@@ -117,6 +117,13 @@
   .gd .meta{display:flex; gap:16px; margin-top:12px; font-size:12.5px; color:var(--muted)}
   .gd .meta b{color:var(--ink)}
 
+  /* origin crosswalk */
+  .origin{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+  .og{display:flex; gap:12px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow)}
+  .og .chip2{margin-top:2px; min-width:52px; text-align:center; padding:4px 8px; flex:0 0 auto}
+  .og p{margin:0; font-size:13.5px; color:var(--muted)} .og p b{color:var(--ink)}
+  code{background:var(--surface-2); padding:1px 6px; border-radius:5px; font-size:.9em}
+
   /* grade chips in table + ladder */
   .chip2{display:inline-block; font-size:11.5px; font-weight:800; padding:2px 8px; border-radius:7px; color:#fff; white-space:nowrap}
   .chip2.c1{background:var(--s1)} .chip2.c2{background:var(--s2)} .chip2.c3{background:var(--s3)} .chip2.c4{background:var(--s4)}
@@ -141,6 +148,7 @@
     .stats{grid-template-columns:repeat(2,1fr)}
     .prog{grid-template-columns:1fr 1fr}
     .grades{grid-template-columns:1fr}
+    .origin{grid-template-columns:1fr}
     .terms{grid-template-columns:1fr}
     .arrow{padding:8px; font-size:18px; transform:rotate(90deg)}
   }
@@ -243,6 +251,15 @@
       <div class="era"><div class="yr">2010–2020</div><div class="sys">군(群)</div><div class="det">제1~5군 + 지정감염병. ‘감염병’ 전환.</div></div>
       <div class="era cur"><div class="yr">2020–현재</div><div class="sys">급(級)</div><div class="det">제1~4급. 신고시기·격리수준 중심 재편.</div></div>
     </div>
+
+    <h3 style="font-size:14px;font-weight:800;margin:28px 0 12px">2020.1.1 개편 — 급별로 어디서 왔나</h3>
+    <div class="origin">
+      <div class="og"><span class="chip2 c1">제1급</span><p>대부분 <b>제4군</b>(신종·생물테러) + 제3군 <b>탄저</b> + 제2군 <b>디프테리아</b></p></div>
+      <div class="og"><span class="chip2 c2">제2급</span><p><b>제1군 전체</b> + 제2군 대부분 + 제3군 일부(수막구균·한센·성홍열·VRSA·CRE)</p></div>
+      <div class="og"><span class="chip2 c3">제3급</span><p><b>제3군 대부분</b> + 제4군 감시필요군(황열·뎅기·SFTS 등)</p></div>
+      <div class="og"><span class="chip2 c4">제4급</span><p><b>제5군(기생충)</b> + <b>지정감염병 전체</b> + 인플루엔자 + 코로나19</p></div>
+    </div>
+    <p class="lnote" style="margin-top:12px">같은 군이 여러 급으로 쪼개졌다 — 제2군은 디프테리아(1급)·홍역(2급)·파상풍(3급)으로 분산. 질병 단위 전체 매핑은 저장소 <code>군급_개별매핑표</code> 참조.</p>
   </section>
 
   <section>
@@ -255,7 +272,7 @@
           <tr><td class="num">2000–2019</td><td>제1~4군 + 지정</td><td class="n">증감</td><td>제4군(신종·해외유입) 신설</td></tr>
           <tr><td class="num">2019</td><td>제1~5군 + 지정</td><td class="n num em">80종</td><td>급 체계 전환 직전</td></tr>
           <tr><td class="num">2020.01</td><td>제1~4급</td><td class="n num em">86종</td><td>군→급 개편, 6종 순증</td></tr>
-          <tr><td class="num">현재(2024)</td><td>제1~4급</td><td class="n num em">약 88종</td><td>엠폭스·코로나19 재분류 등 수시 변동</td></tr>
+          <tr><td class="num">현재(2024~25)</td><td>제1~4급</td><td class="n num em">91종</td><td>전수 67종(1·2·3급) + 표본 24종(4급)</td></tr>
         </tbody>
       </table>
     </div>
