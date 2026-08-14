@@ -79,6 +79,11 @@ https://www.law.go.kr/DRF/lawService.do?OC=test&target=eflaw&MST=<법령일련�
 
 ---
 
+## 6. 더 쉬운 대안 — MCP 서버 (설치·OC 없이도 가능)
+직접 API를 다루는 대신 **`korean-law-mcp`**(법제처 42개 API를 10개 MCP 도구로 통합)를 쓰면 조문 조회·인용 검증·시점 비교가 훨씬 쉽다. 공개 서버 `https://mcp.gomdori.app/law?oc=test` 로 설치 없이 즉시 사용 가능(이 세션에서 실측 확인). → [`유사도구_korean-law-mcp_분석.md`](./유사도구_korean-law-mcp_분석.md)
+
+---
+
 ### 참고 출처
 - 법제처 Open API 포털: <https://open.law.go.kr/LSO/openApi/guideList.do>
 - 공공데이터포털(법제처 국가법령정보 공유서비스): <https://www.data.go.kr/data/15000115/openapi.do>
