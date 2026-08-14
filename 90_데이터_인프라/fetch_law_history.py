@@ -1,11 +1,12 @@
-import urllib.request, urllib.parse, xml.etree.ElementTree as ET, ssl, time, csv
+import urllib.request, urllib.parse, xml.etree.ElementTree as ET, ssl, time, csv, os
 
 ctx = ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
+OC = os.environ.get('LAW_OC', 'test')  # export LAW_OC=본인OC 하면 자동 사용
 
 def fetch(query):
     rows=[]
     for page in range(1,10):
-        params=urllib.parse.urlencode({'OC':'test','target':'eflaw','query':query,
+        params=urllib.parse.urlencode({'OC':OC,'target':'eflaw','query':query,
             'type':'XML','display':'100','page':str(page)})
         url='https://www.law.go.kr/DRF/lawSearch.do?'+params
         try:
