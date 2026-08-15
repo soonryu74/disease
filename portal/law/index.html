@@ -1,0 +1,388 @@
+<title>감염병예방법 70년</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --s1:#B23A3A; --s2:#C7712B; --s3:#B8942A; --s4:#2F7D8C;
+    --s1b:#F6E1E1; --s2b:#F7E7D8; --s3b:#F5EED6; --s4b:#DEEDF0;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+  }
+  :root:not([data-theme="light"]){ }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+      --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+      --line:#243330; --line-strong:#32433E;
+      --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+      --s1:#E07A7A; --s2:#E0A268; --s3:#D8BE6A; --s4:#6FBECB;
+      --s1b:#3A2020; --s2b:#3A2C1B; --s3b:#37311A; --s4b:#1C333A;
+      --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --s1:#E07A7A; --s2:#E0A268; --s3:#D8BE6A; --s4:#6FBECB;
+    --s1b:#3A2020; --s2b:#3A2C1B; --s3b:#37311A; --s4b:#1C333A;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;
+    line-height:1.6; letter-spacing:-.01em;
+    font-feature-settings:"tnum";
+  }
+  .num{font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+  .wrap{max-width:940px; margin:0 auto; padding:0 24px}
+  a{color:var(--accent-ink); text-decoration:none; border-bottom:1px solid var(--line-strong)}
+  a:hover{border-color:var(--accent)}
+  a:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:2px}
+
+  /* header */
+  header{padding:72px 0 40px; border-bottom:1px solid var(--line)}
+  .eyebrow{font-size:12.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--accent); font-weight:700; margin:0 0 18px}
+  h1{font-size:clamp(38px,7vw,68px); line-height:1.02; margin:0; font-weight:800; text-wrap:balance; letter-spacing:-.035em}
+  h1 .yr{color:var(--accent)}
+  .thesis{font-size:clamp(16px,2.4vw,19px); color:var(--muted); max-width:60ch; margin:20px 0 0; text-wrap:pretty}
+
+  /* stat tiles */
+  .stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin:34px 0 0}
+  .tile{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:18px 18px 16px; box-shadow:var(--shadow)}
+  .tile .big{font-size:clamp(30px,5vw,44px); font-weight:800; line-height:1; color:var(--ink)}
+  .tile .lab{font-size:12.5px; color:var(--muted); margin-top:10px; line-height:1.35}
+  .tile .u{color:var(--accent); font-weight:700}
+
+  section{padding:52px 0; border-bottom:1px solid var(--line)}
+  .kicker{display:flex; align-items:baseline; gap:12px; margin:0 0 26px}
+  .kicker .no{font-size:13px; font-weight:800; color:var(--accent); letter-spacing:.04em}
+  h2{font-size:clamp(22px,3.4vw,29px); margin:0; font-weight:800; letter-spacing:-.025em}
+  .sub{color:var(--muted); font-size:14.5px; margin:6px 0 0}
+
+  /* timeline */
+  .tl{position:relative; margin-left:8px; padding-left:30px}
+  .tl:before{content:""; position:absolute; left:0; top:6px; bottom:6px; width:2px; background:var(--line-strong)}
+  .ev{position:relative; padding:0 0 26px}
+  .ev:last-child{padding-bottom:0}
+  .ev:before{content:""; position:absolute; left:-34px; top:5px; width:11px; height:11px; border-radius:50%; background:var(--surface); border:2.5px solid var(--line-strong)}
+  .ev.key:before{background:var(--accent); border-color:var(--accent)}
+  .ev .date{font-size:12.5px; font-weight:700; color:var(--accent); letter-spacing:.02em}
+  .ev .ttl{font-weight:700; margin:3px 0 2px; font-size:16.5px}
+  .ev .law{font-size:12.5px; color:var(--faint)}
+  .ev .desc{font-size:14.5px; color:var(--muted); margin:6px 0 0; max-width:64ch}
+  .badge{display:inline-block; font-size:11px; font-weight:700; padding:2px 8px; border-radius:999px; background:var(--accent-soft); color:var(--accent-ink); margin-left:8px; vertical-align:middle}
+
+  /* term before/after */
+  .terms{display:grid; grid-template-columns:1fr auto 1fr; align-items:stretch; gap:0; background:var(--surface); border:1px solid var(--line); border-radius:16px; overflow:hidden; box-shadow:var(--shadow)}
+  .term{padding:24px}
+  .term h3{margin:0 0 14px; font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); font-weight:700}
+  .term.now h3{color:var(--accent)}
+  .row{display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-top:1px solid var(--line); font-size:14.5px}
+  .row:first-of-type{border-top:none}
+  .row .k{color:var(--muted)}
+  .row .v{font-weight:700; text-align:right}
+  .arrow{display:flex; align-items:center; justify-content:center; padding:0 6px; background:var(--surface-2); color:var(--accent); font-size:22px; font-weight:800}
+
+  /* classification progression */
+  .prog{display:grid; grid-template-columns:repeat(4,1fr); gap:12px}
+  .era{background:var(--surface); border:1px solid var(--line); border-radius:14px; padding:16px; box-shadow:var(--shadow); position:relative}
+  .era .yr{font-size:12px; font-weight:800; color:var(--accent); letter-spacing:.02em}
+  .era .sys{font-size:19px; font-weight:800; margin:6px 0 4px}
+  .era .det{font-size:13px; color:var(--muted); line-height:1.45}
+  .era.cur{border-color:var(--accent); box-shadow:0 0 0 1px var(--accent), var(--shadow)}
+
+  /* tables */
+  .tblwrap{overflow-x:auto; border:1px solid var(--line); border-radius:14px; box-shadow:var(--shadow)}
+  table{border-collapse:collapse; width:100%; font-size:14px; background:var(--surface); min-width:480px}
+  th,td{text-align:left; padding:12px 16px; border-top:1px solid var(--line)}
+  thead th{background:var(--surface-2); border-top:none; font-size:12px; letter-spacing:.04em; color:var(--muted); text-transform:uppercase; font-weight:700; white-space:nowrap}
+  tbody tr:hover{background:var(--surface-2)}
+  td.n{font-variant-numeric:tabular-nums; font-weight:700}
+  .em{color:var(--accent); font-weight:700}
+
+  /* grade cards */
+  .grades{display:grid; grid-template-columns:repeat(2,1fr); gap:14px}
+  .gd{border:1px solid var(--line); border-radius:14px; padding:18px; background:var(--surface); box-shadow:var(--shadow); border-left:5px solid var(--g)}
+  .gd.g1{--g:var(--s1)} .gd.g2{--g:var(--s2)} .gd.g3{--g:var(--s3)} .gd.g4{--g:var(--s4)}
+  .gd .gt{display:flex; align-items:center; gap:10px; margin:0 0 8px}
+  .gd .chip{font-size:12px; font-weight:800; padding:3px 10px; border-radius:8px; color:#fff; background:var(--g)}
+  .gd .rep{font-size:12.5px; color:var(--faint); margin-left:auto; font-weight:700}
+  .gd .gdesc{font-size:13.5px; color:var(--muted); margin:0}
+  .gd .meta{display:flex; gap:16px; margin-top:12px; font-size:12.5px; color:var(--muted)}
+  .gd .meta b{color:var(--ink)}
+
+  /* origin crosswalk */
+  .origin{display:grid; grid-template-columns:repeat(2,1fr); gap:10px}
+  .og{display:flex; gap:12px; align-items:flex-start; background:var(--surface); border:1px solid var(--line); border-radius:12px; padding:14px 16px; box-shadow:var(--shadow)}
+  .og .chip2{margin-top:2px; min-width:52px; text-align:center; padding:4px 8px; flex:0 0 auto}
+  .og p{margin:0; font-size:13.5px; color:var(--muted)} .og p b{color:var(--ink)}
+  code{background:var(--surface-2); padding:1px 6px; border-radius:5px; font-size:.9em}
+
+  /* grade chips in table + ladder */
+  .chip2{display:inline-block; font-size:11.5px; font-weight:800; padding:2px 8px; border-radius:7px; color:#fff; white-space:nowrap}
+  .chip2.c1{background:var(--s1)} .chip2.c2{background:var(--s2)} .chip2.c3{background:var(--s3)} .chip2.c4{background:var(--s4)}
+  .ladder{background:var(--surface); border:1px solid var(--line); border-radius:16px; padding:22px 24px; box-shadow:var(--shadow)}
+  .ladder h3{margin:0 0 16px; font-size:15px; font-weight:800}
+  .steps{display:flex; flex-direction:column; gap:8px; max-width:560px}
+  .step{display:flex; align-items:center; gap:14px}
+  .step .sd{font-size:14px; color:var(--muted)} .step .sd b{color:var(--ink)}
+  .step .chip2{min-width:56px; text-align:center; padding:5px 8px}
+  .stepar{color:var(--faint); font-size:18px; font-weight:800; margin-left:20px; line-height:1}
+  .lnote{font-size:13.5px; color:var(--muted); margin:16px 0 0; max-width:66ch}
+  .lnote b{color:var(--ink)}
+
+  /* strengthened vs weakened */
+  .vs{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  .vscol{border:1px solid var(--line); border-radius:14px; padding:18px 20px; background:var(--surface); box-shadow:var(--shadow); border-top:4px solid var(--tc)}
+  .vscol.up{--tc:var(--s1)} .vscol.down{--tc:var(--s4)}
+  .vshead{font-weight:800; font-size:16px; margin:0 0 14px}
+  .vshead span{display:block; font-size:12px; font-weight:600; color:var(--muted); margin-top:2px}
+  .vscol ul{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:11px}
+  .vscol li{font-size:13.5px; color:var(--muted); line-height:1.45; padding-left:14px; position:relative}
+  .vscol li:before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px; border-radius:50%; background:var(--tc)}
+  .vscol li b{color:var(--ink)}
+  .yr2{display:inline-block; font-size:11px; font-weight:700; color:var(--tc); background:var(--surface-2); padding:1px 7px; border-radius:6px; margin-left:2px; white-space:nowrap}
+
+  /* callout */
+  .note{background:var(--accent-soft); border:1px solid transparent; border-radius:14px; padding:18px 20px; font-size:14px; color:var(--accent-ink); margin-top:24px}
+  .note b{font-weight:800}
+
+  footer{padding:40px 0 64px; color:var(--faint); font-size:13px}
+  footer .src{margin-top:10px; line-height:1.7}
+
+  @media(max-width:760px){
+    .stats{grid-template-columns:repeat(2,1fr)}
+    .prog{grid-template-columns:1fr 1fr}
+    .grades{grid-template-columns:1fr}
+    .origin{grid-template-columns:1fr}
+    .vs{grid-template-columns:1fr}
+    .terms{grid-template-columns:1fr}
+    .arrow{padding:8px; font-size:18px; transform:rotate(90deg)}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">대한민국 법정감염병 법제사 · 1954–2026</p>
+    <h1>전염병에서 감염병으로,<br><span class="yr">70년</span>의 법제 변천</h1>
+    <p class="thesis">1954년 「전염병예방법」으로 태어나, 2009년 「감염병의 예방 및 관리에 관한 법률」로 전부개정되며 이름·철학·분류체계가 모두 바뀌었고, 2020년 '급(級)' 체계로 재편되어 오늘에 이른다.</p>
+    <div class="stats">
+      <div class="tile"><div class="big num">1954</div><div class="lab"><span class="u">제정</span> · 전염병예방법<br>법률 제308호</div></div>
+      <div class="tile"><div class="big num">67</div><div class="lab"><span class="u">시행 버전</span><br>제정1·전부개정1·일부44·타법21</div></div>
+      <div class="tile"><div class="big num">3</div><div class="lab">분류체계 세대<br><span class="u">種 → 群 → 級</span></div></div>
+      <div class="tile"><div class="big num">88<span style="font-size:.5em">종</span></div><div class="lab">현행 법정감염병<br><span class="u">제1~4급</span> (수시 변동)</div></div>
+    </div>
+  </header>
+
+  <section>
+    <div class="kicker"><span class="no">01</span><div><h2>법의 큰 줄기</h2><p class="sub">제정에서 현행까지, 방향이 바뀐 순간들</p></div></div>
+    <div class="tl">
+      <div class="ev key">
+        <div class="date">1954.02.02 공포 · 1957.02.28 시행</div>
+        <div class="ttl">「전염병예방법」 제정<span class="badge">제정</span></div>
+        <div class="law">법률 제308호</div>
+        <div class="desc">종(種)별 체계 출범 — 제1·2·3종 전염병(약 20여 종). 콜레라·페스트·장티푸스(1종), 결핵·성병·나병(3종) 등.</div>
+      </div>
+      <div class="ev">
+        <div class="date">1963–1990년대</div>
+        <div class="ttl">다수 일부·타법개정</div>
+        <div class="desc">예방접종·검역·신고체계 정비. 이 시기 대부분의 개정은 제도 세부 보완.</div>
+      </div>
+      <div class="ev key">
+        <div class="date">2000.01.12 공포 · 2000.08.01 시행</div>
+        <div class="ttl">분류체계 전면 개편<span class="badge">군 체계</span></div>
+        <div class="law">법률 제6162호</div>
+        <div class="desc">종별 → 군(群)별 체계(제1~4군 + 지정전염병). 신종·재출현·해외유입 전염병 대응 개념 도입.</div>
+      </div>
+      <div class="ev key">
+        <div class="date">2009.12.29 공포 · 2010.12.30 시행</div>
+        <div class="ttl">전부개정 — 이름과 철학의 전환<span class="badge">전부개정</span></div>
+        <div class="law">법률 제9847호</div>
+        <div class="desc">‘전염병’ → ‘감염병’ 용어 전환 · 「기생충질환예방법」 통합 · 제1~5군 + 지정감염병 체계 · 감염병 위기관리 도입.</div>
+      </div>
+      <div class="ev">
+        <div class="date">2015년</div>
+        <div class="ttl">메르스(MERS) 사태 후속 개정</div>
+        <div class="law">법률 제13392호 등</div>
+        <div class="desc">역학조사·격리·손실보상·의료기관 감염관리 대폭 강화.</div>
+      </div>
+      <div class="ev key">
+        <div class="date">2018.03.27 공포 · 2020.01.01 시행</div>
+        <div class="ttl">‘급(級)’ 체계로 재편<span class="badge">급 체계</span></div>
+        <div class="law">법률 제15534호</div>
+        <div class="desc">군(群) → 급(級). 질병 특성이 아니라 심각도·전파력·격리수준·신고시기 기준으로 재분류(80종 → 86종).</div>
+      </div>
+      <div class="ev">
+        <div class="date">2020–2022년</div>
+        <div class="ttl">코로나19 대응 연속 개정</div>
+        <div class="law">법률 제17067·17472·17491호 등</div>
+        <div class="desc">역학조사 강화, 방역조치·손실보상·정보공개·백신 이상반응 보상 등 다수 개정.</div>
+      </div>
+      <div class="ev key">
+        <div class="date">2025.12.23 공포 · 2026.06.24 시행</div>
+        <div class="ttl">현행 최신본<span class="badge">현행</span></div>
+        <div class="law">법률 제21234호 · 이후 2건 시행예정</div>
+        <div class="desc">소관: 보건복지부·질병관리청. 법령ID 001792.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="no">02</span><div><h2>용어 변천사</h2><p class="sub">2009년 전부개정이 바꾼 말들</p></div></div>
+    <div class="terms">
+      <div class="term">
+        <h3>~2010 · 구법</h3>
+        <div class="row"><span class="k">법률 이름</span><span class="v">전염병예방법</span></div>
+        <div class="row"><span class="k">질병 총칭</span><span class="v">전염(傳染)병</span></div>
+        <div class="row"><span class="k">분류 단위</span><span class="v">종(種) → 군(群)</span></div>
+        <div class="row"><span class="k">감시 대상</span><span class="v">법정전염병</span></div>
+      </div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="term now">
+        <h3>2010~ · 현행법</h3>
+        <div class="row"><span class="k">법률 이름</span><span class="v">감염병예방법*</span></div>
+        <div class="row"><span class="k">질병 총칭</span><span class="v">감염(感染)병</span></div>
+        <div class="row"><span class="k">분류 단위</span><span class="v">급(級)</span></div>
+        <div class="row"><span class="k">감시 대상</span><span class="v">법정감염병</span></div>
+      </div>
+    </div>
+    <div class="note"><b>왜 바꿨나?</b> ‘전염병’은 사람 간 전파되는 병만 연상시키지만, 파상풍·렙토스피라증처럼 사람 간 전파가 없어도 관리가 필요한 병이 많다. 더 넓은 개념인 <b>‘감염병’</b>으로 바꿔 관리 대상을 포괄했다. &nbsp;<span style="opacity:.75">*정식명 「감염병의 예방 및 관리에 관한 법률」</span></div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="no">03</span><div><h2>분류체계 3세대</h2><p class="sub">種 → 群 → 級, 기준 자체가 바뀌었다</p></div></div>
+    <div class="prog">
+      <div class="era"><div class="yr">1954–2000</div><div class="sys">종(種)</div><div class="det">제1~3종 전염병. 질병의 위험도별 종별 구분.</div></div>
+      <div class="era"><div class="yr">2000–2010</div><div class="sys">군(群)</div><div class="det">제1~4군 + 지정전염병. 위급성·의학체계 기준.</div></div>
+      <div class="era"><div class="yr">2010–2020</div><div class="sys">군(群)</div><div class="det">제1~5군 + 지정감염병. ‘감염병’ 전환.</div></div>
+      <div class="era cur"><div class="yr">2020–현재</div><div class="sys">급(級)</div><div class="det">제1~4급. 신고시기·격리수준 중심 재편.</div></div>
+    </div>
+
+    <h3 style="font-size:14px;font-weight:800;margin:28px 0 12px">2020.1.1 개편 — 급별로 어디서 왔나</h3>
+    <div class="origin">
+      <div class="og"><span class="chip2 c1">제1급</span><p>대부분 <b>제4군</b>(신종·생물테러) + 제3군 <b>탄저</b> + 제2군 <b>디프테리아</b></p></div>
+      <div class="og"><span class="chip2 c2">제2급</span><p><b>제1군 전체</b> + 제2군 대부분 + 제3군 일부(수막구균·한센·성홍열·VRSA·CRE)</p></div>
+      <div class="og"><span class="chip2 c3">제3급</span><p><b>제3군 대부분</b> + 제4군 감시필요군(황열·뎅기·SFTS 등)</p></div>
+      <div class="og"><span class="chip2 c4">제4급</span><p><b>제5군(기생충)</b> + <b>지정감염병 전체</b> + 인플루엔자 + 코로나19</p></div>
+    </div>
+    <p class="lnote" style="margin-top:12px">같은 군이 여러 급으로 쪼개졌다 — 제2군은 디프테리아(1급)·홍역(2급)·파상풍(3급)으로 분산. 질병 단위 전체 매핑은 저장소 <code>군급_개별매핑표</code> 참조.</p>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="no">04</span><div><h2>개수 변천사</h2><p class="sub">체계가 바뀔 때마다 대상 질병 수도 움직였다</p></div></div>
+    <div class="tblwrap">
+      <table>
+        <thead><tr><th>시점</th><th>체계</th><th>총 종수</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1957</td><td>제1~3종</td><td class="n num">약 20여</td><td>제정 시행</td></tr>
+          <tr><td class="num">2000–2019</td><td>제1~4군 + 지정</td><td class="n">증감</td><td>제4군(신종·해외유입) 신설</td></tr>
+          <tr><td class="num">2019</td><td>제1~5군 + 지정</td><td class="n num em">80종</td><td>급 체계 전환 직전</td></tr>
+          <tr><td class="num">2020.01</td><td>제1~4급</td><td class="n num em">86종</td><td>군→급 개편, 6종 순증</td></tr>
+          <tr><td class="num">현재(2024~25)</td><td>제1~4급</td><td class="n num em">91종</td><td>전수 67종(1·2·3급) + 표본 24종(4급)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="note">⚠️ 개수는 대통령령·복지부령 개정으로 <b>수시 변동</b>한다. 자료별로 88~91종 집계 편차가 있음(전수감시 vs 표본감시 포함 범위 차이). 최신 확정 수치·전체 목록은 <a href="https://dportal.kdca.go.kr/pot/ii/sttyInftnsds/sttyInftnsds.do">질병관리청 법정감염병 페이지</a>에서 확인.</div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="no">05</span><div><h2>현행 급(級) 체계 정의</h2><p class="sub">2020.01.01~ · 심각도·전파력·격리·신고시기 기준</p></div></div>
+    <div class="grades">
+      <div class="gd g1">
+        <div class="gt"><span class="chip">제1급</span><span class="rep">에볼라·페스트·탄저</span></div>
+        <p class="gdesc">생물테러감염병 또는 치명률이 높거나 집단발생 우려가 커서 즉시 대응·음압격리가 필요.</p>
+        <div class="meta"><span>신고 <b>발생 즉시</b></span><span>격리 <b>높은 수준(음압)</b></span></div>
+      </div>
+      <div class="gd g2">
+        <div class="gt"><span class="chip">제2급</span><span class="rep">결핵·홍역·콜레라</span></div>
+        <p class="gdesc">전파가능성을 고려하여 격리가 필요한 감염병.</p>
+        <div class="meta"><span>신고 <b>24시간 이내</b></span><span>격리 <b>필요</b></span></div>
+      </div>
+      <div class="gd g3">
+        <div class="gt"><span class="chip">제3급</span><span class="rep">파상풍·B형간염·말라리아</span></div>
+        <p class="gdesc">발생을 계속 감시할 필요가 있는 감염병.</p>
+        <div class="meta"><span>신고 <b>24시간 이내</b></span><span>격리 <b>불요</b></span></div>
+      </div>
+      <div class="gd g4">
+        <div class="gt"><span class="chip">제4급</span><span class="rep">인플루엔자·수족구병</span></div>
+        <p class="gdesc">제1~3급 외 유행 여부 조사를 위해 표본감시가 필요한 감염병.</p>
+        <div class="meta"><span>신고 <b>표본감시</b></span><span>격리 <b>불요</b></span></div>
+      </div>
+    </div>
+    <div class="note">이 밖에 기생충감염병·WHO 감시대상·생물테러·성매개·인수공통·의료관련 감염병 등은 <b>별도 지정</b>으로 함께 관리된다.</div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="no">06</span><div><h2>급수 변동 · 감시체계 전환 이력</h2><p class="sub">신고의무가 통째로 바뀌는 실무상 가장 중요한 변경 · 시행 연·월 기준</p></div></div>
+
+    <div class="tblwrap" style="margin-bottom:22px">
+      <table>
+        <thead><tr><th>시행 시점</th><th>감염병</th><th>변경 전 → 후</th><th>감시체계</th><th>비고</th></tr></thead>
+        <tbody>
+          <tr><td class="num">2020.01</td><td><b>E형간염</b></td><td>신규 → <span class="chip2 c2">제2급</span></td><td class="em">전수감시 개시</td><td>법정감염병 신규 편입</td></tr>
+          <tr><td class="num">2020.01</td><td><b>코로나19</b></td><td>신규 → <span class="chip2 c1">제1급</span></td><td>전수감시</td><td>신종감염병증후군 지정(1.20)</td></tr>
+          <tr><td class="num">2022.04</td><td><b>코로나19</b></td><td><span class="chip2 c1">제1급</span> → <span class="chip2 c2">제2급</span></td><td>전수감시</td><td>하향(4.25)·유행 안정화</td></tr>
+          <tr><td class="num">2022.06</td><td><b>엠폭스</b></td><td>신규 → <span class="chip2 c2">제2급</span></td><td>전수감시</td><td>원숭이두창 선제 지정(6.8)</td></tr>
+          <tr><td class="num">2023.08</td><td><b>코로나19</b></td><td><span class="chip2 c2">제2급</span> → <span class="chip2 c4">제4급</span></td><td class="em">전수 → 표본감시</td><td>하향(8.31)·일반의료체계</td></tr>
+          <tr><td class="num">2024.01</td><td><b>매독</b></td><td><span class="chip2 c4">제4급</span> → <span class="chip2 c3">제3급</span></td><td class="em">표본 → 전수감시</td><td>감시 강화·신고 3→5종</td></tr>
+          <tr><td class="num">2024.01</td><td><b>엠폭스</b></td><td><span class="chip2 c2">제2급</span> → <span class="chip2 c3">제3급</span></td><td>전수감시 유지</td><td>격리의무 해제·일반의료체계</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="ladder">
+      <h3>코로나19 — 3단계 하향의 대표 사례</h3>
+      <div class="steps">
+        <div class="step"><span class="chip2 c1">제1급</span><div class="sd"><b>2020.01.20</b> 신종감염병증후군 지정 · 음압격리</div></div>
+        <div class="stepar" aria-hidden="true">↓</div>
+        <div class="step"><span class="chip2 c2">제2급</span><div class="sd"><b>2022.04.25</b> 하향 · 24h 내 신고·격리 유지</div></div>
+        <div class="stepar" aria-hidden="true">↓</div>
+        <div class="step"><span class="chip2 c4">제4급</span><div class="sd"><b>2023.08.31</b> 하향 · 표본(양성자)감시·일반의료체계</div></div>
+      </div>
+      <p class="lnote">전수감시 기간 2020.1.20 – 2023.8.30. 급수 하향/상향과 감시체계 전환이 항상 함께 움직이진 않는다 — <b>엠폭스</b>는 제3급으로 하향되면서도 전수감시는 유지했다.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="kicker"><span class="no">07</span><div><h2>강화된 것 vs 완화된 것</h2><p class="sub">메르스·코로나가 남긴 조항별 방향성 · "벌금은 강화, 격리는 완화"</p></div></div>
+    <div class="vs">
+      <div class="vscol up">
+        <div class="vshead">🔺 강화 <span>방역 권한·의무·처벌</span></div>
+        <ul>
+          <li><b>격리·입원 위반 벌칙</b> — 300만원 벌금 → <b>1년 징역 또는 1천만원</b> <span class="yr2">2020.4</span></li>
+          <li><b>역학조사 거부 처벌</b> — 신설 → 2년 징역 또는 2천만원 <span class="yr2">2015.7</span></li>
+          <li><b>정보공개 의무</b> — 환자 이동경로 공개 신설 <span class="yr2">2015.7</span></li>
+          <li><b>손실보상·생활지원</b> — 격리자 생활지원비·유급휴가비 <span class="yr2">2015·2020</span></li>
+          <li><b>감시 확대</b> — 표본→전수(C형간염·내성균·매독) <span class="yr2">2017·2024</span></li>
+        </ul>
+      </div>
+      <div class="vscol down">
+        <div class="vshead">🔻 완화 <span>방역조치 완화·인권 보호</span></div>
+        <ul>
+          <li><b>개인정보 보호</b> — 동선공개 시 성별·나이 제외, 목적달성 후 삭제 의무 <span class="yr2">2020.10</span></li>
+          <li><b>격리 의무→권고</b> — 코로나 2급→4급 하향 <span class="yr2">2023.8</span></li>
+          <li><b>방역조치→권고</b> — 의무 대부분 권고화 <span class="yr2">2023.8</span></li>
+          <li><b>거리두기 해제</b> — 집합·영업제한 전면 해제 <span class="yr2">2022.4</span></li>
+          <li><b>방역패스 폐지</b> <span class="yr2">2022.3</span></li>
+        </ul>
+      </div>
+    </div>
+    <p class="lnote">완화의 상당수는 법 조항 삭제가 아니라 <b>급수 하향(2급→4급)과 지침 개정</b>으로 이뤄졌다. 같은 개정도 관점에 따라 강화이자 완화 — 이 법의 역사는 <b>'방역 실효성'과 '기본권 보호'의 시계추</b>다.</p>
+  </section>
+
+  <footer class="wrap" style="padding-left:0;padding-right:0">
+    <div><b>데이터 출처 · 재현 방법</b></div>
+    <div class="src">
+      모든 연혁 데이터는 <a href="https://www.law.go.kr/법령/감염병의예방및관리에관한법률">법제처 국가법령정보 공동활용 Open API</a>에서 직접 수집·검증(법령ID 001792, <span class="num">target=eflaw</span>, 67개 시행 버전).<br>
+      분류·개수·정의: 보건복지부 보도자료(2019), <a href="https://dportal.kdca.go.kr/pot/ii/sttyInftnsds/sttyInftnsds.do">질병관리청 법정감염병</a>, 한국민족문화대백과.<br>
+      <span style="opacity:.7">참고용 정리물이며, 법적·의학적 판단은 반드시 원문과 전문가 확인을 거쳐야 합니다.</span>
+    </div>
+  </footer>
+</div>
