@@ -1,0 +1,337 @@
+<title>인플루엔자 감시 100년</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    /* categorical (dataviz-validated, light) */
+    --s-h3:#2a78d6; --s-pdm:#eb6834; --s-h1:#1baf7a; --s-bvic:#eda100; --s-byam:#e87ba4;
+    /* status */
+    --ok:#2e7d5b; --warn:#d9880f; --bad:#c0392b; --neutral:#9aa6a1;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+  }
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --s-h3:#3987e5; --s-pdm:#d95926; --s-h1:#199e70; --s-bvic:#c98500; --s-byam:#d55181;
+    --ok:#4fb389; --warn:#e0a53a; --bad:#e0685c; --neutral:#71807A;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --s-h3:#3987e5; --s-pdm:#d95926; --s-h1:#199e70; --s-bvic:#c98500; --s-byam:#d55181;
+    --ok:#4fb389; --warn:#e0a53a; --bad:#e0685c; --neutral:#71807A;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 22px}
+  .num{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  a{color:var(--accent-ink)}
+  header{padding:60px 0 30px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 14px}
+  h1{font-size:clamp(32px,6vw,58px);line-height:1.02;margin:0;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+  .thesis{font-size:clamp(15px,2.3vw,18px);color:var(--muted);max-width:64ch;margin:18px 0 0}
+  .today{display:flex;flex-wrap:wrap;gap:10px;margin:24px 0 0}
+  .pill{background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:13px;box-shadow:var(--shadow)}
+  .pill b{color:var(--accent)}
+  section{padding:30px 0;border-top:1px solid var(--line)}
+  .kick{display:flex;align-items:baseline;gap:12px;margin:0 0 6px;flex-wrap:wrap}
+  .kick .no{font-size:13px;font-weight:800;color:var(--accent)}
+  h2{font-size:clamp(20px,3.2vw,27px);margin:0;font-weight:800;letter-spacing:-.025em}
+  .sub{color:var(--muted);font-size:14px;margin:4px 0 18px;max-width:72ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow)}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;margin:14px 0 6px;font-size:12.5px;color:var(--muted)}
+  .legend span{display:inline-flex;align-items:center;gap:6px}
+  .sw{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .toggle{display:inline-flex;border:1px solid var(--line-strong);border-radius:9px;overflow:hidden;margin-left:auto}
+  .toggle button{border:0;background:var(--surface);color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;padding:6px 12px;cursor:pointer}
+  .toggle button[aria-pressed=true]{background:var(--accent);color:#fff}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .axis{fill:var(--faint);font-size:11px}
+  .axis-line{stroke:var(--line);stroke-width:1}
+  .grid{stroke:var(--line);stroke-width:1;stroke-dasharray:2 3;opacity:.6}
+  .insight{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 18px;font-size:13.5px;margin-top:14px}
+  .insight b{font-weight:800}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .ds{border-radius:12px;border:1px solid var(--line);padding:16px;background:var(--surface)}
+  .ds h3{margin:0 0 6px;font-size:15px}
+  .ds p{margin:0;font-size:13px;color:var(--muted)}
+  table{border-collapse:collapse;width:100%;font-size:13px;margin-top:8px}
+  th,td{border-top:1px solid var(--line);padding:7px 9px;text-align:left}
+  thead th{border:0;color:var(--muted);font-size:11.5px;text-transform:uppercase;letter-spacing:.04em}
+  .tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--ground);font-size:12px;padding:7px 10px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:50;box-shadow:0 4px 16px rgba(0,0,0,.25);max-width:240px}
+  .tip .r{display:flex;justify-content:space-between;gap:14px}
+  .foot{padding:30px 0 60px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line)}
+  .vac{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+  .vac .c{flex:1;min-width:64px;border-radius:9px;padding:10px 8px;color:#fff;font-size:11.5px;font-weight:700;text-align:center;line-height:1.25}
+  .vac .c small{display:block;font-weight:500;opacity:.92;font-size:10.5px;margin-top:3px}
+  @media(max-width:720px){.two{grid-template-columns:1fr}}
+  @media(prefers-reduced-motion:reduce){*{transition:none}}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">감염병 자료 아카이브 · 인플루엔자 심층</p>
+    <h1>인플루엔자 감시 100년<br>무엇이·얼마나·어떻게 변하나</h1>
+    <p class="thesis">1918년 스페인독감부터 오늘까지 — 아형(subtype)의 정권교체, 매년 백신을 다시 맞는 이유(drift), 팬데믹이 오는 이유(shift), 그리고 코로나가 바꾼 독감 생태계를 국제(WHO FluNet)·한국(KINRESS) 실데이터로 추적한다.</p>
+    <div class="today" id="today"></div>
+  </header>
+
+  <section>
+    <div class="kick"><span class="no">01</span><h2>100년, 아형 정권교체의 역사</h2></div>
+    <p class="sub">팬데믹(●)은 항원 대변이(shift)로 지배 아형이 바뀌는 순간이다. 감시 데이터의 해상도도 시대마다 다르다.</p>
+    <div class="card"><div id="timeline"></div></div>
+    <div class="insight">💡 <b>인사이트</b> — 팬데믹은 무작위가 아니라 <b>아형 지배구조가 깨질 때</b> 온다. 1918 H1N1 → 1957 H2N2 → 1968 H3N2 → 1977 H1N1 재출현 → 2009 H1N1pdm09. 다음 감시 초점은 새 아형의 인체 적응(예: 조류 H5).</div>
+  </section>
+
+  <section>
+    <div class="kick"><span class="no">02</span><h2>아형 구성 (WHO FluNet 실데이터)</h2>
+      <div class="toggle"><button id="tCount" aria-pressed="true">검출 건수</button><button id="tShare" aria-pressed="false">구성비 %</button></div>
+    </div>
+    <p class="sub">1997~2026 전세계 실험실 확진 검출. 2009 신종플루(pdm) 급증, 2021 코로나 방역기 붕괴, B/야마가타 소멸이 그대로 보인다.</p>
+    <div class="card">
+      <div class="legend" id="legend2"></div>
+      <div id="stack"></div>
+    </div>
+    <div class="insight">💡 <b>인사이트</b> — 2009년 <b>H1N1pdm09</b>가 계절 H1N1을 대체하며 폭증했고, 2021년 코로나 방역으로 독감이 <b>붕괴</b>(전세계 검출 급감)했다가 2023~ 반등. 절대 건수는 감시망 확대도 반영하므로 '구성비 %'로 지배 아형을 함께 보라.</div>
+  </section>
+
+  <section>
+    <div class="kick"><span class="no">03</span><h2>drift vs shift — 왜 매년 맞고, 왜 팬데믹인가</h2></div>
+    <p class="sub">같은 바이러스의 두 가지 변화 방식. 이 구분이 백신 정책의 핵심이다.</p>
+    <div class="two">
+      <div class="ds"><h3>🔁 항원 소변이 (drift)</h3><p>HA/NA가 <b>조금씩 계속</b> 변함 → 작년 면역·백신이 덜 들음 → <b>매 절기 백신주 갱신</b>. 계절 유행의 원인.</p></div>
+      <div class="ds" style="border-color:var(--bad)"><h3>💥 항원 대변이 (shift)</h3><p>유전자 <b>재조합</b>으로 <b>새 아형</b> 출현 → 인류 집단면역 없음 → <b>팬데믹</b>. 1918·1957·1968·2009가 이 경우.</p></div>
+    </div>
+    <div class="insight">💡 <b>인사이트</b> — drift는 <b>연례 백신 갱신</b>으로, shift는 <b>팬데믹 대비(신속 백신·항바이러스제 비축)</b>로 대응한다. 독감 백신을 매년 맞는 건 drift 때문이다.</div>
+  </section>
+
+  <section>
+    <div class="kick"><span class="no">04</span><h2>백신 정합성 트래커 ★</h2></div>
+    <p class="sub">WHO가 매년 2회(북반구 2월·남반구 9월) 백신주를 권고하지만, 그사이 유행주가 drift하면 '부정합(miss)'이 되어 백신효과가 떨어진다.</p>
+    <div class="card"><div class="vac" id="vac"></div>
+      <div class="legend" style="margin-top:12px">
+        <span><i class="sw" style="background:var(--bad)"></i> 부정합(miss)</span>
+        <span><i class="sw" style="background:var(--warn)"></i> 부분정합</span>
+        <span><i class="sw" style="background:var(--neutral)"></i> 특이/해당없음</span>
+      </div>
+    </div>
+    <div class="insight">💡 <b>인사이트</b> — <b>2014-15 H3N2 clade 3C.2a drift</b>로 북반구 백신효과가 ~19%까지 급락한 게 대표적 부정합. "그해 백신이 통했는지"는 유행주 vs 백신주 정합성이 결정한다 — 실무 최고 가치 지표.</div>
+  </section>
+
+  <section>
+    <div class="kick"><span class="no">05</span><h2>B/야마가타 멸종 — 진행 중인 사건</h2></div>
+    <p class="sub">B형은 Victoria·Yamagata 두 계통. B/Yamagata는 2020년 코로나 방역 이후 전세계에서 사실상 사라졌다.</p>
+    <div class="card"><div id="byam"></div></div>
+    <div class="insight">💡 <b>인사이트</b> — 실데이터상 B/Yamagata 검출은 2018년 5만+ 에서 <b>2023~2025년 0~1건</b>으로 붕괴. <b>방역(NPI)이 한 바이러스 계통을 멸종</b>시킨 실증이며, 그 결과 <b>4가 백신에서 B/Yamagata를 빼고 3가로 회귀</b>하는 중이다.</div>
+  </section>
+
+  <section>
+    <div class="kick"><span class="no">06</span><h2>한국 — 코로나가 지운 한 절기</h2></div>
+    <p class="sub">질병관리청 KINRESS(FluNet 보고분). 2021년 국내 인플루엔자 검출이 사실상 0으로, 방역의 효과가 가장 극적으로 나타났다.</p>
+    <div class="card"><div class="legend"><span><i class="sw" style="background:var(--s-h3)"></i> A형</span><span><i class="sw" style="background:var(--s-bvic)"></i> B형</span></div><div id="korea"></div></div>
+    <div class="insight">💡 <b>인사이트</b> — 2021년 한국 A형·B형 검출 <b>0</b>. 이후 2024~2025 반등하며 A(H3N2) 우세로 복귀. 코로나 방역이 독감까지 눌렀다가 면역 공백 뒤 재유행하는 패턴.</div>
+  </section>
+
+  <section>
+    <div class="kick"><span class="no">07</span><h2>데이터 · 방법론 (정직 고지)</h2></div>
+    <table>
+      <thead><tr><th>시대</th><th>가용 데이터</th><th>성격</th></tr></thead>
+      <tbody>
+        <tr><td class="num">1918–1951</td><td>사망·초과사망 추정, 문헌</td><td>재구성(역사)</td></tr>
+        <tr><td class="num">1952–1995</td><td>WHO GISRS 아형 감시</td><td>체계적 감시(정성)</td></tr>
+        <tr><td class="num">1996–현재</td><td>WHO FluNet 실시간 실험실</td><td>정량·공개(본 차트 ②⑤⑥)</td></tr>
+        <tr><td class="num">2009–현재</td><td>한국 KINRESS + ILI 표본감시</td><td>국내 정량(차트 ⑥)</td></tr>
+      </tbody>
+    </table>
+    <p class="sub" style="margin-top:12px">차트 ②⑤⑥은 <b>WHO FluNet(xmart VIW_FNT)</b> 연도별 전세계/한국 검출 합계 실데이터. 절대 건수는 감시망 참여 확대도 일부 반영(→ 구성비 병용). 팬데믹 연표·백신 정합성·아형 정권 밴드(1918~1996)는 문헌 큐레이션.</p>
+  </section>
+
+  <div class="foot">
+    출처: WHO GISRS/FluNet(1952~/1996~) · US CDC FluView · 질병관리청 감염병포털·KINRESS(2009~) · History of Vaccines · Nature Rev. Microbiology(2021)·Lancet Microbe(2024, B/Yamagata). 참고용이며 의학적 판단은 전문가·원문 확인.
+  </div>
+</div>
+
+<div class="tip" id="tip"></div>
+<script>
+const FLUNET={"world": [{"year": 1997, "rows": 1182, "AH1": 178, "AH3": 4502, "H1N1pdm": 0, "AH5": 0, "A_nosub": 3531, "INF_A": 8211, "BVic": 0, "BYam": 0, "B_nodet": 4590, "INF_B": 4590}, {"year": 1998, "rows": 1564, "AH1": 538, "AH3": 4538, "H1N1pdm": 0, "AH5": 0, "A_nosub": 7529, "INF_A": 12605, "BVic": 0, "BYam": 0, "B_nodet": 917, "INF_B": 917}, {"year": 1999, "rows": 1647, "AH1": 689, "AH3": 15713, "H1N1pdm": 0, "AH5": 0, "A_nosub": 30692, "INF_A": 47094, "BVic": 0, "BYam": 0, "B_nodet": 11580, "INF_B": 11580}, {"year": 2000, "rows": 1634, "AH1": 5429, "AH3": 6420, "H1N1pdm": 0, "AH5": 0, "A_nosub": 10731, "INF_A": 22580, "BVic": 0, "BYam": 0, "B_nodet": 1696, "INF_B": 1696}, {"year": 2001, "rows": 1642, "AH1": 7301, "AH3": 2389, "H1N1pdm": 0, "AH5": 0, "A_nosub": 10049, "INF_A": 19739, "BVic": 0, "BYam": 0, "B_nodet": 11926, "INF_B": 11926}, {"year": 2002, "rows": 1854, "AH1": 3906, "AH3": 13376, "H1N1pdm": 0, "AH5": 0, "A_nosub": 20453, "INF_A": 37735, "BVic": 2, "BYam": 0, "B_nodet": 10042, "INF_B": 10044}, {"year": 2003, "rows": 1939, "AH1": 3022, "AH3": 21585, "H1N1pdm": 0, "AH5": 0, "A_nosub": 34148, "INF_A": 58755, "BVic": 229, "BYam": 1, "B_nodet": 11420, "INF_B": 11650}, {"year": 2004, "rows": 1935, "AH1": 639, "AH3": 16681, "H1N1pdm": 0, "AH5": 10, "A_nosub": 9867, "INF_A": 27198, "BVic": 3, "BYam": 5, "B_nodet": 2660, "INF_B": 2668}, {"year": 2005, "rows": 1904, "AH1": 4569, "AH3": 20679, "H1N1pdm": 0, "AH5": 2, "A_nosub": 18100, "INF_A": 43350, "BVic": 19, "BYam": 86, "B_nodet": 13857, "INF_B": 13962}, {"year": 2006, "rows": 2260, "AH1": 8866, "AH3": 10720, "H1N1pdm": 0, "AH5": 0, "A_nosub": 13311, "INF_A": 32899, "BVic": 219, "BYam": 25, "B_nodet": 12447, "INF_B": 12691}, {"year": 2007, "rows": 2727, "AH1": 9068, "AH3": 22105, "H1N1pdm": 0, "AH5": 0, "A_nosub": 27047, "INF_A": 58222, "BVic": 43, "BYam": 46, "B_nodet": 13281, "INF_B": 13370}, {"year": 2008, "rows": 3233, "AH1": 17257, "AH3": 15401, "H1N1pdm": 0, "AH5": 0, "A_nosub": 32838, "INF_A": 65585, "BVic": 435, "BYam": 1299, "B_nodet": 31213, "INF_B": 32947}, {"year": 2009, "rows": 4354, "AH1": 24330, "AH3": 46324, "H1N1pdm": 523451, "AH5": 40, "A_nosub": 101050, "INF_A": 695293, "BVic": 2589, "BYam": 559, "B_nodet": 24644, "INF_B": 27792}, {"year": 2010, "rows": 5276, "AH1": 562, "AH3": 32433, "H1N1pdm": 54100, "AH5": 30, "A_nosub": 17937, "INF_A": 105063, "BVic": 3644, "BYam": 1871, "B_nodet": 38476, "INF_B": 43991}, {"year": 2011, "rows": 6012, "AH1": 27, "AH3": 40323, "H1N1pdm": 97673, "AH5": 48, "A_nosub": 33106, "INF_A": 171180, "BVic": 5776, "BYam": 1362, "B_nodet": 54475, "INF_B": 61613}, {"year": 2012, "rows": 6126, "AH1": 3, "AH3": 99040, "H1N1pdm": 21224, "AH5": 23, "A_nosub": 41221, "INF_A": 161782, "BVic": 11513, "BYam": 5923, "B_nodet": 47933, "INF_B": 65369}, {"year": 2013, "rows": 7017, "AH1": 15, "AH3": 75673, "H1N1pdm": 82183, "AH5": 33, "A_nosub": 57024, "INF_A": 214969, "BVic": 1848, "BYam": 8412, "B_nodet": 70519, "INF_B": 80779}, {"year": 2014, "rows": 7891, "AH1": 13, "AH3": 102666, "H1N1pdm": 82926, "AH5": 38, "A_nosub": 73607, "INF_A": 259293, "BVic": 1784, "BYam": 11895, "B_nodet": 44227, "INF_B": 57906}, {"year": 2015, "rows": 8380, "AH1": 44, "AH3": 135512, "H1N1pdm": 36857, "AH5": 143, "A_nosub": 89882, "INF_A": 262447, "BVic": 1867, "BYam": 23250, "B_nodet": 73979, "INF_B": 99096}, {"year": 2016, "rows": 8817, "AH1": 42, "AH3": 84092, "H1N1pdm": 141793, "AH5": 9, "A_nosub": 133289, "INF_A": 359260, "BVic": 34249, "BYam": 13306, "B_nodet": 97366, "INF_B": 144921}, {"year": 2017, "rows": 9295, "AH1": 1, "AH3": 186645, "H1N1pdm": 46675, "AH5": 3, "A_nosub": 211360, "INF_A": 444750, "BVic": 12351, "BYam": 30501, "B_nodet": 100330, "INF_B": 143184}, {"year": 2018, "rows": 9684, "AH1": 3, "AH3": 75861, "H1N1pdm": 117752, "AH5": 0, "A_nosub": 249357, "INF_A": 443356, "BVic": 6291, "BYam": 51267, "B_nodet": 238071, "INF_B": 295511}, {"year": 2019, "rows": 9715, "AH1": 1, "AH3": 137253, "H1N1pdm": 168722, "AH5": 1, "A_nosub": 350523, "INF_A": 656561, "BVic": 47035, "BYam": 3464, "B_nodet": 82944, "INF_B": 131614}, {"year": 2020, "rows": 10614, "AH1": 32, "AH3": 36673, "H1N1pdm": 67841, "AH5": 0, "A_nosub": 207719, "INF_A": 312275, "BVic": 27310, "BYam": 305, "B_nodet": 143162, "INF_B": 168996}, {"year": 2021, "rows": 11888, "AH1": 0, "AH3": 29722, "H1N1pdm": 3316, "AH5": 15, "A_nosub": 47502, "INF_A": 80657, "BVic": 29411, "BYam": 10, "B_nodet": 5009, "INF_B": 34206}, {"year": 2022, "rows": 12684, "AH1": 8, "AH3": 187052, "H1N1pdm": 46085, "AH5": 0, "A_nosub": 741760, "INF_A": 975040, "BVic": 36175, "BYam": 4, "B_nodet": 33676, "INF_B": 68716}, {"year": 2023, "rows": 13534, "AH1": 2, "AH3": 213418, "H1N1pdm": 200388, "AH5": 10, "A_nosub": 324164, "INF_A": 738017, "BVic": 56194, "BYam": 1, "B_nodet": 142652, "INF_B": 191785}, {"year": 2024, "rows": 13246, "AH1": 1, "AH3": 141936, "H1N1pdm": 195396, "AH5": 99, "A_nosub": 567344, "INF_A": 904802, "BVic": 97190, "BYam": 1, "B_nodet": 170461, "INF_B": 262319}, {"year": 2025, "rows": 12077, "AH1": 0, "AH3": 328900, "H1N1pdm": 283788, "AH5": 14, "A_nosub": 1061485, "INF_A": 1674765, "BVic": 35416, "BYam": 0, "B_nodet": 224282, "INF_B": 258923}, {"year": 2026, "rows": 6846, "AH1": 0, "AH3": 163778, "H1N1pdm": 33646, "AH5": 4, "A_nosub": 361614, "INF_A": 559043, "BVic": 65776, "BYam": 0, "B_nodet": 148018, "INF_B": 213794}], "korea": [{"year": 1997, "rows": 0, "AH1": 0, "AH3": 0, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 0, "BVic": 0, "BYam": 0, "B_nodet": 0, "INF_B": 0}, {"year": 1998, "rows": 0, "AH1": 0, "AH3": 0, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 0, "BVic": 0, "BYam": 0, "B_nodet": 0, "INF_B": 0}, {"year": 1999, "rows": 0, "AH1": 0, "AH3": 0, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 0, "BVic": 0, "BYam": 0, "B_nodet": 0, "INF_B": 0}, {"year": 2000, "rows": 0, "AH1": 0, "AH3": 0, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 0, "BVic": 0, "BYam": 0, "B_nodet": 0, "INF_B": 0}, {"year": 2001, "rows": 6, "AH1": 23, "AH3": 0, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 23, "BVic": 0, "BYam": 0, "B_nodet": 0, "INF_B": 0}, {"year": 2002, "rows": 30, "AH1": 80, "AH3": 559, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 639, "BVic": 0, "BYam": 0, "B_nodet": 97, "INF_B": 97}, {"year": 2003, "rows": 9, "AH1": 1, "AH3": 1, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 2, "BVic": 0, "BYam": 0, "B_nodet": 68, "INF_B": 68}, {"year": 2004, "rows": 32, "AH1": 2, "AH3": 965, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 967, "BVic": 0, "BYam": 0, "B_nodet": 497, "INF_B": 497}, {"year": 2005, "rows": 32, "AH1": 586, "AH3": 595, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 1181, "BVic": 0, "BYam": 0, "B_nodet": 191, "INF_B": 191}, {"year": 2006, "rows": 26, "AH1": 177, "AH3": 890, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 1067, "BVic": 0, "BYam": 0, "B_nodet": 256, "INF_B": 256}, {"year": 2007, "rows": 33, "AH1": 652, "AH3": 1848, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 2500, "BVic": 0, "BYam": 0, "B_nodet": 255, "INF_B": 255}, {"year": 2008, "rows": 32, "AH1": 2222, "AH3": 974, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 3196, "BVic": 0, "BYam": 0, "B_nodet": 2920, "INF_B": 2920}, {"year": 2009, "rows": 52, "AH1": 1474, "AH3": 1706, "H1N1pdm": 5126, "AH5": 0, "A_nosub": 0, "INF_A": 8306, "BVic": 0, "BYam": 1, "B_nodet": 62, "INF_B": 63}, {"year": 2010, "rows": 52, "AH1": 0, "AH3": 112, "H1N1pdm": 1720, "AH5": 0, "A_nosub": 0, "INF_A": 1832, "BVic": 0, "BYam": 0, "B_nodet": 1691, "INF_B": 1691}, {"year": 2011, "rows": 52, "AH1": 0, "AH3": 419, "H1N1pdm": 727, "AH5": 0, "A_nosub": 0, "INF_A": 1146, "BVic": 0, "BYam": 0, "B_nodet": 65, "INF_B": 65}, {"year": 2012, "rows": 52, "AH1": 0, "AH3": 1742, "H1N1pdm": 21, "AH5": 0, "A_nosub": 0, "INF_A": 1763, "BVic": 0, "BYam": 0, "B_nodet": 1787, "INF_B": 1787}, {"year": 2013, "rows": 52, "AH1": 0, "AH3": 1273, "H1N1pdm": 322, "AH5": 0, "A_nosub": 0, "INF_A": 1595, "BVic": 0, "BYam": 0, "B_nodet": 178, "INF_B": 178}, {"year": 2014, "rows": 52, "AH1": 0, "AH3": 641, "H1N1pdm": 343, "AH5": 0, "A_nosub": 0, "INF_A": 984, "BVic": 0, "BYam": 0, "B_nodet": 1027, "INF_B": 1027}, {"year": 2015, "rows": 53, "AH1": 0, "AH3": 836, "H1N1pdm": 181, "AH5": 0, "A_nosub": 1, "INF_A": 1018, "BVic": 0, "BYam": 0, "B_nodet": 608, "INF_B": 608}, {"year": 2016, "rows": 52, "AH1": 0, "AH3": 520, "H1N1pdm": 570, "AH5": 0, "A_nosub": 0, "INF_A": 1090, "BVic": 0, "BYam": 0, "B_nodet": 662, "INF_B": 662}, {"year": 2017, "rows": 52, "AH1": 0, "AH3": 635, "H1N1pdm": 44, "AH5": 0, "A_nosub": 0, "INF_A": 679, "BVic": 0, "BYam": 0, "B_nodet": 625, "INF_B": 625}, {"year": 2018, "rows": 52, "AH1": 0, "AH3": 599, "H1N1pdm": 660, "AH5": 0, "A_nosub": 0, "INF_A": 1259, "BVic": 0, "BYam": 0, "B_nodet": 693, "INF_B": 693}, {"year": 2019, "rows": 52, "AH1": 0, "AH3": 391, "H1N1pdm": 619, "AH5": 0, "A_nosub": 0, "INF_A": 1010, "BVic": 0, "BYam": 0, "B_nodet": 692, "INF_B": 692}, {"year": 2020, "rows": 22, "AH1": 0, "AH3": 130, "H1N1pdm": 357, "AH5": 0, "A_nosub": 0, "INF_A": 487, "BVic": 0, "BYam": 0, "B_nodet": 18, "INF_B": 18}, {"year": 2021, "rows": 53, "AH1": 0, "AH3": 0, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 0, "BVic": 0, "BYam": 0, "B_nodet": 0, "INF_B": 0}, {"year": 2022, "rows": 51, "AH1": 0, "AH3": 294, "H1N1pdm": 0, "AH5": 0, "A_nosub": 0, "INF_A": 294, "BVic": 0, "BYam": 1, "B_nodet": 0, "INF_B": 1}, {"year": 2023, "rows": 52, "AH1": 0, "AH3": 1114, "H1N1pdm": 1245, "AH5": 0, "A_nosub": 0, "INF_A": 2359, "BVic": 227, "BYam": 0, "B_nodet": 0, "INF_B": 227}, {"year": 2024, "rows": 52, "AH1": 0, "AH3": 518, "H1N1pdm": 424, "AH5": 0, "A_nosub": 0, "INF_A": 942, "BVic": 623, "BYam": 0, "B_nodet": 0, "INF_B": 623}, {"year": 2025, "rows": 52, "AH1": 0, "AH3": 1949, "H1N1pdm": 742, "AH5": 0, "A_nosub": 0, "INF_A": 2691, "BVic": 1001, "BYam": 0, "B_nodet": 0, "INF_B": 1001}, {"year": 2026, "rows": 31, "AH1": 0, "AH3": 414, "H1N1pdm": 46, "AH5": 0, "A_nosub": 0, "INF_A": 460, "BVic": 1569, "BYam": 0, "B_nodet": 0, "INF_B": 1569}], "source": "WHO FluNet (xmart VIW_FNT)", "note": "연도별 전세계/한국 검출건 합계"};
+const CURATED={"pandemics": [{"year": 1918, "subtype": "A(H1N1)", "name": "스페인 독감", "deaths": "5,000만+ 추정", "note": "현대 모든 계절 H1N1의 조상. 감시체계 이전 — 사망 통계로만 재구성."}, {"year": 1957, "subtype": "A(H2N2)", "name": "아시아 독감", "deaths": "100만+", "note": "1918 H1N1을 대체(항원 대변이). WHO GISRS(1952) 가동 후 첫 팬데믹."}, {"year": 1968, "subtype": "A(H3N2)", "name": "홍콩 독감", "deaths": "100만+", "note": "H2N2를 대체. H3N2는 현재까지 주요 계절 아형으로 지속."}, {"year": 1977, "subtype": "A(H1N1)", "name": "러시아 독감", "deaths": "경증(주로 청소년)", "note": "H1N1 재출현 → 이후 H3N2와 공존. 팬데믹 여부는 논쟁."}, {"year": 2009, "subtype": "A(H1N1)pdm09", "name": "신종플루", "deaths": "15~28만 추정", "note": "돼지·조류·인체 유래 재조합. 기존 계절 H1N1을 대체. WHO 팬데믹 선언."}], "regimes": [{"from": 1918, "to": 1957, "label": "H1N1 단독 지배", "subtypes": ["H1N1"]}, {"from": 1957, "to": 1968, "label": "H2N2 지배", "subtypes": ["H2N2"]}, {"from": 1968, "to": 1977, "label": "H3N2 지배", "subtypes": ["H3N2"]}, {"from": 1977, "to": 2009, "label": "H1N1 + H3N2 공존 (+B)", "subtypes": ["H1N1", "H3N2", "B"]}, {"from": 2009, "to": 2027, "label": "H1N1pdm09 + H3N2 공존 (+B)", "subtypes": ["H1N1pdm09", "H3N2", "B"]}], "vaccine_seasons": [{"season": "2003-04", "match": "miss", "note": "H3N2 Fujian주 항원 drift, 소아 중증 다발"}, {"season": "2007-08", "match": "miss", "note": "3개 성분 모두 부정합"}, {"season": "2009-10", "match": "special", "note": "신종플루 팬데믹 — 별도 단가백신 긴급 공급"}, {"season": "2012-13", "match": "partial", "note": "B형 계통 부정합(4가 백신 도입 배경)"}, {"season": "2014-15", "match": "miss", "note": "H3N2 clade 3C.2a drift, 북반구 백신효과 ~19%로 급락 ★대표 사례"}, {"season": "2017-18", "match": "partial", "note": "H3N2+B 동시 유행, 고령 중증·초과사망"}, {"season": "2019-20", "match": "partial", "note": "B→H1N1 2차 파동 후 코로나로 조기 종료"}, {"season": "2020-21", "match": "na", "note": "코로나 방역(NPI)으로 독감 거의 소멸"}, {"season": "2021-22", "match": "partial", "note": "유행 저조·시기 교란 지속"}, {"season": "2023-24", "match": "note", "note": "WHO, 4가 백신에서 B/Yamagata 제외 권고 → 3가 회귀"}], "system_history": [{"year": 1952, "event": "WHO 글로벌 인플루엔자 감시망(GISRS) 출범 — 아형 변화 추적 시작"}, {"year": 1996, "event": "FluNet 가동 — 실시간 실험실 감시 데이터 공개(정량 추적 가능)"}, {"year": 2005, "event": "한국 급성호흡기감염증 감시사업 시작"}, {"year": 2009, "event": "한국 KINRESS(인플루엔자·호흡기바이러스 실험실감시체계)로 확대"}, {"year": 2020, "event": "B/Yamagata 전세계 미검출 시작(사실상 멸종 추정)"}], "sources": ["WHO GISRS(1952~)·FluNet(1996~)", "History of Vaccines — Influenza Pandemics", "Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종", "질병관리청 감염병포털·KINRESS"]};
+const NS="http://www.w3.org/2000/svg";
+const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const el=(t,a={})=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+const fmt=n=>n>=1000?(n/1000).toFixed(n>=10000?0:1)+"k":(""+n);
+const tip=document.getElementById('tip');
+function showTip(html,x,y){tip.innerHTML=html;tip.style.opacity=1;tip.style.left=Math.min(x+14,innerWidth-250)+'px';tip.style.top=(y+14)+'px';}
+function hideTip(){tip.style.opacity=0;}
+
+const SUB=[['AH3','A(H3N2)','--s-h3'],['H1N1pdm','A(H1N1)pdm09','--s-pdm'],['AH1','A(H1N1) 계절','--s-h1'],['BVic','B/Victoria','--s-bvic'],['BYam','B/Yamagata','--s-byam']];
+
+/* ---------- 01 timeline ---------- */
+(function(){
+  const W=920,H=150,padL=8,padR=8,y0=64,bandH=30;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`,role:'img'});
+  const yr0=1918,yr1=2026, X=y=>padL+(y-yr0)/(yr1-yr0)*(W-padL-padR);
+  // data eras (shading)
+  const eras=[[1918,1952,'재구성',0.06],[1952,1996,'GISRS',0.12],[1996,2026,'FluNet',0.20]];
+  eras.forEach(([a,b,lab,op])=>{
+    svg.appendChild(el('rect',{x:X(a),y:22,width:X(b)-X(a),height:H-42,fill:cssv('--accent'),opacity:op}));
+    const t=el('text',{x:X(a)+5,y:36,class:'axis'});t.textContent=lab+' '+a;svg.appendChild(t);
+  });
+  // regime bands
+  const cmap={'H1N1':'--s-h1','H2N2':'--s-pdm','H3N2':'--s-h3','H1N1pdm09':'--s-pdm','B':'--s-bvic'};
+  CURATED.regimes.forEach(r=>{
+    const x=X(r.from),w=X(Math.min(r.to,yr1))-X(r.from);
+    svg.appendChild(el('rect',{x:x+1,y:y0,width:Math.max(w-2,2),height:bandH,rx:5,fill:cssv('--surface-2'),stroke:cssv('--line-strong')}));
+    const t=el('text',{x:x+6,y:y0+19,class:'axis'});t.setAttribute('fill',cssv('--muted'));t.style.fontWeight=700;t.textContent=r.label;svg.appendChild(t);
+  });
+  // axis
+  [1918,1940,1957,1968,1977,2000,2009,2026].forEach(y=>{
+    const t=el('text',{x:X(y),y:H-6,class:'axis','text-anchor':'middle'});t.textContent=y;svg.appendChild(t);
+  });
+  // pandemic markers
+  CURATED.pandemics.forEach(p=>{
+    const x=X(p.year);
+    svg.appendChild(el('line',{x1:x,y1:y0-8,x2:x,y2:y0+bandH+8,stroke:cssv('--bad'),'stroke-width':2}));
+    const c=el('circle',{cx:x,cy:y0-8,r:6,fill:cssv('--bad'),style:'cursor:pointer'});
+    c.addEventListener('mousemove',e=>showTip(`<b>${p.year} ${p.name}</b><br>${p.subtype} · 사망 ${p.deaths}<br><span style="opacity:.8">${p.note}</span>`,e.clientX,e.clientY));
+    c.addEventListener('mouseleave',hideTip);svg.appendChild(c);
+    const t=el('text',{x:x,y:y0-16,class:'axis','text-anchor':'middle'});t.setAttribute('fill',cssv('--bad'));t.style.fontWeight=700;t.textContent=p.subtype.replace('A','');svg.appendChild(t);
+  });
+  document.getElementById('timeline').appendChild(svg);
+})();
+
+/* ---------- 02 stacked area ---------- */
+let stackMode='count';
+function drawStack(){
+  const host=document.getElementById('stack');host.innerHTML='';
+  const data=FLUNET.world.filter(d=>d.year>=1997);
+  const W=920,H=340,padL=44,padR=14,padT=10,padB=26;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
+  const yr0=data[0].year,yr1=data[data.length-1].year;
+  const X=y=>padL+(y-yr0)/(yr1-yr0)*(W-padL-padR);
+  const totals=data.map(d=>SUB.reduce((s,[k])=>s+(d[k]||0),0));
+  const maxTot=Math.max(...totals);
+  const Y=v=>padT+(1-v)*(H-padT-padB); // v in 0..1 (fraction of scale)
+  // build stacked paths
+  const keys=SUB.map(s=>s[0]);
+  let prev=data.map(()=>0);
+  SUB.forEach(([k,label,cvar],si)=>{
+    const cur=data.map((d,i)=>{
+      const t=stackMode==='share'?(totals[i]||1):maxTot;
+      return prev[i]+(d[k]||0)/t;
+    });
+    let dpath='M'+data.map((d,i)=>`${X(d.year).toFixed(1)},${Y(prev[i]).toFixed(1)}`).join(' L ');
+    dpath+=' L '+data.slice().reverse().map((d,i)=>{const j=data.length-1-i;return `${X(d.year).toFixed(1)},${Y(cur[j]).toFixed(1)}`;}).join(' L ')+' Z';
+    svg.appendChild(el('path',{d:dpath,fill:cssv(cvar),opacity:.92,stroke:cssv('--surface'),'stroke-width':.6}));
+    prev=cur;
+  });
+  // y axis
+  const yticks = stackMode==='share'?[0,.25,.5,.75,1]:[0,.25,.5,.75,1];
+  yticks.forEach(f=>{
+    svg.appendChild(el('line',{x1:padL,y1:Y(f),x2:W-padR,y2:Y(f),class:'grid'}));
+    const t=el('text',{x:padL-6,y:Y(f)+3,class:'axis','text-anchor':'end'});
+    t.textContent=stackMode==='share'?(f*100+'%'):fmt(Math.round(f*maxTot));svg.appendChild(t);
+  });
+  [2000,2005,2009,2015,2020,2025].forEach(y=>{const t=el('text',{x:X(y),y:H-8,class:'axis','text-anchor':'middle'});t.textContent=y;svg.appendChild(t);});
+  // hover crosshair
+  const cl=el('line',{y1:padT,y2:H-padB,stroke:cssv('--ink'),'stroke-width':1,opacity:0});svg.appendChild(cl);
+  const ov=el('rect',{x:padL,y:padT,width:W-padL-padR,height:H-padT-padB,fill:'transparent',style:'cursor:crosshair'});
+  ov.addEventListener('mousemove',e=>{
+    const r=svg.getBoundingClientRect();const px=(e.clientX-r.left)/r.width*W;
+    let yi=Math.round((px-padL)/(W-padL-padR)*(yr1-yr0));yi=Math.max(0,Math.min(data.length-1,yi));
+    const d=data[yi];cl.setAttribute('x1',X(d.year));cl.setAttribute('x2',X(d.year));cl.setAttribute('opacity',.5);
+    const tot=totals[yi]||1;
+    let rows=SUB.map(([k,label,cv])=>`<div class="r"><span style="color:${cssv(cv)}">${label}</span><span>${fmt(d[k]||0)} · ${(100*(d[k]||0)/tot).toFixed(0)}%</span></div>`).join('');
+    showTip(`<b>${d.year}</b> · 총 ${fmt(tot)}건<br>${rows}`,e.clientX,e.clientY);
+  });
+  ov.addEventListener('mouseleave',()=>{hideTip();cl.setAttribute('opacity',0);});
+  svg.appendChild(ov);
+  host.appendChild(svg);
+}
+document.getElementById('tCount').onclick=()=>{stackMode='count';setTG();drawStack();};
+document.getElementById('tShare').onclick=()=>{stackMode='share';setTG();drawStack();};
+function setTG(){document.getElementById('tCount').setAttribute('aria-pressed',stackMode==='count');document.getElementById('tShare').setAttribute('aria-pressed',stackMode==='share');}
+// legend
+document.getElementById('legend2').innerHTML=SUB.map(([k,l,cv])=>`<span><i class="sw" style="background:${cssv(cv)}"></i>${l}</span>`).join('');
+
+/* ---------- 04 vaccine heatmap ---------- */
+(function(){
+  const host=document.getElementById('vac');
+  const col={miss:'--bad',partial:'--warn',special:'--neutral',na:'--neutral',note:'--neutral'};
+  CURATED.vaccine_seasons.forEach(s=>{
+    const d=document.createElement('div');d.className='c';d.style.background=cssv(col[s.match]||'--neutral');
+    d.innerHTML=`${s.season}<small>${s.match==='miss'?'부정합':s.match==='partial'?'부분':s.match==='special'?'팬데믹':s.match==='na'?'유행소멸':'정책'}</small>`;
+    d.addEventListener('mousemove',e=>showTip(`<b>${s.season}</b><br>${s.note}`,e.clientX,e.clientY));
+    d.addEventListener('mouseleave',hideTip);host.appendChild(d);
+  });
+})();
+
+/* ---------- 05 B/Yamagata line ---------- */
+(function(){
+  const data=FLUNET.world.filter(d=>d.year>=2010);
+  const W=920,H=220,padL=46,padR=14,padT=12,padB=26;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
+  const yr0=data[0].year,yr1=data[data.length-1].year;
+  const X=y=>padL+(y-yr0)/(yr1-yr0)*(W-padL-padR);
+  const max=Math.max(...data.map(d=>d.BYam));
+  const Y=v=>padT+(1-v/max)*(H-padT-padB);
+  [0,.5,1].forEach(f=>{svg.appendChild(el('line',{x1:padL,y1:padT+(1-f)*(H-padT-padB),x2:W-padR,y2:padT+(1-f)*(H-padT-padB),class:'grid'}));
+    const t=el('text',{x:padL-6,y:padT+(1-f)*(H-padT-padB)+3,class:'axis','text-anchor':'end'});t.textContent=fmt(Math.round(f*max));svg.appendChild(t);});
+  let dp='M'+data.map(d=>`${X(d.year).toFixed(1)},${Y(d.BYam).toFixed(1)}`).join(' L ');
+  svg.appendChild(el('path',{d:dp,fill:'none',stroke:cssv('--s-byam'),'stroke-width':2.5}));
+  data.forEach(d=>{const c=el('circle',{cx:X(d.year),cy:Y(d.BYam),r:4,fill:cssv('--s-byam')});
+    c.addEventListener('mousemove',e=>showTip(`<b>${d.year}</b><br>B/Yamagata ${d.BYam.toLocaleString()}건`,e.clientX,e.clientY));c.addEventListener('mouseleave',hideTip);svg.appendChild(c);});
+  [2010,2015,2018,2020,2023,2026].forEach(y=>{const t=el('text',{x:X(y),y:H-8,class:'axis','text-anchor':'middle'});t.textContent=y;svg.appendChild(t);});
+  // annotation
+  const ax=X(2020);svg.appendChild(el('line',{x1:ax,y1:padT,x2:ax,y2:H-padB,stroke:cssv('--muted'),'stroke-width':1,'stroke-dasharray':'3 3'}));
+  const at=el('text',{x:ax+4,y:padT+12,class:'axis'});at.setAttribute('fill',cssv('--muted'));at.textContent='2020 코로나 방역 →';svg.appendChild(at);
+  document.getElementById('byam').appendChild(svg);
+})();
+
+/* ---------- 06 Korea bars ---------- */
+(function(){
+  const data=FLUNET.korea.filter(d=>d.year>=2015);
+  const W=920,H=240,padL=40,padR=14,padT=12,padB=26;
+  const svg=el('svg',{viewBox:`0 0 ${W} ${H}`});
+  const max=Math.max(...data.map(d=>d.INF_A+d.INF_B),1);
+  const bw=(W-padL-padR)/data.length*0.62;
+  const X=i=>padL+(i+0.5)/data.length*(W-padL-padR);
+  const Yb=H-padB;const sc=v=>v/max*(H-padT-padB);
+  [0,.5,1].forEach(f=>{const yy=Yb-f*(H-padT-padB);svg.appendChild(el('line',{x1:padL,y1:yy,x2:W-padR,y2:yy,class:'grid'}));
+    const t=el('text',{x:padL-6,y:yy+3,class:'axis','text-anchor':'end'});t.textContent=fmt(Math.round(f*max));svg.appendChild(t);});
+  data.forEach((d,i)=>{
+    const x=X(i)-bw/2;const ha=sc(d.INF_A),hb=sc(d.INF_B);
+    const ra=el('rect',{x,y:Yb-ha,width:bw,height:Math.max(ha,0),fill:cssv('--s-h3'),rx:2});svg.appendChild(ra);
+    const rb=el('rect',{x,y:Yb-ha-hb-(hb>0?2:0),width:bw,height:Math.max(hb,0),fill:cssv('--s-bvic'),rx:2});svg.appendChild(rb);
+    const hit=el('rect',{x:x-2,y:padT,width:bw+4,height:H-padT-padB,fill:'transparent'});
+    hit.addEventListener('mousemove',e=>showTip(`<b>${d.year}</b><br>A형 ${d.INF_A.toLocaleString()} · B형 ${d.INF_B.toLocaleString()}`,e.clientX,e.clientY));hit.addEventListener('mouseleave',hideTip);svg.appendChild(hit);
+    const t=el('text',{x:X(i),y:H-8,class:'axis','text-anchor':'middle'});t.textContent=d.year;svg.appendChild(t);
+    if(d.INF_A+d.INF_B===0){const z=el('text',{x:X(i),y:Yb-6,class:'axis','text-anchor':'middle'});z.setAttribute('fill',cssv('--bad'));z.style.fontWeight=700;z.textContent='0';svg.appendChild(z);}
+  });
+  document.getElementById('korea').appendChild(svg);
+})();
+
+/* ---------- today pills ---------- */
+(function(){
+  const last=FLUNET.world[FLUNET.world.length-1];
+  const tot=SUB.reduce((s,[k])=>s+(last[k]||0),0)||1;
+  const dom=SUB.map(([k,l])=>[l,last[k]||0]).sort((a,b)=>b[1]-a[1])[0];
+  const klast=FLUNET.korea[FLUNET.korea.length-1];
+  document.getElementById('today').innerHTML=
+    `<span class="pill">최근 데이터 <b>${last.year}년</b> (WHO FluNet)</span>`+
+    `<span class="pill">전세계 우세주 <b>${dom[0]}</b> (${(100*dom[1]/tot).toFixed(0)}%)</span>`+
+    `<span class="pill">B/Yamagata <b>${last.BYam}건</b> (멸종 추정)</span>`+
+    `<span class="pill">한국 ${klast.year} 검출 A <b>${klast.INF_A.toLocaleString()}</b>·B <b>${klast.INF_B.toLocaleString()}</b></span>`;
+})();
+
+drawStack();
+</script>

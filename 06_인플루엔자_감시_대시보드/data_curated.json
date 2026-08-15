@@ -1,0 +1,41 @@
+{
+  "pandemics": [
+    {"year":1918,"subtype":"A(H1N1)","name":"스페인 독감","deaths":"5,000만+ 추정","note":"현대 모든 계절 H1N1의 조상. 감시체계 이전 — 사망 통계로만 재구성."},
+    {"year":1957,"subtype":"A(H2N2)","name":"아시아 독감","deaths":"100만+","note":"1918 H1N1을 대체(항원 대변이). WHO GISRS(1952) 가동 후 첫 팬데믹."},
+    {"year":1968,"subtype":"A(H3N2)","name":"홍콩 독감","deaths":"100만+","note":"H2N2를 대체. H3N2는 현재까지 주요 계절 아형으로 지속."},
+    {"year":1977,"subtype":"A(H1N1)","name":"러시아 독감","deaths":"경증(주로 청소년)","note":"H1N1 재출현 → 이후 H3N2와 공존. 팬데믹 여부는 논쟁."},
+    {"year":2009,"subtype":"A(H1N1)pdm09","name":"신종플루","deaths":"15~28만 추정","note":"돼지·조류·인체 유래 재조합. 기존 계절 H1N1을 대체. WHO 팬데믹 선언."}
+  ],
+  "regimes": [
+    {"from":1918,"to":1957,"label":"H1N1 단독 지배","subtypes":["H1N1"]},
+    {"from":1957,"to":1968,"label":"H2N2 지배","subtypes":["H2N2"]},
+    {"from":1968,"to":1977,"label":"H3N2 지배","subtypes":["H3N2"]},
+    {"from":1977,"to":2009,"label":"H1N1 + H3N2 공존 (+B)","subtypes":["H1N1","H3N2","B"]},
+    {"from":2009,"to":2027,"label":"H1N1pdm09 + H3N2 공존 (+B)","subtypes":["H1N1pdm09","H3N2","B"]}
+  ],
+  "vaccine_seasons": [
+    {"season":"2003-04","match":"miss","note":"H3N2 Fujian주 항원 drift, 소아 중증 다발"},
+    {"season":"2007-08","match":"miss","note":"3개 성분 모두 부정합"},
+    {"season":"2009-10","match":"special","note":"신종플루 팬데믹 — 별도 단가백신 긴급 공급"},
+    {"season":"2012-13","match":"partial","note":"B형 계통 부정합(4가 백신 도입 배경)"},
+    {"season":"2014-15","match":"miss","note":"H3N2 clade 3C.2a drift, 북반구 백신효과 ~19%로 급락 ★대표 사례"},
+    {"season":"2017-18","match":"partial","note":"H3N2+B 동시 유행, 고령 중증·초과사망"},
+    {"season":"2019-20","match":"partial","note":"B→H1N1 2차 파동 후 코로나로 조기 종료"},
+    {"season":"2020-21","match":"na","note":"코로나 방역(NPI)으로 독감 거의 소멸"},
+    {"season":"2021-22","match":"partial","note":"유행 저조·시기 교란 지속"},
+    {"season":"2023-24","match":"note","note":"WHO, 4가 백신에서 B/Yamagata 제외 권고 → 3가 회귀"}
+  ],
+  "system_history": [
+    {"year":1952,"event":"WHO 글로벌 인플루엔자 감시망(GISRS) 출범 — 아형 변화 추적 시작"},
+    {"year":1996,"event":"FluNet 가동 — 실시간 실험실 감시 데이터 공개(정량 추적 가능)"},
+    {"year":2005,"event":"한국 급성호흡기감염증 감시사업 시작"},
+    {"year":2009,"event":"한국 KINRESS(인플루엔자·호흡기바이러스 실험실감시체계)로 확대"},
+    {"year":2020,"event":"B/Yamagata 전세계 미검출 시작(사실상 멸종 추정)"}
+  ],
+  "sources": [
+    "WHO GISRS(1952~)·FluNet(1996~)",
+    "History of Vaccines — Influenza Pandemics",
+    "Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종",
+    "질병관리청 감염병포털·KINRESS"
+  ]
+}
