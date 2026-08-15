@@ -1,0 +1,204 @@
+<title>감염병 자료 아카이브</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --c1:#B23A3A; --c2:#C7712B; --c3:#B8942A; --c4:#2F7D8C; --c5:#6A4C93;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --c1:#E07A7A; --c2:#E0A268; --c3:#D8BE6A; --c4:#6FBECB; --c5:#B49BDC;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --c1:#E07A7A; --c2:#E0A268; --c3:#D8BE6A; --c4:#6FBECB; --c5:#B49BDC;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+  a{color:var(--accent-ink);text-decoration:none}
+  a:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+
+  /* nav */
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1000px;margin:0 auto;padding:11px 24px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;letter-spacing:-.02em;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+
+  /* hero */
+  header{padding:64px 0 36px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 16px}
+  h1{font-size:clamp(32px,6vw,56px);line-height:1.03;margin:0;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+  .thesis{font-size:clamp(15px,2.3vw,18px);color:var(--muted);max-width:64ch;margin:18px 0 0;text-wrap:pretty}
+  .src-note{font-size:13px;color:var(--faint);margin:16px 0 0}
+
+  /* stat band */
+  .band{display:grid;grid-template-columns:repeat(6,1fr);gap:12px;margin:30px 0 0}
+  .st{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:15px 14px;box-shadow:var(--shadow)}
+  .st .b{font-size:clamp(22px,3.4vw,30px);font-weight:800;line-height:1;color:var(--ink)}
+  .st .l{font-size:11.5px;color:var(--muted);margin-top:8px;line-height:1.3}
+
+  /* section cards */
+  section{padding:22px 0}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:26px 28px;box-shadow:var(--shadow);
+    border-top:4px solid var(--ac);margin-bottom:18px}
+  .s1{--ac:var(--accent)} .s2{--ac:var(--c4)} .s3{--ac:var(--c5)} .s4{--ac:var(--c2)} .s5{--ac:var(--c1)} .s9{--ac:var(--c3)}
+  .chead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+  .cno{font-size:13px;font-weight:800;color:var(--ac);letter-spacing:.04em}
+  .card h2{font-size:clamp(19px,3vw,25px);margin:0;font-weight:800;letter-spacing:-.02em}
+  .cstat{margin-left:auto;font-size:12px;font-weight:700;color:var(--ac);background:var(--surface-2);padding:3px 10px;border-radius:999px}
+  .cdesc{color:var(--muted);font-size:14.5px;margin:4px 0 16px;max-width:70ch}
+  .hl{display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin:0 0 16px;padding:0;list-style:none}
+  .hl li{font-size:13.5px;color:var(--muted);padding-left:16px;position:relative;line-height:1.5}
+  .hl li:before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;border-radius:50%;background:var(--ac)}
+  .hl li b{color:var(--ink)}
+  .clink{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--ac);
+    border:1px solid var(--line-strong);padding:7px 13px;border-radius:9px}
+  .clink:hover{background:var(--surface-2)}
+
+  .divider{display:flex;align-items:center;gap:14px;margin:30px 0 8px}
+  .divider h3{font-size:12.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);font-weight:700;margin:0}
+  .divider .ln{flex:1;height:1px;background:var(--line)}
+
+  footer{padding:34px 0 60px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:20px}
+  .foot-links{display:flex;gap:12px;flex-wrap:wrap;margin:0 0 14px}
+  .foot-links a{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;font-weight:700;color:var(--accent-ink);
+    border:1px solid var(--line-strong);padding:9px 15px;border-radius:10px}
+  .foot-links a:hover{background:var(--surface-2)}
+  .warn{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 18px;font-size:13px;margin:18px 0 0}
+
+  @media(max-width:820px){
+    .band{grid-template-columns:repeat(3,1fr)}
+    .hl{grid-template-columns:1fr}
+  }
+  @media(max-width:480px){.band{grid-template-columns:repeat(2,1fr)}}
+  @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+  html{scroll-behavior:smooth}
+</style>
+
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="#s1">연혁</a><a href="#s5">질병도감</a><a href="#s2">지침</a><a href="#s3">백서</a><a href="#s4">사업화</a><a href="#s9">데이터</a>
+</div></nav>
+
+<div class="wrap">
+  <header>
+    <p class="eyebrow">질병관리청 · 법제처 기반 · 정확·최신·연결</p>
+    <h1>대한민국 감염병 자료를<br>한곳에 정리하다</h1>
+    <p class="thesis">1954년 감염병예방법부터 현행 91종 법정감염병, 358건의 관리지침, 질병관리청 백서, 그리고 감염병 자체의 실제 지식까지 — 흩어진 공공자료를 <b>공식 1차 출처에서 직접 수집·검증</b>해 하나의 지식베이스로 묶었다.</p>
+    <p class="src-note">모든 사실은 법제처 국가법령정보 Open API·질병관리청 공식자료에서 직접 수집. 법·조문은 현행 원문(139개 조문)과 대조 검증.</p>
+
+    <div class="band">
+      <div class="st"><div class="b num">67</div><div class="l">감염병예방법<br>시행 버전(1954→)</div></div>
+      <div class="st"><div class="b num">91</div><div class="l">현행 법정감염병<br>(전수67+표본24)</div></div>
+      <div class="st"><div class="b num">34</div><div class="l">질병도감<br>실제 내용</div></div>
+      <div class="st"><div class="b num">358</div><div class="l">관리지침<br>전량 수집</div></div>
+      <div class="st"><div class="b num">10<span style="font-size:.5em">+1</span></div><div class="l">백서<br>+코로나 대응</div></div>
+      <div class="st"><div class="b num">5</div><div class="l">축 + 데이터<br>인프라</div></div>
+    </div>
+  </header>
+
+  <div class="divider"><h3>정리한 것</h3><span class="ln"></span></div>
+
+  <section id="s1"><div class="card s1">
+    <div class="chead"><span class="cno">01</span><h2>감염병예방법 연혁</h2><span class="cstat">1954 → 2026 · 67버전</span></div>
+    <p class="cdesc">전염병예방법 제정부터 현행 급(級) 체계까지, 법의 이름·철학·분류가 바뀐 70년.</p>
+    <ul class="hl">
+      <li><b>용어·분류 변천</b> — 전염병→감염병, 종(種)→군(群)→급(級)</li>
+      <li><b>개수</b> — 개편 전 80종 → 현행 91종(전수 67·표본 24)</li>
+      <li><b>급수 변동</b> — 코로나19 3단계 하향(1→2→4급), 매독 표본→전수(2024), 엠폭스</li>
+      <li><b>강화 vs 완화</b> — 벌칙은 메르스(2015)·코로나(2020) 때 강화, 격리는 완화</li>
+      <li><b>군→급 개별 매핑</b> — 80종 전체 크로스워크</li>
+      <li><b>원문 검증</b> — 제79조의3(1년/1천만원) 등 6건 현행 원문 일치</li>
+    </ul>
+    <a class="clink" href="https://claude.ai/code/artifact/d10d68b8-0b7f-43e1-b055-178e7731ed78" target="_blank" rel="noopener">📊 상세 시각화 페이지 열기 →</a>
+  </div></section>
+
+  <section id="s5"><div class="card s5">
+    <div class="chead"><span class="cno">05</span><h2>감염병 질병정보 도감</h2><span class="cstat">실제 내용 34종</span></div>
+    <p class="cdesc">법·제도가 아닌 <b>감염병 자체의 실제 지식</b> — 병원체·감염경로·잠복기·증상·진단·치료·예방.</p>
+    <ul class="hl">
+      <li><b>제1급</b> — 페스트·탄저·에볼라·MERS·SARS·두창·디프테리아</li>
+      <li><b>제2급</b> — 결핵·홍역·콜레라·A/E형간염·백일해·수두·한센병</li>
+      <li><b>제3급</b> — 말라리아·AIDS·뎅기열·SFTS·매독·엠폭스·일본뇌염</li>
+      <li><b>질병명 변천사</b> — 나병→한센병, 원숭이두창→엠폭스, 유행성출혈열→신증후군출혈열</li>
+    </ul>
+    <a class="clink" href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/05_%EA%B0%90%EC%97%BC%EB%B3%91_%EC%A7%88%EB%B3%91%EC%A0%95%EB%B3%B4" target="_blank" rel="noopener">📁 질병도감 열기 →</a>
+  </div></section>
+
+  <section id="s2"><div class="card s2">
+    <div class="chead"><span class="cno">02</span><h2>감염병 관리지침</h2><span class="cstat">전량 358건 + 검수</span></div>
+    <p class="cdesc">질병관리청 지침 게시판 전량 크롤링 + 오탈자·용어 정합성 자동 검수.</p>
+    <ul class="hl">
+      <li><b>358건</b> 수집(2002~2026), 2026년판 포함</li>
+      <li><b>8개 대분류</b> — 호흡기·수인성·매개체·인수공통·의료관련·예방접종·신고감시·위기대응</li>
+      <li><b>실오류 발견</b> — #226 '중증열성혈소판증후군' → '감소' 누락(SFTS)</li>
+      <li>'전염병' 11건은 구법(2010 이전) 표기로 정상 판정</li>
+    </ul>
+    <a class="clink" href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/02_%EC%A7%80%EC%B9%A8_%EC%A0%95%EB%A6%AC" target="_blank" rel="noopener">📁 지침 목록·검수 열기 →</a>
+  </div></section>
+
+  <section id="s3"><div class="card s3">
+    <div class="chead"><span class="cno">03</span><h2>질병관리청 백서</h2><span class="cstat">10종 + 코로나 대응</span></div>
+    <p class="cdesc">2012~2024 연도별 백서 + 「코로나19 4년간의 기록」 별책.</p>
+    <ul class="hl">
+      <li><b>2016</b> — 2015 메르스 대응 / <b>2020-2021</b> — 코로나 초기+청 승격</li>
+      <li><b>발간기관 변천</b> — 2020.9 질병관리본부→질병관리청</li>
+      <li><b>코로나19 대응 백서</b>(2024.4) — 4년을 5개 시기로, 3편 구성</li>
+      <li>2014·2015·2021 단독본 부재 등 유의사항 명시</li>
+    </ul>
+    <a class="clink" href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/03_%EB%B0%B1%EC%84%9C_%EC%A0%95%EB%A6%AC" target="_blank" rel="noopener">📁 백서 목록 열기 →</a>
+  </div></section>
+
+  <section id="s4"><div class="card s4">
+    <div class="chead"><span class="cno">04</span><h2>사업화 구상</h2><span class="cstat">전문가용 · 일반인용</span></div>
+    <p class="cdesc">정제된 감염병 지식베이스를 자산으로 한 지식 서비스 사업 모델.</p>
+    <ul class="hl">
+      <li><b>4대 자산</b> — 법령 연혁 DB·검수 지침·백서 통계·버전 추적 파이프라인</li>
+      <li><b>전문가용(B2B/B2G)</b> — 지침 변경 알림, 조문 연혁 API</li>
+      <li><b>일반인용(B2C)</b> — 팩트체크된 감염병 Q&A, 대응 가이드</li>
+      <li><b>차별화</b> — 출처 100% 링크·최신성 자동화·전문/일반 모드</li>
+    </ul>
+    <a class="clink" href="https://github.com/soonryu74/disease/blob/claude/infectious-disease-resources-org-kbjcfz/04_%EC%82%AC%EC%97%85%ED%99%94_%EA%B5%AC%EC%83%81/README.md" target="_blank" rel="noopener">📁 사업 모델 열기 →</a>
+  </div></section>
+
+  <div class="divider"><h3>데이터 인프라</h3><span class="ln"></span></div>
+
+  <section id="s9"><div class="card s9">
+    <div class="chead"><span class="cno">90</span><h2>법제처 API · 원문 검증</h2><span class="cstat">재현 가능</span></div>
+    <p class="cdesc">모든 법령 데이터의 원천과 검증 방법 — 누구나 스크립트로 재현 가능.</p>
+    <ul class="hl">
+      <li><b>법제처 Open API</b> — 연도별 연혁은 <span class="num">target=eflaw</span> 별도 조회</li>
+      <li><b>원문 검증</b> — <span class="num">type=XML</span>로 139개 조문 대조</li>
+      <li><b>korean-law-mcp</b> — 공개 서버로 조문·인용검증 실측(설치 불필요)</li>
+      <li><b>AI 법령비서</b>는 공무원 전용(내부망) → 외부 접속 불가 확인</li>
+    </ul>
+    <a class="clink" href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/90_%EB%8D%B0%EC%9D%B4%ED%84%B0_%EC%9D%B8%ED%94%84%EB%9D%BC" target="_blank" rel="noopener">📁 API 가이드·검증 로그 →</a>
+  </div></section>
+
+  <footer>
+    <div class="foot-links">
+      <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz" target="_blank" rel="noopener">📦 GitHub 저장소 전체</a>
+      <a href="https://claude.ai/code/artifact/d10d68b8-0b7f-43e1-b055-178e7731ed78" target="_blank" rel="noopener">📊 연혁 상세 페이지</a>
+    </div>
+    <div>데이터 원천: 법제처 국가법령정보 공동활용 Open API · 질병관리청(감염병포털·감염병누리집·국가건강정보포털) · 보건복지부.</div>
+    <div class="warn">⚠️ 참고용 정리물입니다. 법적·의학적 판단은 반드시 원문과 전문가(의료진·보건소) 확인을 거쳐야 합니다.</div>
+  </footer>
+</div>
