@@ -88,70 +88,130 @@
    "match": "miss",
    "vac": "A/Panama/2007/99 (H3N2)",
    "circ": "A/Fujian/411/2002 drift",
-   "note": "H3N2 Fujian주 항원 drift — 백신주와 부정합, 소아 중증 다발"
+   "note": "H3N2 Fujian주 항원 drift — 백신주와 부정합, 소아 중증 다발",
+   "ax": {
+    "ag": "drift",
+    "li": "na",
+    "mf": "ok",
+    "basis": "HI 항원분석"
+   }
   },
   {
    "season": "2007-08",
    "match": "miss",
    "vac": "A/Wisconsin/67/2005 (H3N2) 등",
    "circ": "A/Brisbane/10/2007 drift + B계통 불일치",
-   "note": "H3N2·B 양쪽 부정합"
+   "note": "H3N2·B 양쪽 부정합",
+   "ax": {
+    "ag": "drift",
+    "li": "mismatch",
+    "mf": "ok",
+    "basis": "HI+계통"
+   }
   },
   {
    "season": "2009-10",
    "match": "special",
    "vac": "계절 3가 + pdm09 단가 별도",
    "circ": "A(H1N1)pdm09 대유행",
-   "note": "팬데믹 — 단가백신 긴급 생산·접종"
+   "note": "팬데믹 — 단가백신 긴급 생산·접종",
+   "ax": {
+    "ag": "na",
+    "li": "na",
+    "mf": "na",
+    "basis": "팬데믹 별도"
+   }
   },
   {
    "season": "2012-13",
    "match": "partial",
    "vac": "B/Wisconsin/1/2010 (Yamagata)",
    "circ": "B 두 계통 혼재",
-   "note": "B계통 부정합 → 4가(QIV) 백신 도입의 배경"
+   "note": "B계통 부정합 → 4가(QIV) 백신 도입의 배경",
+   "ax": {
+    "ag": "match",
+    "li": "mismatch",
+    "mf": "ok",
+    "basis": "계통"
+   }
   },
   {
    "season": "2014-15",
    "match": "miss",
    "vac": "A/Texas/50/2012 (H3N2, 3C.1)",
    "circ": "A/Switzerland/9715293/2013 (3C.3a)",
-   "note": "★대표 부정합 — 미 CDC 백신효과 ~19%로 급락"
+   "note": "★대표 부정합 — 미 CDC 백신효과 ~19%로 급락",
+   "ax": {
+    "ag": "drift",
+    "li": "na",
+    "mf": "ok",
+    "basis": "clade(3C.3a)+VE 19%"
+   }
   },
   {
    "season": "2017-18",
    "match": "partial",
    "vac": "A/Hong Kong/4801/2014 (H3N2)",
    "circ": "H3N2 3C.2a + B/Yamagata 동시",
-   "note": "계란적응 문제로 H3N2 효과 저하(~25%), 3가는 B/Yam 미포함 — 고령 중증·초과사망"
+   "note": "계란적응 문제로 H3N2 효과 저하(~25%), 3가는 B/Yam 미포함 — 고령 중증·초과사망",
+   "ax": {
+    "ag": "match",
+    "li": "mismatch",
+    "mf": "egg",
+    "basis": "VE 25%+계란적응"
+   }
   },
   {
    "season": "2019-20",
    "match": "partial",
    "vac": "B/Colorado/06/2017 (Victoria)",
    "circ": "B/Victoria 조기 유행 → H1N1 2차",
-   "note": "B빅토리아 항원 변이 하위군 유행, 코로나로 시즌 조기 종료"
+   "note": "B빅토리아 항원 변이 하위군 유행, 코로나로 시즌 조기 종료",
+   "ax": {
+    "ag": "drift",
+    "li": "included",
+    "mf": "ok",
+    "basis": "계통 하위군"
+   }
   },
   {
    "season": "2020-21",
    "match": "na",
    "vac": "—",
    "circ": "유행 소멸",
-   "note": "코로나 방역(NPI)으로 독감 거의 소멸 — 정합성 평가 불가"
+   "note": "코로나 방역(NPI)으로 독감 거의 소멸 — 정합성 평가 불가",
+   "ax": {
+    "ag": "na",
+    "li": "na",
+    "mf": "na",
+    "basis": "유행 소멸"
+   }
   },
   {
    "season": "2021-22",
    "match": "partial",
    "vac": "A/Cambodia/e0826360/2020 (H3N2)",
    "circ": "H3N2 3C.2a1b.2a.2 하위군",
-   "note": "지연·저강도 유행, 하위군 이동"
+   "note": "지연·저강도 유행, 하위군 이동",
+   "ax": {
+    "ag": "drift",
+    "li": "included",
+    "mf": "ok",
+    "basis": "clade 하위군"
+   }
   },
   {
    "season": "2023-24",
    "match": "note",
    "vac": "4가 → 3가 전환 권고",
    "circ": "B/Yamagata 미검출 지속",
-   "note": "WHO, 백신에서 B/Yamagata 제외 권고 — 3가 회귀 시작"
+   "note": "WHO, 백신에서 B/Yamagata 제외 권고 — 3가 회귀 시작",
+   "ax": {
+    "ag": "na",
+    "li": "removed",
+    "mf": "na",
+    "basis": "WHO 정책(3가 회귀)"
+   }
   }
  ],
  "system_history": [
@@ -181,5 +241,9 @@
   "History of Vaccines — Influenza Pandemics",
   "Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종",
   "질병관리청 감염병포털·KINRESS"
- ]
+ ],
+ "meta": {
+  "as_of": "2026-08-15",
+  "note": "정합성·VE 수치는 북반구/미국 CDC 기준(한국 VE 아님). WHO FluNet은 소급 수정될 수 있어 as_of 필수."
+ }
 }

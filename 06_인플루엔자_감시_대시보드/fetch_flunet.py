@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # WHO FluNet(RespiMart) 연도별 전세계 + 한국 아형 집계 수집
+import datetime
 import urllib.request, urllib.parse, json, ssl, time
 ctx=ssl.create_default_context(); ctx.check_hostname=False; ctx.verify_mode=ssl.CERT_NONE
 BASE="https://xmart-api-public.who.int/FLUMART/VIW_FNT"
@@ -27,6 +28,6 @@ for y in range(1997,2027):
         korea.append(fetch_year(y,"KOR")); print("  K",y,korea[-1]["INF_A"],korea[-1]["INF_B"])
     except Exception as e: print("K ERR",y,e)
     time.sleep(0.2)
-json.dump({"world":world,"korea":korea,"source":"WHO FluNet (xmart VIW_FNT)","note":"연도별 전세계/한국 검출건 합계"},
+json.dump({"as_of":datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%MZ"),"world":world,"korea":korea,"source":"WHO FluNet (xmart VIW_FNT)","note":"연도별 전세계/한국 검출건 합계"},
           open("06_인플루엔자_감시_대시보드/data_flunet.json","w"),ensure_ascii=False,indent=1)
 print("SAVED", len(world),"years")

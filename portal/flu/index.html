@@ -117,7 +117,7 @@
 
   <section>
     <div class="kick"><span class="no">04</span><h2>백신 정합성 트래커 ★</h2></div>
-    <p class="sub">WHO가 매년 2회(북반구 2월·남반구 9월) 백신주를 권고하지만, 그사이 유행주가 drift하면 '부정합(miss)'이 되어 백신효과가 떨어진다.</p>
+    <p class="sub">WHO가 매년 2회(북반구 2월·남반구 9월) 백신주를 권고하지만, 그사이 유행주가 drift하면 '부정합(miss)'이 되어 백신효과가 떨어진다. <b>⚠️ 정합성·VE 수치는 북반구/미국 CDC 기준</b> — 한국 VE 아님.</p>
     <div class="card"><div class="vac" id="vac"></div>
       <div class="legend" style="margin-top:12px">
         <span><i class="sw" style="background:var(--bad)"></i> 부정합(miss)</span>
@@ -137,17 +137,17 @@
 
   <section>
     <div class="kick"><span class="no">06</span><h2>한국 — 코로나가 지운 한 절기</h2></div>
-    <p class="sub">질병관리청 KINRESS(FluNet 보고분). 2021년 국내 인플루엔자 검출이 사실상 0으로, 방역의 효과가 가장 극적으로 나타났다.</p>
-    <div class="card"><div class="legend"><span><i class="sw" style="background:var(--s-h3)"></i> A형</span><span><i class="sw" style="background:var(--s-bvic)"></i> B형</span></div><div id="korea"></div></div>
-    <div class="insight">💡 <b>인사이트</b> — 2021년 한국 A형·B형 검출 <b>0</b>. 이후 2024~2025 반등하며 A(H3N2) 우세로 복귀. 코로나 방역이 독감까지 눌렀다가 면역 공백 뒤 재유행하는 패턴.</div>
+    <p class="sub">WHO FluNet의 한국(KOR) 주간 보고분 — 원출처는 국내 감시망이나 <b>이 차트의 직접 소스는 FluNet</b>이다. 2021년(53주 전부 보고, 검체 4,675건)은 검출 0의 '보고된 진짜 0'.</p>
+    <div class="card"><div class="legend"><span><i class="sw" style="background:var(--s-h3)"></i> A형</span><span><i class="sw" style="background:var(--s-bvic)"></i> B형</span></div><div id="korea"></div><p class="lnote" style="font-size:12px">* 2020년은 FluNet에 52주 중 <b>22주만 보고(30주 미보고)</b> — 미보고는 0이 아니므로 2020년 막대는 과소집계다. (as-of 2026-08-15 수집 스냅샷 기준; FluNet은 소급 수정될 수 있음)</p></div>
+    <div class="insight">💡 <b>인사이트</b> — <b>2021년(전 주 보고)</b> 한국 A·B형 검출 0 = 보고된 진짜 0. 반면 2020년 봄 30주는 <b>미보고 구간</b>이라 '독감 소멸'의 근거 절기는 2021년이다. 이후 2024~25 반등, A(H3N2) 우세 복귀.</div>
   </section>
 
 
   <section>
     <div class="kick"><span class="no">06-b</span><h2>한국 절기 곡선 — 주간 양성률</h2></div>
-    <p class="sub">절기(36주 시작→다음해 35주) 기준 주간 인플루엔자 검사 양성률(KINRESS→FluNet 보고분). 절기마다 유행의 시작·정점·모양이 어떻게 다른지 겹쳐 본다.</p>
+    <p class="sub">절기(36주 시작→다음해 35주) 기준 주간 검사 양성률(WHO FluNet KOR 주간 보고분). 절기마다 유행의 시작·정점·모양이 어떻게 다른지 겹쳐 본다.</p>
     <div class="card"><div class="legend" id="legendS"></div><div id="seasons"></div></div>
-    <div class="insight">💡 <b>인사이트</b> — 코로나 이전 절기는 12~1월(절기 16~20주차) 정점의 규칙적 곡선이었지만, <b>2020-21·2021-22 절기는 평평(유행 실종)</b>, 2022-23부터는 <b>이례적 조기·다봉형 유행</b>으로 재개됐다. 기준선이 리셋된 것 — 과거 평균으로 올해를 읽으면 틀린다.</div>
+    <div class="insight">💡 <b>인사이트</b> — 코로나 이전 절기는 12~1월 정점의 규칙적 곡선. <b>2021-22 절기(전 주 보고)가 평평한 것이 '유행 실종'의 검증된 근거</b>이며, 2020-21 절기 전반부는 미보고 구간이 섞여 있다. 2022-23부터 조기·다봉형 재유행 — 기준선 리셋.</div>
   </section>
 
   <section>
@@ -158,10 +158,10 @@
         <tr><td class="num">1918–1951</td><td>사망·초과사망 추정, 문헌</td><td>재구성(역사)</td></tr>
         <tr><td class="num">1952–1995</td><td>WHO GISRS 아형 감시</td><td>체계적 감시(정성)</td></tr>
         <tr><td class="num">1996–현재</td><td>WHO FluNet 실시간 실험실</td><td>정량·공개(본 차트 ②⑤⑥)</td></tr>
-        <tr><td class="num">2009–현재</td><td>한국 KINRESS + ILI 표본감시</td><td>국내 정량(차트 ⑥)</td></tr>
+        <tr><td class="num">2009–현재</td><td>한국 감시망(KINRESS 등) — 단 <b>차트 ⑥의 직접 소스는 WHO FluNet KOR 보고분</b></td><td>국내 정량(차트 ⑥)</td></tr>
       </tbody>
     </table>
-    <p class="sub" style="margin-top:12px">차트 ②⑤⑥은 <b>WHO FluNet(xmart VIW_FNT)</b> 연도별 전세계/한국 검출 합계 실데이터. 절대 건수는 감시망 참여 확대도 일부 반영(→ 구성비 병용). 팬데믹 연표·백신 정합성·아형 정권 밴드(1918~1996)는 문헌 큐레이션.</p>
+    <p class="sub" style="margin-top:12px">차트 ②⑤⑥은 <b>WHO FluNet(xmart VIW_FNT)</b> 연도별 전세계/한국 검출 합계 실데이터. 절대 건수는 감시망 참여 확대도 일부 반영(→ 구성비 병용). <b>수집 as-of 2026-08-15</b> — FluNet은 소급 백필·수정되는 시스템이므로 수치는 스냅샷 기준. 팬데믹 연표·백신 정합성·아형 정권 밴드(1918~1996)는 문헌 큐레이션.</p>
   </section>
 
   <div class="foot">
@@ -241,22 +241,23 @@ const CURATED={"pandemics":[{"year":1918,"subtype":"A(H1N1)","name":"스페인 �
 {"from":1968,"to":1977,"label":"H3N2 지배","subtypes":["H3N2"]},
 {"from":1977,"to":2009,"label":"H1N1 + H3N2 공존 (+B)","subtypes":["H1N1","H3N2","B"]},
 {"from":2009,"to":2027,"label":"H1N1pdm09 + H3N2 공존 (+B)","subtypes":["H1N1pdm09","H3N2","B"]}],
-"vaccine_seasons":[{"season":"2003-04","match":"miss","vac":"A/Panama/2007/99 (H3N2)","circ":"A/Fujian/411/2002 drift","note":"H3N2 Fujian주 항원 drift — 백신주와 부정합, 소아 중증 다발"},
-{"season":"2007-08","match":"miss","vac":"A/Wisconsin/67/2005 (H3N2) 등","circ":"A/Brisbane/10/2007 drift + B계통 불일치","note":"H3N2·B 양쪽 부정합"},
-{"season":"2009-10","match":"special","vac":"계절 3가 + pdm09 단가 별도","circ":"A(H1N1)pdm09 대유행","note":"팬데믹 — 단가백신 긴급 생산·접종"},
-{"season":"2012-13","match":"partial","vac":"B/Wisconsin/1/2010 (Yamagata)","circ":"B 두 계통 혼재","note":"B계통 부정합 → 4가(QIV) 백신 도입의 배경"},
-{"season":"2014-15","match":"miss","vac":"A/Texas/50/2012 (H3N2, 3C.1)","circ":"A/Switzerland/9715293/2013 (3C.3a)","note":"★대표 부정합 — 미 CDC 백신효과 ~19%로 급락"},
-{"season":"2017-18","match":"partial","vac":"A/Hong Kong/4801/2014 (H3N2)","circ":"H3N2 3C.2a + B/Yamagata 동시","note":"계란적응 문제로 H3N2 효과 저하(~25%), 3가는 B/Yam 미포함 — 고령 중증·초과사망"},
-{"season":"2019-20","match":"partial","vac":"B/Colorado/06/2017 (Victoria)","circ":"B/Victoria 조기 유행 → H1N1 2차","note":"B빅토리아 항원 변이 하위군 유행, 코로나로 시즌 조기 종료"},
-{"season":"2020-21","match":"na","vac":"—","circ":"유행 소멸","note":"코로나 방역(NPI)으로 독감 거의 소멸 — 정합성 평가 불가"},
-{"season":"2021-22","match":"partial","vac":"A/Cambodia/e0826360/2020 (H3N2)","circ":"H3N2 3C.2a1b.2a.2 하위군","note":"지연·저강도 유행, 하위군 이동"},
-{"season":"2023-24","match":"note","vac":"4가 → 3가 전환 권고","circ":"B/Yamagata 미검출 지속","note":"WHO, 백신에서 B/Yamagata 제외 권고 — 3가 회귀 시작"}],
+"vaccine_seasons":[{"season":"2003-04","match":"miss","vac":"A/Panama/2007/99 (H3N2)","circ":"A/Fujian/411/2002 drift","note":"H3N2 Fujian주 항원 drift — 백신주와 부정합, 소아 중증 다발","ax":{"ag":"drift","li":"na","mf":"ok","basis":"HI 항원분석"}},
+{"season":"2007-08","match":"miss","vac":"A/Wisconsin/67/2005 (H3N2) 등","circ":"A/Brisbane/10/2007 drift + B계통 불일치","note":"H3N2·B 양쪽 부정합","ax":{"ag":"drift","li":"mismatch","mf":"ok","basis":"HI+계통"}},
+{"season":"2009-10","match":"special","vac":"계절 3가 + pdm09 단가 별도","circ":"A(H1N1)pdm09 대유행","note":"팬데믹 — 단가백신 긴급 생산·접종","ax":{"ag":"na","li":"na","mf":"na","basis":"팬데믹 별도"}},
+{"season":"2012-13","match":"partial","vac":"B/Wisconsin/1/2010 (Yamagata)","circ":"B 두 계통 혼재","note":"B계통 부정합 → 4가(QIV) 백신 도입의 배경","ax":{"ag":"match","li":"mismatch","mf":"ok","basis":"계통"}},
+{"season":"2014-15","match":"miss","vac":"A/Texas/50/2012 (H3N2, 3C.1)","circ":"A/Switzerland/9715293/2013 (3C.3a)","note":"★대표 부정합 — 미 CDC 백신효과 ~19%로 급락","ax":{"ag":"drift","li":"na","mf":"ok","basis":"clade(3C.3a)+VE 19%"}},
+{"season":"2017-18","match":"partial","vac":"A/Hong Kong/4801/2014 (H3N2)","circ":"H3N2 3C.2a + B/Yamagata 동시","note":"계란적응 문제로 H3N2 효과 저하(~25%), 3가는 B/Yam 미포함 — 고령 중증·초과사망","ax":{"ag":"match","li":"mismatch","mf":"egg","basis":"VE 25%+계란적응"}},
+{"season":"2019-20","match":"partial","vac":"B/Colorado/06/2017 (Victoria)","circ":"B/Victoria 조기 유행 → H1N1 2차","note":"B빅토리아 항원 변이 하위군 유행, 코로나로 시즌 조기 종료","ax":{"ag":"drift","li":"included","mf":"ok","basis":"계통 하위군"}},
+{"season":"2020-21","match":"na","vac":"—","circ":"유행 소멸","note":"코로나 방역(NPI)으로 독감 거의 소멸 — 정합성 평가 불가","ax":{"ag":"na","li":"na","mf":"na","basis":"유행 소멸"}},
+{"season":"2021-22","match":"partial","vac":"A/Cambodia/e0826360/2020 (H3N2)","circ":"H3N2 3C.2a1b.2a.2 하위군","note":"지연·저강도 유행, 하위군 이동","ax":{"ag":"drift","li":"included","mf":"ok","basis":"clade 하위군"}},
+{"season":"2023-24","match":"note","vac":"4가 → 3가 전환 권고","circ":"B/Yamagata 미검출 지속","note":"WHO, 백신에서 B/Yamagata 제외 권고 — 3가 회귀 시작","ax":{"ag":"na","li":"removed","mf":"na","basis":"WHO 정책(3가 회귀)"}}],
 "system_history":[{"year":1952,"event":"WHO 글로벌 인플루엔자 감시망(GISRS) 출범 — 아형 변화 추적 시작"},
 {"year":1996,"event":"FluNet 가동 — 실시간 실험실 감시 데이터 공개(정량 추적 가능)"},
 {"year":2005,"event":"한국 급성호흡기감염증 감시사업 시작"},
 {"year":2009,"event":"한국 KINRESS(인플루엔자·호흡기바이러스 실험실감시체계)로 확대"},
 {"year":2020,"event":"B/Yamagata 전세계 미검출 시작(사실상 멸종 추정)"}],
-"sources":["WHO GISRS(1952~)·FluNet(1996~)","History of Vaccines — Influenza Pandemics","Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종","질병관리청 감염병포털·KINRESS"]};
+"sources":["WHO GISRS(1952~)·FluNet(1996~)","History of Vaccines — Influenza Pandemics","Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종","질병관리청 감염병포털·KINRESS"],
+"meta":{"as_of":"2026-08-15","note":"정합성·VE 수치는 북반구/미국 CDC 기준(한국 VE 아님). WHO FluNet은 소급 수정될 수 있어 as_of 필수."}};
 const KORW={"w":[[2016,1,224,17,1],
 [2016,2,220,25,5],
 [2016,3,223,38,9],
@@ -883,7 +884,7 @@ document.getElementById('legend2').innerHTML=SUB.map(([k,l,cv])=>`<span><i class
   CURATED.vaccine_seasons.forEach(s=>{
     const d=document.createElement('div');d.className='c';d.style.background=cssv(col[s.match]||'--neutral');
     d.innerHTML=`${s.season}<small>${s.match==='miss'?'부정합':s.match==='partial'?'부분':s.match==='special'?'팬데믹':s.match==='na'?'유행소멸':'정책'}</small>`;
-    d.addEventListener('mousemove',e=>showTip(`<b>${s.season}</b>${s.vac?`<br>백신주 ${s.vac}`:''}${s.circ?`<br>유행주 ${s.circ}`:''}<br><span style=\"opacity:.85\">${s.note}</span>`,e.clientX,e.clientY));
+    d.addEventListener('mousemove',e=>showTip(`<b>${s.season}</b>${s.vac?`<br>백신주 ${s.vac}`:''}${s.circ?`<br>유행주 ${s.circ}`:''}${s.ax&&s.ax.basis?`<br>항원:${({match:'일치',drift:'drift',na:'—'})[s.ax.ag]||s.ax.ag} · B계통:${({included:'포함',mismatch:'부정합',missing:'미포함',removed:'제외',na:'—'})[s.ax.li]||s.ax.li} · 제조:${({ok:'정상',egg:'계란적응 이슈',na:'—'})[s.ax.mf]||s.ax.mf}<br>판정근거: ${s.ax.basis}`:''}<br><span style=\"opacity:.85\">${s.note}</span>`,e.clientX,e.clientY));
     d.addEventListener('mouseleave',hideTip);host.appendChild(d);
   });
 })();
@@ -927,7 +928,7 @@ document.getElementById('legend2').innerHTML=SUB.map(([k,l,cv])=>`<span><i class
     const rb=el('rect',{x,y:Yb-ha-hb-(hb>0?2:0),width:bw,height:Math.max(hb,0),fill:cssv('--s-bvic'),rx:2});svg.appendChild(rb);
     const hit=el('rect',{x:x-2,y:padT,width:bw+4,height:H-padT-padB,fill:'transparent'});
     hit.addEventListener('mousemove',e=>showTip(`<b>${d.year}</b><br>A형 ${d.INF_A.toLocaleString()} · B형 ${d.INF_B.toLocaleString()}`,e.clientX,e.clientY));hit.addEventListener('mouseleave',hideTip);svg.appendChild(hit);
-    const t=el('text',{x:X(i),y:H-8,class:'axis','text-anchor':'middle'});t.textContent=d.year;svg.appendChild(t);
+    const t=el('text',{x:X(i),y:H-8,class:'axis','text-anchor':'middle'});t.textContent=d.year+(d.year===2020?'*':'');svg.appendChild(t);
     if(d.INF_A+d.INF_B===0){const z=el('text',{x:X(i),y:Yb-6,class:'axis','text-anchor':'middle'});z.setAttribute('fill',cssv('--bad'));z.style.fontWeight=700;z.textContent='0';svg.appendChild(z);}
   });
   document.getElementById('korea').appendChild(svg);
