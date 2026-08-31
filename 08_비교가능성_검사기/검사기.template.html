@@ -1,0 +1,592 @@
+<title>감염병 통계 단절점 검사기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    --paper:#F3F4F1; --surface:#FFFFFF; --surface-2:#EAECE7; --sunk:#E3E6E0;
+    --ink:#191C1A; --muted:#6A716C; --faint:#949A94;
+    --line:#DCDFDA; --line-firm:#C3C8C0;
+    --seal:#B3232B; --seal-soft:#F6E5E4; --seal-ink:#8E1A21;
+    --clear:#2E6B4E; --clear-soft:#E1EDE5; --clear-ink:#245740;
+    --caution:#9C6B15; --caution-soft:#F5EBD8; --caution-ink:#7A5310;
+    --shadow:0 1px 2px rgba(25,28,26,.05), 0 10px 30px rgba(25,28,26,.07);
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --paper:#131614; --surface:#1B1F1D; --surface-2:#232825; --sunk:#0E110F;
+    --ink:#E7EAE6; --muted:#98A09A; --faint:#6E766F;
+    --line:#2A2F2C; --line-firm:#3A403C;
+    --seal:#E5717A; --seal-soft:#341A1C; --seal-ink:#F2A3A8;
+    --clear:#6FBF95; --clear-soft:#15291F; --clear-ink:#9BD8B7;
+    --caution:#D6A548; --caution-soft:#2C2415; --caution-ink:#E8C989;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.45);
+  }}
+  :root[data-theme="dark"]{
+    --paper:#131614; --surface:#1B1F1D; --surface-2:#232825; --sunk:#0E110F;
+    --ink:#E7EAE6; --muted:#98A09A; --faint:#6E766F;
+    --line:#2A2F2C; --line-firm:#3A403C;
+    --seal:#E5717A; --seal-soft:#341A1C; --seal-ink:#F2A3A8;
+    --clear:#6FBF95; --clear-soft:#15291F; --clear-ink:#9BD8B7;
+    --caution:#D6A548; --caution-soft:#2C2415; --caution-ink:#E8C989;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+  body,h1,p,label,textarea,option,.vlabel,.etitle,.edetail{word-break:keep-all;overflow-wrap:anywhere}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;
+    font-weight:400;line-height:1.62;letter-spacing:-.005em;
+    -webkit-font-smoothing:antialiased}
+  .mono{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .serif{font-family:'Gowun Batang',Batang,serif}
+  .wrap{max-width:940px;margin:0 auto;padding:0 22px}
+  a{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--seal);outline-offset:2px;border-radius:3px}
+
+  /* ── masthead ─────────────────────────────── */
+  header{padding:46px 0 26px;border-bottom:1px solid var(--line)}
+  .kicker{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--seal);
+    font-weight:600;margin:0 0 14px;font-family:'IBM Plex Mono',monospace}
+  h1{font-family:'Gowun Batang',Batang,serif;font-weight:700;
+    font-size:clamp(30px,5.4vw,46px);line-height:1.14;margin:0;letter-spacing:-.02em;text-wrap:balance}
+  .lede{color:var(--muted);font-size:15.5px;max-width:62ch;margin:16px 0 0;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+
+  /* ── console ──────────────────────────────── */
+  .console{position:sticky;top:0;z-index:30;background:var(--paper);
+    border-bottom:1px solid var(--line);padding:14px 0;margin-bottom:26px}
+  .ctrls{display:grid;grid-template-columns:2.1fr 1fr 26px 1fr;gap:10px;align-items:end}
+  .fld{display:flex;flex-direction:column;gap:5px;min-width:0}
+  .fld label{font-size:11px;letter-spacing:.11em;text-transform:uppercase;
+    color:var(--faint);font-weight:600}
+  .fld select{width:100%;appearance:none;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line-firm);border-radius:9px;padding:10px 30px 10px 12px;
+    font:500 14px/1.3 'IBM Plex Sans KR',system-ui,sans-serif;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+    background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;
+    background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .vs{text-align:center;color:var(--faint);font-size:13px;padding-bottom:11px;font-weight:600}
+
+  /* ── verdict ──────────────────────────────── */
+  .verdict{border-radius:16px;padding:26px 28px;margin-bottom:20px;
+    border:1px solid var(--vline);background:var(--vbg);box-shadow:var(--shadow)}
+  .verdict.no{--vbg:var(--seal-soft);--vline:var(--seal);--vink:var(--seal-ink);--vdot:var(--seal)}
+  .verdict.care{--vbg:var(--caution-soft);--vline:var(--caution);--vink:var(--caution-ink);--vdot:var(--caution)}
+  .verdict.ok{--vbg:var(--clear-soft);--vline:var(--clear);--vink:var(--clear-ink);--vdot:var(--clear)}
+  .vtop{display:flex;align-items:center;gap:11px;margin-bottom:4px}
+  .stamp{width:11px;height:11px;border-radius:50%;background:var(--vdot);flex:none}
+  .vlabel{font-family:'Gowun Batang',Batang,serif;font-weight:700;
+    font-size:clamp(23px,3.6vw,31px);line-height:1.2;color:var(--vink);letter-spacing:-.02em}
+  .vsub{color:var(--vink);opacity:.92;font-size:14.5px;margin:8px 0 0;max-width:64ch}
+
+  .figs{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-top:18px;
+    padding-top:16px;border-top:1px solid color-mix(in srgb,var(--vline) 32%,transparent)}
+  .fig{display:flex;flex-direction:column;gap:2px}
+  .fig .y{font-size:11.5px;letter-spacing:.08em;color:var(--vink);opacity:.7;font-weight:600}
+  .fig .n{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:23px;
+    color:var(--vink);font-variant-numeric:tabular-nums;line-height:1.1}
+  .arrow{color:var(--vink);opacity:.5;font-size:17px;align-self:center;padding-top:12px}
+  .delta{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;
+    color:var(--vink);align-self:center;padding-top:14px}
+  .delta.void{text-decoration:line-through;opacity:.45}
+  .voidnote{font-size:12.5px;color:var(--vink);opacity:.75;align-self:center;padding-top:15px}
+
+  /* ── chart ────────────────────────────────── */
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:22px 24px;margin-bottom:20px;box-shadow:var(--shadow)}
+  .ptitle{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:17px;margin:0 0 3px}
+  .pnote{color:var(--muted);font-size:13px;margin:0 0 16px;max-width:66ch}
+  .cwrap{position:relative;width:100%;height:212px}
+  canvas{width:100%;height:100%;display:block}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-size:12px;color:var(--muted)}
+  .legend i{display:inline-block;width:18px;height:0;border-top:2px solid currentColor;
+    vertical-align:middle;margin-right:6px}
+  .legend .cut{color:var(--seal)}
+  .legend .ovl{color:var(--clear)}
+  .legend .ovl i{border-top-style:dashed}
+  .legend .cut i{border-top-style:dashed}
+
+  /* ── evidence ─────────────────────────────── */
+  .ev{display:flex;flex-direction:column;gap:11px}
+  .ecard{display:grid;grid-template-columns:78px 1fr;gap:16px;
+    background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ec);
+    border-radius:12px;padding:15px 18px}
+  .ecard.br{--ec:var(--seal)} .ecard.ca{--ec:var(--caution)}
+  .edate{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+    color:var(--ec);line-height:1.35;padding-top:2px}
+  .etype{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);
+    display:block;margin-top:4px;font-weight:600}
+  .etitle{font-weight:600;font-size:14.5px;margin:0 0 5px}
+  .edetail{color:var(--muted);font-size:13.5px;margin:0;text-wrap:pretty}
+  .elegal{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);margin:7px 0 0}
+
+  /* ── footnote generator ───────────────────── */
+  .fn{background:var(--sunk);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:20px}
+  .fnhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .fnhead h3{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:16px;margin:0}
+  .fnhead span{font-size:12.5px;color:var(--muted)}
+  #fnText{width:100%;min-height:88px;resize:vertical;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line-firm);border-radius:9px;padding:12px 14px;
+    font:400 13.5px/1.62 'IBM Plex Sans KR',system-ui,sans-serif}
+  .btn{margin-top:10px;background:var(--ink);color:var(--paper);border:0;border-radius:9px;
+    padding:9px 16px;font:600 13px 'IBM Plex Sans KR',system-ui,sans-serif;cursor:pointer}
+  .btn:hover{opacity:.87}
+  .btn[data-done="1"]{background:var(--clear)}
+
+  /* ── recalc ───────────────────────────────── */
+  .recalc{border:1px solid var(--clear);background:var(--clear-soft);border-radius:16px;
+    padding:22px 24px;margin-bottom:20px}
+  .recalc h3{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:17px;
+    margin:0 0 4px;color:var(--clear-ink)}
+  .recalc p{color:var(--clear-ink);opacity:.9;font-size:13.5px;margin:0 0 14px;max-width:66ch}
+  .rrow{display:flex;gap:22px;flex-wrap:wrap;align-items:baseline}
+  .rrow .n{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:21px;color:var(--clear-ink)}
+  .rrow .y{font-size:11.5px;color:var(--clear-ink);opacity:.7;font-weight:600;display:block}
+
+  footer{border-top:1px solid var(--line);margin-top:34px;padding:24px 0 56px;
+    color:var(--faint);font-size:12.5px}
+  footer p{margin:0 0 7px;max-width:78ch}
+  footer a{color:var(--muted);text-decoration:underline;text-underline-offset:2px}
+
+  @media(max-width:720px){
+    .ctrls{grid-template-columns:1fr 1fr;gap:9px}
+    .fld:first-child{grid-column:1/-1}
+    .vs{display:none}
+    .ecard{grid-template-columns:1fr;gap:6px}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">법정감염병 · 2016–2025 · 전수감시</p>
+    <h1>이 수치, 작년과<br>비교해도 되나요?</h1>
+    <p class="lede">감염병 통계는 조용히 끊긴다. 급수가 바뀌고, 감시체계가 바뀌고, <b>무엇을 세는지</b>가 바뀐다.
+      그 지점을 모르고 두 해를 나란히 놓으면 유행을 잘못 읽는다.
+      질병과 두 연도를 고르면 <b>비교해도 되는지, 안 된다면 왜인지</b>를 판정한다.</p>
+  </header>
+
+  <div class="console">
+    <div class="ctrls">
+      <div class="fld">
+        <label for="dz">감염병</label>
+        <select id="dz"></select>
+      </div>
+      <div class="fld">
+        <label for="ya">기준 연도</label>
+        <select id="ya"></select>
+      </div>
+      <div class="vs">↔</div>
+      <div class="fld">
+        <label for="yb">비교 연도</label>
+        <select id="yb"></select>
+      </div>
+    </div>
+  </div>
+
+  <div id="verdict"></div>
+  <div id="recalc"></div>
+
+  <div class="panel">
+    <h2 class="ptitle" id="chartTitle">연도별 신고수</h2>
+    <p class="pnote" id="chartNote"></p>
+    <div class="cwrap"><canvas id="cv"></canvas></div>
+    <div class="legend">
+      <span><i></i>신고수</span>
+      <span class="cut"><i></i>단절점 — 선이 끊긴 곳은 이어서 읽으면 안 된다</span>
+      <span class="ovl" id="ovlLegend" hidden><i></i>동일 신고범위 재계산</span>
+    </div>
+  </div>
+
+  <div class="fn">
+    <div class="fnhead">
+      <h3>붙여 쓸 각주</h3>
+      <span>보고서·기사에 그대로 넣을 수 있는 문장</span>
+    </div>
+    <textarea id="fnText" readonly aria-label="생성된 각주 문장"></textarea>
+    <button class="btn" id="fnCopy" type="button">각주 복사</button>
+  </div>
+
+  <div class="panel">
+    <h2 class="ptitle">근거</h2>
+    <p class="pnote" id="evNote"></p>
+    <div class="ev" id="ev"></div>
+  </div>
+
+  <footer>
+    <p><b>출처</b> — 질병관리청 「2025 감염병 신고 현황 연보」(2026.6 발간) 붙임4 전수감시 신고수 원문, 및 감염병예방법·질병관리청 고시 이력에서 직접 수집한 단절점 원장 16건.</p>
+    <p>수치는 <b>의료기관 신고 기준</b>이며 신고범위(환자·의사환자·병원체보유자)는 질병마다 다르다. 표본감시(제4급) 감염병은 분모가 달라 이 표에 포함하지 않았다.</p>
+    <p>참고용이다. 역학적 해석과 정책 판단은 원문과 전문가 확인을 거쳐야 한다. <span class="mono" id="asof"></span></p>
+  </footer>
+</div>
+
+<script type="application/json" id="rules">__DATA__</script>
+<script>
+(function(){
+  "use strict";
+  var D = JSON.parse(document.getElementById('rules').textContent);
+  var YEARS = D.years;
+  var byName = {}; D.diseases.forEach(function(d){ byName[d.name] = d; });
+
+  var elD = document.getElementById('dz'), elA = document.getElementById('ya'), elB = document.getElementById('yb');
+  document.getElementById('asof').textContent = 'as-of ' + D.as_of;
+
+  // ── populate controls, grouped by 급
+  var groups = {};
+  D.diseases.forEach(function(d){ (groups[d.grade] = groups[d.grade] || []).push(d); });
+  ['제1급','제2급','제3급'].forEach(function(g){
+    if(!groups[g]) return;
+    var og = document.createElement('optgroup'); og.label = g + '감염병';
+    groups[g].forEach(function(d){
+      var o = document.createElement('option'); o.value = d.name;
+      var n = d.breaks.length;
+      o.textContent = d.name + (n ? '  ⦁ 단절 ' + n : '');
+      og.appendChild(o);
+    });
+    elD.appendChild(og);
+  });
+  YEARS.forEach(function(y){
+    [elA, elB].forEach(function(sel){
+      var o = document.createElement('option'); o.value = y; o.textContent = y; sel.appendChild(o);
+    });
+  });
+  elD.value = '매독'; elA.value = 2023; elB.value = 2024;
+
+  var fmt = function(n){ return n == null ? '—' : n.toLocaleString('ko-KR'); };
+  // 대체 연도는 반드시 상대 연도의 같은 쪽(시간 순서)을 유지해야 한다.
+  // 2023(기준) ↔ 2024(비교)에서 2023을 2025로 바꾸면 앞뒤가 뒤집힌다.
+  function nearest(ser, want, avoid){
+    var dir = want < avoid ? -1 : 1;
+    for(var r = 1; r < 12; r++){
+      var y = want + dir * r;
+      if(y !== avoid && ser[y] != null) return y;
+    }
+    return null;
+  }
+  // 한글 받침에 따른 은/는 · 이/가
+  function josa(w, withBatchim, without){
+    var c = w.charCodeAt(w.length - 1);
+    var has = (c >= 0xAC00 && c <= 0xD7A3) ? ((c - 0xAC00) % 28 !== 0) : true;
+    return w + (has ? withBatchim : without);
+  }
+  var yOf = function(iso){ return parseInt(iso.slice(0,4), 10); };
+
+  // ── which discontinuities does the span [lo,hi] cross?
+  function crossed(d, lo, hi){
+    var out = [];
+    d.breaks.forEach(function(b){
+      var y = yOf(b.date);
+      if(lo < y && y <= hi) out.push(Object.assign({}, b, {scope:'질병'}));
+    });
+    D['global'].forEach(function(g){
+      var gy = yOf(g.from);
+      if(g.from === g.to){
+        if(lo < gy && gy <= hi) out.push(Object.assign({}, g, {date:g.from, scope:'전체'}));
+      } else {
+        // 구간형: 선택 연도 중 하나라도 구간 안이면 해석 주의
+        var lo2 = gy, hi2 = yOf(g.to);
+        if((lo >= lo2 && lo <= hi2) || (hi >= lo2 && hi <= hi2))
+          out.push(Object.assign({}, g, {date:g.from.slice(0,4) + '–' + g.to.slice(0,4), scope:'전체'}));
+      }
+    });
+    out.sort(function(a,b){ return a.date < b.date ? -1 : 1; });
+    return out;
+  }
+
+  function render(){
+    var d = byName[elD.value];
+    var a = +elA.value, b = +elB.value;
+    var lo = Math.min(a,b), hi = Math.max(a,b);
+    var va = d.series[a], vb = d.series[b];
+    var hits = a === b ? [] : crossed(d, lo, hi);
+    var brk = hits.filter(function(h){ return h.kind === 'break'; });
+    var care = hits.filter(function(h){ return h.kind === 'caution'; });
+    var missing = (va == null || vb == null);
+
+    var cls, label, sub;
+    if(a === b){
+      cls='care'; label='같은 해를 골랐다';
+      sub='비교할 두 해를 서로 다르게 골라야 판정할 수 있다.';
+    } else if(missing){
+      var gy = (va == null ? a : b), g = d.gaps && d.gaps[gy];
+      cls='no';
+      if(g && g.why === 'sentinel'){
+        label='비교 불가 — ' + gy + '년은 표본감시 구간이다';
+        sub=g.note + (g.ref != null ? ' 참고로 그해 표본 신고수는 ' + fmt(g.ref) + '건이지만, 전수 수치와 나란히 놓으면 안 된다.' : '');
+      } else if(g && g.why === 'moved'){
+        label='비교 불가 — ' + gy + '년은 다른 항목에 신고됐다';
+        sub=g.note + ' 표에서 이 줄만 보면 0으로 보이지만 실제로는 다른 줄에 있다.';
+      } else {
+        label='비교 불가 — ' + gy + '년에는 자료 자체가 없다';
+        sub=gy + '년에는 이 감염병이 법정 전수감시 대상이 아니었다. 0건이 아니라 세지 않았다는 뜻이다.';
+      }
+    } else if(brk.length){
+      cls='no'; label='비교 불가';
+      sub='두 해 사이에 ' + (brk.length===1 ? '정의가 바뀐 지점이 있다' : '정의가 바뀐 지점이 ' + brk.length + '군데 있다')
+        + '. 같은 이름이지만 세는 대상이나 세는 기관이 다르다 — 증감률을 계산하면 유행이 아니라 제도 변경을 측정하게 된다.';
+    } else if(care.length){
+      cls='care'; label='비교 가능 — 단, 해석 주의';
+      sub='정의는 같아서 수치를 나란히 놓을 수는 있다. 다만 기저 조건이 달라 증감을 곧바로 유행 변화로 읽으면 안 된다.';
+    } else {
+      cls='ok'; label='비교 가능';
+      sub='두 해 사이에 급수·감시체계·신고범위 변경이 없다. 증감을 발생 변화로 해석해도 된다.';
+    }
+
+    var pct = (!missing && va > 0 && a !== b) ? ((vb - va) / va * 100) : null;
+    var pctTxt = pct == null ? '' : (pct >= 0 ? '+' : '−') + Math.abs(pct).toFixed(1) + '%';
+
+    var figs = '';
+    if(a !== b){
+      figs = '<div class="figs">'
+        + '<div class="fig"><span class="y">' + a + '</span><span class="n">' + fmt(va) + '</span></div>'
+        + '<span class="arrow">→</span>'
+        + '<div class="fig"><span class="y">' + b + '</span><span class="n">' + fmt(vb) + '</span></div>'
+        + (pct == null ? ''
+            : '<span class="delta' + (cls === 'no' ? ' void' : '') + '">' + pctTxt + '</span>'
+              + (cls === 'no' ? '<span class="voidnote">이 증감률은 쓰면 안 된다</span>' : ''))
+        + '</div>';
+    }
+
+    document.getElementById('verdict').innerHTML =
+      '<div class="verdict ' + cls + '"><div class="vtop"><span class="stamp"></span>'
+      + '<span class="vlabel">' + label + '</span></div>'
+      + '<p class="vsub">' + sub + '</p>' + figs + '</div>';
+
+    // ── 동일범위 재계산 (있는 질병만)
+    var rc = document.getElementById('recalc'); rc.innerHTML = '';
+    if(d.recalc && cls === 'no'){
+      var ra = d.recalc.series[a], rb = d.recalc.series[b], sa = a, sb = b, swapped = false;
+      if(ra == null || rb == null){                 // 가장 가까운 유효 연도로 대체 제안
+        if(ra == null){ sa = nearest(d.recalc.series, a, b); ra = sa && d.recalc.series[sa]; swapped = true; }
+        if(rb == null){ sb = nearest(d.recalc.series, b, a); rb = sb && d.recalc.series[sb]; swapped = true; }
+      }
+      if(ra != null && rb != null && sa !== sb){
+        var rp = ((rb - ra) / ra * 100);
+        rc.innerHTML = '<div class="recalc"><h3>대신 이렇게 비교하라 — ' + d.recalc.label + '</h3>'
+          + '<p>' + d.recalc.why
+          + (swapped ? ' 고른 해에는 이 축의 값이 없어 <b>가장 가까운 유효 연도</b>로 바꿔 계산했다.' : '')
+          + '</p><div class="rrow">'
+          + '<div><span class="y">' + sa + (swapped && sa !== a ? ' (대체)' : '') + '</span><span class="n">' + fmt(ra) + '</span></div>'
+          + '<div><span class="y">' + sb + (swapped && sb !== b ? ' (대체)' : '') + '</span><span class="n">' + fmt(rb) + '</span></div>'
+          + '<div><span class="y">동일범위 증감</span><span class="n">'
+          + (rp >= 0 ? '+' : '−') + Math.abs(rp).toFixed(1) + '%</span></div>'
+          + '</div></div>';
+      }
+    }
+
+    // ── 각주
+    var fn;
+    if(a === b){
+      fn = '비교할 두 해를 서로 다르게 선택하십시오.';
+    } else if(missing){
+      var gy2 = (va == null ? a : b), g2 = d.gaps && d.gaps[gy2];
+      var why2 = (g2 && g2.why === 'sentinel')
+            ? '은 ' + gy2 + '년에 표본감시 구간(지정 표본기관만 신고)이어서 전수 수치와 분모가 다르므로'
+            : (g2 && g2.why === 'moved')
+              ? '는 ' + gy2 + '년에 다른 신고 항목으로 집계되었으므로'
+              : '은 ' + gy2 + '년 당시 법정 전수감시 대상이 아니었으므로';
+      fn = '「' + d.name + '」' + why2 + ' ' + a + '년과 ' + b + '년 수치를 직접 비교할 수 없다.';
+      if(g2 && g2.ref != null) fn += ' (' + gy2 + '년 참고 신고수 ' + fmt(g2.ref) + '건)';
+    } else if(brk.length){
+      fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건)은 직접 비교할 수 없다. '
+         + brk.map(function(x){ return x.date.slice(0,10) + ' ' + x.title; }).join('; ') + '. '
+         + '따라서 이 구간의 증감률은 발생 변화가 아니라 제도 변경을 반영한다.'
+         + (d.recalc && d.recalc.series[a] != null && d.recalc.series[b] != null
+             ? ' ' + d.recalc.label + ' 기준으로는 ' + fmt(d.recalc.series[a]) + '건 → ' + fmt(d.recalc.series[b]) + '건이다.' : '');
+    } else if(care.length){
+      fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건)은 신고 정의가 동일해 비교 가능하다('
+         + pctTxt + '). 다만 ' + care.map(function(x){ return x.title; }).join(', ')
+         + '을(를) 고려해 해석해야 한다.';
+    } else {
+      fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건) 사이에는 급수·감시체계·신고범위 변경이 없어 '
+         + '직접 비교할 수 있다(' + pctTxt + ').';
+    }
+    var rcEl = document.querySelector('.recalc');
+    if(rcEl && cls === 'no'){
+      var ns = rcEl.querySelectorAll('.rrow .n'), ys = rcEl.querySelectorAll('.rrow .y');
+      if(ns.length === 3)
+        fn += ' ' + d.recalc.label + ' 기준으로는 ' + ys[0].textContent.replace(' (대체)','') + '년 ' + ns[0].textContent
+            + '건 → ' + ys[1].textContent.replace(' (대체)','') + '년 ' + ns[1].textContent
+            + '건(' + ns[2].textContent + ')이다.';
+    }
+    fn += ' [출처: 질병관리청 「2025 감염병 신고 현황 연보」]';
+    document.getElementById('fnText').value = fn;
+    var btn = document.getElementById('fnCopy');
+    btn.dataset.done = '0'; btn.textContent = '각주 복사';
+
+    // ── 근거 목록
+    var evNote = document.getElementById('evNote');
+    var ev = document.getElementById('ev');
+    var all = d.breaks.map(function(x){ return Object.assign({}, x, {scope:'질병'}); });
+    if(hits.length){
+      evNote.textContent = a + '–' + b + ' 구간에 걸리는 항목 ' + hits.length + '건.';
+      ev.innerHTML = hits.map(card).join('');
+    } else if(all.length){
+      evNote.textContent = '선택한 구간에 걸리는 단절점은 없다. 이 감염병에 기록된 단절점 전체는 아래와 같다.';
+      ev.innerHTML = all.map(card).join('');
+    } else {
+      evNote.textContent = '이 감염병에는 2016년 이후 기록된 단절점이 없다. 10년 시계열을 그대로 이어서 읽어도 된다.';
+      ev.innerHTML = '';
+    }
+    function card(x){
+      var isBr = x.kind === 'break';
+      return '<div class="ecard ' + (isBr ? 'br' : 'ca') + '">'
+        + '<div class="edate">' + x.date + '<span class="etype">'
+        + (isBr ? '정의 변경' : '해석 주의') + '</span></div>'
+        + '<div><p class="etitle">' + x.title + '</p><p class="edetail">' + x.detail + '</p>'
+        + (x.legal ? '<p class="elegal">근거 · ' + x.legal + '</p>' : '') + '</div></div>';
+    }
+
+    // ── 차트
+    document.getElementById('chartTitle').textContent = d.name + ' — 연도별 신고수';
+    document.getElementById('chartNote').textContent = d.note
+      ? d.note
+      : '2016–2025년 전수감시 신고수. 붉은 세로선에서 정의가 바뀌므로 선을 가로질러 읽지 않는다.';
+    document.getElementById('ovlLegend').hidden = !(d.recalc && d.recalc.overlay);
+    draw(d, a, b);
+  }
+
+  // ── canvas
+  var cv = document.getElementById('cv'), ctx = cv.getContext('2d');
+  var cur = null;
+  function css(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+
+  function draw(d, a, b){
+    cur = {d:d, a:a, b:b};
+    var dpr = window.devicePixelRatio || 1;
+    var W = cv.clientWidth, H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+
+    var ink = css('--ink'), muted = css('--faint'), line = css('--line'),
+        seal = css('--seal'), surf = css('--surface');
+    var L = 26, R = 26, T = 24, Bm = 32;
+    var pw = W - L - R, ph = H - T - Bm;
+
+    var vals = YEARS.map(function(y){ return d.series[y]; });
+    var nums = vals.filter(function(v){ return v != null; });
+    var max = nums.length ? Math.max.apply(null, nums) : 1;
+    if(max <= 0) max = 1;
+    var x = function(i){ return L + (YEARS.length === 1 ? 0 : pw * i / (YEARS.length - 1)); };
+    var y = function(v){ return T + ph - (v / max) * ph; };
+
+    // baseline
+    ctx.strokeStyle = line; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(L, T + ph + .5); ctx.lineTo(L + pw, T + ph + .5); ctx.stroke();
+
+    // break positions (between i-1 and i)
+    var cuts = {};
+    d.breaks.forEach(function(bk){
+      var by = parseInt(bk.date.slice(0,4), 10);
+      var i = YEARS.indexOf(by);
+      if(i > 0) cuts[i] = true;
+    });
+
+    // segments split at cuts
+    var seg = [], run = [];
+    vals.forEach(function(v, i){
+      if(cuts[i] && run.length){ seg.push(run); run = []; }
+      if(v == null){ if(run.length){ seg.push(run); run = []; } return; }
+      run.push(i);
+    });
+    if(run.length) seg.push(run);
+
+    ctx.strokeStyle = ink; ctx.lineWidth = 2; ctx.lineJoin = 'round'; ctx.lineCap = 'round';
+    seg.forEach(function(s){
+      if(s.length < 2){
+        if(s.length === 1){ ctx.beginPath(); ctx.arc(x(s[0]), y(vals[s[0]]), 2.6, 0, 6.284); ctx.fillStyle = ink; ctx.fill(); }
+        return;
+      }
+      ctx.beginPath();
+      s.forEach(function(i, k){ k ? ctx.lineTo(x(i), y(vals[i])) : ctx.moveTo(x(i), y(vals[i])); });
+      ctx.stroke();
+    });
+
+    // overlay: 동일범위 재계산 축
+    if(d.recalc && d.recalc.overlay){
+      var ov = YEARS.map(function(yr){ return d.recalc.series[yr]; });
+      var oseg = [], orun = [];
+      ov.forEach(function(v, i){
+        if(cuts[i] && orun.length){ oseg.push(orun); orun = []; }
+        if(v == null){ if(orun.length){ oseg.push(orun); orun = []; } return; }
+        orun.push(i);
+      });
+      if(orun.length) oseg.push(orun);
+      ctx.save();
+      ctx.strokeStyle = css('--clear'); ctx.lineWidth = 2.4; ctx.setLineDash([3,6]); ctx.lineCap = 'round';
+      oseg.forEach(function(sg){
+        if(sg.length < 2) return;
+        ctx.beginPath();
+        sg.forEach(function(i, k){ k ? ctx.lineTo(x(i), y(ov[i])) : ctx.moveTo(x(i), y(ov[i])); });
+        ctx.stroke();
+      });
+      ctx.restore();
+    }
+
+    // cut rules
+    ctx.save();
+    ctx.setLineDash([4,4]); ctx.strokeStyle = seal; ctx.lineWidth = 1.5;
+    Object.keys(cuts).forEach(function(k){
+      var cx = (x(+k) + x(+k - 1)) / 2;
+      ctx.beginPath(); ctx.moveTo(cx, T - 6); ctx.lineTo(cx, T + ph); ctx.stroke();
+    });
+    ctx.restore();
+
+    // year labels
+    var dense = W < 620;
+    ctx.textAlign = 'center';
+    YEARS.forEach(function(yr, i){
+      var sel = (yr === a || yr === b);
+      if(dense && !sel && i % 2) return;
+      ctx.font = (sel ? "600 " : "400 ") + (dense ? 10 : 11) + "px 'IBM Plex Mono', monospace";
+      ctx.fillStyle = sel ? ink : muted;
+      ctx.fillText(String(yr), x(i), T + ph + 18);
+      if(sel){
+        ctx.fillRect(x(i) - 9, T + ph + 23, 18, 1.5);
+      }
+    });
+
+    // selected markers
+    [a, b].forEach(function(yr){
+      var i = YEARS.indexOf(yr), v = d.series[yr];
+      if(i < 0 || v == null) return;
+      ctx.beginPath(); ctx.arc(x(i), y(v), 5.5, 0, 6.284);
+      ctx.fillStyle = surf; ctx.fill();
+      ctx.strokeStyle = ink; ctx.lineWidth = 2.2; ctx.stroke();
+      ctx.fillStyle = ink; ctx.font = "600 11.5px 'IBM Plex Mono', monospace";
+      ctx.textAlign = i >= YEARS.length - 1 ? 'right' : (i === 0 ? 'left' : 'center');
+      ctx.fillText(v.toLocaleString('ko-KR'), x(i), Math.max(y(v) - 11, 11));
+    });
+  }
+
+  [elD, elA, elB].forEach(function(el){ el.addEventListener('change', render); });
+  document.getElementById('fnCopy').addEventListener('click', function(){
+    var t = document.getElementById('fnText');
+    t.select();
+    var done = false;
+    try{ done = document.execCommand('copy'); }catch(e){}
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(t.value).catch(function(){});
+      done = true;
+    }
+    this.textContent = done ? '복사됨' : '위 문장을 직접 선택해 복사하세요';
+    this.dataset.done = done ? '1' : '0';
+  });
+  var rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt = setTimeout(function(){ if(cur) draw(cur.d, cur.a, cur.b); }, 120);
+  });
+  if(window.matchMedia){
+    var mq = window.matchMedia('(prefers-color-scheme: dark)');
+    (mq.addEventListener ? mq.addEventListener.bind(mq,'change') : mq.addListener.bind(mq))(function(){
+      if(cur) draw(cur.d, cur.a, cur.b);
+    });
+  }
+  new MutationObserver(function(){ if(cur) draw(cur.d, cur.a, cur.b); })
+    .observe(document.documentElement, {attributes:true, attributeFilter:['data-theme']});
+
+  render();
+})();
+</script>

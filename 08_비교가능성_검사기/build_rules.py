@@ -1,0 +1,168 @@
+#!/usr/bin/env python3
+"""전수감시 시계열 CSV + 단절점 원장 → 비교가능성 판정 규칙 JSON.
+
+핵심 설계: 결측('-')에는 두 가지 의미가 있고, 이를 구분하지 않으면 판정이 틀린다.
+  - not_notifiable : 법정감염병이 아니었다 (E형간염 2019, 니파 2024)
+  - sentinel       : 표본감시라 전수표에 없다 (매독 2020-2023, 코로나19 2024-)
+  - moved          : 같은 병이 다른 급 행에 있다 (코로나19 2020-2021)
+"""
+import csv, json, datetime, os
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SRC = os.path.join(ROOT, '03_백서_정리/data/전수감시_신고수_2016_2025.csv')
+OUT = os.path.join(ROOT, '08_비교가능성_검사기/data/비교가능성_규칙.json')
+YEARS = list(range(2016, 2026))
+
+rows = list(csv.DictReader(open(SRC, encoding='utf-8-sig')))
+
+
+def series(r):
+    return {str(y): (None if r[str(y)].strip() == '-' else int(r[str(y)].strip())) for y in YEARS}
+
+
+# ── 단절점 (급수변동 원장 + 연보 각주 원문) ────────────────────────────
+BREAKS = {
+ '매독': [
+   {'date': '2020-01-01', 'kind': 'break', 'title': '전수감시 → 표본감시 (제3군 → 제4급)',
+    'detail': '신고기관이 전국 전 의료기관에서 지정 표본기관 572개소로 축소됐다. 세는 기관이 다르므로 분모 자체가 다르다.',
+    'legal': '2020.1.1 법정감염병 분류체계 전면 개편'},
+   {'date': '2024-01-01', 'kind': 'break', 'title': '표본감시 → 전수감시 + 신고범위 3종 → 5종',
+    'detail': '체계 전환과 범위 확대가 같은 날 동시에 일어났다. 2024년 2,790건 중 1,271건(45.6%)이 새로 세기 시작한 항목(3기·잠복)이다.',
+    'legal': '감염병예방법 개정 2023.8.8 공포 → 제3급'},
+ ],
+ 'B형간염(급성)': [
+   {'date': '2016-01-07', 'kind': 'break', 'title': '신고범위 축소 — 급성 B형간염만 집계',
+    'detail': '2016년부터 급성만 센다. 2015년 이전 수치는 다른 것을 센 값이다.',
+    'legal': '「감염병의 진단기준」 고시 개정(2016.1.7)'},
+ ],
+ '반코마이신내성황색포도알균(VRSA) 감염증': [
+   {'date': '2017-06-03', 'kind': 'break', 'title': '표본감시 → 전수감시',
+    'detail': '지정 표본기관만 신고하던 것을 전 의료기관 신고로 전환했다.', 'legal': '2017.6.3 제3군감염병 편입'},
+   {'date': '2019-04-30', 'kind': 'break', 'title': '신고범위 확대 — VISA(중등도내성) 포함',
+    'detail': '이후 신고 전건이 사실상 VISA다. VRSA 자체는 국내 보고 사례가 없다.',
+    'legal': '「감염병의 진단기준」 고시 개정(2019.4.30)'},
+ ],
+ '카바페넴내성장내세균목(CRE) 감염증': [
+   {'date': '2017-06-03', 'kind': 'break', 'title': '표본감시 → 전수감시',
+    'detail': '2017년이 전수감시 첫 해다. 이전 표본 기반 수치와는 이어 붙일 수 없다.', 'legal': '2017.6.3 제3군감염병 편입'},
+   {'date': '2023-12-14', 'kind': 'caution', 'title': '명칭 변경 — 장내세균속균종 → 장내세균목',
+    'detail': '정의가 아니라 분류학 명칭이 바뀌었다. 수치 비교에는 영향이 없으나 문헌 검색 시 두 이름을 모두 써야 한다.',
+    'legal': '고시 개정(2023.12.14)'},
+ ],
+ 'C형간염': [
+   {'date': '2017-06-03', 'kind': 'break', 'title': '표본감시 → 전수감시',
+    'detail': '2017년이 전수감시 첫 해다. 일회용 주사기 재사용 집단발생(2015~2016) 대응으로 전환됐다.',
+    'legal': '2016.12 법 개정 → 2017.6.3 시행'},
+ ],
+ '쯔쯔가무시증': [
+   {'date': '2025-01-01', 'kind': 'break', 'title': '신고기준에 가피(eschar) 형성 여부 포함',
+    'detail': '2025년 45.7% 감소는 방제 성과가 아니라 판정 엄격화의 결과다. 연보가 감소 요인으로 직접 지목했다.',
+    'legal': '신고기준 개정 (연보 명시)'},
+ ],
+ '코로나바이러스감염증-19': [
+   {'date': '2022-04-05', 'kind': 'break', 'title': '신고 항목 이동 — 신종감염병증후군 → 제2급 코로나19',
+    'detail': '2020~2021년 코로나19는 「신종감염병증후군」 행에 신고됐다. 같은 병이 표의 다른 줄에 있다.',
+    'legal': '고시 개정(2022.4.5)'},
+   {'date': '2023-08-31', 'kind': 'break', 'title': '제2급 → 제4급, 전수 → 표본감시',
+    'detail': '2023년 값은 8월 30일까지만 집계된 부분연도다. 연간값으로 쓰면 안 된다.',
+    'legal': '고시 개정(2023.8.31)'},
+ ],
+ '신종감염병증후군': [
+   {'date': '2020-01-20', 'kind': 'break', 'title': '코로나19가 이 항목으로 신고 개시',
+    'detail': '2020~2021년 값은 증후군 감시 결과가 아니라 사실상 코로나19 확진자 수다.',
+    'legal': '2020.1.20 제1급 지정'},
+   {'date': '2022-04-05', 'kind': 'break', 'title': '코로나19가 제2급으로 이관',
+    'detail': '이관 후 이 행은 다시 0으로 돌아간다. 2022년의 0은 유행 종식이 아니라 항목 이동이다.',
+    'legal': '고시 개정(2022.4.5)'},
+ ],
+ 'E형간염': [
+   {'date': '2020-07-01', 'kind': 'break', 'title': '법정감염병 신규 편입 — 전수감시 개시',
+    'detail': '2020년은 7월 1일부터 6개월분만 집계된 부분연도다.', 'legal': '2019.12 법 개정 → 2020.7.1 시행'},
+ ],
+ '엠폭스': [
+   {'date': '2022-06-08', 'kind': 'break', 'title': '제2급 신규 지정',
+    'detail': '국내 유입 대비 선제 지정. 그 이전 값은 존재하지 않는다.', 'legal': '고시 제2022-10호'},
+   {'date': '2024-01-01', 'kind': 'break', 'title': '제2급 → 제3급 (연보 표에서 행이 이동)',
+    'detail': '2022~2023년은 제2급 행에, 2024년부터는 제3급 행에 실린다. 표를 그대로 읽으면 2024년에 사라진 것처럼 보인다.',
+    'legal': '고시 개정(2024.1.1)'},
+ ],
+ '니파바이러스감염증': [
+   {'date': '2025-09-08', 'kind': 'break', 'title': '법정감염병 신규 지정',
+    'detail': '2025년 값은 9월 8일 이후 신고분만이다.', 'legal': '고시 제2025-10호'},
+ ],
+}
+
+# ── 결측 사유 ─────────────────────────────────────────────────────────
+GAPS = {
+ '매독': {str(y): {'why': 'sentinel',
+                   'note': '표본감시 구간이다. 자료가 없는 게 아니라 지정 표본기관 572개소만 신고했다 — 전수 수치와 분모가 다르다.',
+                   'ref': v} for y, v in [(2020, 354), (2021, 337), (2022, 401), (2023, None)]},
+ '코로나바이러스감염증-19': {
+   '2020': {'why': 'moved', 'note': '2020년 코로나19는 「신종감염병증후군」 행에 신고됐다(60,722건).', 'ref': 60722},
+   '2021': {'why': 'moved', 'note': '2021년 코로나19는 「신종감염병증후군」 행에 신고됐다(569,943건).', 'ref': 569943},
+   '2024': {'why': 'sentinel', 'note': '2023.8.31 제4급 전환 이후 표본감시(양성자 감시)라 전수표에 없다.', 'ref': None},
+   '2025': {'why': 'sentinel', 'note': '2023.8.31 제4급 전환 이후 표본감시(양성자 감시)라 전수표에 없다.', 'ref': None},
+ },
+}
+
+# ── 전 질병 공통 맥락 ──────────────────────────────────────────────────
+GLOBAL = [
+ {'from': '2020-01-01', 'to': '2020-01-01', 'kind': 'caution', 'title': '급(級) 체계 전면 개편',
+  'detail': '제1~5군+지정 → 제1~4급으로 재편되며 신고시기·격리수준 기준이 바뀌었다. 다수 감염병의 급이 재배치됐다.'},
+ {'from': '2020-01-01', 'to': '2022-12-31', 'kind': 'caution', 'title': '코로나19 방역조치(NPI) 구간',
+  'detail': '거리두기·마스크·의료이용 감소로 호흡기·수인성 감염병 신고가 전반적으로 억제됐다. 정의는 그대로지만 기저가 다르다.'},
+]
+
+# ── 조립 ──────────────────────────────────────────────────────────────
+merged = {}
+for r in rows:
+    n = r['감염병명']
+    if n.startswith('매독('):
+        continue
+    s = series(r)
+    if n in merged:                      # 엠폭스: 제2급·제3급 두 행 → 하나로 합침
+        for y in YEARS:
+            if merged[n]['series'][str(y)] is None:
+                merged[n]['series'][str(y)] = s[str(y)]
+        merged[n]['grade'] = '제3급'
+        continue
+    merged[n] = {'name': n, 'grade': r['급'], 'series': s, 'note': r['비고'],
+                 'breaks': BREAKS.get(n, []), 'gaps': GAPS.get(n, {})}
+
+mr = {r['감염병명']: r for r in rows if r['감염병명'].startswith('매독(')}
+
+
+def sum_stages(keys, strict=False):
+    """strict=True  : 한 병기라도 없으면 None (동일범위 축)
+       strict=False : 그해 존재한 병기만 합산 = 그해 공표 합계"""
+    out = {}
+    for y in YEARS:
+        vals = [mr[k][str(y)].strip() for k in keys]
+        have = [int(v) for v in vals if v != '-']
+        if strict:
+            out[str(y)] = None if len(have) != len(vals) else sum(have)
+        else:
+            out[str(y)] = sum(have) if have else None
+    return out
+
+
+merged['매독'] = {
+ 'name': '매독', 'grade': '제3급',
+ 'series': sum_stages(['매독(1기)', '매독(2기)', '매독(3기)', '매독(선천성)', '매독(잠복)']),
+ 'series_label': '그해 공표된 매독 합계 (그 시점의 신고범위 기준)',
+ 'note': '전수 구간만 표시. 2020~2023년은 표본감시라 전수표에 없다(참고 신고수 2020년 354, 2021년 337, 2022년 401건).',
+ 'breaks': BREAKS['매독'], 'gaps': GAPS['매독'],
+ 'recalc': {'label': '동일 신고범위 (1기 + 2기 + 선천성)',
+            'why': '2016~2019년과 2024~2025년에 공통으로 존재하는 범위만 남긴 값이다. 3기·잠복은 2024년에 신설됐으므로 빼야 두 구간이 같은 자를 쓴다.',
+            'series': sum_stages(['매독(1기)', '매독(2기)', '매독(선천성)'], strict=True),
+            'overlay': True},
+}
+
+diseases = sorted(merged.values(), key=lambda d: (d['grade'], d['name']))
+out = {'as_of': datetime.datetime.utcnow().strftime('%Y-%m-%dT%H:%MZ'),
+       'years': YEARS, 'global': GLOBAL, 'diseases': diseases,
+       'source': '질병관리청 「2025 감염병 신고 현황 연보」 붙임4 원문 + 급수변동 단절점 원장(16건)'}
+
+json.dump(out, open(OUT, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
+print('saved', OUT, os.path.getsize(OUT), 'bytes /', len(diseases), 'diseases /',
+      sum(len(d['breaks']) for d in diseases), 'breaks')
