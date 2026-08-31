@@ -195,6 +195,7 @@
       <span><i></i>신고수</span>
       <span class="cut"><i></i>단절점 — 선이 끊긴 곳은 이어서 읽으면 안 된다</span>
       <span class="ovl" id="ovlLegend" hidden><i></i>동일 신고범위 재계산</span>
+      <span class="cut" id="parLegend" hidden><i style="border:0;width:9px;height:9px;border-radius:50%;border:2px solid currentColor"></i>부분연도(12개월치 아님)</span>
     </div>
   </div>
 
@@ -320,6 +321,10 @@
         label='비교 불가 — ' + gy + '년에는 자료 자체가 없다';
         sub=gy + '년에는 이 감염병이 법정 전수감시 대상이 아니었다. 0건이 아니라 세지 않았다는 뜻이다.';
       }
+    } else if(d.partial && (d.partial[a] || d.partial[b])){
+      var py = d.partial[a] ? a : b;
+      cls='no'; label='비교 불가 — ' + py + '년은 부분연도다';
+      sub=d.partial[py] + ' 12개월치가 아닌 값을 연간값과 나란히 놓으면 그 자체로 과소 비교가 된다.';
     } else if(brk.length){
       cls='no'; label='비교 불가';
       sub='두 해 사이에 ' + (brk.length===1 ? '정의가 바뀐 지점이 있다' : '정의가 바뀐 지점이 ' + brk.length + '군데 있다')
@@ -387,6 +392,10 @@
               : '은 ' + gy2 + '년 당시 법정 전수감시 대상이 아니었으므로';
       fn = '「' + d.name + '」' + why2 + ' ' + a + '년과 ' + b + '년 수치를 직접 비교할 수 없다.';
       if(g2 && g2.ref != null) fn += ' (' + gy2 + '년 참고 신고수 ' + fmt(g2.ref) + '건)';
+    } else if(d.partial && (d.partial[a] || d.partial[b])){
+      var py2 = d.partial[a] ? a : b;
+      fn = d.name + '의 ' + py2 + '년 수치는 연중 일부 기간만 집계된 부분연도 값이어서 '
+         + a + '년과 ' + b + '년을 연간 단위로 직접 비교할 수 없다. ' + d.partial[py2];
     } else if(brk.length){
       fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건)은 직접 비교할 수 없다. '
          + brk.map(function(x){ return x.date.slice(0,10) + ' ' + x.title; }).join('; ') + '. '
@@ -418,6 +427,11 @@
     var evNote = document.getElementById('evNote');
     var ev = document.getElementById('ev');
     var all = d.breaks.map(function(x){ return Object.assign({}, x, {scope:'질병'}); });
+    Object.keys(d.partial || {}).forEach(function(py3){
+      var item = {date:py3, kind:'break', title:py3 + '년은 부분연도', detail:d.partial[py3]};
+      all.push(item);
+      if((''+a) === py3 || (''+b) === py3) hits.push(item);
+    });
     if(hits.length){
       evNote.textContent = a + '–' + b + ' 구간에 걸리는 항목 ' + hits.length + '건.';
       ev.innerHTML = hits.map(card).join('');
@@ -443,6 +457,7 @@
       ? d.note
       : '2016–2025년 전수감시 신고수. 붉은 세로선에서 정의가 바뀌므로 선을 가로질러 읽지 않는다.';
     document.getElementById('ovlLegend').hidden = !(d.recalc && d.recalc.overlay);
+    document.getElementById('parLegend').hidden = !(d.partial && Object.keys(d.partial).length);
     draw(d, a, b);
   }
 
@@ -545,6 +560,15 @@
       if(sel){
         ctx.fillRect(x(i) - 9, T + ph + 23, 18, 1.5);
       }
+    });
+
+    // partial-year markers: open ring
+    Object.keys(d.partial || {}).forEach(function(py4){
+      var i = YEARS.indexOf(+py4), v = d.series[py4];
+      if(i < 0 || v == null) return;
+      ctx.beginPath(); ctx.arc(x(i), y(v), 4, 0, 6.284);
+      ctx.fillStyle = surf; ctx.fill();
+      ctx.strokeStyle = css('--seal'); ctx.lineWidth = 1.8; ctx.stroke();
     });
 
     // selected markers
