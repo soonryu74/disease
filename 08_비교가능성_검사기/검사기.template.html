@@ -159,7 +159,7 @@
 
 <div class="wrap">
   <header>
-    <p class="kicker">법정감염병 · 2016–2025 · 전수감시</p>
+    <p class="kicker">법정감염병 · 2016–2025 · 전수 + 표본감시</p>
     <h1>이 수치, 작년과<br>비교해도 되나요?</h1>
     <p class="lede">감염병 통계는 조용히 끊긴다. 급수가 바뀌고, 감시체계가 바뀌고, <b>무엇을 세는지</b>가 바뀐다.
       그 지점을 모르고 두 해를 나란히 놓으면 유행을 잘못 읽는다.
@@ -192,7 +192,7 @@
     <p class="pnote" id="chartNote"></p>
     <div class="cwrap"><canvas id="cv"></canvas></div>
     <div class="legend">
-      <span><i></i>신고수</span>
+      <span><i></i>신고수 (표본감시는 기관당 신고수)</span>
       <span class="cut"><i></i>단절점 — 선이 끊긴 곳은 이어서 읽으면 안 된다</span>
       <span class="ovl" id="ovlLegend" hidden><i></i>동일 신고범위 재계산</span>
       <span class="cut" id="parLegend" hidden><i style="border:0;width:9px;height:9px;border-radius:50%;border:2px solid currentColor"></i>부분연도(12개월치 아님)</span>
@@ -216,7 +216,7 @@
 
   <footer>
     <p><b>출처</b> — 질병관리청 「2025 감염병 신고 현황 연보」(2026.6 발간) 붙임4 전수감시 신고수 원문, 및 감염병예방법·질병관리청 고시 이력에서 직접 수집한 단절점 원장 16건.</p>
-    <p>수치는 <b>의료기관 신고 기준</b>이며 신고범위(환자·의사환자·병원체보유자)는 질병마다 다르다. 표본감시(제4급) 감염병은 분모가 달라 이 표에 포함하지 않았다.</p>
+    <p>수치는 <b>의료기관 신고 기준</b>이며 신고범위(환자·의사환자·병원체보유자)는 질병마다 다르다. 표본감시(제4급)는 <b>기관당 신고수</b>(신고수 ÷ 참여기관수, 연보 정의) 축으로 수록했다 — 발생 총량이 아니다. 인플루엔자(절기·ILI 분율)와 내성균 4종(2012.10부터 분리율)은 연 단위 비교 자체가 성립하지 않아 그 사실을 판정으로 안내한다.</p>
     <p>참고용이다. 역학적 해석과 정책 판단은 원문과 전문가 확인을 거쳐야 한다. <span class="mono" id="asof"></span></p>
   </footer>
 </div>
@@ -235,9 +235,9 @@
   // ── populate controls, grouped by 급
   var groups = {};
   D.diseases.forEach(function(d){ (groups[d.grade] = groups[d.grade] || []).push(d); });
-  ['제1급','제2급','제3급'].forEach(function(g){
+  ['제1급','제2급','제3급','제4급'].forEach(function(g){
     if(!groups[g]) return;
-    var og = document.createElement('optgroup'); og.label = g + '감염병';
+    var og = document.createElement('optgroup'); og.label = g + '감염병' + (g === '제4급' ? ' — 표본감시(기관당 신고수)' : '');
     groups[g].forEach(function(d){
       var o = document.createElement('option'); o.value = d.name;
       var n = d.breaks.length;
@@ -294,11 +294,38 @@
     return out;
   }
 
+  function sv(d, y){ return d.mode === 'sentinel' ? d.series.rate[y] : d.series[y]; }
   function render(){
     var d = byName[elD.value];
     var a = +elA.value, b = +elB.value;
     var lo = Math.min(a,b), hi = Math.max(a,b);
-    var va = d.series[a], vb = d.series[b];
+    var isSent = d.mode === 'sentinel';
+
+    // special: 비교 축 자체가 없는 항목
+    if(d.mode === 'special'){
+      document.getElementById('verdict').innerHTML =
+        '<div class="verdict care"><div class="vtop"><span class="stamp"></span>'
+        + '<span class="vlabel">연도 비교 대상이 아니다</span></div>'
+        + '<p class="vsub">' + d.msg + '</p></div>';
+      document.getElementById('recalc').innerHTML = '';
+      document.getElementById('fnText').value = d.name + ' — ' + d.msg + ' [출처: 질병관리청 「2025 감염병 신고 현황 연보」]';
+      var btnS = document.getElementById('fnCopy'); btnS.dataset.done='0'; btnS.textContent='각주 복사';
+      document.getElementById('chartTitle').textContent = d.name;
+      document.getElementById('chartNote').textContent = '이 항목은 연 단위 신고수 시계열이 없어 그래프를 그리지 않는다.';
+      var cvEl = document.getElementById('cv'); cvEl.getContext('2d').clearRect(0,0,cvEl.width,cvEl.height); cur = null;
+      document.getElementById('ovlLegend').hidden = true; document.getElementById('parLegend').hidden = true;
+      document.getElementById('evNote').textContent = '이 항목에 기록된 단절점.';
+      document.getElementById('ev').innerHTML = d.breaks.map(function(x){
+        var isBr = x.kind === 'break';
+        return '<div class="ecard ' + (isBr?'br':'ca') + '"><div class="edate">' + x.date
+          + '<span class="etype">' + (isBr?'정의 변경':'해석 주의') + '</span></div>'
+          + '<div><p class="etitle">' + x.title + '</p><p class="edetail">' + x.detail + '</p>'
+          + (x.legal?'<p class="elegal">근거 · ' + x.legal + '</p>':'') + '</div></div>';
+      }).join('');
+      return;
+    }
+
+    var va = sv(d, a), vb = sv(d, b);
     var hits = a === b ? [] : crossed(d, lo, hi);
     var brk = hits.filter(function(h){ return h.kind === 'break'; });
     var care = hits.filter(function(h){ return h.kind === 'caution'; });
@@ -319,7 +346,8 @@
         sub=g.note + ' 표에서 이 줄만 보면 0으로 보이지만 실제로는 다른 줄에 있다.';
       } else {
         label='비교 불가 — ' + gy + '년에는 자료 자체가 없다';
-        sub=gy + '년에는 이 감염병이 법정 전수감시 대상이 아니었다. 0건이 아니라 세지 않았다는 뜻이다.';
+        sub=(g && g.note) ? g.note + ' 0건이 아니라 세지 않았다는 뜻이다.'
+            : gy + '년에는 이 감염병이 법정 감시 대상이 아니었다. 0건이 아니라 세지 않았다는 뜻이다.';
       }
     } else if(d.partial && (d.partial[a] || d.partial[b])){
       var py = d.partial[a] ? a : b;
@@ -334,18 +362,26 @@
       sub='정의는 같아서 수치를 나란히 놓을 수는 있다. 다만 기저 조건이 달라 증감을 곧바로 유행 변화로 읽으면 안 된다.';
     } else {
       cls='ok'; label='비교 가능';
-      sub='두 해 사이에 급수·감시체계·신고범위 변경이 없다. 증감을 발생 변화로 해석해도 된다.';
+      sub=isSent
+        ? '두 해 사이에 감시군 정의·지정기준 변경이 없다. 단, 표본감시이므로 비교 단위는 발생 총량이 아니라 기관당 신고수다.'
+        : '두 해 사이에 급수·감시체계·신고범위 변경이 없다. 증감을 발생 변화로 해석해도 된다.';
     }
 
     var pct = (!missing && va > 0 && a !== b) ? ((vb - va) / va * 100) : null;
     var pctTxt = pct == null ? '' : (pct >= 0 ? '+' : '−') + Math.abs(pct).toFixed(1) + '%';
 
+    var unit = isSent ? ' <small style="font-size:.55em;font-weight:500">/기관</small>' : '';
+    function sub2(y){
+      if(!isSent) return '';
+      var c = d.series.cases[y], n = d.series.sent[y];
+      return '<span class="y" style="margin-top:3px">신고 ' + fmt(c) + ' · 지정 ' + fmt(n) + '개소</span>';
+    }
     var figs = '';
     if(a !== b){
       figs = '<div class="figs">'
-        + '<div class="fig"><span class="y">' + a + '</span><span class="n">' + fmt(va) + '</span></div>'
+        + '<div class="fig"><span class="y">' + a + '</span><span class="n">' + fmt(va) + unit + '</span>' + sub2(a) + '</div>'
         + '<span class="arrow">→</span>'
-        + '<div class="fig"><span class="y">' + b + '</span><span class="n">' + fmt(vb) + '</span></div>'
+        + '<div class="fig"><span class="y">' + b + '</span><span class="n">' + fmt(vb) + unit + '</span>' + sub2(b) + '</div>'
         + (pct == null ? ''
             : '<span class="delta' + (cls === 'no' ? ' void' : '') + '">' + pctTxt + '</span>'
               + (cls === 'no' ? '<span class="voidnote">이 증감률은 쓰면 안 된다</span>' : ''))
@@ -389,25 +425,29 @@
             ? '은 ' + gy2 + '년에 표본감시 구간(지정 표본기관만 신고)이어서 전수 수치와 분모가 다르므로'
             : (g2 && g2.why === 'moved')
               ? '는 ' + gy2 + '년에 다른 신고 항목으로 집계되었으므로'
-              : '은 ' + gy2 + '년 당시 법정 전수감시 대상이 아니었으므로';
+              : '은 ' + gy2 + '년 당시 법정 감시 대상이 아니었으므로';
       fn = '「' + d.name + '」' + why2 + ' ' + a + '년과 ' + b + '년 수치를 직접 비교할 수 없다.';
+      if(g2 && g2.why !== 'sentinel' && g2.why !== 'moved' && g2.note) fn += ' ' + g2.note;
       if(g2 && g2.ref != null) fn += ' (' + gy2 + '년 참고 신고수 ' + fmt(g2.ref) + '건)';
     } else if(d.partial && (d.partial[a] || d.partial[b])){
       var py2 = d.partial[a] ? a : b;
       fn = d.name + '의 ' + py2 + '년 수치는 연중 일부 기간만 집계된 부분연도 값이어서 '
          + a + '년과 ' + b + '년을 연간 단위로 직접 비교할 수 없다. ' + d.partial[py2];
     } else if(brk.length){
-      fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건)은 직접 비교할 수 없다. '
+      var u2 = isSent ? '건/기관' : '건';
+      fn = d.name + '의 ' + a + '년(' + fmt(va) + u2 + ')과 ' + b + '년(' + fmt(vb) + u2 + ')은 직접 비교할 수 없다. '
          + brk.map(function(x){ return x.date.slice(0,10) + ' ' + x.title; }).join('; ') + '. '
          + '따라서 이 구간의 증감률은 발생 변화가 아니라 제도 변경을 반영한다.'
          + (d.recalc && d.recalc.series[a] != null && d.recalc.series[b] != null
              ? ' ' + d.recalc.label + ' 기준으로는 ' + fmt(d.recalc.series[a]) + '건 → ' + fmt(d.recalc.series[b]) + '건이다.' : '');
     } else if(care.length){
-      fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건)은 신고 정의가 동일해 비교 가능하다('
+      fn = d.name + '의 ' + a + '년(' + fmt(va) + (isSent ? '건/기관' : '건') + ')과 ' + b + '년(' + fmt(vb) + (isSent ? '건/기관' : '건') + ')은 신고 정의가 동일해 비교 가능하다('
          + pctTxt + '). 다만 ' + care.map(function(x){ return x.title; }).join(', ')
          + '을(를) 고려해 해석해야 한다.';
     } else {
-      fn = d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건) 사이에는 급수·감시체계·신고범위 변경이 없어 '
+      fn = isSent
+        ? d.name + '의 표본감시 기관당 신고수는 ' + a + '년 ' + fmt(va) + '건/기관에서 ' + b + '년 ' + fmt(vb) + '건/기관으로 변화했다(' + pctTxt + '). 표본감시 자료이므로 발생 총량이 아니라 참여기관당 신고 경향을 나타낸다.'
+        : d.name + '의 ' + a + '년(' + fmt(va) + '건)과 ' + b + '년(' + fmt(vb) + '건) 사이에는 급수·감시체계·신고범위 변경이 없어 '
          + '직접 비교할 수 있다(' + pctTxt + ').';
     }
     var rcEl = document.querySelector('.recalc');
@@ -452,7 +492,7 @@
     }
 
     // ── 차트
-    document.getElementById('chartTitle').textContent = d.name + ' — 연도별 신고수';
+    document.getElementById('chartTitle').textContent = d.name + (d.mode === 'sentinel' ? ' — 기관당 신고수(표본감시)' : ' — 연도별 신고수');
     document.getElementById('chartNote').textContent = d.note
       ? d.note
       : '2016–2025년 전수감시 신고수. 붉은 세로선에서 정의가 바뀌므로 선을 가로질러 읽지 않는다.';
@@ -479,7 +519,8 @@
     var L = 26, R = 26, T = 24, Bm = 32;
     var pw = W - L - R, ph = H - T - Bm;
 
-    var vals = YEARS.map(function(y){ return d.series[y]; });
+    var isSentC = d.mode === 'sentinel';
+    var vals = YEARS.map(function(y){ return isSentC ? d.series.rate[y] : d.series[y]; });
     var nums = vals.filter(function(v){ return v != null; });
     var max = nums.length ? Math.max.apply(null, nums) : 1;
     if(max <= 0) max = 1;
@@ -564,7 +605,7 @@
 
     // partial-year markers: open ring
     Object.keys(d.partial || {}).forEach(function(py4){
-      var i = YEARS.indexOf(+py4), v = d.series[py4];
+      var i = YEARS.indexOf(+py4), v = isSentC ? d.series.rate[py4] : d.series[py4];
       if(i < 0 || v == null) return;
       ctx.beginPath(); ctx.arc(x(i), y(v), 4, 0, 6.284);
       ctx.fillStyle = surf; ctx.fill();
@@ -573,7 +614,7 @@
 
     // selected markers
     [a, b].forEach(function(yr){
-      var i = YEARS.indexOf(yr), v = d.series[yr];
+      var i = YEARS.indexOf(yr), v = isSentC ? d.series.rate[yr] : d.series[yr];
       if(i < 0 || v == null) return;
       ctx.beginPath(); ctx.arc(x(i), y(v), 5.5, 0, 6.284);
       ctx.fillStyle = surf; ctx.fill();
