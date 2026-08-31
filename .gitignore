@@ -1,0 +1,6 @@
+# Netlify CLI 로컬 링크 상태 (siteId는 netlify.toml 주석·문서에 기록)
+.netlify/
+
+# 파이썬
+__pycache__/
+*.pyc

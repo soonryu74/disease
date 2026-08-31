@@ -1,5 +1,9 @@
 # 감염병 자료 아카이브 통합 포털
 # portal/ 을 정적 사이트로 배포 (빌드 불필요)
+# Netlify site: infection-dashboard-kr  (https://infection-dashboard-kr.netlify.app)
+# siteId: 18d32adb-ac3d-481c-ade9-b1e07b6eb8a3
+# 재배포: npx -y @netlify/mcp@latest --site-id <siteId> ... (MCP deploy-site로 명령 발급)
+# 주의: 2026-08-31 배포 시도는 "account credit usage exceeded"로 스킵됨 — 크레딧 회복 후 재시도
 [build]
   publish = "portal"
   command = ""
