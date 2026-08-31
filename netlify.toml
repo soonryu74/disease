@@ -1,0 +1,11 @@
+# 감염병 자료 아카이브 통합 포털
+# portal/ 을 정적 사이트로 배포 (빌드 불필요)
+[build]
+  publish = "portal"
+  command = ""
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
