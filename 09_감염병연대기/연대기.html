@@ -1,0 +1,432 @@
+<title>감염병 연대기</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
+<style>
+  :root{
+    --paper:#F3F4F1; --surface:#FFFFFF; --surface-2:#EAECE7; --sunk:#E3E6E0;
+    --ink:#191C1A; --muted:#6A716C; --faint:#949A94;
+    --line:#DCDFDA; --line-firm:#C3C8C0;
+    --seal:#B3232B; --seal-soft:#F6E5E4; --seal-ink:#8E1A21;
+    --clear:#2E6B4E; --clear-soft:#E1EDE5; --clear-ink:#245740;
+    --caution:#9C6B15; --caution-soft:#F5EBD8; --caution-ink:#7A5310;
+    --g1:#8E1A21; --g2:#A85A18; --g3:#3D6B8E; --g4:#4E7D63; --gx:#7A8480;
+    --shadow:0 1px 2px rgba(25,28,26,.05), 0 10px 30px rgba(25,28,26,.07);
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --paper:#131614; --surface:#1B1F1D; --surface-2:#232825; --sunk:#0E110F;
+    --ink:#E7EAE6; --muted:#98A09A; --faint:#6E766F;
+    --line:#2A2F2C; --line-firm:#3A403C;
+    --seal:#E5717A; --seal-soft:#341A1C; --seal-ink:#F2A3A8;
+    --clear:#6FBF95; --clear-soft:#15291F; --clear-ink:#9BD8B7;
+    --caution:#D6A548; --caution-soft:#2C2415; --caution-ink:#E8C989;
+    --g1:#E5717A; --g2:#DFA163; --g3:#7FB1D6; --g4:#82BC9E; --gx:#8B948F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.45);
+  }}
+  :root[data-theme="dark"]{
+    --paper:#131614; --surface:#1B1F1D; --surface-2:#232825; --sunk:#0E110F;
+    --ink:#E7EAE6; --muted:#98A09A; --faint:#6E766F;
+    --line:#2A2F2C; --line-firm:#3A403C;
+    --seal:#E5717A; --seal-soft:#341A1C; --seal-ink:#F2A3A8;
+    --clear:#6FBF95; --clear-soft:#15291F; --clear-ink:#9BD8B7;
+    --caution:#D6A548; --caution-soft:#2C2415; --caution-ink:#E8C989;
+    --g1:#E5717A; --g2:#DFA163; --g3:#7FB1D6; --g4:#82BC9E; --gx:#8B948F;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.45);
+  }
+
+  *{box-sizing:border-box}
+  body,h1,h2,h3,p,label,li,td,th{word-break:keep-all;overflow-wrap:anywhere}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;
+    line-height:1.62;letter-spacing:-.005em;-webkit-font-smoothing:antialiased}
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
+  .wrap{max-width:980px;margin:0 auto;padding:0 22px}
+  a{color:var(--ink)}
+  :focus-visible{outline:2px solid var(--seal);outline-offset:2px;border-radius:3px}
+
+  nav{position:sticky;top:0;z-index:40;background:color-mix(in srgb,var(--paper) 90%,transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:980px;margin:0 auto;padding:11px 22px;display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+  nav .brand{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:15px;margin-right:auto}
+  nav .brand .seal{color:var(--seal)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;text-decoration:none;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+
+  header{padding:52px 0 30px}
+  .kicker{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--seal);
+    font-weight:600;margin:0 0 14px;font-family:'IBM Plex Mono',monospace}
+  h1{font-family:'Gowun Batang',Batang,serif;font-weight:700;
+    font-size:clamp(34px,6.4vw,56px);line-height:1.1;margin:0;letter-spacing:-.02em;text-wrap:balance}
+  .lede{color:var(--muted);font-size:15.5px;max-width:64ch;margin:18px 0 0;text-wrap:pretty}
+  .lede b{color:var(--ink);font-weight:600}
+
+  section{padding:26px 0 6px}
+  .shead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin:0 0 4px}
+  .shead h2{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:clamp(20px,3vw,25px);margin:0}
+  .sno{font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;color:var(--seal);letter-spacing:.06em}
+  .sdesc{color:var(--muted);font-size:14px;margin:2px 0 18px;max-width:68ch}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:22px 24px;box-shadow:var(--shadow);margin-bottom:18px}
+
+  /* ── 타임머신 컨트롤 ── */
+  .tm-ctrl{display:grid;grid-template-columns:minmax(230px,300px) 1fr;gap:18px 26px;align-items:end}
+  .fld label{display:block;font-size:11px;letter-spacing:.11em;text-transform:uppercase;color:var(--faint);font-weight:600;margin-bottom:5px}
+  select{width:100%;appearance:none;background:var(--surface);color:var(--ink);
+    border:1px solid var(--line-firm);border-radius:9px;padding:10px 30px 10px 12px;
+    font:500 14px/1.3 'IBM Plex Sans KR',system-ui,sans-serif;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+    background-position:calc(100% - 17px) 50%,calc(100% - 12px) 50%;
+    background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+  .datebox{display:flex;align-items:baseline;gap:10px}
+  .dateval{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:clamp(22px,3.4vw,30px);min-width:6.4em}
+  input[type=range]{width:100%;accent-color:var(--seal);cursor:pointer}
+  .epochs{display:flex;justify-content:space-between;margin-top:4px;font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px;color:var(--faint)}
+
+  /* ── 페이즈 밴드 ── */
+  .band{position:relative;height:40px;border-radius:8px;overflow:hidden;background:var(--sunk);
+    border:1px solid var(--line);margin:16px 0 6px}
+  .seg{position:absolute;top:0;bottom:0}
+  .seg.s급1{background:var(--g1)} .seg.s급2{background:var(--g2)}
+  .seg.s급3{background:var(--g3)} .seg.s급4{background:var(--g4)}
+  .seg.s군{background:color-mix(in srgb,var(--g3) 55%,var(--sunk))}
+  .seg.s지정{background:color-mix(in srgb,var(--gx) 55%,var(--sunk))}
+  .seg.s없음{background:transparent}
+  .seg.s미정{background:repeating-linear-gradient(45deg,var(--sunk),var(--sunk) 5px,var(--surface-2) 5px,var(--surface-2) 10px)}
+  .cursorline{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);z-index:3}
+  .cursorline:after{content:'';position:absolute;top:-5px;left:-4px;width:10px;height:10px;border-radius:50%;background:var(--ink)}
+  .bandlab{display:flex;justify-content:space-between;font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint)}
+  .bandlegend{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;font-size:11.5px;color:var(--muted)}
+  .bandlegend i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+
+  /* ── 사실 카드 ── */
+  .fact{border-radius:16px;border:1px solid var(--line);background:var(--surface);
+    box-shadow:var(--shadow);padding:24px 26px;margin-top:16px}
+  .fact-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:4px}
+  .badge{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:clamp(20px,3vw,26px);
+    padding:2px 14px;border-radius:10px;color:#fff}
+  .badge.s급1{background:var(--g1)} .badge.s급2{background:var(--g2)}
+  .badge.s급3{background:var(--g3)} .badge.s급4{background:var(--g4)}
+  .badge.s군,.badge.s지정{background:var(--gx)}
+  .badge.s없음,.badge.s미정{background:var(--faint)}
+  .fact-name{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:clamp(19px,2.8vw,24px)}
+  .fact-period{margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:12.5px;color:var(--muted)}
+  .aka{font-size:13px;color:var(--muted);margin:2px 0 14px}
+  .aka b{color:var(--ink)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px 22px;
+    border-top:1px solid var(--line);padding-top:16px}
+  .cell .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:600}
+  .cell .v{font-size:14.5px;font-weight:500;margin-top:1px}
+  .fact-note{margin:16px 0 0;font-size:13px;color:var(--muted);border-left:3px solid var(--line-firm);padding-left:12px}
+  .fact-legal{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);margin-top:12px}
+  .warnbox{margin-top:14px;background:var(--seal-soft);color:var(--seal-ink);border:1px solid var(--seal);
+    border-radius:11px;padding:12px 15px;font-size:13.5px}
+  .jumps{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+  .jump{font:600 12px 'IBM Plex Sans KR',sans-serif;background:var(--surface-2);color:var(--muted);
+    border:1px solid var(--line);border-radius:999px;padding:5px 12px;cursor:pointer}
+  .jump:hover{color:var(--ink);border-color:var(--line-firm)}
+
+  /* ── 단절점 지도 ── */
+  .map{display:flex;align-items:flex-end;gap:4px;height:150px;padding:6px 2px 0}
+  .ycol{flex:1;display:flex;flex-direction:column-reverse;align-items:center;gap:3px;cursor:pointer;
+    border-radius:6px;padding:4px 0}
+  .ycol:hover,.ycol.on{background:var(--surface-2)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--seal);flex:none}
+  .maplab{display:flex;gap:4px;font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--faint)}
+  .maplab span{flex:1;text-align:center}
+  .maplist{margin-top:14px;border-top:1px solid var(--line);padding-top:12px;font-size:13.5px}
+  .maplist .mi{display:grid;grid-template-columns:88px 1fr;gap:12px;padding:6px 0}
+  .maplist .md{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--seal);padding-top:2px}
+  .maplist .mt b{font-weight:600}
+  .maplist .mt span{color:var(--muted)}
+
+  /* ── 도구 카드 ── */
+  .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+  .tool{display:block;text-decoration:none;background:var(--surface);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px;box-shadow:var(--shadow)}
+  .tool:hover{border-color:var(--line-firm)}
+  .tool h3{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:16px;margin:0 0 4px}
+  .tool p{font-size:13px;color:var(--muted);margin:0}
+  .tool .go{display:inline-block;margin-top:10px;font-size:12.5px;font-weight:700;color:var(--seal-ink)}
+
+  /* ── 오류 원장 ── */
+  .errwrap{overflow-x:auto}
+  table{width:100%;border-collapse:collapse;font-size:13.5px}
+  th{font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);text-align:left;
+    padding:7px 12px;border-bottom:1px solid var(--line-firm)}
+  td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.sev{white-space:nowrap;font-weight:600}
+  .sevchip{font-size:11px;font-weight:700;padding:2px 9px;border-radius:999px;background:var(--seal-soft);color:var(--seal-ink)}
+
+  footer{border-top:1px solid var(--line);margin-top:38px;padding:26px 0 60px;color:var(--faint);font-size:12.5px}
+  footer p{margin:0 0 7px;max-width:80ch}
+  .principle{font-family:'Gowun Batang',Batang,serif;font-size:15px;color:var(--muted);font-weight:700}
+
+  @media(max-width:680px){
+    .tm-ctrl{grid-template-columns:1fr}
+    .fact-period{margin-left:0;width:100%}
+    .map{height:120px}
+    .maplab span:nth-child(even){visibility:hidden}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<nav><div class="in">
+  <span class="brand">감염병 연대기<span class="seal">.</span></span>
+  <a href="#tm">타임머신</a><a href="#map">단절점 지도</a><a href="#tools">도구</a><a href="#err">오류 원장</a>
+</div></nav>
+
+<div class="wrap">
+  <header>
+    <p class="kicker">Korea Infectious Disease Chronicle · 1954–2026</p>
+    <h1>모든 사실에는<br>유효기간이 있다</h1>
+    <p class="lede">"매독은 몇 급인가요?"라는 질문에는 답이 없다. <b>"2019년의 매독은 제3군 전수감시, 2021년엔 제4급 표본감시, 지금은 제3급 전수감시"</b>가 답이다.
+      이름도, 급수도, 세는 방법도 계속 바뀌었다 — 이 플랫폼은 그 시간축을 통째로 들고 있어서, <b>날짜를 대면 그 시점의 사실</b>을 돌려준다.
+      대조하지 못한 구간은 빗금으로 남겨두고 추정하지 않는다.</p>
+  </header>
+
+  <section id="tm">
+    <div class="shead"><span class="sno">01</span><h2>타임머신</h2></div>
+    <p class="sdesc">질병을 고르고 날짜를 움직여 보라. 이름·급수·감시체계·신고 의무가 그 시점 기준으로 바뀐다.</p>
+    <div class="panel">
+      <div class="tm-ctrl">
+        <div class="fld"><label for="dz">감염병</label><select id="dz"></select></div>
+        <div class="fld">
+          <label for="dt">시점 <span class="mono" id="dtRange"></span></label>
+          <div class="datebox"><span class="dateval mono" id="dtVal"></span>
+            <input type="range" id="dt" min="0" max="875" step="1" aria-label="시점 선택">
+          </div>
+          <div class="epochs" id="epochTicks"></div>
+        </div>
+      </div>
+      <div class="band" id="band"></div>
+      <div class="bandlab"><span>1954</span><span>1970</span><span>1990</span><span>2010</span><span>2026</span></div>
+      <div class="bandlegend">
+        <span><i style="background:var(--g1)"></i>제1급</span>
+        <span><i style="background:var(--g2)"></i>제2급</span>
+        <span><i style="background:var(--g3)"></i>제3급</span>
+        <span><i style="background:var(--g4)"></i>제4급</span>
+        <span><i style="background:color-mix(in srgb,var(--g3) 55%,var(--sunk))"></i>군 체계</span>
+        <span><i style="background:color-mix(in srgb,var(--gx) 55%,var(--sunk))"></i>지정</span>
+        <span><i style="background:repeating-linear-gradient(45deg,var(--sunk),var(--sunk) 3px,var(--surface-2) 3px,var(--surface-2) 6px);border:1px solid var(--line)"></i>미정리(원문 대조 전)</span>
+      </div>
+      <div class="jumps" id="jumps"></div>
+    </div>
+    <div id="fact"></div>
+  </section>
+
+  <section id="map">
+    <div class="shead"><span class="sno">02</span><h2>단절점 지도</h2></div>
+    <p class="sdesc">통계가 끊긴 순간들 — 점 하나가 정의 변경 하나다. 연도를 누르면 그 해의 단절을 보여준다.</p>
+    <div class="panel">
+      <div class="map" id="mapCols"></div>
+      <div class="maplab" id="mapLab"></div>
+      <div class="maplist" id="mapList"></div>
+    </div>
+  </section>
+
+  <section id="tools">
+    <div class="shead"><span class="sno">03</span><h2>도구와 자료고</h2></div>
+    <p class="sdesc">연대기의 원장 위에서 돌아가는 도구들.</p>
+    <div class="tools">
+      <a class="tool" href="https://claude.ai/code/artifact/bcbf2999-af6b-45a0-9f20-4d2504ddeb50" target="_blank" rel="noopener">
+        <h3>🩺 단절점 검사기</h3>
+        <p>질병과 두 연도를 고르면 비교해도 되는지 판정하고, 안 된다면 이유·대체 비교값·인용 각주를 준다. 81개 항목.</p>
+        <span class="go">검사기 열기 →</span>
+      </a>
+      <a class="tool" href="https://claude.ai/code/artifact/b92f4396-92b2-4f70-b33c-112849e425e9" target="_blank" rel="noopener">
+        <h3>🗂 자료고 (통합 허브)</h3>
+        <p>감염병예방법 67버전 연혁, 91종 질병 도감, 지침 358건, 백서 19판 — 이 플랫폼의 근거 전체.</p>
+        <span class="go">자료고 열기 →</span>
+      </a>
+      <a class="tool" href="https://claude.ai/code/artifact/b0fb4b51-3197-4438-883e-b91caafd4595" target="_blank" rel="noopener">
+        <h3>🔬 인플루엔자 감시 100년</h3>
+        <p>아형 정권교체·백신 정합성·B/야마가타 멸종 — 절기 단위의 심층 대시보드.</p>
+        <span class="go">대시보드 열기 →</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="err">
+    <div class="shead"><span class="sno">04</span><h2>오류 원장</h2></div>
+    <p class="sdesc">이 플랫폼을 만들며 공식 자료에서 실측으로 확인한 오류들. 정부 자료를 그대로 옮기지 않고 대조했기 때문에 나온 목록이다.</p>
+    <div class="panel errwrap">
+      <table>
+        <thead><tr><th style="width:34%">출처</th><th>내용</th><th style="width:96px">유형</th></tr></thead>
+        <tbody id="errRows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <footer>
+    <p class="principle" id="principle"></p>
+    <p><b>출처</b> — <span id="srcline"></span></p>
+    <p>참고용이다. 법적·의학적 판단은 반드시 원문과 전문가 확인을 거쳐야 한다. <span class="mono" id="asof"></span></p>
+  </footer>
+</div>
+
+<script type="application/json" id="db">{"as_of":"2026-09-05T01:24Z","principle":"모든 사실에는 유효기간이 있다. 대조되지 않은 구간은 미정리로 표기하고 추정하지 않는다.","diseases":[{"id":"syphilis","name":"매독","icon":"🩸","names":[{"n":"매독","f":null,"t":null}],"phases":[{"from":null,"to":"2000-12","status":"미정리","note":"전염병예방법 시기(1954~2000)의 매독 관리 지위는 아직 원문 대조 전이다."},{"from":"2001-01","to":"2010-12","status":"지정전염병","surv":"표본감시","scope":"1기·2기·선천성 3종","legal":"2001 표본감시 도입","note":"보건소·시군구당 민간 2개소 지정 체계"},{"from":"2011-01","to":"2019-12","status":"제3군","surv":"전수감시","report":"지체없이 신고","scope":"1기·2기·선천성 3종","legal":"2010.12.30 법 전면 개정·시행"},{"from":"2020-01","to":"2023-12","status":"제4급","surv":"표본감시","report":"주 단위","scope":"1기·2기·선천성 3종","denom":"표본기관 572개소","legal":"2020.1.1 급 체계 개편","note":"익명 집계로 후퇴. 참고 신고수: 2020년 354·2021년 337·2022년 401건"},{"from":"2024-01","to":null,"status":"제3급","surv":"전수감시","report":"24시간 이내","iso":"격리 불요","scope":"5종(+조기잠복·3기)","denom":"전국 전 의료기관","legal":"법률 제19603호(2023.8.8 공포)","note":"실명 등록으로 전환. 2024년 2,790건 중 1,271건(45.6%)이 신규 편입분"}],"warn":{"2020":"표본 전환 첫해 — 2019년 이전과 비교 불가","2024":"체계 전환+범위 확대 동시 — \"폭증\" 서사는 자[尺]가 길어진 것. 동일범위 재계산: 2018년 2,280 → 2024년 1,519(△33.4%)"}},{"id":"covid","name":"코로나바이러스감염증-19","icon":"🦠","names":[{"n":"(존재하지 않음)","f":null,"t":"2019-12"},{"n":"우한폐렴·신종코로나(초기 언론명, 지양)","f":"2020-01","t":"2020-02"},{"n":"코로나바이러스감염증-19","f":"2020-02","t":null}],"phases":[{"from":null,"to":"2019-12","status":"비법정","note":"2019년 12월 이전에는 이 질병 자체가 알려지지 않았다."},{"from":"2020-01","to":"2022-04","status":"제1급","surv":"전수감시","report":"즉시","iso":"음압격리","scope":"신종감염병증후군 항목으로 신고","legal":"2020.1.20 제1급(신종감염병증후군) 지정","note":"통계는 「신종감염병증후군」 행에 실렸다(2020년 60,722·2021년 569,943건)"},{"from":"2022-04","to":"2023-08","status":"제2급","surv":"전수감시","report":"24시간 이내","iso":"격리","legal":"고시 개정(2022.4.25 관보)","note":"2022.4.5 고시로 신고 항목이 제2급 코로나19로 이동"},{"from":"2023-08","to":null,"status":"제4급","surv":"표본감시(양성자)","report":"주 1회","denom":"전국 표본감시기관","legal":"고시 개정(2023.8.31)","note":"일반의료체계 전환. 하수감시가 보완 지표"}],"warn":{"2022":"항목 이동(신종감염병증후군→코로나19) — 행이 바뀐다","2023":"8월 30일까지 8개월분 부분연도"}},{"id":"mpox","name":"엠폭스","icon":"🐒","names":[{"n":"(비법정 — 해외 질병)","f":null,"t":"2022-05"},{"n":"원숭이두창","f":"2022-06","t":"2022-11"},{"n":"엠폭스","f":"2022-12","t":null}],"phases":[{"from":null,"to":"2022-05","status":"비법정","note":"1970년대부터 아프리카에서 알려졌으나 국내 법정감염병은 아니었다."},{"from":"2022-06","to":"2023-12","status":"제2급","surv":"전수감시","report":"24시간 이내","iso":"격리 의무","scope":"환자·의사환자","legal":"고시 제2022-10호(2022.6.8)","note":"국내 첫 환자 2022.6.22. 2022.12 WHO 권고로 명칭 변경"},{"from":"2024-01","to":null,"status":"제3급","surv":"전수감시","report":"24시간 이내","iso":"격리 해제(일반의료체계)","legal":"고시 개정(2024.1.1)","note":"2024.5 관리 업무를 에이즈관리과로 이관(성매개 통합 접근)"}],"warn":{"2022":"6.8 지정 — 약 7개월분 부분연도","2024":"제2급→제3급, 연보 표에서 행이 이동"}},{"id":"hcv","name":"C형간염","icon":"💉","names":[{"n":"C형간염","f":null,"t":null}],"phases":[{"from":null,"to":"2000-12","status":"비법정","note":"2000년까지 법정 감시 대상이 아니었다."},{"from":"2001-01","to":"2017-05","status":"지정(감염병)","surv":"표본감시","denom":"표본기관 186개소","legal":"2001 지정","note":"일부 의료기관에만 보고 의무"},{"from":"2017-06","to":"2019-12","status":"제3군","surv":"전수감시","report":"지체없이 신고","denom":"전국 전 의료기관","legal":"2016.12 법 개정 → 2017.6.3 시행","note":"일회용 주사기 재사용 집단발생(2015~2016) 대응"},{"from":"2020-01","to":null,"status":"제3급","surv":"전수감시","report":"24시간 이내","denom":"전국 전 의료기관","legal":"2020.1.1 급 체계 개편","note":"2025년부터 56세 국가건강검진에 항체검사 도입"}],"warn":{"2017":"전수 전환이 6.3 — 약 7개월분 부분연도. KDCA 논문도 2018년부터 비교"}},{"id":"hev","name":"E형간염","icon":"🫁","names":[{"n":"E형간염","f":null,"t":null}],"phases":[{"from":null,"to":"2020-06","status":"비법정","note":"법정 감시 대상이 아니었다. 0건이 아니라 세지 않았다."},{"from":"2020-07","to":null,"status":"제2급","surv":"전수감시","report":"24시간 이내","iso":"격리","denom":"전국 전 의료기관","legal":"2019.12 법 개정 → 2020.7.1 시행","note":"신고는 2021년 494 → 2025년 915건으로 증가 추세"}],"warn":{"2020":"7.1 편입 — 6개월분 부분연도"}},{"id":"nipah","name":"니파바이러스감염증","icon":"🦇","names":[{"n":"(비법정 — 해외 질병)","f":null,"t":"2025-08"},{"n":"니파바이러스감염증","f":"2025-09","t":null}],"phases":[{"from":null,"to":"2025-08","status":"비법정","note":"2024 백서가 \"향후 추진계획\"으로 지정을 예고했고, 1년 만에 실행됐다."},{"from":"2025-09","to":null,"status":"제1급","surv":"전수감시","report":"즉시","iso":"음압격리","legal":"고시 제2025-10호(2025.9.8)","note":"인수공통감염병에도 동시 지정. 치명률 40~75%, BSL-4. 이 지정으로 제1급 17→18종"}],"warn":{"2025":"9.8 지정 — 약 4개월분 부분연도"}},{"id":"cauris","name":"칸디다 오리스 감염증","icon":"🍄","names":[{"n":"(비법정)","f":null,"t":"2026-02"},{"n":"칸디다 오리스 감염증","f":"2026-03","t":null}],"phases":[{"from":null,"to":"2026-02","status":"비법정"},{"from":"2026-03","to":null,"status":"제4급","surv":"표본감시","report":"7일 이내","denom":"표본기관 368개소","legal":"고시 제2026-3호(2026.3.29)","note":"진균 최초의 법정감염병. 의료관련감염병 동시 지정"}],"warn":{"2026":"3.29 지정 — 부분연도"}},{"id":"cre","name":"카바페넴내성장내세균목(CRE) 감염증","icon":"🧫","names":[{"n":"(비법정)","f":null,"t":"2010-11"},{"n":"카바페넴내성장내세균속균종(CRE) 감염증","f":"2010-12","t":"2023-11"},{"n":"카바페넴내성장내세균목(CRE) 감염증","f":"2023-12","t":null}],"phases":[{"from":null,"to":"2010-11","status":"비법정"},{"from":"2010-12","to":"2017-05","status":"지정감염병","surv":"표본감시","denom":"의료관련감염 표본기관(2011년 97개소~)","legal":"2010.12.30 법 전면 개정","note":"상급종합병원 중심 표본감시"},{"from":"2017-06","to":"2019-12","status":"제3군","surv":"전수감시","report":"지체없이 신고","scope":"환자(혈액)·병원체보유자","denom":"전국 전 의료기관","legal":"2017.6.3 전수 전환"},{"from":"2020-01","to":null,"status":"제2급","surv":"전수감시","report":"24시간 이내","scope":"환자(혈액)·병원체보유자 · CPE 추가신고","denom":"전국 전 의료기관","legal":"2020.1.1 급 체계 개편","note":"2024년 42,346 → 2025년 49,053건. 신고 최다 내성균"}],"warn":{"2017":"전수 전환 6.3 — 부분연도. KDCA 논문도 2018년부터 비교","2023":"12.14 명칭 변경(속균종→목) — 문헌 검색 시 두 이름 모두"}},{"id":"vrsa","name":"반코마이신내성황색포도알균(VRSA) 감염증","icon":"🧪","names":[{"n":"(비법정)","f":null,"t":"2000-07"},{"n":"반코마이신내성황색포도알균(VRSA) 감염증","f":"2000-08","t":null}],"phases":[{"from":null,"to":"2000-07","status":"비법정"},{"from":"2000-08","to":"2017-05","status":"지정(전염병→감염병)","surv":"표본감시","legal":"2000.8 지정"},{"from":"2017-06","to":"2019-12","status":"제3군","surv":"전수감시","report":"지체없이 신고","denom":"전국 전 의료기관","legal":"2017.6.3 전수 전환"},{"from":"2020-01","to":null,"status":"제2급","surv":"전수감시","report":"24시간 이내","scope":"VISA 포함(2019.4.30~) · 환자(혈액)·병원체보유자","denom":"전국 전 의료기관","legal":"2020.1.1 급 체계 개편","note":"VRSA 국내 보고 0건. 신고 전건이 VISA(전수 전환 후 누적 19건)"}],"warn":{"2017":"전수 전환 6.3 — 부분연도","2019":"4.30부터 VISA 포함 — 신고범위 확대"}},{"id":"tsutsu","name":"쯔쯔가무시증","icon":"🕷️","names":[{"n":"쯔쯔가무시증","f":null,"t":null}],"phases":[{"from":null,"to":"2019-12","status":"미정리","note":"군 체계 시기의 상세(제3군 편입 시점 등)는 아직 원문 대조 전이다."},{"from":"2020-01","to":"2024-12","status":"제3급","surv":"전수감시","report":"24시간 이내","scope":"가피 여부 무관","legal":"2020.1.1 급 체계 개편"},{"from":"2025-01","to":null,"status":"제3급","surv":"전수감시","report":"24시간 이내","scope":"가피(eschar) 형성 여부 포함 — 판정 엄격화","legal":"신고기준 개정(연보 명시)","note":"6,268(2024) → 3,405(2025). 감소분은 유행이 아니라 기준 변경"}],"warn":{"2025":"가피 기준 추가 — △45.7%를 방제 성과로 읽으면 틀린다"}},{"id":"hansen","name":"한센병","icon":"🕊️","names":[{"n":"나병(구 공식명)","f":null,"t":"1999-12"},{"n":"한센병","f":"2000-01","t":null}],"phases":[{"from":null,"to":"2019-12","status":"미정리","note":"전염병예방법·군 체계 시기의 관리 지위는 아직 원문 대조 전이다. 명칭은 2000년대 행정용어 순화로 나병→한센병."},{"from":"2020-01","to":null,"status":"제2급","surv":"전수감시","report":"24시간 이내","iso":"격리(치료 개시 후 완화)","legal":"2020.1.1 급 체계 개편","note":"MDT 복합화학요법으로 완치. 2024년 신고 5명 전원 외국인"}],"warn":{}},{"id":"hfrs","name":"신증후군출혈열","icon":"🐭","names":[{"n":"유행성출혈열·한국형출혈열(구칭)","f":null,"t":"1999-12"},{"n":"신증후군출혈열","f":"2000-01","t":null}],"phases":[{"from":null,"to":"2019-12","status":"미정리","note":"군 체계 시기 상세는 아직 원문 대조 전. 한국이 병원체(한탄바이러스) 발견국이다."},{"from":"2020-01","to":null,"status":"제3급","surv":"전수감시","report":"24시간 이내","legal":"2020.1.1 급 체계 개편","note":"575(2016) → 230건(2025) 감소 추세"}],"warn":{}}],"epochs":[{"y":"1954-02","t":"전염병예방법 제정","d":"종(種) 체계 — 제1·2·3종"},{"y":"2000-01","t":"전부개정","d":"군(群) 체계 도입"},{"y":"2010-12","t":"「감염병의 예방 및 관리에 관한 법률」 시행","d":"'전염병'→'감염병', 제1~5군+지정"},{"y":"2020-01","t":"급(級) 체계","d":"제1~4급 — 신고시기·격리수준 기준. 80종→86종"},{"y":"2020-09","t":"질병관리청 승격","d":"질병관리본부 → 질병관리청"},{"y":"2026-06","t":"현행 91종","d":"전수 67 + 표본 24 (고시 제2026-9호)"}],"errors":[{"src":"감염병 관리지침 #226","what":"표제 '중증열성혈소판증후군' — '감소' 누락(SFTS)","sev":"오탈자"},{"src":"감염병포털 · 마버그열","what":"감염경로 첫 줄에 '에볼라바이러스에 감염된…' 오기","sev":"내용 오류"},{"src":"감염병포털 · 남아메리카출혈열","what":"치명률란에 라싸열 수치가 복사됨","sev":"내용 오류"},{"src":"제1급 대응지침 · 크리미안콩고출혈열","what":"예방 항목 공란 + factsheet에 라싸열 문구 혼입","sev":"내용 오류"},{"src":"제1급 대응지침 · 리프트밸리열","what":"국내발생란에 CCHF 진드기 문구 혼입","sev":"내용 오류"},{"src":"감염병포털 · 동물인플루엔자","what":"구 법령 '제4군감염병' 표기 잔존(2020년 폐지된 체계)","sev":"구판 잔존"},{"src":"감염병포털 · 니파바이러스","what":"학명 'Paramyxiviridae' 오기(정: Paramyxoviridae)","sev":"오탈자"},{"src":"질병관리청백서 게시판","what":"2004~2011·2014-2015 백서 9판 — HTML 주석 처리·파일 404 (표지 이미지는 생존)","sev":"원문 유실"},{"src":"질병관리청백서 게시판","what":"2022년 백서[영문] 링크가 2023년 영문 PDF를 가리킴","sev":"링크 오류"},{"src":"백서 PDF (2020-2021~2024)","what":"글꼴 ToUnicode 미탑재 — 텍스트 추출·검색·스크린리더 불가","sev":"접근성"},{"src":"2024 백서 텍스트 대체자료","what":"제3권 부록(국가승인통계 14종) 결락 — 제작자 주 명시","sev":"범위 한계"},{"src":"백서 ↔ 연보","what":"2024년 제2급 신고수 152,586(백서) vs 156,117(연보) — 소급 보정 미표기","sev":"수치 불일치"}],"source":"감염병예방법·질병관리청 고시(법제처 API 원문), 「2025 감염병 신고 현황 연보」, PHWR, 급수변동 단절점 원장","breaks":[{"disease":"매독","date":"2011-01-01","title":"감시체계 전환 (지정→제3군)"},{"disease":"내성균 4종(VRE·MRSA·MRPA·MRAB)","date":"2012-10-01","title":"지표 변경 — 신고수 → 분리율(%)"},{"disease":"인플루엔자","date":"2013-01-01","title":"표본감시기관 854→200개소 대개편"},{"disease":"B형간염(급성)","date":"2016-01-07","title":"신고범위 축소 — 급성 B형간염만 집계"},{"disease":"B형간염","date":"2016-01-07","title":"신고범위·기준 변경 (제3급→제3급)"},{"disease":"반코마이신내성황색포도알균(VRSA) 감염증","date":"2017-06-03","title":"표본감시 → 전수감시"},{"disease":"카바페넴내성장내세균목(CRE) 감염증","date":"2017-06-03","title":"표본감시 → 전수감시"},{"disease":"C형간염","date":"2017-06-03","title":"표본감시 → 전수감시"},{"disease":"VRSA·CRE","date":"2017-06-03","title":"감시체계 전환 (제3군(당시)→제3군)"},{"disease":"장관감염증(계)","date":"2017-07-30","title":"표본감시기관 지정기준 변경 — 기관 수 약 2배 확대"},{"disease":"급성호흡기감염증(계)","date":"2017-07-30","title":"표본감시기관 지정기준 변경 — 기관 수 약 2배 확대"},{"disease":"엔테로바이러스 감염증","date":"2017-07-30","title":"표본감시기관 지정기준 변경 — 기관 수 약 2배 확대"},{"disease":"합병증을 동반한 수족구병","date":"2017-07-30","title":"표본감시기관 지정기준 변경 — 기관 수 약 2배 확대"},{"disease":"반코마이신내성황색포도알균(VRSA) 감염증","date":"2019-04-30","title":"신고범위 확대 — VISA(중등도내성) 포함"},{"disease":"반코마이신내성황색포도알균(VRSA)","date":"2019-04-30","title":"신고범위·기준 변경 (제3군→제3군)"},{"disease":"매독","date":"2020-01-01","title":"전수감시 → 표본감시 (제3군 → 제4급)"},{"disease":"성매개감염병(계)","date":"2020-01-01","title":"HPV 감염증이 성매개감염병 감시군에 추가"},{"disease":"신종감염병증후군","date":"2020-01-20","title":"코로나19가 이 항목으로 신고 개시"},{"disease":"코로나19","date":"2020-01-20","title":"신규 지정"},{"disease":"E형간염","date":"2020-07-01","title":"법정감염병 신규 편입 — 전수감시 개시"},{"disease":"신종감염병증후군","date":"2022-04-05","title":"코로나19가 제2급으로 이관"},{"disease":"코로나바이러스감염증-19","date":"2022-04-05","title":"신고 항목 이동 — 신종감염병증후군 → 제2급 코로나19"},{"disease":"코로나19","date":"2022-04-25","title":"급수 하향 (제1급→제2급)"},{"disease":"엠폭스","date":"2022-06-08","title":"제2급 신규 지정"},{"disease":"코로나바이러스감염증-19","date":"2023-08-31","title":"제2급 → 제4급, 전수 → 표본감시"},{"disease":"코로나19","date":"2023-08-31","title":"급수 하향 (제2급→제4급)"},{"disease":"매독","date":"2024-01-01","title":"표본감시 → 전수감시 + 신고범위 3종 → 5종"},{"disease":"엠폭스","date":"2024-01-01","title":"제2급 → 제3급 (연보 표에서 행이 이동)"},{"disease":"인플루엔자","date":"2024-01-01","title":"표본감시기관 196→299개소 확대"},{"disease":"쯔쯔가무시증","date":"2025-01-01","title":"신고기준에 가피(eschar) 형성 여부 포함"},{"disease":"니파바이러스감염증","date":"2025-09-08","title":"법정감염병 신규 지정"},{"disease":"칸디다오리스감염증","date":"2026-03-29","title":"신규 지정"}]}</script>
+<script>
+(function(){
+  "use strict";
+  var D = JSON.parse(document.getElementById('db').textContent);
+  var M0 = 1954*12;              // month index origin: 1954-01
+  var MMAX = 2026*12+11;         // 2026-12
+  var TOTAL = MMAX - M0;         // slider max
+
+  function mIdx(ym){             // 'YYYY-MM' -> month index (from 1954-01)
+    if(!ym) return null;
+    var p = ym.split('-');
+    return (+p[0])*12 + (+p[1]-1) - M0;
+  }
+  function mLabel(i){
+    var t = i + M0;
+    return Math.floor(t/12) + '년 ' + (t%12+1) + '월';
+  }
+  function segFrom(p){ return p.from ? mIdx(p.from) : 0; }
+  function segTo(p){ return p.to != null ? mIdx(p.to)+1 : TOTAL+1; }
+  function statusCls(s){
+    if(s.indexOf('제1급')===0) return 's급1';
+    if(s.indexOf('제2급')===0) return 's급2';
+    if(s.indexOf('제3급')===0) return 's급3';
+    if(s.indexOf('제4급')===0) return 's급4';
+    if(s.indexOf('군')>-1)    return 's군';
+    if(s.indexOf('지정')>-1)  return 's지정';
+    if(s==='비법정')          return 's없음';
+    return 's미정';
+  }
+
+  var elDz=document.getElementById('dz'), elDt=document.getElementById('dt');
+  elDt.max = TOTAL;
+  document.getElementById('dtRange').textContent='· 1954.1 ~ 2026.12';
+  D.diseases.forEach(function(d){
+    var o=document.createElement('option'); o.value=d.id; o.textContent=d.icon+' '+d.name;
+    elDz.appendChild(o);
+  });
+  var byId={}; D.diseases.forEach(function(d){ byId[d.id]=d; });
+  elDz.value='syphilis';
+  elDt.value = mIdx('2026-09');
+
+  // epoch ticks under slider
+  document.getElementById('epochTicks').innerHTML =
+    D.epochs.map(function(e){ return '<span title="'+e.t+' — '+e.d+'">'+e.y.slice(0,4)+'</span>'; }).join('');
+
+  function phaseAt(d,i){
+    for(var k=d.phases.length-1;k>=0;k--){
+      var p=d.phases[k];
+      if(i>=segFrom(p) && i<segTo(p)) return p;
+    }
+    return null;
+  }
+  function nameAt(d,i){
+    for(var k=d.names.length-1;k>=0;k--){
+      var n=d.names[k];
+      var f=n.f?mIdx(n.f):0, t=n.t!=null?mIdx(n.t)+1:TOTAL+1;
+      if(i>=f && i<t) return n.n;
+    }
+    return d.name;
+  }
+  function fmtYM(ym){ return ym ? ym.replace('-','.') : null; }
+
+  function render(){
+    var d=byId[elDz.value], i=+elDt.value;
+    document.getElementById('dtVal').textContent = mLabel(i);
+
+    // band
+    var band=document.getElementById('band'); band.innerHTML='';
+    d.phases.forEach(function(p){
+      var a=segFrom(p), b=segTo(p);
+      var el=document.createElement('div');
+      el.className='seg '+statusCls(p.status);
+      el.style.left=(a/TOTAL*100)+'%';
+      el.style.width=((b-a)/TOTAL*100)+'%';
+      el.title=(p.from?fmtYM(p.from):'…')+' ~ '+(p.to?fmtYM(p.to):'현재')+' · '+p.status;
+      band.appendChild(el);
+    });
+    var cur=document.createElement('div'); cur.className='cursorline';
+    cur.style.left='calc('+(i/TOTAL*100)+'% - 1px)';
+    band.appendChild(cur);
+
+    // jump chips = phase boundaries
+    var jumps=document.getElementById('jumps');
+    jumps.innerHTML='<span style="font-size:11px;color:var(--faint);align-self:center;font-weight:600">전환점 바로가기</span>'+
+      d.phases.filter(function(p){return p.from;}).map(function(p){
+        return '<button class="jump" data-i="'+segFrom(p)+'">'+fmtYM(p.from)+' '+p.status+'</button>';
+      }).join('');
+    jumps.querySelectorAll('.jump').forEach(function(b){
+      b.addEventListener('click',function(){ elDt.value=this.dataset.i; render(); });
+    });
+
+    // fact card
+    var p=phaseAt(d,i);
+    var nm=nameAt(d,i);
+    var yr=String(Math.floor((i+M0)/12));
+    var warn=d.warn&&d.warn[yr];
+    var cells='';
+    function cell(k,v){ if(v) cells+='<div class="cell"><div class="k">'+k+'</div><div class="v">'+v+'</div></div>'; }
+    cell('감시체계',p.surv); cell('신고',p.report); cell('격리',p.iso);
+    cell('신고범위',p.scope); cell('신고 주체·분모',p.denom);
+    var period=(p.from?fmtYM(p.from):'기록 이전')+' ~ '+(p.to?fmtYM(p.to):'현재');
+    document.getElementById('fact').innerHTML =
+      '<div class="fact">'
+      +'<div class="fact-top"><span class="badge '+statusCls(p.status)+'">'+p.status+'</span>'
+      +'<span class="fact-name">'+d.icon+' '+d.name+'</span>'
+      +'<span class="fact-period">'+period+'</span></div>'
+      +'<p class="aka">이 시점의 공식 명칭: <b>'+nm+'</b></p>'
+      +(cells?'<div class="grid">'+cells+'</div>':'')
+      +(p.note?'<p class="fact-note">'+p.note+'</p>':'')
+      +(p.legal?'<p class="fact-legal">근거 · '+p.legal+'</p>':'')
+      +(warn?'<div class="warnbox">⚠️ <b>'+yr+'년 통계를 읽을 때</b> — '+warn+'</div>':'')
+      +'</div>';
+  }
+
+  elDz.addEventListener('change',render);
+  elDt.addEventListener('input',render);
+
+  // ── 단절점 지도 ──
+  var YS=[]; for(var y=2010;y<=2026;y++) YS.push(y);
+  var byYear={};
+  D.breaks.forEach(function(b){
+    var y=+b.date.slice(0,4);
+    if(y<2010) return;
+    (byYear[y]=byYear[y]||[]).push(b);
+  });
+  var cols=document.getElementById('mapCols'), lab=document.getElementById('mapLab');
+  YS.forEach(function(y){
+    var c=document.createElement('div'); c.className='ycol'; c.dataset.y=y;
+    c.setAttribute('role','button'); c.setAttribute('tabindex','0');
+    c.setAttribute('aria-label',y+'년 단절점 '+((byYear[y]||[]).length)+'건');
+    (byYear[y]||[]).forEach(function(){ var d=document.createElement('div'); d.className='dot'; c.appendChild(d); });
+    cols.appendChild(c);
+    var s=document.createElement('span'); s.textContent=String(y).slice(2); lab.appendChild(s);
+  });
+  function showYear(y){
+    cols.querySelectorAll('.ycol').forEach(function(c){ c.classList.toggle('on',+c.dataset.y===y); });
+    var items=byYear[y]||[];
+    document.getElementById('mapList').innerHTML =
+      '<p style="margin:0 0 8px;font-weight:700;font-family:\'Gowun Batang\',serif">'+y+'년 — '+items.length+'건</p>'
+      + (items.length? items.map(function(b){
+          return '<div class="mi"><span class="md">'+b.date+'</span><span class="mt"><b>'+b.disease+'</b> — <span>'+b.title+'</span></span></div>';
+        }).join('') : '<p style="color:var(--muted);margin:0">이 해에 기록된 정의 변경이 없다.</p>');
+  }
+  cols.addEventListener('click',function(e){
+    var c=e.target.closest('.ycol'); if(c) showYear(+c.dataset.y);
+  });
+  cols.addEventListener('keydown',function(e){
+    if(e.key==='Enter'||e.key===' '){ var c=e.target.closest('.ycol'); if(c){ e.preventDefault(); showYear(+c.dataset.y);} }
+  });
+  showYear(2024);
+
+  // ── 오류 원장 ──
+  document.getElementById('errRows').innerHTML = D.errors.map(function(e){
+    return '<tr><td>'+e.src+'</td><td>'+e.what+'</td><td class="sev"><span class="sevchip">'+e.sev+'</span></td></tr>';
+  }).join('');
+
+  document.getElementById('principle').textContent='“'+D.principle+'”';
+  document.getElementById('srcline').textContent=D.source;
+  document.getElementById('asof').textContent='as-of '+D.as_of;
+
+  render();
+})();
+</script>
