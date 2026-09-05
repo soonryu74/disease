@@ -188,7 +188,7 @@
 
   <section id="tm">
     <div class="shead"><span class="sno">01</span><h2>타임머신</h2></div>
-    <p class="sdesc">질병을 고르고 날짜를 움직여 보라. 이름·급수·감시체계·신고 의무가 그 시점 기준으로 바뀐다.</p>
+    <p class="sdesc">법정감염병 <b>91종 전체</b>. 질병을 고르고 날짜를 움직여 보라 — 이름·급수·감시체계·신고 의무가 그 시점 기준으로 바뀐다. ⭐는 전 구간이 원문 대조된 12종이고, 나머지는 군급 매핑표·급별 표준 규정 기반이며 대조 전 구간은 빗금(미정리)이다.</p>
     <div class="panel">
       <div class="tm-ctrl">
         <div class="fld"><label for="dz">감염병</label><select id="dz"></select></div>
@@ -300,9 +300,22 @@
   var elDz=document.getElementById('dz'), elDt=document.getElementById('dt');
   elDt.max = TOTAL;
   document.getElementById('dtRange').textContent='· 1954.1 ~ 2026.12';
-  D.diseases.forEach(function(d){
-    var o=document.createElement('option'); o.value=d.id; o.textContent=d.icon+' '+d.name;
-    elDz.appendChild(o);
+  var GRADE_ORDER=['제1급','제2급','제3급','제4급'];
+  function curGrade(d){
+    for(var k=d.phases.length-1;k>=0;k--){
+      if(GRADE_ORDER.indexOf(d.phases[k].status)>-1) return d.phases[k].status;
+    }
+    return '제4급';
+  }
+  GRADE_ORDER.forEach(function(g){
+    var og=document.createElement('optgroup'); og.label=g+'감염병';
+    D.diseases.forEach(function(d){
+      if(curGrade(d)!==g) return;
+      var o=document.createElement('option'); o.value=d.id;
+      o.textContent=d.icon+' '+d.name+(d.auto?'':'  ⭐');
+      og.appendChild(o);
+    });
+    elDz.appendChild(og);
   });
   var byId={}; D.diseases.forEach(function(d){ byId[d.id]=d; });
   elDz.value='syphilis';
@@ -376,7 +389,7 @@
       +'<p class="aka">이 시점의 공식 명칭: <b>'+nm+'</b></p>'
       +(cells?'<div class="grid">'+cells+'</div>':'')
       +(p.note?'<p class="fact-note">'+p.note+'</p>':'')
-      +(p.legal?'<p class="fact-legal">근거 · '+p.legal+'</p>':'')
+      +(p.legal?'<p class="fact-legal">근거 · '+p.legal+(d.auto?' · <span style="opacity:.8">자동 생성(매핑표 기반)</span>':' · 전 구간 원문 대조 ⭐')+'</p>':'')
       +(warn?'<div class="warnbox">⚠️ <b>'+yr+'년 통계를 읽을 때</b> — '+warn+'</div>':'')
       +'</div>';
   }
