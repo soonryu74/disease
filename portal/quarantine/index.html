@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>검역관리지역</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
+    --grid:#E4EAE7; --mark:#0E6E63; --warn:#B23A3A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+    --grid:#22302C; --mark:#54B7AA; --warn:#E07A7A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+    --grid:#22302C; --mark:#54B7AA; --warn:#E07A7A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1000px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,44px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 6px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .tile .lab{font-size:11.5px;color:var(--muted);line-height:1.35}
+  .tile .big{font-size:clamp(24px,4vw,32px);font-weight:800;line-height:1.05;margin:6px 0 2px}
+  .tile .sub{font-size:11.5px;color:var(--faint)}
+
+  section{padding:26px 0 6px}
+  h2{font-size:clamp(18px,3vw,23px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:72ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+    box-shadow:var(--shadow);margin-bottom:16px}
+  .ctitle{font-size:14.5px;font-weight:700;margin:0 0 2px}
+  .cnote{font-size:12.5px;color:var(--faint);margin:0 0 12px}
+
+  svg{display:block;width:100%;overflow:visible}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .ax{fill:var(--faint);font-size:10.5px}
+  .stp{fill:none;stroke-width:2;stroke-linejoin:round}
+  .bk{stroke:var(--warn);stroke-width:1.5;stroke-dasharray:4 3}
+  .bkdot{fill:var(--warn)}
+  .pt2{stroke:var(--surface);stroke-width:2}
+  .lg{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:10px 0 2px}
+  .lg i{width:16px;height:3px;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:6px}
+
+  .dis{border:1px solid var(--line);border-left:4px solid var(--dc);border-radius:12px;padding:13px 15px;margin-bottom:10px;background:var(--surface)}
+  .dis h3{margin:0 0 2px;font-size:14.5px;font-weight:800;color:var(--dc)}
+  .dis .cnt{font-size:12px;color:var(--faint);font-weight:600;margin:0 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .chip .sub{color:var(--faint);font-size:11px}
+
+  .search{width:100%;font-size:16px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--line-strong);
+    background:var(--surface);color:var(--ink);outline:none}
+  .search:focus{border-color:var(--accent)}
+  .res{margin-top:12px}
+  .row{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .row .nm{font-weight:700;font-size:14px;min-width:130px}
+  .badge{font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;white-space:nowrap}
+  .bp{background:var(--warn);color:#fff}
+  .bg{background:var(--accent-soft);color:var(--accent-ink)}
+  .row .ds{font-size:12.5px;color:var(--muted);flex:1;min-width:200px}
+  .empty{color:var(--faint);font-size:14px;padding:20px 0;text-align:center;display:none}
+
+  .brk{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--surface);
+    border-left:4px solid var(--bc)}
+  .brk .d{font-size:12px;font-weight:800;color:var(--bc);letter-spacing:.02em}
+  .brk h3{margin:2px 0 4px;font-size:15px;font-weight:800}
+  .brk p{margin:0 0 6px;font-size:13.5px;color:var(--muted)}
+  .brk .imp{font-size:13px;background:var(--surface-2);border-radius:9px;padding:8px 11px;color:var(--ink)}
+
+  table{border-collapse:collapse;font-size:13px;width:100%}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{color:var(--muted);font-weight:700;font-size:11.5px;border-bottom:1.5px solid var(--line-strong)}
+  td.n{text-align:right;white-space:nowrap}
+  .tw{overflow-x:auto}
+  details.tbl{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  details.tbl summary{cursor:pointer;padding:11px 15px;font-size:13.5px;font-weight:700;color:var(--accent-ink)}
+  details.tbl .tw{padding:0 15px 14px}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 17px;font-size:13px;margin:16px 0}
+  .note ul{margin:6px 0 0;padding-left:18px}
+  .note li{margin:3px 0}
+  .warnbox{background:color-mix(in srgb,var(--warn) 12%,transparent);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);
+    border-radius:12px;padding:14px 17px;font-size:13.5px;margin:16px 0}
+  footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer .maker a{color:var(--accent-ink)}
+  @media(max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../checker/">🩺 검사기</a><a href="../dogam/">📖 도감</a><a href="../lab/">🔬 진단검사</a>
+<a href="../quarantine/">🛂 검역</a></div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Quarantine Designation</p>
+  <h1>검역관리지역</h1>
+  <p class="thesis">“이 나라, 지금 Q-CODE 내야 하나?”에는 <b>날짜 없이 답할 수 없다.</b>
+  「검역법」 제5조에 따라 질병관리청장이 지정하는 검역관리지역·중점검역관리지역은
+  <b>분기마다, 때로는 분기 도중에</b> 바뀐다. 이 축은 그 시점별 사실을 모아둔 것이다.</p>
+  <div class="tiles" id="tiles"></div>
+</header>
+
+<div class="warnbox" id="curwarn"></div>
+
+<section>
+  <h2>두 등급의 차이</h2>
+  <p class="sdesc">가장 자주 혼동되는 지점이다. 제출 의무의 범위가 다르다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>구분</th><th>뜻</th><th>Q-CODE 제출 의무</th></tr></thead>
+    <tbody id="defs"></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>지정 이력</h2>
+  <p class="sdesc">지정 국가 수의 시기별 추이. 빨간 세로선은 <b>단절점</b> — 그 앞뒤 숫자를 그대로 이으면 안 되는 지점이다.</p>
+  <div class="card">
+    <p class="ctitle">시기별 지정 국가 수</p>
+    <p class="cnote">2024년 상반기까지는 반기, 2025년부터 분기 단위. 중간 개정(rev)도 별도 시점으로 찍었다.</p>
+    <div id="chart"></div>
+    <div class="lg">
+      <span><i style="background:var(--s1)"></i>검역관리지역</span>
+      <span><i style="background:var(--s2)"></i>중점검역관리지역</span>
+      <span><i style="background:none;height:0;border-top:2px dashed var(--warn)"></i>단절점 (앞뒤를 이으면 안 되는 지점)</span>
+    </div>
+  </div>
+  <details class="tbl"><summary>표로 보기 — 시기별 지정 내역</summary><div class="tw" id="ptbl"></div></details>
+</section>
+
+<section>
+  <h2>단절점</h2>
+  <p class="sdesc">이 축을 시계열로 이을 때 반드시 알아야 할 네 지점.</p>
+  <div id="breaks"></div>
+</section>
+
+<section>
+  <h2>현행 중점검역관리지역</h2>
+  <p class="sdesc" id="prihead"></p>
+  <div id="pri"></div>
+</section>
+
+<section>
+  <h2>국가로 찾기</h2>
+  <p class="sdesc">나라 이름을 입력하면 그 나라가 어느 등급인지, 어떤 검역감염병 때문인지 나온다. 2026년 3분기(2026.7.1. 기준) 자료다.</p>
+  <input class="search" id="q" type="search" placeholder="나라 이름 (예: 베트남, 우간다, 미국)" autocomplete="off">
+  <div class="res" id="res"></div>
+  <div class="empty" id="empty">해당 나라는 2026년 3분기 지정 목록에 없다. 지정되지 않은 지역이거나, 원문 표기가 다를 수 있다.</div>
+</section>
+
+<section>
+  <h2>세계 상황과의 매칭</h2>
+  <p class="sdesc">이 축의 쓸모는 <b>“한국이 그때 무엇을 두려워했는가”의 분기별 기록</b>이라는 데 있다. 지정 변경은 대개 WHO·아프리카CDC의 판단을 1~3개월 시차로 따라간다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>시기</th><th>세계</th><th>한국의 국경 대응</th></tr></thead>
+    <tbody id="matched"></tbody>
+  </table></div>
+</section>
+
+<div class="note">
+  <b>한계 — 정직하게</b>
+  <ul id="unver"></ul>
+</div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div id="src"></div>
+  <div style="margin-top:8px">⚠️ 참고용 정리물이다. 실제 입국 시 의무는 <b>입국일 기준 현행 지정</b>을 질병관리청 Q-CODE 누리집에서 확인해야 한다.</div>
+</footer>
+</div>
+
+<script>
+const D = {"as_of":"2026-09-07","definitions":{"검역관리지역":"검역감염병이 유행하거나 유행할 우려가 있어 국내 유입 가능성이 있는 지역. 방문(체류·경유)자 중 '증상이 있는 사람'이 Q-CODE(또는 건강상태질문서) 제출 의무.","중점검역관리지역":"검역관리지역 중 유행 검역감염병이 치명적이고 감염력이 높아 집중 검역이 필요한 지역. 방문자는 '증상 유무와 무관하게' 전원 제출 의무."},"legal_basis":"「검역법」 제5조(검역관리지역등의 지정) — 질병관리청장이 검역전문위원회 심의를 거쳐 지정·해제. 제출 의무는 제2조·제12조의2, 위반 시 1천만원 이하 과태료.","breaks":[{"date":"2024-09-01","type":"break","title":"중점검역관리지역 제도 신설","detail":"이전에는 '검역관리지역' 단일 체계였다. 이 날부터 상위 등급인 중점검역관리지역(3종 21개국)이 생겼고, 검역감염병도 14종→18종으로 확대됐다(엠폭스·라싸열·크리미안콩고출혈열 신규).","impact":"2024.9. 이전과 이후의 '검역관리지역 국가 수'는 같은 뜻이 아니다. 시계열로 이으면 안 된다."},{"date":"2025-01-01","type":"break","title":"반기 지정 → 분기 지정 전환","detail":"질병관리청 보도자료: \"올해부터는 기존 반기마다 지정하던 중점·검역관리지역을 분기마다 지정하여 해외 감염병 발생 상황을 더욱 신속하게 반영\". 첫 분기 지정 시행일이 2025.1.1.","impact":"2024년까지는 연 2회, 2025년부터 연 4회. 갱신 주기가 바뀌었으므로 '변경 횟수'를 연도 간 비교하면 안 된다.","caveat":"같은 발표(2024.12.17.)를 Q-CODE 게시판은 '2025년 상반기'로 올렸다가 2월 개정 때 파일명이 '2025년 1분기'로 바뀌었다. 정정 경위를 밝힌 질병관리청 원문은 확인하지 못했다."},{"date":"2026-01-01","type":"break","title":"엠폭스 검역감염병 해제","detail":"WHO의 엠폭스 국제공중보건위기상황(PHEIC) 공식 종료를 반영. 2024.10.21. 검역관리지역에 추가됐던 엠폭스가 대상에서 빠졌다.","impact":"검역감염병 종수 변화(15종 유지)와 국가 수 감소(184→176개국)의 상당 부분이 이 해제 때문이다."},{"date":"2026-05-19","type":"caution","title":"에볼라 PHEIC → 분기 중 수시 개정","detail":"WHO의 에볼라 PHEIC 선언에 따라 2분기 도중 에볼라 중점검역관리지역 5개국(남수단·르완다·에티오피아·우간다·콩고민주공화국)이 추가돼 21→25개국이 됐다.","impact":"분기 시작일(4.1.) 자료만 보면 이 5개국을 놓친다."}],"periods":[{"period":"2024-H1","kind":"half","effective":"2024-01-01","priority":{"diseases":null,"countries":null,"note":"제도 없음"},"general":{"diseases":14,"countries":156},"source":"PHWR 17(15) — 질병관리청 발간","confidence":"질병관리청 발간물","note":"검역감염병 11종→14종 확대(뎅기열·치쿤구니야열·지카·홍역 추가). 검역관리지역 74→156개국."},{"period":"2024-H2","kind":"half","effective":"2024-09-01","priority":{"diseases":3,"countries":21},"general":{"diseases":18,"countries":157},"source":"PHWR 영문판(PMC12480098) · Q-CODE 공지","confidence":"질병관리청 발간물","note":"중점검역관리지역 제도 신설. 페스트 5 · 동물인플루엔자 인체감염증 5 · 중동호흡기증후군 13."},{"period":"2024-H2-rev","kind":"half","effective":"2024-10-21","priority":{"diseases":3,"countries":21},"general":{"diseases":18,"countries":null},"source":"Q-CODE 공지","confidence":"질병관리청 공지","note":"엠폭스를 검역관리지역에 추가. 추가 후 총 국가 수는 미확인."},{"period":"2025-Q1","kind":"quarter","effective":"2025-01-01","priority":{"diseases":3,"countries":19},"general":{"diseases":null,"countries":159},"source":"질병관리청 보도자료(2024.12.17.)","confidence":"질병관리청 보도자료","note":"첫 분기 단위 지정. 동물인플루엔자에서 영국 제외, 페스트 중점 5→2개국."},{"period":"2025-Q1-rev","kind":"quarter","effective":"2025-02-26","priority":{"diseases":3,"countries":19},"general":{"diseases":null,"countries":null},"source":"Q-CODE 공지","confidence":"질병관리청 공지","note":"에볼라바이러스병 관련 개정."},{"period":"2025-Q2","kind":"quarter","effective":"2025-04-01","priority":{"diseases":3,"countries":18},"general":{"diseases":15,"countries":167},"source":"질병관리청 안내 PDF · 보도자료","confidence":"질병관리청 원문","note":"멕시코 중점 해제. 검역관리지역에 엠폭스 15개국 포함."},{"period":"2025-Q3","kind":"quarter","effective":"2025-07-01","priority":{"diseases":3,"countries":20},"general":{"diseases":15,"countries":182},"source":"질병관리청 보도자료(2025.6.20.)","confidence":"질병관리청 보도자료","note":"방글라데시·베트남(남동부·메콩삼각주) 신규."},{"period":"2025-Q3-rev","kind":"quarter","effective":"2025-09-08","priority":{"diseases":null,"countries":20},"general":{"diseases":null,"countries":null},"source":"Q-CODE 공지","confidence":"질병관리청 공지","note":"분기 중 개정."},{"period":"2025-Q4","kind":"quarter","effective":"2025-10-01","priority":{"diseases":null,"countries":21},"general":{"diseases":null,"countries":null},"source":"Q-CODE 공지","confidence":"질병관리청 공지","note":"인도 추가. 검역관리지역 184개국은 2026-Q1 보도자료의 '8개국 감소' 문구에서 역산한 값으로 원문 미확인 — 채택하지 않는다."},{"period":"2026-Q1","kind":"quarter","effective":"2026-01-01","priority":{"diseases":null,"countries":24},"general":{"diseases":null,"countries":176},"source":"질병관리청 보도자료(2025.12.17.)","confidence":"질병관리청 보도자료","note":"에티오피아 마버그열 중점 신규. 엠폭스 검역감염병 해제."},{"period":"2026-Q1-rev","kind":"quarter","effective":"2026-02-12","priority":{"diseases":null,"countries":24},"general":{"diseases":null,"countries":null},"source":"질병관리청 공지 310091","confidence":"질병관리청 공지","note":"니파바이러스감염증 중점 신규 지정(인도·방글라데시)."},{"period":"2026-Q2","kind":"quarter","effective":"2026-04-01","priority":{"diseases":4,"countries":21},"general":{"diseases":null,"countries":172},"source":"질병관리청 보도자료 310527","confidence":"질병관리청 보도자료","note":"멕시코·베트남·에티오피아 중점 해제(마버그열 유행 종료 선언)."},{"period":"2026-Q2-rev","kind":"quarter","effective":"2026-05-26","priority":{"diseases":5,"countries":25},"general":{"diseases":null,"countries":null},"source":"Q-CODE 공지","confidence":"질병관리청 공지","note":"WHO 에볼라 PHEIC 선언에 따라 에볼라 중점 5개국 추가."},{"period":"2026-Q3","kind":"quarter","effective":"2026-07-01","priority":{"diseases":5,"countries":25},"general":{"diseases":15,"countries":173},"source":"질병관리청 공지 311514 + 안내 PDF","confidence":"원문 PDF 파싱·검산 완료","verified":true,"note":"본 저장소가 국가×감염병 매트릭스를 원문에서 복원하고 열별 국가 수를 공표치와 대조해 전부 일치를 확인한 유일한 시기. data/2026Q3_*.csv 참조."},{"period":"2026-Q3-rev","kind":"quarter","effective":"2026-09-07","priority":{"diseases":5,"countries":31},"general":{"diseases":15,"countries":172},"source":"질병관리청 공지 312514","confidence":"질병관리청 공지","note":"현행. 에볼라 중점 6개국 추가(부룬디·앙골라·잠비아·중앙아프리카공화국·콩고공화국·탄자니아), 검역관리지역에서 케냐 해제. 매트릭스 원문 대조는 미완료."}],"matched":[{"period":"2024-H2","world":"엠폭스 PHEIC 재선언(2024.8., WHO)","korea":"엠폭스·라싸열·크리미안콩고출혈열을 검역감염병에 추가하고 중점검역관리지역 제도 신설"},{"period":"2025-Q1~Q4","world":"북미·동아시아 고병원성 조류인플루엔자(H5N1) 확산","korea":"미국 주(州) 단위·중국 성(省) 단위 지정이 분기마다 재편 — 동물인플루엔자 인체감염증 중점 대상 지역이 가장 자주 바뀐 축"},{"period":"2026-Q1","world":"WHO 엠폭스 PHEIC 종료","korea":"엠폭스 검역감염병 해제, 검역관리지역 176개국으로 축소"},{"period":"2026-Q2~Q3","world":"WHO 에볼라 PHEIC 선언(2026.5.)","korea":"에볼라 중점 5개국 추가(5월) → 6개국 추가(9월)로 확대. 중점 25→31개국"}],"unverified":["2025-Q4 검역관리지역 국가 수(184개국은 역산값)","2025-Q1·Q3, 2026-Q1의 검역관리지역 감염병별 국가 수","2025-Q1 원본(1.1. 기준) 및 2025-Q3 원본(7.1. 기준) 국가 목록 — 개정본만 확보","2026-Q3 개정본(9.7.) 국가×감염병 매트릭스 원문 대조","각 분기 지정의 관보 고시 번호","2023년 이전 지정 내역(검역관리지역 74개국이었다는 비교값만 확인)"],"current":{"기준":"2026년 3분기(2026.7.1. 기준)","출처":"질병관리청 공지 「2026년 3분기 중점검역관리지역 및 검역관리지역 안내」","과태료":"1천만원 이하 과태료(검역법)","priority":{"니파바이러스감염증":["방글라데시","인도"],"동물인플루엔자인체감염증":["미국","방글라데시","인도","중국","캄보디아"],"에볼라바이러스병":["남수단","르완다","에티오피아","우간다","콩고민주공화국"],"중동호흡기증후군":["레바논","바레인","사우디아라비아","시리아","아랍에미리트","예멘","오만","요르단","이라크","이란","이스라엘","카타르","쿠웨이트"],"페스트":["마다가스카르","몽골","미국","콩고민주공화국"]},"sub":{},"general_counts":{"니파바이러스감염증":2,"뎅기열":106,"동물인플루엔자인체감염증":5,"라싸열":3,"마버그열":5,"에볼라바이러스병":12,"중동호흡기증후군":13,"지카바이러스감염증":15,"치쿤구니야열":38,"콜레라":34,"크리미안콩고출혈열":8,"페스트":4,"폴리오":18,"홍역":94,"황열":42}},"countries":{"방글라데시":{"p":["니파바이러스감염증","동물인플루엔자인체감염증"],"g":["동물인플루엔자인체감염증","콜레라","뎅기열","치쿤구니야열","지카바이러스감염증","니파바이러스감염증"]},"인도":{"p":["니파바이러스감염증","동물인플루엔자인체감염증"],"g":["동물인플루엔자인체감염증","콜레라","홍역","뎅기열","치쿤구니야열","니파바이러스감염증"]},"미국":{"p":["동물인플루엔자인체감염증","페스트"],"g":["동물인플루엔자인체감염증","페스트","홍역","뎅기열","치쿤구니야열"]},"중국":{"p":["동물인플루엔자인체감염증"],"g":["뎅기열","치쿤구니야열"]},"캄보디아":{"p":["동물인플루엔자인체감염증"],"g":["동물인플루엔자인체감염증","홍역","뎅기열"]},"남수단":{"p":["에볼라바이러스병"],"g":["에볼라바이러스병","콜레라","황열","폴리오","홍역"]},"르완다":{"p":["에볼라바이러스병"],"g":["에볼라바이러스병","콜레라","마버그열","홍역"]},"에티오피아":{"p":["에볼라바이러스병"],"g":["에볼라바이러스병","콜레라","황열","마버그열","폴리오","홍역","뎅기열"]},"우간다":{"p":["에볼라바이러스병"],"g":["에볼라바이러스병","콜레라","황열","마버그열","크리미안콩고출혈열","홍역"]},"콩고민주공화국":{"p":["에볼라바이러스병","페스트"],"g":["에볼라바이러스병","페스트","콜레라","황열","마버그열","폴리오","홍역"]},"레바논":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","홍역"]},"바레인":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군"]},"사우디아라비아":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","홍역"]},"시리아":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","콜레라","홍역"]},"아랍에미리트":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","홍역"]},"예멘":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","콜레라","폴리오","홍역"]},"오만":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군"]},"요르단":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군"]},"이라크":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","콜레라","크리미안콩고출혈열","홍역"]},"이란":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","뎅기열"]},"이스라엘":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","홍역"]},"카타르":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군","홍역"]},"쿠웨이트":{"p":["중동호흡기증후군"],"g":["중동호흡기증후군"]},"마다가스카르":{"p":["페스트"],"g":["페스트","폴리오","홍역","치쿤구니야열"]},"몽골":{"p":["페스트"],"g":["페스트","홍역"]},"가나":{"p":[],"g":["콜레라","황열","홍역","뎅기열"]},"가봉":{"p":[],"g":["황열","홍역"]},"가이아나":{"p":[],"g":["황열","뎅기열","치쿤구니야열"]},"감비아":{"p":[],"g":["황열","홍역"]},"과들루프":{"p":[],"g":["뎅기열"]},"과테말라":{"p":[],"g":["뎅기열","치쿤구니야열","지카바이러스감염증"]},"그레나다":{"p":[],"g":["뎅기열"]},"그리스":{"p":[],"g":["크리미안콩고출혈열"]},"기니":{"p":[],"g":["황열","라싸열","홍역","뎅기열"]},"기니비사우":{"p":[],"g":["황열","홍역"]},"나미비아":{"p":[],"g":["콜레라","홍역"]},"나우루":{"p":[],"g":["뎅기열"]},"나이지리아":{"p":[],"g":["콜레라","황열","라싸열","폴리오","홍역","뎅기열"]},"남아프리카공화국":{"p":[],"g":["홍역"]},"네덜란드":{"p":[],"g":["홍역"]},"네팔":{"p":[],"g":["콜레라","홍역","뎅기열"]},"뉴칼레도니아":{"p":[],"g":["뎅기열"]},"니제르":{"p":[],"g":["콜레라","황열","홍역"]},"니카라과":{"p":[],"g":["뎅기열"]},"대만":{"p":[],"g":["뎅기열"]},"도미니카공화국":{"p":[],"g":["뎅기열"]},"독일":{"p":[],"g":["홍역"]},"동티모르":{"p":[],"g":["뎅기열"]},"라오스":{"p":[],"g":["폴리오","홍역","뎅기열"]},"라이베리아":{"p":[],"g":["황열","라싸열","홍역","뎅기열"]},"러시아":{"p":[],"g":["홍역"]},"레소토":{"p":[],"g":["홍역"]},"레위니옹":{"p":[],"g":["뎅기열","치쿤구니야열"]},"루마니아":{"p":[],"g":["홍역"]},"리비아":{"p":[],"g":["홍역"]},"마르티니크":{"p":[],"g":["뎅기열"]},"마요트":{"p":[],"g":["뎅기열","치쿤구니야열"]},"마이크로네시아":{"p":[],"g":["뎅기열"]},"말라위":{"p":[],"g":["콜레라","홍역"]},"말레이시아":{"p":[],"g":["홍역","뎅기열","치쿤구니야열"]},"말리":{"p":[],"g":["황열","홍역","뎅기열"]},"멕시코":{"p":[],"g":["홍역","뎅기열","치쿤구니야열","지카바이러스감염증"]},"모로코":{"p":[],"g":["홍역"]},"모리셔스":{"p":[],"g":["뎅기열","치쿤구니야열"]},"모리타니":{"p":[],"g":["황열","홍역","뎅기열"]},"모잠비크":{"p":[],"g":["콜레라","홍역"]},"몰도바":{"p":[],"g":["홍역"]},"몰디브":{"p":[],"g":["뎅기열","지카바이러스감염증"]},"미국령버진아일랜드":{"p":[],"g":["뎅기열"]},"미얀마":{"p":[],"g":["콜레라","뎅기열"]},"바누아투":{"p":[],"g":["뎅기열"]},"바베이도스":{"p":[],"g":["뎅기열","치쿤구니야열"]},"베냉":{"p":[],"g":["황열","폴리오","홍역","뎅기열"]},"베네수엘라":{"p":[],"g":["황열"]},"베트남":{"p":[],"g":["홍역","뎅기열"]},"벨기에":{"p":[],"g":["홍역"]},"벨리즈":{"p":[],"g":["홍역","뎅기열"]},"보스니아헤르체고비나":{"p":[],"g":["홍역"]},"보츠와나":{"p":[],"g":["홍역"]},"볼리비아":{"p":[],"g":["황열","홍역","뎅기열","치쿤구니야열","지카바이러스감염증"]},"부룬디":{"p":[],"g":["에볼라바이러스병","콜레라","황열","홍역"]},"부르키나파소":{"p":[],"g":["황열","홍역","뎅기열"]},"부탄":{"p":[],"g":["뎅기열"]},"브라질":{"p":[],"g":["황열","뎅기열","치쿤구니야열","지카바이러스감염증"]},"사모아":{"p":[],"g":["뎅기열"]},"생바르텔르미":{"p":[],"g":["뎅기열"]},"세네갈":{"p":[],"g":["황열","크리미안콩고출혈열","홍역","뎅기열","치쿤구니야열"]},"세르비아":{"p":[],"g":["홍역"]},"세이셸":{"p":[],"g":["뎅기열","치쿤구니야열"]},"세인트루시아":{"p":[],"g":["뎅기열"]},"세인트마틴":{"p":[],"g":["뎅기열"]},"세인트빈센트그레나딘":{"p":[],"g":["뎅기열"]},"세인트키츠네비스":{"p":[],"g":["뎅기열"]},"소말리아":{"p":[],"g":["콜레라","폴리오","홍역","치쿤구니야열"]},"솔로몬제도":{"p":[],"g":["뎅기열"]},"수단":{"p":[],"g":["콜레라","황열","폴리오","홍역","뎅기열"]},"수리남":{"p":[],"g":["황열","뎅기열","치쿤구니야열"]},"스리랑카":{"p":[],"g":["뎅기열","치쿤구니야열"]},"스페인":{"p":[],"g":["홍역"]},"시에라리온":{"p":[],"g":["황열","홍역","뎅기열"]},"신트마르턴":{"p":[],"g":["뎅기열"]},"싱가포르":{"p":[],"g":["뎅기열","지카바이러스감염증"]},"아루바":{"p":[],"g":["뎅기열"]},"아르메니아":{"p":[],"g":["홍역"]},"아르헨티나":{"p":[],"g":["황열","뎅기열","치쿤구니야열","지카바이러스감염증"]},"아이티":{"p":[],"g":["콜레라"]},"아프가니스탄":{"p":[],"g":["콜레라","크리미안콩고출혈열","폴리오","홍역","뎅기열"]},"알제리":{"p":[],"g":["홍역"]},"앙골라":{"p":[],"g":["에볼라바이러스병","콜레라","황열","폴리오","홍역","뎅기열"]},"앤티가":{"p":[],"g":["뎅기열"]},"앵귈라":{"p":[],"g":["뎅기열"]},"에리트레아":{"p":[],"g":["홍역","뎅기열"]},"에콰도르":{"p":[],"g":["황열","뎅기열"]},"엘살바도르":{"p":[],"g":["뎅기열","치쿤구니야열","지카바이러스감염증"]},"영국":{"p":[],"g":["홍역"]},"영국령버진아일랜드":{"p":[],"g":["뎅기열"]},"오스트레일리아":{"p":[],"g":["뎅기열"]},"오스트리아":{"p":[],"g":["홍역"]},"온두라스":{"p":[],"g":["뎅기열","치쿤구니야열","지카바이러스감염증"]},"왈리스푸투나":{"p":[],"g":["뎅기열"]},"우루과이":{"p":[],"g":["뎅기열"]},"우즈베키스탄":{"p":[],"g":["홍역"]},"우크라이나":{"p":[],"g":["홍역"]},"이탈리아":{"p":[],"g":["홍역","뎅기열","치쿤구니야열"]},"인도네시아":{"p":[],"g":["동물인플루엔자인체감염증","홍역","뎅기열","치쿤구니야열","지카바이러스감염증"]},"자메이카":{"p":[],"g":["뎅기열"]},"잠비아":{"p":[],"g":["에볼라바이러스병","콜레라","홍역"]},"적도기니":{"p":[],"g":["황열","홍역"]},"조지아":{"p":[],"g":["홍역"]},"중앙아프리카공화국":{"p":[],"g":["에볼라바이러스병","황열","폴리오","홍역"]},"지부티":{"p":[],"g":["홍역"]},"짐바브웨":{"p":[],"g":["콜레라"]},"차드":{"p":[],"g":["콜레라","황열","폴리오","홍역","뎅기열"]},"칠레":{"p":[],"g":["뎅기열"]},"카메룬":{"p":[],"g":["황열","홍역","뎅기열"]},"카보베르데":{"p":[],"g":["뎅기열"]},"카자흐스탄":{"p":[],"g":["크리미안콩고출혈열","홍역"]},"캐나다":{"p":[],"g":["홍역"]},"케냐":{"p":[],"g":["에볼라바이러스병","콜레라","황열","홍역","뎅기열","치쿤구니야열"]},"코모로":{"p":[],"g":["홍역","뎅기열","치쿤구니야열"]},"코스타리카":{"p":[],"g":["뎅기열","치쿤구니야열","지카바이러스감염증"]},"코트디부아르":{"p":[],"g":["콜레라","황열","홍역","뎅기열"]},"콜롬비아":{"p":[],"g":["황열","뎅기열","치쿤구니야열","지카바이러스감염증"]},"콩고":{"p":[],"g":["에볼라바이러스병","콜레라","황열","홍역"]},"쿠바":{"p":[],"g":["뎅기열","치쿤구니야열"]},"쿡제도":{"p":[],"g":["뎅기열"]},"키르기스스탄":{"p":[],"g":["홍역"]},"키리바시":{"p":[],"g":["뎅기열"]},"타지키스탄":{"p":[],"g":["홍역"]},"탄자니아":{"p":[],"g":["에볼라바이러스병","콜레라","마버그열","홍역","뎅기열"]},"태국":{"p":[],"g":["홍역","뎅기열","치쿤구니야열","지카바이러스감염증"]},"터크스케이커스":{"p":[],"g":["뎅기열"]},"토고":{"p":[],"g":["콜레라","황열","폴리오","홍역"]},"토켈라우":{"p":[],"g":["뎅기열"]},"통가":{"p":[],"g":["뎅기열"]},"투발루":{"p":[],"g":["뎅기열"]},"튀니지":{"p":[],"g":["홍역"]},"튀르키예":{"p":[],"g":["크리미안콩고출혈열","홍역"]},"트리니다드토바고":{"p":[],"g":["황열","뎅기열"]},"파나마":{"p":[],"g":["황열","뎅기열","치쿤구니야열"]},"파라과이":{"p":[],"g":["황열","뎅기열","치쿤구니야열"]},"파키스탄":{"p":[],"g":["콜레라","크리미안콩고출혈열","폴리오","홍역","뎅기열","치쿤구니야열"]},"파푸아뉴기니":{"p":[],"g":["폴리오"]},"팔라우":{"p":[],"g":["뎅기열"]},"팔레스타인":{"p":[],"g":["폴리오"]},"페루":{"p":[],"g":["황열","뎅기열","치쿤구니야열","지카바이러스감염증"]},"폴란드":{"p":[],"g":["홍역"]},"폴리네시아":{"p":[],"g":["뎅기열"]},"푸에르토리코":{"p":[],"g":["뎅기열"]},"프랑스":{"p":[],"g":["홍역","뎅기열","치쿤구니야열"]},"프랑스령기아나":{"p":[],"g":["황열","뎅기열","치쿤구니야열"]},"피지":{"p":[],"g":["뎅기열"]},"필리핀":{"p":[],"g":["콜레라","홍역","뎅기열","치쿤구니야열"]}}};
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SC = ['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
+
+/* ── 타일 ── */
+(function(){
+  const last = D.periods[D.periods.length - 1];
+  const q3 = D.periods.find(p => p.period === '2026-Q3');
+  document.getElementById('tiles').innerHTML = [
+    ['중점검역관리지역', last.priority.countries + '개국', last.effective.replace(/-/g,'.') + ' 시행'],
+    ['검역관리지역', last.general.countries + '개국', (last.general.diseases || q3.general.diseases) + '종 검역감염병'],
+    ['원문 대조 완료', q3.general.countries + '개국', '2026년 3분기 매트릭스 검산 통과'],
+    ['갱신 주기', '분기', '2025년부터 (이전 반기)'],
+  ].map(([l,b,s]) => `<div class="tile"><div class="lab">${l}</div><div class="big num">${b}</div><div class="sub num">${s}</div></div>`).join('');
+
+  document.getElementById('curwarn').innerHTML =
+    `<b>이 페이지의 매트릭스는 ${esc(q3.effective.replace(/-/g,'.'))} 기준이다.</b> ` +
+    `현행은 ${esc(last.effective.replace(/-/g,'.'))} 개정본으로 중점 <b>${last.priority.countries}개국</b>·검역 <b>${last.general.countries}개국</b>이다. ` +
+    `개정본의 국가×감염병 매트릭스는 아직 원문 대조를 하지 않았기 때문에, 대조가 끝난 시기의 표를 그대로 두고 차이를 여기 적어 둔다. ` +
+    `<span style="color:var(--muted)">${esc(last.note || '')}</span>`;
+})();
+
+/* ── 정의 표 ── */
+document.getElementById('defs').innerHTML = [
+  ['검역관리지역', D.definitions['검역관리지역']],
+  ['중점검역관리지역', D.definitions['중점검역관리지역']],
+].map(([k, v]) => {
+  const i = v.lastIndexOf('. ');
+  return `<tr><td><b>${esc(k)}</b></td><td>${esc(i > 0 ? v.slice(0, i + 1) : v)}</td><td>${esc(i > 0 ? v.slice(i + 2) : '')}</td></tr>`;
+}).join('');
+
+/* ── 이력 계단 차트 ── */
+(function(){
+  const ps = D.periods;
+  const W = 940, H = 260, L = 44, R = 46, T = 16, B = 54;   // R: 끝점 직접 라벨 자리
+  const iw = W - L - R, ih = H - T - B;
+  const maxV = Math.max(...ps.map(p => Math.max(p.general.countries || 0, p.priority.countries || 0))) * 1.1;
+  const X = i => L + (i * iw / (ps.length - 1));
+  const Y = v => T + ih - (v / maxV) * ih;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="시기별 검역관리지역·중점검역관리지역 지정 국가 수">`;
+  [0, 50, 100, 150, 200].forEach(t => {
+    if (t > maxV) return;
+    svg += `<line class="gl" x1="${L}" y1="${Y(t).toFixed(1)}" x2="${W-R}" y2="${Y(t).toFixed(1)}"/>`
+         + `<text class="ax" x="${L-6}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${t}</text>`;
+  });
+  // 단절점 세로선
+  D.breaks.forEach(b => {
+    let idx = ps.findIndex(p => p.effective >= b.date);
+    if (idx < 0) idx = ps.length - 1;
+    const x = X(idx);
+    svg += `<line class="bk" x1="${x.toFixed(1)}" y1="${T}" x2="${x.toFixed(1)}" y2="${T+ih}"/>`
+         + `<circle class="bkdot" cx="${x.toFixed(1)}" cy="${T-2}" r="3.5"/>`;
+  });
+  // 계단선
+  [['general', 'var(--s1)'], ['priority', 'var(--s2)']].forEach(([k, col]) => {
+    let d = '', prev = null;
+    ps.forEach((p, i) => {
+      const v = p[k].countries;
+      if (v == null) return;
+      if (prev === null) d += `M${X(i).toFixed(1)} ${Y(v).toFixed(1)}`;
+      else d += `L${X(i).toFixed(1)} ${Y(prev).toFixed(1)}L${X(i).toFixed(1)} ${Y(v).toFixed(1)}`;
+      prev = v;
+    });
+    svg += `<path class="stp" d="${d}" stroke="${col}"/>`;
+    ps.forEach((p, i) => {
+      const v = p[k].countries;
+      if (v == null) return;
+      svg += `<circle class="pt2" cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3.5" fill="${col}">`
+           + `<title>${esc(p.period)} · ${k === 'general' ? '검역관리지역' : '중점검역관리지역'} ${v}개국</title></circle>`;
+    });
+    // 끝점 직접 라벨
+    for (let i = ps.length - 1; i >= 0; i--) {
+      if (ps[i][k].countries != null) {
+        svg += `<text class="ax" x="${(X(i)+7).toFixed(1)}" y="${(Y(ps[i][k].countries)+4).toFixed(1)}" `
+             + `fill="${col}" style="font-weight:800">${ps[i][k].countries}</text>`;
+        break;
+      }
+    }
+  });
+  ps.forEach((p, i) => {
+    if (p.period.includes('rev')) return;
+    svg += `<text class="ax" x="${X(i).toFixed(1)}" y="${H-32}" text-anchor="end" `
+         + `transform="rotate(-40 ${X(i).toFixed(1)} ${H-32})">${esc(p.period)}</text>`;
+  });
+  document.getElementById('chart').innerHTML = svg + '</svg>';
+
+  document.getElementById('ptbl').innerHTML = '<table><thead><tr>'
+    + ['시기','시행일','중점 국가','검역 국가','검역감염병','출처','비고'].map(h=>`<th>${h}</th>`).join('')
+    + '</tr></thead><tbody>' + ps.map(p =>
+      `<tr><td><b>${esc(p.period)}</b></td><td class="num">${esc(p.effective)}</td>`
+      + `<td class="n num">${p.priority.countries ?? '–'}</td><td class="n num">${p.general.countries ?? '–'}</td>`
+      + `<td class="n num">${p.general.diseases ?? '–'}</td><td>${esc(p.confidence)}</td>`
+      + `<td>${esc(p.note || '')}</td></tr>`).join('') + '</tbody></table>';
+})();
+
+/* ── 단절점 ── */
+document.getElementById('breaks').innerHTML = D.breaks.map(b =>
+  `<div class="brk" style="--bc:${b.type === 'break' ? 'var(--warn)' : 'var(--s4)'}">
+     <div class="d">${esc(b.date.replace(/-/g,'.'))} · ${b.type === 'break' ? '🔴 정의·주기 변경' : '🟡 맥락 변경'}</div>
+     <h3>${esc(b.title)}</h3><p>${esc(b.detail)}</p>
+     <div class="imp"><b>왜 중요한가</b> — ${esc(b.impact)}</div>
+     ${b.caveat ? `<p style="margin-top:8px;font-size:12.5px">⚠️ ${esc(b.caveat)}</p>` : ''}
+   </div>`).join('');
+
+/* ── 현행 중점검역관리지역 ── */
+(function(){
+  const pri = D.current.priority, sub = D.current.sub || {};
+  const order = Object.keys(pri).sort((a, b) => pri[b].length - pri[a].length);
+  document.getElementById('prihead').innerHTML =
+    `${esc(D.current['기준'])} · 총 <b>${Object.values(pri).reduce((s, v) => s + v.length, 0)}개 지정</b>`
+    + `(중복 포함) · 방문자는 <b>증상 유무와 무관하게</b> Q-CODE 제출 의무. 위반 시 ${esc(D.current['과태료'] || '')}.`;
+  document.getElementById('pri').innerHTML = order.map((dis, i) =>
+    `<div class="dis" style="--dc:${SC[i % SC.length]}">
+       <h3>${esc(dis)}</h3><div class="cnt">${pri[dis].length}개국</div>
+       <div class="chips">${pri[dis].map(c => {
+         const s = (sub[c] || []).join(', ');
+         return `<span class="chip">${esc(c)}${s ? ` <span class="sub">${esc(s)}</span>` : ''}</span>`;
+       }).join('')}</div></div>`).join('');
+})();
+
+/* ── 국가 검색 ── */
+(function(){
+  const q = document.getElementById('q'), res = document.getElementById('res'), empty = document.getElementById('empty');
+  const names = Object.keys(D.countries).sort();
+  function render(term){
+    const t = term.replace(/\s+/g, '');
+    const hit = t ? names.filter(n => n.includes(t)) : [];
+    if (!t){ res.innerHTML = `<p style="color:var(--faint);font-size:13.5px">전체 <b>${names.length}개국</b>이 수록돼 있다. 나라 이름을 입력해 보라.</p>`; empty.style.display='none'; return; }
+    empty.style.display = hit.length ? 'none' : 'block';
+    res.innerHTML = hit.map(n => {
+      const c = D.countries[n];
+      return `<div class="row"><span class="nm">${esc(n)}</span>`
+        + (c.p.length ? `<span class="badge bp">중점</span>` : '')
+        + (c.g.length ? `<span class="badge bg">검역</span>` : '')
+        + `<span class="ds">`
+        + (c.p.length ? `<b>중점</b> ${esc(c.p.join(' · '))}<br>` : '')
+        + (c.g.length ? `<b>검역</b> ${esc(c.g.join(' · '))}` : '')
+        + `</span></div>`;
+    }).join('');
+  }
+  q.addEventListener('input', () => render(q.value));
+  render('');
+})();
+
+/* ── 세계 매칭 ── */
+document.getElementById('matched').innerHTML = D.matched.map(m =>
+  `<tr><td><b>${esc(m.period)}</b></td><td>${esc(m.world)}</td><td>${esc(m.korea)}</td></tr>`).join('');
+
+document.getElementById('unver').innerHTML = D.unverified.map(u => `<li>${esc(u)}</li>`).join('');
+document.getElementById('src').innerHTML =
+  `근거: ${esc(D.legal_basis)} · 출처: ${esc(D.current['출처'])} — `
+  + `<a href="https://www.kdca.go.kr" target="_blank" rel="noopener">질병관리청</a> · `
+  + `<a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/11_%EA%B2%80%EC%97%AD%EA%B4%80%EB%A6%AC%EC%A7%80%EC%97%AD" target="_blank" rel="noopener">정리 데이터(GitHub)</a>`;
+</script>
+</body>
+</html>

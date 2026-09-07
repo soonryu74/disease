@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>검역관리지역</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --s4:#eda100; --s5:#e87ba4;
+    --grid:#E4EAE7; --mark:#0E6E63; --warn:#B23A3A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+    --grid:#22302C; --mark:#54B7AA; --warn:#E07A7A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70; --s4:#c98500; --s5:#d55181;
+    --grid:#22302C; --mark:#54B7AA; --warn:#E07A7A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1000px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,44px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 6px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow)}
+  .tile .lab{font-size:11.5px;color:var(--muted);line-height:1.35}
+  .tile .big{font-size:clamp(24px,4vw,32px);font-weight:800;line-height:1.05;margin:6px 0 2px}
+  .tile .sub{font-size:11.5px;color:var(--faint)}
+
+  section{padding:26px 0 6px}
+  h2{font-size:clamp(18px,3vw,23px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14px;margin:0 0 16px;max-width:72ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+    box-shadow:var(--shadow);margin-bottom:16px}
+  .ctitle{font-size:14.5px;font-weight:700;margin:0 0 2px}
+  .cnote{font-size:12.5px;color:var(--faint);margin:0 0 12px}
+
+  svg{display:block;width:100%;overflow:visible}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .ax{fill:var(--faint);font-size:10.5px}
+  .stp{fill:none;stroke-width:2;stroke-linejoin:round}
+  .bk{stroke:var(--warn);stroke-width:1.5;stroke-dasharray:4 3}
+  .bkdot{fill:var(--warn)}
+  .pt2{stroke:var(--surface);stroke-width:2}
+  .lg{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:10px 0 2px}
+  .lg i{width:16px;height:3px;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:6px}
+
+  .dis{border:1px solid var(--line);border-left:4px solid var(--dc);border-radius:12px;padding:13px 15px;margin-bottom:10px;background:var(--surface)}
+  .dis h3{margin:0 0 2px;font-size:14.5px;font-weight:800;color:var(--dc)}
+  .dis .cnt{font-size:12px;color:var(--faint);font-weight:600;margin:0 0 8px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:4px 11px}
+  .chip .sub{color:var(--faint);font-size:11px}
+
+  .search{width:100%;font-size:16px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--line-strong);
+    background:var(--surface);color:var(--ink);outline:none}
+  .search:focus{border-color:var(--accent)}
+  .res{margin-top:12px}
+  .row{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .row .nm{font-weight:700;font-size:14px;min-width:130px}
+  .badge{font-size:11px;font-weight:800;border-radius:6px;padding:2px 7px;white-space:nowrap}
+  .bp{background:var(--warn);color:#fff}
+  .bg{background:var(--accent-soft);color:var(--accent-ink)}
+  .row .ds{font-size:12.5px;color:var(--muted);flex:1;min-width:200px}
+  .empty{color:var(--faint);font-size:14px;padding:20px 0;text-align:center;display:none}
+
+  .brk{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;background:var(--surface);
+    border-left:4px solid var(--bc)}
+  .brk .d{font-size:12px;font-weight:800;color:var(--bc);letter-spacing:.02em}
+  .brk h3{margin:2px 0 4px;font-size:15px;font-weight:800}
+  .brk p{margin:0 0 6px;font-size:13.5px;color:var(--muted)}
+  .brk .imp{font-size:13px;background:var(--surface-2);border-radius:9px;padding:8px 11px;color:var(--ink)}
+
+  table{border-collapse:collapse;font-size:13px;width:100%}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{color:var(--muted);font-weight:700;font-size:11.5px;border-bottom:1.5px solid var(--line-strong)}
+  td.n{text-align:right;white-space:nowrap}
+  .tw{overflow-x:auto}
+  details.tbl{margin-top:8px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  details.tbl summary{cursor:pointer;padding:11px 15px;font-size:13.5px;font-weight:700;color:var(--accent-ink)}
+  details.tbl .tw{padding:0 15px 14px}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 17px;font-size:13px;margin:16px 0}
+  .note ul{margin:6px 0 0;padding-left:18px}
+  .note li{margin:3px 0}
+  .warnbox{background:color-mix(in srgb,var(--warn) 12%,transparent);border:1px solid color-mix(in srgb,var(--warn) 35%,transparent);
+    border-radius:12px;padding:14px 17px;font-size:13.5px;margin:16px 0}
+  footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer .maker a{color:var(--accent-ink)}
+  @media(max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../checker/">🩺 검사기</a><a href="../dogam/">📖 도감</a><a href="../lab/">🔬 진단검사</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Quarantine Designation</p>
+  <h1>검역관리지역</h1>
+  <p class="thesis">“이 나라, 지금 Q-CODE 내야 하나?”에는 <b>날짜 없이 답할 수 없다.</b>
+  「검역법」 제5조에 따라 질병관리청장이 지정하는 검역관리지역·중점검역관리지역은
+  <b>분기마다, 때로는 분기 도중에</b> 바뀐다. 이 축은 그 시점별 사실을 모아둔 것이다.</p>
+  <div class="tiles" id="tiles"></div>
+</header>
+
+<div class="warnbox" id="curwarn"></div>
+
+<section>
+  <h2>두 등급의 차이</h2>
+  <p class="sdesc">가장 자주 혼동되는 지점이다. 제출 의무의 범위가 다르다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>구분</th><th>뜻</th><th>Q-CODE 제출 의무</th></tr></thead>
+    <tbody id="defs"></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>지정 이력</h2>
+  <p class="sdesc">지정 국가 수의 시기별 추이. 빨간 세로선은 <b>단절점</b> — 그 앞뒤 숫자를 그대로 이으면 안 되는 지점이다.</p>
+  <div class="card">
+    <p class="ctitle">시기별 지정 국가 수</p>
+    <p class="cnote">2024년 상반기까지는 반기, 2025년부터 분기 단위. 중간 개정(rev)도 별도 시점으로 찍었다.</p>
+    <div id="chart"></div>
+    <div class="lg">
+      <span><i style="background:var(--s1)"></i>검역관리지역</span>
+      <span><i style="background:var(--s2)"></i>중점검역관리지역</span>
+      <span><i style="background:none;height:0;border-top:2px dashed var(--warn)"></i>단절점 (앞뒤를 이으면 안 되는 지점)</span>
+    </div>
+  </div>
+  <details class="tbl"><summary>표로 보기 — 시기별 지정 내역</summary><div class="tw" id="ptbl"></div></details>
+</section>
+
+<section>
+  <h2>단절점</h2>
+  <p class="sdesc">이 축을 시계열로 이을 때 반드시 알아야 할 네 지점.</p>
+  <div id="breaks"></div>
+</section>
+
+<section>
+  <h2>현행 중점검역관리지역</h2>
+  <p class="sdesc" id="prihead"></p>
+  <div id="pri"></div>
+</section>
+
+<section>
+  <h2>국가로 찾기</h2>
+  <p class="sdesc">나라 이름을 입력하면 그 나라가 어느 등급인지, 어떤 검역감염병 때문인지 나온다. 2026년 3분기(2026.7.1. 기준) 자료다.</p>
+  <input class="search" id="q" type="search" placeholder="나라 이름 (예: 베트남, 우간다, 미국)" autocomplete="off">
+  <div class="res" id="res"></div>
+  <div class="empty" id="empty">해당 나라는 2026년 3분기 지정 목록에 없다. 지정되지 않은 지역이거나, 원문 표기가 다를 수 있다.</div>
+</section>
+
+<section>
+  <h2>세계 상황과의 매칭</h2>
+  <p class="sdesc">이 축의 쓸모는 <b>“한국이 그때 무엇을 두려워했는가”의 분기별 기록</b>이라는 데 있다. 지정 변경은 대개 WHO·아프리카CDC의 판단을 1~3개월 시차로 따라간다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>시기</th><th>세계</th><th>한국의 국경 대응</th></tr></thead>
+    <tbody id="matched"></tbody>
+  </table></div>
+</section>
+
+<div class="note">
+  <b>한계 — 정직하게</b>
+  <ul id="unver"></ul>
+</div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div id="src"></div>
+  <div style="margin-top:8px">⚠️ 참고용 정리물이다. 실제 입국 시 의무는 <b>입국일 기준 현행 지정</b>을 질병관리청 Q-CODE 누리집에서 확인해야 한다.</div>
+</footer>
+</div>
+
+<script>
+const D = __DATA__;
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const SC = ['var(--s1)','var(--s2)','var(--s3)','var(--s4)','var(--s5)'];
+
+/* ── 타일 ── */
+(function(){
+  const last = D.periods[D.periods.length - 1];
+  const q3 = D.periods.find(p => p.period === '2026-Q3');
+  document.getElementById('tiles').innerHTML = [
+    ['중점검역관리지역', last.priority.countries + '개국', last.effective.replace(/-/g,'.') + ' 시행'],
+    ['검역관리지역', last.general.countries + '개국', (last.general.diseases || q3.general.diseases) + '종 검역감염병'],
+    ['원문 대조 완료', q3.general.countries + '개국', '2026년 3분기 매트릭스 검산 통과'],
+    ['갱신 주기', '분기', '2025년부터 (이전 반기)'],
+  ].map(([l,b,s]) => `<div class="tile"><div class="lab">${l}</div><div class="big num">${b}</div><div class="sub num">${s}</div></div>`).join('');
+
+  document.getElementById('curwarn').innerHTML =
+    `<b>이 페이지의 매트릭스는 ${esc(q3.effective.replace(/-/g,'.'))} 기준이다.</b> ` +
+    `현행은 ${esc(last.effective.replace(/-/g,'.'))} 개정본으로 중점 <b>${last.priority.countries}개국</b>·검역 <b>${last.general.countries}개국</b>이다. ` +
+    `개정본의 국가×감염병 매트릭스는 아직 원문 대조를 하지 않았기 때문에, 대조가 끝난 시기의 표를 그대로 두고 차이를 여기 적어 둔다. ` +
+    `<span style="color:var(--muted)">${esc(last.note || '')}</span>`;
+})();
+
+/* ── 정의 표 ── */
+document.getElementById('defs').innerHTML = [
+  ['검역관리지역', D.definitions['검역관리지역']],
+  ['중점검역관리지역', D.definitions['중점검역관리지역']],
+].map(([k, v]) => {
+  const i = v.lastIndexOf('. ');
+  return `<tr><td><b>${esc(k)}</b></td><td>${esc(i > 0 ? v.slice(0, i + 1) : v)}</td><td>${esc(i > 0 ? v.slice(i + 2) : '')}</td></tr>`;
+}).join('');
+
+/* ── 이력 계단 차트 ── */
+(function(){
+  const ps = D.periods;
+  const W = 940, H = 260, L = 44, R = 46, T = 16, B = 54;   // R: 끝점 직접 라벨 자리
+  const iw = W - L - R, ih = H - T - B;
+  const maxV = Math.max(...ps.map(p => Math.max(p.general.countries || 0, p.priority.countries || 0))) * 1.1;
+  const X = i => L + (i * iw / (ps.length - 1));
+  const Y = v => T + ih - (v / maxV) * ih;
+  let svg = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="시기별 검역관리지역·중점검역관리지역 지정 국가 수">`;
+  [0, 50, 100, 150, 200].forEach(t => {
+    if (t > maxV) return;
+    svg += `<line class="gl" x1="${L}" y1="${Y(t).toFixed(1)}" x2="${W-R}" y2="${Y(t).toFixed(1)}"/>`
+         + `<text class="ax" x="${L-6}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${t}</text>`;
+  });
+  // 단절점 세로선
+  D.breaks.forEach(b => {
+    let idx = ps.findIndex(p => p.effective >= b.date);
+    if (idx < 0) idx = ps.length - 1;
+    const x = X(idx);
+    svg += `<line class="bk" x1="${x.toFixed(1)}" y1="${T}" x2="${x.toFixed(1)}" y2="${T+ih}"/>`
+         + `<circle class="bkdot" cx="${x.toFixed(1)}" cy="${T-2}" r="3.5"/>`;
+  });
+  // 계단선
+  [['general', 'var(--s1)'], ['priority', 'var(--s2)']].forEach(([k, col]) => {
+    let d = '', prev = null;
+    ps.forEach((p, i) => {
+      const v = p[k].countries;
+      if (v == null) return;
+      if (prev === null) d += `M${X(i).toFixed(1)} ${Y(v).toFixed(1)}`;
+      else d += `L${X(i).toFixed(1)} ${Y(prev).toFixed(1)}L${X(i).toFixed(1)} ${Y(v).toFixed(1)}`;
+      prev = v;
+    });
+    svg += `<path class="stp" d="${d}" stroke="${col}"/>`;
+    ps.forEach((p, i) => {
+      const v = p[k].countries;
+      if (v == null) return;
+      svg += `<circle class="pt2" cx="${X(i).toFixed(1)}" cy="${Y(v).toFixed(1)}" r="3.5" fill="${col}">`
+           + `<title>${esc(p.period)} · ${k === 'general' ? '검역관리지역' : '중점검역관리지역'} ${v}개국</title></circle>`;
+    });
+    // 끝점 직접 라벨
+    for (let i = ps.length - 1; i >= 0; i--) {
+      if (ps[i][k].countries != null) {
+        svg += `<text class="ax" x="${(X(i)+7).toFixed(1)}" y="${(Y(ps[i][k].countries)+4).toFixed(1)}" `
+             + `fill="${col}" style="font-weight:800">${ps[i][k].countries}</text>`;
+        break;
+      }
+    }
+  });
+  ps.forEach((p, i) => {
+    if (p.period.includes('rev')) return;
+    svg += `<text class="ax" x="${X(i).toFixed(1)}" y="${H-32}" text-anchor="end" `
+         + `transform="rotate(-40 ${X(i).toFixed(1)} ${H-32})">${esc(p.period)}</text>`;
+  });
+  document.getElementById('chart').innerHTML = svg + '</svg>';
+
+  document.getElementById('ptbl').innerHTML = '<table><thead><tr>'
+    + ['시기','시행일','중점 국가','검역 국가','검역감염병','출처','비고'].map(h=>`<th>${h}</th>`).join('')
+    + '</tr></thead><tbody>' + ps.map(p =>
+      `<tr><td><b>${esc(p.period)}</b></td><td class="num">${esc(p.effective)}</td>`
+      + `<td class="n num">${p.priority.countries ?? '–'}</td><td class="n num">${p.general.countries ?? '–'}</td>`
+      + `<td class="n num">${p.general.diseases ?? '–'}</td><td>${esc(p.confidence)}</td>`
+      + `<td>${esc(p.note || '')}</td></tr>`).join('') + '</tbody></table>';
+})();
+
+/* ── 단절점 ── */
+document.getElementById('breaks').innerHTML = D.breaks.map(b =>
+  `<div class="brk" style="--bc:${b.type === 'break' ? 'var(--warn)' : 'var(--s4)'}">
+     <div class="d">${esc(b.date.replace(/-/g,'.'))} · ${b.type === 'break' ? '🔴 정의·주기 변경' : '🟡 맥락 변경'}</div>
+     <h3>${esc(b.title)}</h3><p>${esc(b.detail)}</p>
+     <div class="imp"><b>왜 중요한가</b> — ${esc(b.impact)}</div>
+     ${b.caveat ? `<p style="margin-top:8px;font-size:12.5px">⚠️ ${esc(b.caveat)}</p>` : ''}
+   </div>`).join('');
+
+/* ── 현행 중점검역관리지역 ── */
+(function(){
+  const pri = D.current.priority, sub = D.current.sub || {};
+  const order = Object.keys(pri).sort((a, b) => pri[b].length - pri[a].length);
+  document.getElementById('prihead').innerHTML =
+    `${esc(D.current['기준'])} · 총 <b>${Object.values(pri).reduce((s, v) => s + v.length, 0)}개 지정</b>`
+    + `(중복 포함) · 방문자는 <b>증상 유무와 무관하게</b> Q-CODE 제출 의무. 위반 시 ${esc(D.current['과태료'] || '')}.`;
+  document.getElementById('pri').innerHTML = order.map((dis, i) =>
+    `<div class="dis" style="--dc:${SC[i % SC.length]}">
+       <h3>${esc(dis)}</h3><div class="cnt">${pri[dis].length}개국</div>
+       <div class="chips">${pri[dis].map(c => {
+         const s = (sub[c] || []).join(', ');
+         return `<span class="chip">${esc(c)}${s ? ` <span class="sub">${esc(s)}</span>` : ''}</span>`;
+       }).join('')}</div></div>`).join('');
+})();
+
+/* ── 국가 검색 ── */
+(function(){
+  const q = document.getElementById('q'), res = document.getElementById('res'), empty = document.getElementById('empty');
+  const names = Object.keys(D.countries).sort();
+  function render(term){
+    const t = term.replace(/\s+/g, '');
+    const hit = t ? names.filter(n => n.includes(t)) : [];
+    if (!t){ res.innerHTML = `<p style="color:var(--faint);font-size:13.5px">전체 <b>${names.length}개국</b>이 수록돼 있다. 나라 이름을 입력해 보라.</p>`; empty.style.display='none'; return; }
+    empty.style.display = hit.length ? 'none' : 'block';
+    res.innerHTML = hit.map(n => {
+      const c = D.countries[n];
+      return `<div class="row"><span class="nm">${esc(n)}</span>`
+        + (c.p.length ? `<span class="badge bp">중점</span>` : '')
+        + (c.g.length ? `<span class="badge bg">검역</span>` : '')
+        + `<span class="ds">`
+        + (c.p.length ? `<b>중점</b> ${esc(c.p.join(' · '))}<br>` : '')
+        + (c.g.length ? `<b>검역</b> ${esc(c.g.join(' · '))}` : '')
+        + `</span></div>`;
+    }).join('');
+  }
+  q.addEventListener('input', () => render(q.value));
+  render('');
+})();
+
+/* ── 세계 매칭 ── */
+document.getElementById('matched').innerHTML = D.matched.map(m =>
+  `<tr><td><b>${esc(m.period)}</b></td><td>${esc(m.world)}</td><td>${esc(m.korea)}</td></tr>`).join('');
+
+document.getElementById('unver').innerHTML = D.unverified.map(u => `<li>${esc(u)}</li>`).join('');
+document.getElementById('src').innerHTML =
+  `근거: ${esc(D.legal_basis)} · 출처: ${esc(D.current['출처'])} — `
+  + `<a href="https://www.kdca.go.kr" target="_blank" rel="noopener">질병관리청</a> · `
+  + `<a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/11_%EA%B2%80%EC%97%AD%EA%B4%80%EB%A6%AC%EC%A7%80%EC%97%AD" target="_blank" rel="noopener">정리 데이터(GitHub)</a>`;
+</script>
+</body>
+</html>

@@ -15,10 +15,18 @@ ARTIFACT_TO_REL = {
     'https://claude.ai/code/artifact/00d13129-712e-4ab8-b781-7da1b1ae9b7c': '../chronicle/',
 }
 
+# 포털 번들에만 추가하는 내비 링크(원본 페이지는 아티팩트로도 배포되므로 건드리지 않는다)
+NAV_EXTRA = ('<a href="../dogam/">📖 도감</a>'
+             '<a href="../lab/">🔬 진단검사</a>'
+             '<a href="../quarantine/">🛂 검역</a>')
+
+
 def wrap(src_path, out_path):
     s = open(os.path.join(ROOT, src_path), encoding='utf-8').read()
     for url, rel in ARTIFACT_TO_REL.items():
         s = s.replace(url, rel)
+    if '</div></nav>' in s and '../quarantine/' not in s:
+        s = s.replace('</div></nav>', NAV_EXTRA + '</div></nav>', 1)
     s = ('<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n'
          + s.replace('<title>', '<meta name="viewport" content="width=device-width, initial-scale=1">\n<title>', 1))
     s = s.replace('</style>', '</style>\n</head>\n<body>', 1) + '\n</body>\n</html>'
