@@ -4,3 +4,6 @@
 # 파이썬
 __pycache__/
 *.pyc
+
+# ⑮ 지도 원본(840KB). scripts/fetch_inflow_sources.py 가 다시 받는다. 간략화본 세계지도.json만 둔다.
+15_해외유입_지도/data/raw_ne_110m.geojson

@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>해외유입 지도</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s4:#eda100;
+    --grid:#E4EAE7; --warn:#B23A3A;
+    --sea:#E3ECEA; --land:#C9D5D1; --land-line:#F5F7F6; --graticule:rgba(22,33,29,.07);
+    --r1:#CFE6E1; --r2:#8BC5BB; --r3:#3E958A; --r4:#0A4A43;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500;
+    --grid:#22302C; --warn:#E07A7A;
+    --sea:#0F1A17; --land:#2A3A35; --land-line:#0D1412; --graticule:rgba(231,237,234,.06);
+    --r1:#1E3D38; --r2:#2E6B62; --r3:#54B7AA; --r4:#B8EEE6;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500;
+    --grid:#22302C; --warn:#E07A7A;
+    --sea:#0F1A17; --land:#2A3A35; --land-line:#0D1412; --graticule:rgba(231,237,234,.06);
+    --r1:#1E3D38; --r2:#2E6B62; --r3:#54B7AA; --r4:#B8EEE6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,46px);line-height:1.05;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(15px,2.3vw,17.5px);color:var(--muted);max-width:62ch;margin:16px 0 0}
+  .thesis b{color:var(--ink)}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 0}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:120px}
+  .stat .v{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .stat .k{font-size:11.5px;color:var(--muted);margin-top:2px}
+
+  section{padding:30px 0 6px}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14.5px;margin:0 0 18px;max-width:76ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+    box-shadow:var(--shadow);margin-bottom:14px}
+  .card h3{margin:0 0 6px;font-size:16px;font-weight:800}
+  .card p{margin:6px 0;font-size:14px}
+  .muted{color:var(--muted)} .small{font-size:12.5px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+
+  /* ── 지도 ── */
+  .mapcard{padding:0;overflow:hidden}
+  .ctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line);background:var(--surface)}
+  .ctl .grp{display:inline-flex;border:1px solid var(--line-strong);border-radius:9px;overflow:hidden}
+  .ctl .grp button{border:0;background:transparent;color:var(--muted);font:inherit;font-size:12.5px;font-weight:700;padding:6px 10px;cursor:pointer}
+  .ctl .grp button.on{background:var(--accent);color:#fff}
+  .ctl .lbl{font-size:11.5px;color:var(--faint);font-weight:700;margin:0 2px 0 6px;letter-spacing:.04em}
+  .ctl select,.ctl input{font:inherit;font-size:12.5px;padding:6px 8px;border:1px solid var(--line-strong);border-radius:9px;background:var(--surface);color:var(--ink)}
+  .ctl .sp{flex:1}
+  .ctl .ic{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:9px;width:30px;height:30px;cursor:pointer;font-weight:800}
+  .stage{display:grid;grid-template-columns:1fr 320px;min-height:520px}
+  @media (max-width:860px){.stage{grid-template-columns:1fr}}
+  .cv{position:relative;background:var(--sea)}
+  canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+  canvas.drag{cursor:grabbing}
+  .tip{position:absolute;pointer-events:none;background:var(--ink);color:var(--ground);font-size:12px;font-weight:700;padding:4px 8px;border-radius:7px;transform:translate(-50%,-140%);white-space:nowrap;opacity:0;transition:opacity .08s}
+  .tip.on{opacity:1}
+  .legend{position:absolute;left:12px;bottom:10px;font-size:11.5px;color:var(--muted);background:color-mix(in srgb,var(--surface) 85%,transparent);border:1px solid var(--line);border-radius:9px;padding:7px 10px;line-height:1.5}
+  .legend .row{display:flex;align-items:center;gap:6px}
+  .legend .sw{width:12px;height:12px;border-radius:3px;display:inline-block;border:1px solid rgba(0,0,0,.08)}
+  .legend .ln{width:22px;height:0;border-top:2px solid var(--accent);display:inline-block}
+  .hint{position:absolute;right:12px;top:10px;font-size:11.5px;color:var(--faint);background:color-mix(in srgb,var(--surface) 75%,transparent);padding:4px 8px;border-radius:7px}
+  .panel{border-left:1px solid var(--line);padding:16px 18px;overflow:auto;max-height:640px;background:var(--surface)}
+  @media (max-width:860px){.panel{border-left:0;border-top:1px solid var(--line);max-height:none}}
+  .panel h3{margin:0;font-size:20px;font-weight:800;letter-spacing:-.02em}
+  .panel .sub{color:var(--muted);font-size:12.5px;margin:2px 0 12px}
+  .panel .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;margin:0 0 12px}
+  .panel .kv dt{color:var(--muted)} .panel .kv dd{margin:0;font-weight:700}
+  .panel h4{margin:14px 0 6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  .chips{display:flex;flex-wrap:wrap;gap:4px}
+  .chip{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+  .chip.pri{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn);border-color:transparent}
+  .chip.gen{background:color-mix(in srgb,var(--s4) 22%,transparent);color:var(--ink);border-color:transparent}
+  .chip.q{border-color:var(--accent);color:var(--accent-ink)}
+  .chip.q.miss{border-color:var(--warn);color:var(--warn)}
+  .empty{color:var(--faint);font-size:13px}
+  .spark{width:100%;height:46px;display:block;margin:4px 0 0}
+  .note{font-size:12px;color:var(--muted);background:var(--surface-2);border-radius:9px;padding:8px 10px;margin:10px 0 0;line-height:1.5}
+  .note.warn{color:var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent)}
+
+  /* ── 발견 ── */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid2>*{min-width:0}
+  .card{min-width:0}
+  .card .flip{display:block;overflow-x:auto}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr}}
+  .big{font-size:34px;font-weight:800;letter-spacing:-.03em;line-height:1;margin:6px 0 4px}
+  .big small{font-size:14px;color:var(--muted);font-weight:600;letter-spacing:0;margin-left:6px}
+  ol.tight,ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px}
+  ol.tight li,ul.tight li{margin:2px 0}
+  .flip{width:100%;border-collapse:collapse;font-size:13px;margin-top:8px}
+  .flip th,.flip td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right}
+  .flip th:first-child,.flip td:first-child{text-align:left}
+  .flip th{font-size:11.5px;color:var(--muted);font-weight:700}
+  .flip .weak{color:var(--faint)}
+  .ok{color:var(--accent)} .bad{color:var(--warn)}
+
+  /* ── 표 ── */
+  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+  table.main{width:100%;border-collapse:collapse;font-size:13px;min-width:900px}
+  table.main th,table.main td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  table.main th:nth-child(-n+2),table.main td:nth-child(-n+2){text-align:left}
+  table.main thead th{position:sticky;top:0;background:var(--surface-2);font-size:11.5px;color:var(--muted);cursor:pointer;user-select:none}
+  table.main thead th.on{color:var(--accent-ink)}
+  table.main tbody tr:hover{background:var(--surface-2)}
+  table.main tbody tr.sel{background:var(--accent-soft)}
+  table.main td.dim{color:var(--faint)}
+  .tbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 10px}
+  .tbar input,.tbar select{font:inherit;font-size:13px;padding:6px 9px;border:1px solid var(--line-strong);border-radius:9px;background:var(--surface);color:var(--ink)}
+  .tbar .cnt{font-size:12.5px;color:var(--muted);margin-left:auto}
+
+  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
+  footer a{color:var(--muted)}
+  @media print{
+    nav,.ctl,.hint{display:none!important}
+    .stage{grid-template-columns:1fr}
+    .panel{max-height:none}
+    .card{break-inside:avoid;box-shadow:none}
+  }
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../quarantine/">🛂 검역</a><a href="../cross/">🧪 교차검증</a><a href="../field/">🚑 현장카드</a><a href="../dogam/">📖 도감</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">⑮ 해외유입 지도</p>
+  <h1>지정된 나라에서<br>실제로 얼마나 들어왔나</h1>
+  <p class="thesis">검역관리지역은 <b>어디를 막을지</b>의 목록이고, 항공·출입국 통계는 <b>어디서 왔는지</b>의 숫자다.
+  KDCA는 둘을 한 화면에 놓지 않는다. 여기서는 나라마다 <b>지정 여부 · 직항 도착 여객 · 국적별 입국자 · 실제 유입 신고</b>를 한 점에 모아
+  <b>들어온 사람 백만 명당 유입 신고 건수</b>를 낸다. 지구본을 돌려 나라를 누르면 그 나라의 네 숫자가 뜬다.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<section id="map">
+  <h2>지구본 — 항로가 곧 위험의 굵기</h2>
+  <p class="sdesc">호(弧)는 그 나라에서 인천으로 들어온 사람 수에 비례해 굵어진다(로그 눈금). 색은 검역관리지역 지정 여부나 유입 위험도.
+  끌어서 돌리고, 누르면 오른쪽에 나라 정보가 뜬다. 평면으로 바꾸면 전체가 한눈에 보인다.</p>
+  <div class="card mapcard">
+    <div class="ctl">
+      <span class="lbl">보기</span>
+      <span class="grp" data-key="mode"><button data-v="globe" class="on">지구본</button><button data-v="flat">평면</button></span>
+      <span class="lbl">굵기</span>
+      <span class="grp" data-key="weight"><button data-v="air" class="on">직항 도착여객</button><button data-v="nat">국적별 입국자</button></span>
+      <span class="lbl">색</span>
+      <span class="grp" data-key="color"><button data-v="quar" class="on">검역 지정</button><button data-v="rate">유입 위험도</button></span>
+      <span class="lbl">필터</span>
+      <span class="grp" data-key="filter"><button data-v="all" class="on">전체</button><button data-v="q">지정국</button><button data-v="r">유입신고국</button></span>
+      <span class="sp"></span>
+      <select id="jump"><option value="">나라로 이동…</option></select>
+      <button class="ic" id="zin" title="확대">＋</button><button class="ic" id="zout" title="축소">－</button>
+      <button class="ic" id="home" title="한국 중심으로">⌂</button>
+    </div>
+    <div class="stage">
+      <div class="cv" id="cv">
+        <canvas id="c"></canvas>
+        <div class="tip" id="tip"></div>
+        <div class="legend" id="legend"></div>
+        <div class="hint" id="hint">끌어서 회전 · 누르면 상세</div>
+      </div>
+      <aside class="panel" id="panel"></aside>
+    </div>
+  </div>
+</section>
+
+<section id="findings">
+  <h2>발견 — 숫자를 나누면 순위가 뒤집힌다</h2>
+  <p class="sdesc">아래는 모두 위 데이터에서 계산으로 나온 것이다. 해석은 한 줄씩만 붙였다.</p>
+  <div id="fx"></div>
+</section>
+
+<section id="table">
+  <h2>국가별 종합표</h2>
+  <p class="sdesc">머리글을 누르면 정렬된다. 행을 누르면 지구본이 그 나라로 돈다. 빈칸은 <em>자료 없음</em>이고 0이 아니다.</p>
+  <div class="tbar">
+    <input id="q" placeholder="나라 검색" type="search">
+    <select id="reg"><option value="">모든 지역</option></select>
+    <span class="cnt" id="cnt"></span>
+  </div>
+  <div class="tblwrap"><table class="main" id="tbl"><thead></thead><tbody></tbody></table></div>
+</section>
+
+<section id="sources">
+  <h2>출처와 한계</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>어디서 받았나</h3>
+      <ul class="tight">
+        <li><b>직항 도착여객</b> — 국토교통부 지역·국가별 항공통계 (항공정보포털 조회 API). 도착·여객기·정기+부정기. <em>전체 − 환승</em>으로 실제 입국에 가까운 값을 만들었다. 기간 <code id="src-period"></code>.</li>
+        <li><b>국적별 입국자</b> — 법무부 출입국·외국인정책 통계월보, 공공데이터포털 <a href="https://www.data.go.kr/data/15099989/fileData.do" target="_blank" rel="noopener">15099989</a>. 월별·국적별 <em>외국인</em> 입국자. 같은 기간 합계.</li>
+        <li><b>검역관리지역</b> — ⑪ 2026년 3분기 고시(2026.7.1. 기준). 173개국·15종, 중점 25개국·5종. 원문 대조 완료.</li>
+        <li><b>유입 신고</b> — ⑫ 주간 건강과 질병 표본 <code id="src-issues"></code>호의 전수감시 해외유입 국가 열. <b>모든 호를 읽은 것이 아니다.</b></li>
+        <li><b>지도</b> — Natural Earth 110m (public domain), 0.25° 간략화. 소국 <span id="src-pts"></span>곳은 점.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>이 숫자로 할 수 없는 것</h3>
+      <ul class="tight">
+        <li><b>국적 ≠ 출발국.</b> 법무부 표는 여권 기준이다. 방콕에서 갈아탄 미국인은 미국으로, 러시아발 항공편의 한국인은 어디에도 잡히지 않는다. 그래서 분모를 둘 다 낸다.</li>
+        <li><b>직항 ≠ 전부.</b> 국토부 노선 표에는 직항이 있는 <span id="src-air"></span>개국만 있다. 경유 입국은 경유지 나라로 잡힌다. 검역관리지역 <span id="src-nofl"></span>개국은 이 표에 없다.</li>
+        <li><b>내국인은 분모에 없다.</b> 법무부 외국인 표에 우리 국민은 없고, 국민의 행선지별 출입국 통계는 공개되지 않는다. 남수단 말라리아 6건처럼 파병·근무 유입은 어느 분모로도 맞게 나누지 못한다.</li>
+        <li><b>신고는 표본.</b> 분자가 작다. 신고 3건 미만 나라의 위험도는 순위가 아니라 신호로만 읽어야 한다. 표에 흐리게 적었다.</li>
+        <li><b>15종 밖은 검역이 잡지 않는다.</b> 유입 신고의 대부분은 매독·수두·C형간염처럼 검역감염병이 아니다. "지정 안 했는데 들어왔다"는 비교는 15종 안에서만 했다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>자료 — 국토교통부 · 법무부 · 질병관리청 · Natural Earth. 지도 투영·계산은 이 저장소의 <code>scripts/build_inflow.py</code>.</div>
+  <div style="margin-top:6px">Built by <a href="https://jieumworks.com" target="_blank" rel="noopener">지음웍스 jieumworks.com</a> · 2026년 9월</div>
+</footer>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+'use strict';
+const D = JSON.parse(document.getElementById('data').textContent);
+const ROWS = D.rows, BY = Object.fromEntries(ROWS.map(r=>[r.iso,r]));
+const GEO = Object.fromEntries(D.map.countries.concat(D.map.points).map(c=>[c.iso,c]));
+const ICN = D.icn, RAD = Math.PI/180;
+const fmt = n => n==null ? '—' : n.toLocaleString('ko-KR');
+const fmt1 = n => n==null ? '—' : (Math.round(n*10)/10).toLocaleString('ko-KR');
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ── 머리 통계 ── */
+const M = D.meta, C = M.counts;
+document.getElementById('stats').innerHTML = [
+  [C.countries, '나라'], [C.with_air, '직항 노선 있는 나라'], [C.designated, '검역관리지역 지정국'],
+  [C.reported, '유입 신고 국가'], [M.report_total + '건', `유입 신고 · 표본 ${M.report_issues.length}호`],
+].map(([v,k])=>`<div class="stat"><div class="v num">${fmt(v)}</div><div class="k">${k}</div></div>`).join('');
+document.getElementById('src-period').textContent = M.period.join(' ~ ');
+document.getElementById('src-issues').textContent = M.report_issues.length;
+document.getElementById('src-pts').textContent = D.map.points.length;
+document.getElementById('src-air').textContent = C.with_air;
+document.getElementById('src-nofl').textContent = D.findings.desig_no_flight.length;
+
+/* ── 상태 ── */
+const S = {mode:'globe', weight:'air', color:'quar', filter:'all',
+           lam0:110*RAD, phi0:25*RAD, zoom:1, sel:null, hover:null, spin:!reduce};
+
+function weightOf(r){ return S.weight==='air' ? r.air_direct : r.nat_entries; }
+function rateOf(r){ return r.rate_air!=null ? r.rate_air : r.rate_nat; }
+function passes(r){
+  if(S.filter==='q') return r.q_general.length||r.q_priority.length;
+  if(S.filter==='r') return r.rep_n>0;
+  return true;
+}
+function quarClass(r){ return r.q_priority.length ? 'pri' : r.q_general.length ? 'gen' : null; }
+function rateBin(v){ const b=M.rate_bins; if(v==null) return null; if(v<=0) return 0; return v<b[0]?1 : v<b[1]?2 : v<b[2]?3 : 4; }
+function fillFor(r){
+  if(!r) return css('--land');
+  if(S.color==='quar'){ const q=quarClass(r); return q==='pri'?css('--warn') : q==='gen'?css('--s4') : css('--land'); }
+  const b = rateBin(rateOf(r));
+  return b==null||b===0 ? css('--land') : css('--r'+b);
+}
+
+/* ── 투영 ── */
+const cv = document.getElementById('c'), box = document.getElementById('cv');
+const ctx = cv.getContext('2d');
+let W=0,H=0,DPR=1,R=0,CX=0,CY=0, MAPW=0, MAPH=0, PADX=0, PADY=0;
+const FLAT_LAM = 150, LAT_MAX = 84, LAT_MIN = -58;
+function resize(){
+  DPR = Math.min(2, devicePixelRatio||1);
+  W = box.clientWidth; H = Math.max(360, Math.min(600, Math.round(W*0.72)));
+  box.style.height = H+'px';
+  cv.width = W*DPR; cv.height = H*DPR; cv.style.width=W+'px'; cv.style.height=H+'px';
+  ctx.setTransform(DPR,0,0,DPR,0,0);
+  R = Math.min(W,H)*0.47*S.zoom; CX = W/2; CY = H/2;
+  MAPW = Math.min(W-20, (H-20)*360/(LAT_MAX-LAT_MIN)); MAPH = MAPW*(LAT_MAX-LAT_MIN)/360;
+  PADX=(W-MAPW)/2; PADY=(H-MAPH)/2;
+  draw();
+}
+function proj(lon, lat){
+  if(S.mode==='flat'){
+    const l = ((lon - FLAT_LAM + 540) % 360) - 180;
+    const la = Math.max(LAT_MIN, Math.min(LAT_MAX, lat));
+    return {x: PADX + (l+180)/360*MAPW, y: PADY + (LAT_MAX-la)/(LAT_MAX-LAT_MIN)*MAPH, v:true, c:1};
+  }
+  const lam = lon*RAD - S.lam0, phi = lat*RAD;
+  const sp=Math.sin(phi), cp=Math.cos(phi), s0=Math.sin(S.phi0), c0=Math.cos(S.phi0);
+  const cosc = s0*sp + c0*cp*Math.cos(lam);
+  return {x: CX + R*cp*Math.sin(lam), y: CY - R*(c0*sp - s0*cp*Math.cos(lam)), v: cosc>0, c: cosc};
+}
+function toLimb(p){ // 뒷면 점을 가장자리로 밀어 낸다(싼 절단)
+  const dx=p.x-CX, dy=p.y-CY, d=Math.hypot(dx,dy)||1;
+  return {x: CX+dx/d*R, y: CY+dy/d*R};
+}
+/* 대권 보간 */
+function gc(a, b, n){
+  const A=[a[0]*RAD,a[1]*RAD], B=[b[0]*RAD,b[1]*RAD];
+  const va=[Math.cos(A[1])*Math.cos(A[0]),Math.cos(A[1])*Math.sin(A[0]),Math.sin(A[1])];
+  const vb=[Math.cos(B[1])*Math.cos(B[0]),Math.cos(B[1])*Math.sin(B[0]),Math.sin(B[1])];
+  const dot=Math.max(-1,Math.min(1,va[0]*vb[0]+va[1]*vb[1]+va[2]*vb[2])), om=Math.acos(dot), so=Math.sin(om)||1e-9;
+  const out=[];
+  for(let i=0;i<=n;i++){
+    const t=i/n, k1=Math.sin((1-t)*om)/so, k2=Math.sin(t*om)/so;
+    const x=k1*va[0]+k2*vb[0], y=k1*va[1]+k2*vb[1], z=k1*va[2]+k2*vb[2];
+    out.push([Math.atan2(y,x)/RAD, Math.atan2(z,Math.hypot(x,y))/RAD, t]);
+  }
+  return out;
+}
+
+/* ── 그리기 ── */
+let polyCache = []; // 히트테스트용 (iso, [[x,y],...])
+function draw(){
+  ctx.clearRect(0,0,W,H);
+  polyCache = [];
+  const land=css('--land'), landLine=css('--land-line'), sea=css('--sea'), grat=css('--graticule');
+  // 바다
+  ctx.fillStyle = sea;
+  if(S.mode==='globe'){ ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2); ctx.fill(); }
+  else { ctx.fillRect(PADX,PADY,MAPW,MAPH); }
+  // 경위선
+  ctx.strokeStyle = grat; ctx.lineWidth = 1;
+  for(let lat=-60; lat<=60; lat+=30){ pathLine(Array.from({length:73},(_,i)=>[i*5-180,lat])); }
+  for(let lon=-180; lon<180; lon+=30){ pathLine(Array.from({length:37},(_,i)=>[lon, Math.max(LAT_MIN,Math.min(LAT_MAX,i*5-90))])); }
+  // 육지
+  for(const c of D.map.countries){
+    if(c.iso==='ATA') continue;
+    const r = BY[c.iso];
+    const dim = r && !passes(r);
+    ctx.fillStyle = dim ? land : fillFor(r);
+    ctx.strokeStyle = landLine; ctx.lineWidth = 0.6;
+    const pts = [];
+    for(const ring of c.rings){
+      const pr = ring.map(p=>proj(p[0],p[1]));
+      if(S.mode==='globe'){
+        if(!pr.some(p=>p.v)) continue;
+        const q = pr.map(p=>p.v?p:toLimb(p));
+        pathPoly(q); pts.push(q);
+      } else {
+        // 날짜변경선에서 끊는다
+        let seg=[];
+        for(let i=0;i<pr.length;i++){
+          if(i>0 && Math.abs(pr[i].x-pr[i-1].x)>MAPW/2){ if(seg.length>2){pathPoly(seg);pts.push(seg);} seg=[]; }
+          seg.push(pr[i]);
+        }
+        if(seg.length>2){ pathPoly(seg); pts.push(seg); }
+      }
+    }
+    if(pts.length) polyCache.push({iso:c.iso, polys:pts});
+  }
+  // 점 나라
+  for(const c of D.map.points){
+    const r = BY[c.iso]; if(r && !passes(r)) continue;
+    const p = proj(c.c[0],c.c[1]); if(!p.v) continue;
+    ctx.fillStyle = fillFor(r); ctx.beginPath(); ctx.arc(p.x,p.y,2.4,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = landLine; ctx.lineWidth=.8; ctx.stroke();
+    polyCache.push({iso:c.iso, point:p});
+  }
+  // 호
+  const vals = ROWS.map(weightOf).filter(v=>v>0);
+  const vmax = Math.max(...vals, 1), lmax = Math.log10(vmax);
+  const arcs = ROWS.filter(r=>passes(r) && weightOf(r)>0 && GEO[r.iso] && r.iso!=='KOR')
+                   .sort((a,b)=>weightOf(a)-weightOf(b)); // 굵은 것을 위에
+  for(const r of arcs){
+    const v = weightOf(r), w = 0.5 + 3.4*Math.max(0, Math.log10(v))/lmax;
+    const hot = r.iso===S.sel || r.iso===S.hover;
+    ctx.lineWidth = hot ? Math.max(w,2.2)+1 : w;
+    ctx.strokeStyle = arcColor(r, hot);
+    pathArc(GEO[r.iso].c, hot);
+  }
+  // 인천
+  const icn = proj(ICN[0],ICN[1]);
+  if(icn.v){ ctx.fillStyle=css('--accent'); ctx.beginPath(); ctx.arc(icn.x,icn.y,4,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle=css('--surface'); ctx.lineWidth=1.5; ctx.stroke(); }
+  // 지구본 테
+  if(S.mode==='globe'){ ctx.strokeStyle=css('--line-strong'); ctx.lineWidth=1; ctx.beginPath(); ctx.arc(CX,CY,R,0,Math.PI*2); ctx.stroke(); }
+  // 선택 강조
+  const hi = S.sel || S.hover;
+  if(hi){ const e = polyCache.find(p=>p.iso===hi); if(e){
+    ctx.strokeStyle = css('--ink'); ctx.lineWidth = 1.6;
+    if(e.polys) e.polys.forEach(q=>{ ctx.beginPath(); q.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.closePath(); ctx.stroke(); });
+    else { ctx.beginPath(); ctx.arc(e.point.x,e.point.y,6,0,Math.PI*2); ctx.stroke(); }
+  }}
+  drawLegend();
+}
+function arcColor(r, hot){
+  const a = hot ? 1 : 0.62;
+  let col;
+  if(S.color==='quar'){ const q=quarClass(r); col = q==='pri'?css('--warn') : q==='gen'?css('--s4') : css('--s1'); }
+  else { const b=rateBin(rateOf(r)); col = b ? css('--r'+Math.max(2,b)) : css('--s1'); }
+  return hexA(col, a);
+}
+function hexA(hex, a){
+  if(!/^#/.test(hex)) return hex;
+  const h = hex.length===4 ? hex.replace(/./g,(c,i)=>i?c+c:c) : hex;
+  const n = parseInt(h.slice(1),16);
+  return `rgba(${n>>16&255},${n>>8&255},${n&255},${a})`;
+}
+function pathPoly(q){ ctx.beginPath(); q.forEach((p,i)=>i?ctx.lineTo(p.x,p.y):ctx.moveTo(p.x,p.y)); ctx.closePath(); ctx.fill(); ctx.stroke(); }
+function pathLine(coords){
+  ctx.beginPath(); let pen=false, last=null;
+  for(const c of coords){
+    const p = proj(c[0],c[1]);
+    const jump = last && S.mode==='flat' && Math.abs(p.x-last.x)>MAPW/2;
+    if(!p.v || jump){ pen=false; last=p; continue; }
+    if(pen) ctx.lineTo(p.x,p.y); else ctx.moveTo(p.x,p.y);
+    pen=true; last=p;
+  }
+  ctx.stroke();
+}
+function pathArc(from, hot){
+  const pts = gc(from, ICN, 48);
+  ctx.beginPath(); let pen=false, last=null;
+  for(const c of pts){
+    let p = proj(c[0],c[1]);
+    if(S.mode==='globe'){
+      const lift = 1 + 0.10*Math.sin(Math.PI*c[2]);   // 3D 느낌: 중간에서 살짝 뜬다
+      p = {x: CX+(p.x-CX)*lift, y: CY+(p.y-CY)*lift, v: p.c > -0.08*lift};
+    }
+    const jump = last && S.mode==='flat' && Math.abs(p.x-last.x)>MAPW/2;
+    if(!p.v || jump){ pen=false; last=p; continue; }
+    if(pen) ctx.lineTo(p.x,p.y); else ctx.moveTo(p.x,p.y);
+    pen=true; last=p;
+  }
+  ctx.stroke();
+}
+function drawLegend(){
+  const el = document.getElementById('legend');
+  const wlab = S.weight==='air' ? '직항 도착여객(환승 제외)' : '국적별 외국인 입국자';
+  let rows = `<div class="row"><span class="ln"></span> 굵기 = ${wlab}, 로그</div>`;
+  if(S.color==='quar'){
+    rows += `<div class="row"><span class="sw" style="background:${css('--warn')}"></span> 중점검역관리지역</div>
+             <div class="row"><span class="sw" style="background:${css('--s4')}"></span> 검역관리지역</div>
+             <div class="row"><span class="sw" style="background:${css('--land')}"></span> 미지정</div>`;
+  } else {
+    const b=M.rate_bins;
+    rows += `<div class="row"><span class="sw" style="background:${css('--r1')}"></span> &lt;${b[0]} /백만</div>
+             <div class="row"><span class="sw" style="background:${css('--r2')}"></span> ${b[0]}–${b[1]}</div>
+             <div class="row"><span class="sw" style="background:${css('--r3')}"></span> ${b[1]}–${b[2]}</div>
+             <div class="row"><span class="sw" style="background:${css('--r4')}"></span> ≥${b[2]}</div>
+             <div class="row"><span class="sw" style="background:${css('--land')}"></span> 신고 없음</div>`;
+  }
+  el.innerHTML = rows;
+}
+
+/* ── 상호작용 ── */
+let dragging=false, lx=0, ly=0, moved=false;
+cv.addEventListener('pointerdown', e=>{ dragging=true; moved=false; S.spin=false; lx=e.clientX; ly=e.clientY; cv.classList.add('drag'); cv.setPointerCapture(e.pointerId); });
+cv.addEventListener('pointermove', e=>{
+  if(dragging && S.mode==='globe'){
+    const dx=e.clientX-lx, dy=e.clientY-ly; lx=e.clientX; ly=e.clientY;
+    if(Math.abs(dx)+Math.abs(dy)>2) moved=true;
+    S.lam0 -= dx/R; S.phi0 = Math.max(-1.35, Math.min(1.35, S.phi0 + dy/R));
+    req();
+  } else {
+    const rect=cv.getBoundingClientRect(); const iso=hit(e.clientX-rect.left, e.clientY-rect.top);
+    if(iso!==S.hover){ S.hover=iso; req(); }
+    tip(iso, e.clientX-rect.left, e.clientY-rect.top);
+  }
+});
+cv.addEventListener('pointerup', e=>{
+  dragging=false; cv.classList.remove('drag');
+  if(!moved){ const rect=cv.getBoundingClientRect(); const iso=hit(e.clientX-rect.left, e.clientY-rect.top); select(iso, false); }
+});
+cv.addEventListener('pointerleave', ()=>{ S.hover=null; tip(null); req(); });
+function hit(x,y){
+  for(let i=polyCache.length-1;i>=0;i--){
+    const e=polyCache[i];
+    if(e.point){ if(Math.hypot(e.point.x-x,e.point.y-y)<7) return e.iso; continue; }
+    for(const q of e.polys) if(pip(q,x,y)) return e.iso;
+  }
+  return null;
+}
+function pip(q,x,y){ let inside=false;
+  for(let i=0,j=q.length-1;i<q.length;j=i++){
+    const xi=q[i].x, yi=q[i].y, xj=q[j].x, yj=q[j].y;
+    if(((yi>y)!==(yj>y)) && (x < (xj-xi)*(y-yi)/(yj-yi)+xi)) inside=!inside;
+  } return inside; }
+const tipEl=document.getElementById('tip');
+function tip(iso,x,y){
+  if(!iso){ tipEl.classList.remove('on'); return; }
+  const r=BY[iso], g=GEO[iso]; const v = r ? weightOf(r) : null;
+  tipEl.textContent = (g?g.ko:iso) + (v ? ` · ${fmt(v)}명` : r && r.rep_n ? ` · 신고 ${r.rep_n}건` : '');
+  tipEl.style.left=x+'px'; tipEl.style.top=y+'px'; tipEl.classList.add('on');
+}
+let raf=0; function req(){ if(!raf) raf=requestAnimationFrame(()=>{raf=0;draw();}); }
+
+document.querySelectorAll('.ctl .grp').forEach(g=>g.addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b) return;
+  g.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+  S[g.dataset.key]=b.dataset.v; S.spin=false;
+  document.getElementById('hint').textContent = S.mode==='globe' ? '끌어서 회전 · 누르면 상세' : '누르면 상세';
+  req(); renderTable();
+}));
+document.getElementById('zin').onclick=()=>{ S.zoom=Math.min(3,S.zoom*1.25); S.spin=false; resize(); };
+document.getElementById('zout').onclick=()=>{ S.zoom=Math.max(0.7,S.zoom/1.25); S.spin=false; resize(); };
+document.getElementById('home').onclick=()=>{ flyTo(110,25); };
+const jump=document.getElementById('jump');
+ROWS.slice().sort((a,b)=>a.ko.localeCompare(b.ko,'ko')).forEach(r=>{ const o=document.createElement('option'); o.value=r.iso; o.textContent=r.ko; jump.appendChild(o); });
+jump.onchange=()=>{ if(jump.value) select(jump.value, true); jump.value=''; };
+
+/* 나라와 인천이 함께 보이도록 둘의 중간으로 돈다 */
+let anim=0;
+function flyTo(lon, lat){
+  S.spin=false;
+  const t0=performance.now(), L0=S.lam0, P0=S.phi0;
+  let L1=lon*RAD, P1=Math.max(-1.2,Math.min(1.2,lat*RAD));
+  while(L1-L0>Math.PI) L1-=2*Math.PI; while(L1-L0<-Math.PI) L1+=2*Math.PI;
+  cancelAnimationFrame(anim);
+  if(reduce){ S.lam0=L1; S.phi0=P1; req(); return; }
+  const step=()=>{ const t=Math.min(1,(performance.now()-t0)/700), e=1-Math.pow(1-t,3);
+    S.lam0=L0+(L1-L0)*e; S.phi0=P0+(P1-P0)*e; draw(); if(t<1) anim=requestAnimationFrame(step); };
+  anim=requestAnimationFrame(step);
+}
+function select(iso, fly){
+  S.sel = iso; renderPanel(iso); req();
+  document.querySelectorAll('#tbl tbody tr').forEach(tr=>tr.classList.toggle('sel', tr.dataset.iso===iso));
+  if(fly && iso && GEO[iso] && S.mode==='globe'){
+    const mid = gc(GEO[iso].c, ICN, 2)[1];
+    flyTo(mid[0], mid[1]);
+  }
+}
+
+/* ── 패널 ── */
+const panel=document.getElementById('panel');
+function spark(vals){
+  const w=280,h=40, mx=Math.max(...vals,1);
+  const pts=vals.map((v,i)=>`${(i/(vals.length-1)*w).toFixed(1)},${(h-2-(v/mx)*(h-6)).toFixed(1)}`).join(' ');
+  return `<svg class="spark" viewBox="0 0 ${w} ${h}" preserveAspectRatio="none" aria-hidden="true">
+    <polyline fill="none" stroke="${css('--accent')}" stroke-width="1.6" points="${pts}"/></svg>`;
+}
+function renderPanel(iso){
+  if(!iso || !BY[iso]){
+    panel.innerHTML = `<h3>나라를 누르세요</h3><p class="sub">지구본이나 표에서</p>
+      <p class="small muted">호가 굵은 나라가 사람이 많이 들어온 나라다. 색이 붉은 나라가 중점검역관리지역이다.
+      둘이 겹치지 않는 곳이 이 지도가 보여 주려는 것이다.</p>
+      <h4>기간</h4><p class="small">여객·입국자 ${M.period.join('~')} · 유입 신고 ${M.report_span[0][0]}년 ${M.report_span[0][1]}주 ~ ${M.report_span[1][0]}년 ${M.report_span[1][1]}주 (표본 ${M.report_issues.length}호) · 검역 ${M.quarantine_basis}</p>`;
+    return;
+  }
+  const r=BY[iso], g=GEO[iso]||{};
+  const q = quarClass(r);
+  let h = `<h3>${r.ko}</h3><div class="sub">${r.region||''} · ${iso}${q==='pri'?' · <b style="color:var(--warn)">중점검역관리지역</b>':q==='gen'?' · 검역관리지역':' · 미지정'}</div>`;
+  h += `<dl class="kv">
+    <dt>직항 도착여객</dt><dd class="num">${r.air_direct==null?'<span class="empty">직항 없음</span>':fmt(r.air_direct)+'명'}${r.air_transit?` <span class="muted small">(+환승 ${fmt(r.air_transit)})</span>`:''}</dd>
+    <dt>국적별 입국자</dt><dd class="num">${r.nat_entries==null?'<span class="empty">—</span>':fmt(r.nat_entries)+'명'}</dd>
+    <dt>유입 신고</dt><dd class="num">${r.rep_n?r.rep_n+'건':'<span class="empty">표본에 없음</span>'}</dd>
+    <dt>백만 명당</dt><dd class="num">${r.rate_air!=null?fmt1(r.rate_air)+' <span class="muted small">직항 기준</span>':'<span class="empty">—</span>'}${r.rate_nat!=null?`<br>${fmt1(r.rate_nat)} <span class="muted small">국적 기준</span>`:''}</dd>
+  </dl>`;
+  if(r.air_years){
+    h += `<h4>연도별 직항 도착 (환승 제외)</h4><table class="flip">${Object.entries(r.air_years).map(([y,v])=>`<tr><td>${y}${y==='2026'?' <span class="weak">1~7월</span>':''}</td><td class="num">${fmt(v.total-v.transit)}</td><td class="num weak">${fmt(v.flights)}편</td></tr>`).join('')}</table>`;
+  }
+  const ser = D.series[iso];
+  if(ser && ser.some(v=>v)){ h += `<h4>국적별 입국자 월별 ${M.months[0]} ~ ${M.months[M.months.length-1]}</h4>${spark(ser)}<div class="small muted num">최근 ${M.months[M.months.length-1]}: ${fmt(ser[ser.length-1])}명 · 최고 ${fmt(Math.max(...ser))}명</div>`; }
+  h += `<h4>검역관리지역 지정 · ${M.quarantine_basis.split('(')[0]}</h4>`;
+  if(r.q_priority.length||r.q_general.length){
+    h += `<div class="chips">${r.q_priority.map(d=>`<span class="chip pri">중점 · ${d}</span>`).join('')}${r.q_general.filter(d=>!r.q_priority.includes(d)).map(d=>`<span class="chip gen">${d}</span>`).join('')}</div>`;
+  } else h += `<p class="empty">지정되지 않음</p>`;
+  h += `<h4>유입 신고 질병 (표본)</h4>`;
+  if(r.rep_diseases.length){
+    const quarSet = new Set(r.rep_quar.map(x=>x.disease));
+    h += `<div class="chips">${r.rep_diseases.map(([d,n])=>{ const qx=r.rep_quar.find(x=>x.disease===d);
+      return `<span class="chip ${qx?('q'+(qx.designated?'':' miss')):''}" title="${qx?(qx.designated?'검역감염병 · 이 나라가 이 병으로 지정됨':'검역감염병 · 이 나라는 이 병으로 미지정'):'검역감염병 아님'}">${d} ${n}</span>`; }).join('')}</div>
+      <div class="small muted" style="margin-top:6px">테두리 있는 것이 검역감염병 15종. ${quarSet.size?'':'이 나라 유입 신고는 모두 검역이 잡지 않는 병이다.'}</div>`;
+  } else h += `<p class="empty">표본 ${M.report_issues.length}호에 없음</p>`;
+  if(r.nat_over_air!=null && (r.nat_over_air>3 || r.nat_over_air<0.2) && (r.nat_entries>20000||r.air_direct>100000)){
+    h += `<div class="note">국적별 입국자가 직항 여객의 <b>${r.nat_over_air}배</b>. ${r.nat_over_air>3?'이 나라 국적자는 대부분 다른 나라를 거쳐 들어온다 — 직항 기준 위험도가 과대평가된다.':'이 노선 여객은 대부분 이 나라 국적이 아니다(우리 국민·제3국인). 국적 기준 위험도가 과대평가된다.'}</div>`;
+  }
+  if(r.rep_n && r.rep_n<3) h += `<div class="note">신고 ${r.rep_n}건. 위험도는 순위가 아니라 신호로만 읽을 것.</div>`;
+  if(iso==='SSD') h += `<div class="note warn">말라리아 6건은 파병 부대 복귀로 보인다(원문은 국가만 적는다). 외국인 입국자 163명은 이 유입의 분모가 아니다. 어떤 공개 분모로도 맞게 나누지 못하는 사례.</div>`;
+  if(iso==='RUS') h += `<div class="note warn">직항이 2022년 이후 사실상 끊겼다(3년 9편). 국적 입국자 ${fmt(r.nat_entries)}명은 거의 전부 경유 입국 — 직항 기준 위험도 ${fmt1(r.rate_air)}은 분모가 무너진 숫자다.</div>`;
+  panel.innerHTML = h;
+}
+
+/* ── 발견 ── */
+(function findings(){
+  const F=D.findings, fx=document.getElementById('fx');
+  const qp=F.quar_pairs;
+  // 분모가 무너진 나라(국적 입국자가 직항 여객의 3배 넘음 — 러시아 등)는 이 표에서 뺀다. ④에서 따로 다룬다.
+  const sane = F.flips.filter(x=>x.n>=3 && !(BY[x.iso].nat_over_air>3));
+  const top = sane.filter(x=>x.rank_count>x.rank_rate).sort((a,b)=>(b.rank_count-b.rank_rate)-(a.rank_count-a.rank_rate)).slice(0,6);
+  const bottom = sane.filter(x=>x.rank_rate>x.rank_count).sort((a,b)=>(b.rank_rate-b.rank_count)-(a.rank_rate-a.rank_count)).slice(0,6);
+  const okList = ROWS.filter(r=>r.rep_quar && r.rep_quar.length).sort((a,b)=>b.rep_quar.reduce((s,x)=>s+x.n,0)-a.rep_quar.reduce((s,x)=>s+x.n,0));
+  fx.innerHTML = `
+  <div class="grid2">
+    <div class="card">
+      <h3>① 검역감염병 유입 ${qp.n_reports}건, 지정은 빈틈이 없었다</h3>
+      <div class="big">${qp.hit}<small>/ ${qp.hit+qp.miss} (질병, 국가) 쌍이 지정 목록 안</small></div>
+      <p>표본 ${M.report_issues.length}호에서 검역감염병 15종으로 신고된 해외유입은 ${qp.n_reports}건, 나라·질병 쌍으로 ${qp.hit+qp.miss}가지다.
+      ${qp.miss===0?`<b class="ok">전부</b> 그 병의 검역관리지역으로 지정된 나라에서 왔다. 지정 목록이 실제 유입과 맞물려 있다는 뜻이다.`:
+        `그중 <b class="bad">${qp.miss}쌍(${qp.miss_n}건)</b>은 그 병으로 지정되지 않은 나라에서 왔다.`}</p>
+      ${qp.miss? `<ol class="tight">${qp.miss_list.slice(0,8).map(p=>`<li>${p.ko} — ${p.disease} ${p.n}건</li>`).join('')}</ol>`:''}
+      <p class="small muted">뒤집어 보면: 전체 유입 신고 ${M.report_total}건 중 <b>${M.report_total-qp.n_reports}건(${Math.round((M.report_total-qp.n_reports)/M.report_total*100)}%)</b>은 매독·수두·C형간염처럼 검역이 애초에 잡지 않는 병이다. 검역은 유입의 1/4을 겨눈다.</p>
+    </div>
+    <div class="card">
+      <h3>② 지정국 ${C.designated}개 중 ${F.desig_no_flight.length}개국은 직항이 없다</h3>
+      <div class="big">${Math.round(F.desig_no_flight.length/C.designated*100)}%<small>검역관리지역에 직항 노선 없음</small></div>
+      <p>검역이 공항에서 실제로 걸 수 있는 나라는 직항이 있는 <b>${C.designated-F.desig_no_flight.length}개국</b>뿐이다. 나머지 ${F.desig_no_flight.length}개국에서 오는 사람은
+      경유지(대개 두바이·도하·방콕·홍콩)발 항공편으로 들어오므로 검역정보사전입력(Q-CODE)의 <em>자기 신고</em>가 유일한 그물이다.</p>
+      <p class="small muted">그중 ${F.desig_low_entries.length}개국은 같은 기간 국적별 입국자가 1,000명 미만 — 대부분 뎅기열로 지정된 카리브·태평양 소도서다. 지정은 넓고 실제 유입은 좁다.</p>
+    </div>
+  </div>
+  <div class="card">
+    <h3>③ 건수로 보면 베트남, 나누면 다른 나라</h3>
+    <p>유입 신고 건수 순위와 <b>직항 도착여객 백만 명당</b> 순위를 나란히 놓았다. 신고 3건 이상이고 분모가 성한 나라만 적었다 — 러시아처럼 직항이 끊겨 분모가 무너진 나라는 ④로 보냈다.</p>
+    <div class="grid2">
+      <div><p class="small muted" style="margin:0">건수는 낮은데 비율은 높은 나라 — 사람은 적게 오는데 병은 들어온다</p>
+      <table class="flip"><tr><th>나라</th><th>신고</th><th>직항 여객</th><th>/백만</th><th>순위 건수→비율</th></tr>
+      ${top.map(x=>`<tr><td>${x.ko}</td><td class="num">${x.n}</td><td class="num">${fmt(x.direct)}</td><td class="num"><b>${fmt1(x.rate)}</b></td><td class="num">${x.rank_count}→<b>${x.rank_rate}</b></td></tr>`).join('')}</table></div>
+      <div><p class="small muted" style="margin:0">건수는 높은데 비율은 낮은 나라 — 많이 오니 많이 잡힐 뿐</p>
+      <table class="flip"><tr><th>나라</th><th>신고</th><th>직항 여객</th><th>/백만</th><th>순위 건수→비율</th></tr>
+      ${bottom.map(x=>`<tr><td>${x.ko}</td><td class="num">${x.n}</td><td class="num">${fmt(x.direct)}</td><td class="num"><b>${fmt1(x.rate)}</b></td><td class="num">${x.rank_count}→<b>${x.rank_rate}</b></td></tr>`).join('')}</table></div>
+    </div>
+    <p class="small muted">뺀 나라: ${F.flips.filter(x=>x.n>=3 && BY[x.iso].nat_over_air>3).map(x=>`${x.ko}(국적/노선 ${BY[x.iso].nat_over_air}배)`).join(' · ')||'없음'}.
+    베트남은 건수 1위지만 직항으로 ${fmt(BY.VNM.air_direct)}명이 들어와 백만 명당 ${fmt1(BY.VNM.rate_air)}건이다. 일본은 ${fmt(BY.JPN.air_direct)}명에 ${fmt1(BY.JPN.rate_air)}건. 검역 인력을 나라별로 배분한다면 어느 순위를 써야 하는가 — 이 표가 그 질문이다.</p>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <h3>④ 국적과 노선이 어긋나는 나라</h3>
+      <p>국적별 입국자 ÷ 직항 도착여객. 1에서 멀수록 두 분모가 서로 다른 사람을 세고 있다.</p>
+      <table class="flip"><tr><th>나라</th><th>국적 입국자</th><th>직항 여객</th><th>비</th></tr>
+      ${(F.skew||[]).map(x=>`<tr><td>${x.ko}</td><td class="num">${fmt(x.nat)}</td><td class="num">${fmt(x.direct)}</td><td class="num"><b>${x.ratio}</b></td></tr>`).join('')}</table>
+      <p class="small muted">러시아: 국적자 ${fmt(BY.RUS.nat_entries)}명이 들어왔는데 직항 여객은 ${fmt(BY.RUS.air_direct)}명. 직항이 끊긴 나라의 유입은 노선 표에서 사라진다. 베트남: 직항 여객 ${fmt(BY.VNM.air_direct)}명 중 베트남 국적은 ${fmt(BY.VNM.nat_entries)}명 — 나머지는 우리 국민 관광객이다. <b>"어느 나라에서 왔나"는 여권과 항공권이 서로 다른 답을 준다.</b></p>
+    </div>
+    <div class="card">
+      <h3>⑤ 어느 분모로도 못 나누는 유입</h3>
+      <div class="big">남수단<small>말라리아 6건 · 외국인 입국자 ${fmt(BY.SSD.nat_entries)}명 · 직항 없음</small></div>
+      <p>표본에서 남수단은 검역감염병이 아닌 말라리아로 6건이다. 파병 부대 복귀로 보이지만 원문은 나라만 적는다. 외국인 국적 분모로 나누면 백만 명당 ${fmt(Math.round(BY.SSD.rate_nat))}건이라는 무의미한 숫자가 나온다.</p>
+      <p class="small muted">우리 국민의 행선지별 출입국 통계는 공개되지 않는다. 코로나19 때 각국 출입국 정보가 유용했던 이유가 바로 이 빈칸이다 — <b>내국인 귀국자를 출발국별로 세는 공개 통계가 없다.</b> 이 페이지가 채우지 못한 것을 적어 둔다.</p>
+    </div>
+  </div>`;
+})();
+
+/* ── 표 ── */
+const COLS = [
+  ['ko','나라',r=>r.ko], ['region','지역',r=>r.region||''],
+  ['air_direct','직항 도착여객',r=>r.air_direct], ['nat_entries','국적 입국자',r=>r.nat_entries],
+  ['qk','검역 지정',r=>r.q_general.length+r.q_priority.length], ['pri','중점',r=>r.q_priority.length],
+  ['rep_n','유입 신고',r=>r.rep_n], ['rate_air','/백만 (직항)',r=>r.rate_air], ['rate_nat','/백만 (국적)',r=>r.rate_nat],
+];
+let sortKey='rep_n', sortDir=-1;
+const thead=document.querySelector('#tbl thead'), tbody=document.querySelector('#tbl tbody');
+thead.innerHTML='<tr>'+COLS.map(c=>`<th data-k="${c[0]}">${c[1]}</th>`).join('')+'</tr>';
+thead.addEventListener('click',e=>{ const th=e.target.closest('th'); if(!th) return;
+  if(sortKey===th.dataset.k) sortDir=-sortDir; else { sortKey=th.dataset.k; sortDir = th.dataset.k==='ko'||th.dataset.k==='region' ? 1 : -1; }
+  renderTable(); });
+const regSel=document.getElementById('reg');
+[...new Set(ROWS.map(r=>r.region).filter(Boolean))].sort().forEach(x=>{ const o=document.createElement('option'); o.value=x; o.textContent=x; regSel.appendChild(o); });
+document.getElementById('q').oninput=renderTable; regSel.onchange=renderTable;
+function renderTable(){
+  const q=document.getElementById('q').value.trim(), reg=regSel.value;
+  const col=COLS.find(c=>c[0]===sortKey);
+  const rows = ROWS.filter(r=>passes(r) && (!reg||r.region===reg) && (!q||r.ko.includes(q)||r.iso.includes(q.toUpperCase())))
+    .sort((a,b)=>{ const x=col[2](a), y=col[2](b);
+      if(x==null&&y==null) return 0; if(x==null) return 1; if(y==null) return -1;
+      return (typeof x==='string' ? x.localeCompare(y,'ko') : x-y)*sortDir; });
+  thead.querySelectorAll('th').forEach(th=>th.classList.toggle('on',th.dataset.k===sortKey));
+  tbody.innerHTML = rows.map(r=>{ const weak=r.rep_n&&r.rep_n<3;
+    return `<tr data-iso="${r.iso}" class="${r.iso===S.sel?'sel':''}">
+    <td>${r.ko}${r.q_priority.length?' <span style="color:var(--warn)">●</span>':''}</td><td class="dim">${r.region||''}</td>
+    <td class="num ${r.air_direct==null?'dim':''}">${fmt(r.air_direct)}</td><td class="num ${r.nat_entries==null?'dim':''}">${fmt(r.nat_entries)}</td>
+    <td class="num">${r.q_general.length+r.q_priority.length||'<span class="dim">—</span>'}</td><td class="num">${r.q_priority.length||'<span class="dim">—</span>'}</td>
+    <td class="num">${r.rep_n||'<span class="dim">—</span>'}</td>
+    <td class="num ${weak?'dim':''}">${r.rate_air==null?'<span class="dim">—</span>':fmt1(r.rate_air)}</td>
+    <td class="num ${weak?'dim':''}">${r.rate_nat==null?'<span class="dim">—</span>':fmt1(r.rate_nat)}</td></tr>`; }).join('');
+  document.getElementById('cnt').textContent = `${rows.length}개국`;
+}
+tbody.addEventListener('click',e=>{ const tr=e.target.closest('tr'); if(tr){ select(tr.dataset.iso,true); document.getElementById('map').scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'}); }});
+
+/* ── 시동 ── */
+renderPanel(null); renderTable(); resize();
+addEventListener('resize', resize);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', req);
+new MutationObserver(req).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+/* 처음 20초만 천천히 돈다. 손대면 멈춘다. */
+const spinUntil = performance.now() + 20000;
+(function idle(){
+  if(S.spin && S.mode==='globe' && !document.hidden){ S.lam0 += 0.0012; draw(); }
+  if(performance.now() > spinUntil) S.spin = false;
+  if(S.spin) requestAnimationFrame(idle);
+})();
+})();
+</script>
+</body>
+</html>
