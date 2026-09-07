@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>교차검증</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s4:#eda100;
+    --grid:#E4EAE7; --warn:#B23A3A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500;
+    --grid:#22302C; --warn:#E07A7A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500;
+    --grid:#22302C; --warn:#E07A7A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1000px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,46px);line-height:1.05;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(15px,2.3vw,17.5px);color:var(--muted);max-width:60ch;margin:16px 0 0}
+  .thesis b{color:var(--ink)}
+
+  section{padding:30px 0 6px}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14.5px;margin:0 0 18px;max-width:74ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;
+    box-shadow:var(--shadow);margin-bottom:14px}
+
+  .vhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:2px}
+  .vhead h3{margin:0;font-size:16px;font-weight:800}
+  .vb{font-size:11.5px;font-weight:800;border-radius:999px;padding:3px 11px;white-space:nowrap}
+  .v-agree{background:var(--accent);color:#fff}
+  .v-weak{background:var(--s4);color:#231a00}
+  .v-none{background:var(--warn);color:#fff}
+  .v-oppose{background:var(--warn);color:#fff}
+  .v-hold{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+  .rho{margin-left:auto;font-size:12.5px;color:var(--faint);font-weight:600}
+  .why{font-size:13.5px;color:var(--ink);margin:6px 0 2px}
+  .pnote{font-size:12.5px;color:var(--faint);margin:4px 0 10px}
+  .plab{font-size:11.5px;font-weight:700;margin:8px 0 1px;display:flex;gap:7px;align-items:center}
+  .plab i{width:14px;height:3px;border-radius:2px;display:inline-block}
+  svg{display:block;width:100%;overflow:visible}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .ax{fill:var(--faint);font-size:10px}
+  .ln{fill:none;stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+  .ar{opacity:.12}
+  .dt{stroke:var(--surface);stroke-width:1.5}
+
+  .rank{display:grid;grid-template-columns:1fr;gap:8px}
+  .rk{display:flex;align-items:center;gap:12px;padding:11px 14px;border:1px solid var(--line);
+    border-radius:12px;background:var(--surface);flex-wrap:wrap}
+  .rk .x{font-size:19px;font-weight:800;color:var(--warn);min-width:74px;text-align:right}
+  .rk .nm{font-weight:700;font-size:14.5px;min-width:150px}
+  .rk .de{font-size:12.5px;color:var(--muted);flex:1;min-width:190px}
+  .rk .sp{width:168px;flex:none}
+  .rk .spc{font-size:10.5px;color:var(--faint);white-space:nowrap}
+
+  table{border-collapse:collapse;font-size:13px;width:100%}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{color:var(--muted);font-weight:700;font-size:11.5px;border-bottom:1.5px solid var(--line-strong)}
+  td.n{text-align:right;white-space:nowrap}
+  .tw{overflow-x:auto}
+  .tag{font-size:10.5px;font-weight:800;border-radius:5px;padding:1px 6px;white-space:nowrap}
+  .t-pri{background:var(--warn);color:#fff}
+  .t-gen{background:var(--accent-soft);color:var(--accent-ink)}
+  .t-no{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+
+  .find{border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:12px;
+    padding:14px 16px;margin-bottom:10px;background:var(--surface)}
+  .find h3{margin:0 0 4px;font-size:15px;font-weight:800}
+  .find p{margin:0 0 6px;font-size:13.5px;color:var(--muted)}
+  .find code{background:var(--surface-2);padding:1px 6px;border-radius:5px;font-size:12.5px}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 17px;font-size:13px;margin:16px 0}
+  .note ul{margin:6px 0 0;padding-left:18px}
+  .note li{margin:3px 0}
+  footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer .maker a{color:var(--accent-ink)}
+  @media(max-width:620px){.rk .sp{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../checker/">🩺 검사기</a><a href="../lab/">🔬 진단검사</a><a href="../quarantine/">🛂 검역</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Cross-Validation</p>
+  <h1>숫자 하나로는<br>아무것도 알 수 없다</h1>
+  <p class="thesis">"이번 주 신고 300건"은 그 자체로 아무 뜻이 없다. <b>예년엔 몇 건이었는지</b>,
+  <b>검사실도 같이 늘었는지</b>를 나란히 놓아야 뜻이 생긴다.
+  질병관리청은 두 축을 모두 공표하지만 <b>서로 다른 표에 따로</b> 싣는다. 여기서는 그것을 겹쳐 놓는다.</p>
+  <p class="thesis" id="basis" style="font-size:13px;color:var(--faint)"></p>
+</header>
+
+<section>
+  <h2>① 신고가 늘면 병도 는 것인가</h2>
+  <p class="sdesc">같은 주의 <b>신고 지표</b>와 <b>병원체 검출 지표</b>를 위아래로 놓았다.
+  두 축이 같이 움직이면 유행 신호로 읽을 근거가 있고, 신고만 움직이면 신고 행태·제도 변화를 먼저 의심해야 한다.
+  판정은 순위상관(스피어만 ρ)으로 하고, 짝지어진 주가 적으면 계산하지 않고 보류한다.</p>
+  <div id="pairs"></div>
+</section>
+
+<section>
+  <h2>② 예년 대비 얼마나 이례적인가</h2>
+  <p class="sdesc">질병관리청 주간 보고서는 <b>금주 신고수</b>와 <b>최근 5년 같은 주 평균</b>을 함께 싣는다.
+  다만 매주 한 점씩만 보여줘서, 이례가 언제 시작해 언제 꺼졌는지는 보이지 않는다.
+  여기서는 그 배수를 3년치 곡선으로 이어 붙였다. (5년 평균이 <span class="num" id="minbase"></span>건 미만인 질병은 배수가 불안정해 제외했다.)</p>
+  <div class="rank" id="rank"></div>
+</section>
+
+<section>
+  <h2>③ 유입된 나라가 검역 대상이었나</h2>
+  <p class="sdesc">주간 보고서의 <b>해외유입 신고 국가</b>를 모아 <b>검역관리지역 지정</b>과 대조했다.
+  다만 <b>두 목록의 기준이 다르다</b> — 검역관리지역은 검역감염병 15종만 대상이고, 유입 신고는 전체 감염병이다.
+  미지정이라고 해서 누락이 아니다. 그 차이 자체를 보는 표다.</p>
+  <div class="card"><div class="tw"><table>
+    <thead><tr><th>유입국</th><th class="n">신고 합</th><th>검역 지위</th><th>어떤 감염병으로 유입 신고됐나</th></tr></thead>
+    <tbody id="inflow"></tbody>
+  </table></div></div>
+</section>
+
+<section>
+  <h2>④ 원문을 대조하다가 찾은 것</h2>
+  <p class="sdesc">이 축들을 기계로 이어 붙이려면 원문 표기를 하나하나 맞춰야 한다. 그 과정에서 드러난 것들이다.</p>
+  <div id="finds"></div>
+</section>
+
+<div class="note">
+  <b>이 페이지의 한계</b>
+  <ul>
+    <li><b>신고 축은 4주 간격 표본이다.</b> 전수감시 표는 호마다 금주 1주치만 실린다. 4호 간격으로 모았으므로 신고 축은 3년간 36개 주차다. 검출 축(139주)보다 성기다.</li>
+    <li><b>상관은 인과가 아니다.</b> 두 축이 같이 움직인다고 해서 한쪽이 다른 쪽을 설명하지 않는다. 계절이 둘 다를 움직였을 수 있다.</li>
+    <li><b>짝지은 지표가 같은 것을 세지 않는다.</b> 각 쌍의 회색 설명에 무엇이 다른지 적어 두었다. 예컨대 병원성대장균은 장출혈성대장균보다 넓은 범주다.</li>
+    <li><b>같은 호 안에서도 표마다 기준 주차가 다르다.</b> 정확히 같은 주가 없으면 ±1주까지 짝을 허용했고, 그 사실을 각 쌍에 적었다.</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div>출처: 질병관리청 「주간 건강과 질병」 부록 「주요 감염병 통계」 · 검역관리지역 지정 안내 —
+    <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/13_%EA%B5%90%EC%B0%A8%EA%B2%80%EC%A6%9D" target="_blank" rel="noopener">분석 데이터(GitHub)</a></div>
+  <div style="margin-top:8px">⚠️ 참고용 정리물이다. 잠정통계이며, 판정은 이 저장소의 계산이지 질병관리청의 공식 해석이 아니다.</div>
+</footer>
+</div>
+
+<script>
+const D = __DATA__;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const f1 = v => v == null ? '–' : (Math.round(v * 10) / 10).toFixed(1);
+
+document.getElementById('basis').textContent =
+  `신고 축 ${D.built_from['신고 표본 주차']}개 주차 · 검출 축 ${D.built_from['검출 주차']}개 주차 · 검역 ${D.built_from['검역 기준']}`;
+document.getElementById('minbase').textContent = D.min_base;
+
+/* 한 계열 꺾은선 — 단일 계열이라 범례 대신 위의 직접 라벨이 계열을 말한다 */
+function line(host, pts, color, opt){
+  opt = opt || {};
+  const W = 900, H = opt.h || 92, L = 40, R = 10, T = 8, B = opt.xlab ? 20 : 6;
+  const iw = W - L - R, ih = H - T - B;
+  const vals = pts.map(p => p.v).filter(v => v != null);
+  if (!vals.length){ host.innerHTML = ''; return; }
+  const max = Math.max(...vals), top = max <= 0 ? 1 : max * 1.14;
+  const X = i => L + (pts.length < 2 ? iw / 2 : i * iw / (pts.length - 1));
+  const Y = v => T + ih - (v / top) * ih;
+  let d = '', started = false;
+  pts.forEach((p, i) => {
+    if (p.v == null){ started = false; return; }
+    d += (started ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(p.v).toFixed(1) + ' ';
+    started = true;
+  });
+  let s = `<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opt.aria)}">`;
+  [0, top].forEach(t => {
+    s += `<line class="gl" x1="${L}" y1="${Y(t).toFixed(1)}" x2="${W-R}" y2="${Y(t).toFixed(1)}"/>`
+       + `<text class="ax" x="${L-5}" y="${(Y(t)+3.5).toFixed(1)}" text-anchor="end">${f1(t)}</text>`;
+  });
+  // 배수 그래프에는 '예년 수준(=1배)' 기준선을 긋는다 — 위로 솟은 만큼이 이례다
+  if (opt.baseline != null && opt.baseline <= top){
+    s += `<line x1="${L}" y1="${Y(opt.baseline).toFixed(1)}" x2="${W-R}" y2="${Y(opt.baseline).toFixed(1)}"`
+       + ` stroke="var(--line-strong)" stroke-width="1" stroke-dasharray="4 3"/>`;
+  }
+  s += `<path class="ln" d="${d}" stroke="${color}"/>`;
+  if (opt.dots) pts.forEach((p, i) => {
+    if (p.v != null) s += `<circle class="dt" cx="${X(i).toFixed(1)}" cy="${Y(p.v).toFixed(1)}" r="3" fill="${color}"><title>${esc(p.t)} · ${f1(p.v)}</title></circle>`;
+  });
+  if (opt.xlab){
+    const step = Math.max(1, Math.round(pts.length / 6));
+    pts.forEach((p, i) => { if (i % step === 0 || i === pts.length - 1)
+      s += `<text class="ax" x="${X(i).toFixed(1)}" y="${H-4}" text-anchor="middle">${esc(p.t)}</text>`; });
+  }
+  host.innerHTML = s + '</svg>';
+}
+
+/* ① 대조쌍 */
+const VN = {agree:'같이 움직인다', weak:'약하게 같이', none:'따로 논다', oppose:'반대로 움직인다', hold:'판단 보류'};
+document.getElementById('pairs').innerHTML = D.pairs.map(p => `
+  <div class="card">
+    <div class="vhead">
+      <h3>${esc(p.label)}</h3>
+      <span class="vb v-${p.verdict}">${VN[p.verdict]}</span>
+      <span class="rho num">${p.rho == null ? '상관 계산 안 함' : 'ρ = ' + p.rho} · 짝지은 주 ${p.n_paired}</span>
+    </div>
+    <p class="why">${esc(p.why)}</p>
+    <p class="pnote">${esc(p.note)}</p>
+    <div class="plab"><i style="background:var(--s1)"></i>신고 — ${esc(p.report_label)}</div>
+    <div class="ch-r"></div>
+    <div class="plab"><i style="background:var(--s2)"></i>검출 — ${esc(p.lab_label)}</div>
+    <div class="ch-l"></div>
+  </div>`).join('');
+document.querySelectorAll('#pairs .card').forEach((el, i) => {
+  const p = D.pairs[i];
+  line(el.querySelector('.ch-r'), p.report, 'var(--s1)', {dots: p.report.length <= 60, aria: p.label + ' 신고'});
+  line(el.querySelector('.ch-l'), p.lab, 'var(--s2)', {xlab: true, aria: p.label + ' 검출'});
+});
+
+/* ② 이례 순위 */
+document.getElementById('rank').innerHTML = D.anomalies.slice(0, 10).map(a => `
+  <div class="rk">
+    <span class="x num">${a.peak_ratio >= 10 ? Math.round(a.peak_ratio) : f1(a.peak_ratio)}배</span>
+    <span class="nm">${esc(a.disease)}</span>
+    <span class="de num">최고 ${esc(a.peak_week.replace('-', '년 '))}주 · 금주 ${a.peak_count.toLocaleString()}건 vs 5년 평균 ${f1(a.peak_base)}건</span>
+    <span class="sp"></span><span class="spc">점선 = 예년 수준</span>
+  </div>`).join('');
+document.querySelectorAll('#rank .rk').forEach((el, i) => {
+  const a = D.anomalies[i];
+  line(el.querySelector('.sp'), a.series.map(s => ({t: s.t, v: s.ratio})), 'var(--warn)',
+       {h: 46, baseline: 1, aria: a.disease + ' 예년 대비 배수 추이'});
+});
+
+/* ③ 유입 ↔ 검역 */
+document.getElementById('inflow').innerHTML = D.inflow.map(i => {
+  const tag = i.priority ? '<span class="tag t-pri">중점</span>'
+            : i.general ? '<span class="tag t-gen">검역</span>'
+            : '<span class="tag t-no">미지정</span>';
+  const ds = Object.entries(i.diseases).map(([k, v]) => `${esc(k)}(${v})`).join(' · ');
+  return `<tr><td><b>${esc(i.country)}</b></td><td class="n num">${i.n}</td><td>${tag}</td><td style="color:var(--muted)">${ds}</td></tr>`;
+}).join('');
+
+/* ④ 발견 */
+document.getElementById('finds').innerHTML = (D.findings || []).map(f => `
+  <div class="find"><h3>${esc(f.title)}</h3><p>${esc(f.body)}</p>
+  ${f.evidence ? `<p style="color:var(--ink)">근거: <code>${esc(f.evidence)}</code></p>` : ''}</div>`).join('');
+</script>
+</body>
+</html>
