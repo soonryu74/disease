@@ -1,0 +1,3848 @@
+{
+ "meta": {
+  "as_of": "2026-09",
+  "source": "질병관리청 감염병포털 감염병지침 게시판 전량 크롤링(358건, 2002~2026)",
+  "levels": {
+   "direct": "지침 제목에 그 질병명·옛 이름·약어가 들어 있다 — 사실",
+   "group": "그 질병이 속한 계열의 묶음 지침 — 찾아볼 후보. 묶음 지침이 실제로 어느 질병을 다루는지는 원문 목차 확인이 필요하다"
+  },
+  "caution": "제목에 '(4종)'처럼 대상 수가 적힌 묶음 지침이 있다. 대상 목록은 원문에서 확인할 것.",
+  "stats": {
+   "direct": 41,
+   "group": 50,
+   "none": 0,
+   "total": 91,
+   "guidelines": 358
+  }
+ },
+ "index": [
+  {
+   "disease": "남아메리카출혈열",
+   "grade": "제1급",
+   "icon": "🩸",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "니파바이러스감염증",
+   "grade": "제1급",
+   "icon": "🦇",
+   "direct": [
+    {
+     "title": "제1급감염병 니파바이러스감염증 대응 지침(제1판)",
+     "date": "2025.09.08",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250908095956243&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "동물인플루엔자 인체감염증",
+   "grade": "제1급",
+   "icon": "🐔",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 동물인플루엔자 인체감염증 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421489669316&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "동물인플루엔자 인체감염증 대응지침 입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125784788667&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "두창",
+   "grade": "제1급",
+   "icon": "💀",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "디프테리아",
+   "grade": "제1급",
+   "icon": "🗣",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "라싸열",
+   "grade": "제1급",
+   "icon": "🩸",
+   "direct": [
+    {
+     "title": "2016년 라싸열 대응지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716428684310&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "리프트밸리열",
+   "grade": "제1급",
+   "icon": "🩸",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "마버그열",
+   "grade": "제1급",
+   "icon": "🩸",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "보툴리눔독소증",
+   "grade": "제1급",
+   "icon": "🥫",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "신종감염병증후군",
+   "grade": "제1급",
+   "icon": "❓",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "신종인플루엔자",
+   "grade": "제1급",
+   "icon": "🤧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "야토병",
+   "grade": "제1급",
+   "icon": "🐇",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "에볼라바이러스병",
+   "grade": "제1급",
+   "icon": "🩸",
+   "direct": [
+    {
+     "title": "2017년 (제7판)에볼라바이러스병 대응지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716460657497&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "중동호흡기증후군(MERS)",
+   "grade": "제1급",
+   "icon": "🐪",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS) 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421944839744&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "중동호흡기증후군(MERS) 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125213542588&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 메르스(MERS) 대응 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716730763772&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 메르스(MERS) 대응지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716115098166&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 메르스(MERS) 대응 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716315640614&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 5,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "중증급성호흡기증후군(SARS)",
+   "grade": "제1급",
+   "icon": "😷",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS) 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421944839744&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "중증급성호흡기증후군(SARS) 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125546375205&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "크리미안콩고출혈열",
+   "grade": "제1급",
+   "icon": "🩸",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "탄저",
+   "grade": "제1급",
+   "icon": "🐄",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "페스트",
+   "grade": "제1급",
+   "icon": "🐀",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 페스트 대응지침(제1판)",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716745388800&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 3,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "A형간염",
+   "grade": "제2급",
+   "icon": "🫀",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "E형간염",
+   "grade": "제2급",
+   "icon": "🫁",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "b형헤모필루스인플루엔자",
+   "grade": "제2급",
+   "icon": "👶",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "결핵",
+   "grade": "제2급",
+   "icon": "🫁",
+   "direct": [
+    {
+     "title": "2026 국가결핵관리지침",
+     "date": "2026.01.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260105170034695&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "결핵환자 맞춤형 통합관리 지침 안내",
+     "date": "2024.05.31",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240531090527953&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "‘국립결핵병원 치료·간병 통합지원 시범사업’ 시행 안내(2024.5.1.시행)",
+     "date": "2024.04.26",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240426093937340&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "「잠복결핵감염 관리 안내」",
+     "date": "2024.04.11",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240411081008313&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "「다제내성결핵 치료 신약 사전심사제」 일부개정 및 안내서 배포 알림",
+     "date": "2024.03.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240329132858733&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "「교정시설 결핵관리지침」(2024)",
+     "date": "2024.03.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240325083936144&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 25,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "반코마이신내성황색포도알균(VRSA) 감염증",
+   "grade": "제2급",
+   "icon": "🧪",
+   "direct": [
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 의료관련감염병(VRSA,CRE) 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716542576822&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2024년도 의료관련감염병 관리지침",
+     "date": "2023.12.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "백일해",
+   "grade": "제2급",
+   "icon": "🤧",
+   "direct": [
+    {
+     "title": "2015년 백일해통합관리지침",
+     "date": "2018.08.22",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180822324267988&q_clsfNo=0",
+     "year": 2015,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "성홍열",
+   "grade": "제2급",
+   "icon": "🔴",
+   "direct": [
+    {
+     "title": "2018년 성홍열 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716554798814&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 성홍열 집단발생보고 결과보고 양식",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716519199302&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "세균성이질",
+   "grade": "제2급",
+   "icon": "💧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "수두",
+   "grade": "제2급",
+   "icon": "🔴",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "수막구균 감염증",
+   "grade": "제2급",
+   "icon": "🧠",
+   "direct": [
+    {
+     "title": "2020년도 수막구균 감염증 관리지침",
+     "date": "2020.02.13",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200213816378464&q_clsfNo=0",
+     "year": 2020,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 수막구균성수막염 관리지침",
+     "date": "2018.08.22",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180822752686043&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2002년 수막구균성수막염 지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710566397522&q_clsfNo=0",
+     "year": 2002,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 3,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "유행성이하선염",
+   "grade": "제2급",
+   "icon": "🤒",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "장출혈성대장균감염증",
+   "grade": "제2급",
+   "icon": "🥩",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "장티푸스",
+   "grade": "제2급",
+   "icon": "💧",
+   "direct": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2026년도 제1급감염병 대응지침(4종)",
+     "date": "2026.01.26",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260126111805686&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제4-2판)",
+     "date": "2025.12.08",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20251208110516818&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "제1급감염병 니파바이러스감염증 대응 지침(제1판)",
+     "date": "2025.09.08",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250908095956243&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 110,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "카바페넴내성장내세균목(CRE) 감염증",
+   "grade": "제2급",
+   "icon": "🧫",
+   "direct": [
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 의료관련감염병(VRSA,CRE) 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716542576822&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2024년도 의료관련감염병 관리지침",
+     "date": "2023.12.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "콜레라",
+   "grade": "제2급",
+   "icon": "💧",
+   "direct": [
+    {
+     "title": "2002년 콜레라방역관리 지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710779201400&q_clsfNo=0",
+     "year": 2002,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "파라티푸스",
+   "grade": "제2급",
+   "icon": "💧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "폐렴구균 감염증",
+   "grade": "제2급",
+   "icon": "🫁",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "폴리오",
+   "grade": "제2급",
+   "icon": "🦵",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "풍진",
+   "grade": "제2급",
+   "icon": "🔴",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "한센병",
+   "grade": "제2급",
+   "icon": "🕊️",
+   "direct": [
+    {
+     "title": "2026년도 한센병사업 관리지침",
+     "date": "2026.02.24",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260224093345460&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2025년도 한센병사업 관리지침",
+     "date": "2025.03.27",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250327084011146&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2024년도 한센병사업 관리지침",
+     "date": "2024.05.31",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240531085924434&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2000년 한센병관리사업지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710438977204&q_clsfNo=0",
+     "year": 2000,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 4,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "홍역",
+   "grade": "제2급",
+   "icon": "🔴",
+   "direct": [
+    {
+     "title": "2006년 홍역감시관리지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710771704408&q_clsfNo=0",
+     "year": 2006,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2003년 홍역예방․관리 지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710258588430&q_clsfNo=0",
+     "year": 2003,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "B형간염",
+   "grade": "제3급",
+   "icon": "🫀",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "C형간염",
+   "grade": "제3급",
+   "icon": "💉",
+   "direct": [
+    {
+     "title": "2020년도 C형간염 지침",
+     "date": "2020.03.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200310245616631&q_clsfNo=0",
+     "year": 2020,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 C형간염 관리지침_전자용",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716944710754&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 C형간염관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716097735733&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 3,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "공수병",
+   "grade": "제3급",
+   "icon": "🐕",
+   "direct": [
+    {
+     "title": "2018년 공수병 관리지침",
+     "date": "2018.09.27",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180927756905352&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 공수병 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716250193298&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 공수병 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716018016313&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2015년 공수병 예방관리 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716238815426&q_clsfNo=0",
+     "year": 2015,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2007년 공수병지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710901975087&q_clsfNo=0",
+     "year": 2007,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 5,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "뎅기열",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "라임병",
+   "grade": "제3급",
+   "icon": "🕷",
+   "direct": [
+    {
+     "title": "2012년 라임병 관리 지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710511145542&q_clsfNo=0",
+     "year": 2012,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "레지오넬라증",
+   "grade": "제3급",
+   "icon": "🚿",
+   "direct": [
+    {
+     "title": "2025년도 레지오넬라증 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131851611&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2024년 레지오넬라증 관리지침",
+     "date": "2024.04.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240430171900726&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2019년 레지오넬라증관리지침",
+     "date": "2019.07.12",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190712961070144&q_clsfNo=0",
+     "year": 2019,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 레지오넬라증관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716338319585&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 4,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "렙토스피라증",
+   "grade": "제3급",
+   "icon": "🐭",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "말라리아",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [
+    {
+     "title": "2023년 말라리아 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720097551027&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2019년도 말라리아 관리지침",
+     "date": "2019.05.07",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190507539472061&q_clsfNo=0",
+     "year": 2019,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 말라리아 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716642266187&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 말라리아관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716237996855&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 말라리아 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716730170282&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2015년 해외여행을 위한 말라리아 예방지침 개정(안)",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716244644092&q_clsfNo=0",
+     "year": 2015,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 22,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "매독",
+   "grade": "제3급",
+   "icon": "🩸",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "발진열",
+   "grade": "제3급",
+   "icon": "🐀",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "발진티푸스",
+   "grade": "제3급",
+   "icon": "🪳",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "브루셀라증",
+   "grade": "제3급",
+   "icon": "🐄",
+   "direct": [
+    {
+     "title": "2018년 브루셀라증 관리지침",
+     "date": "2018.09.27",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180927509624482&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 브루셀라증 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716007826007&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 브루셀라증 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716447833417&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2012년 브루셀라증 예방관리지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710551560225&q_clsfNo=0",
+     "year": 2012,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2006년 브루셀라증 실태조사 사업수행 지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710178140041&q_clsfNo=0",
+     "year": 2006,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2003 브루셀라증관리지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710404930672&q_clsfNo=0",
+     "year": 2003,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 6,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "비브리오패혈증",
+   "grade": "제3급",
+   "icon": "🦪",
+   "direct": [
+    {
+     "title": "2005년 비브리오패혈증 관리 지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710932165251&q_clsfNo=0",
+     "year": 2005,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "신증후군출혈열",
+   "grade": "제3급",
+   "icon": "🐭",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "엠폭스",
+   "grade": "제3급",
+   "icon": "🐒",
+   "direct": [
+    {
+     "title": "엠폭스 관리지침(제3-1판)",
+     "date": "2026.06.01",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260601083147987&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "엠폭스 관리지침(제3판)",
+     "date": "2025.12.18",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20251218131542258&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "엠폭스 관리지침(2024.10) 개정판",
+     "date": "2024.10.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20241029104413425&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "엠폭스 관리지침",
+     "date": "2024.06.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240625152525766&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "엠폭스 대응지침(지자체용) 제5-2판",
+     "date": "2023.08.18",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230818784829459&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 5,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "웨스트나일열",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "유비저",
+   "grade": "제3급",
+   "icon": "🦠",
+   "direct": [
+    {
+     "title": "2017년 유비저 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716258335893&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 유비저관리지침_최종",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716393798622&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "일본뇌염",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "중증열성혈소판감소증후군(SFTS)",
+   "grade": "제3급",
+   "icon": "🕷",
+   "direct": [
+    {
+     "title": "2013년 중증열성혈소판감소증후군 진단신고기준",
+     "date": "2018.07.11",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180711951619773&q_clsfNo=0",
+     "year": 2013,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 1,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "지카바이러스감염증",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [
+    {
+     "title": "2017년 지카바이러스 감염증 진단검사지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716927594891&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 가임기 여성 및 임산부 지카바이러스",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716004346906&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "진드기매개뇌염",
+   "grade": "제3급",
+   "icon": "🕷",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "쯔쯔가무시증",
+   "grade": "제3급",
+   "icon": "🕷️",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "치쿤구니야열",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "큐열",
+   "grade": "제3급",
+   "icon": "🐐",
+   "direct": [
+    {
+     "title": "2017년 큐열 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716532417122&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 큐열 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716055972107&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 2,
+   "group": [
+    {
+     "title": "인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵)",
+     "date": "2023.06.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "인수공통"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "크로이츠펠트-야콥병(CJD) 및 변종(vCJD)",
+   "grade": "제3급",
+   "icon": "🧠",
+   "direct": [
+    {
+     "title": "2018년 크로이츠펠트-야콥병(CJD) 안내서",
+     "date": "2018.09.27",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180927741448002&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 크로이츠펠트-야콥병(CJD) 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716957625656&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2012년 CJD 관리지침",
+     "date": "2018.07.11",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180711917281039&q_clsfNo=0",
+     "year": 2012,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2009년 CJD 및 vCJD 관리지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710257781682&q_clsfNo=0",
+     "year": 2009,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2008년 CJD표본감시관리지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710793292402&q_clsfNo=0",
+     "year": 2008,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2006년 CJD관리지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710818751299&q_clsfNo=0",
+     "year": 2006,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 7,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "파상풍",
+   "grade": "제3급",
+   "icon": "🪤",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "황열",
+   "grade": "제3급",
+   "icon": "🦟",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2023년 바이러스성모기매개감염병 관리지침",
+     "date": "2023.07.20",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0",
+     "year": 2023,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "2019년도 진드기 매개감염병 관리지침",
+     "date": "2019.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "매개체"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "후천성면역결핍증(AIDS)",
+   "grade": "제3급",
+   "icon": "🎗",
+   "direct": [
+    {
+     "title": "2026년 HIV/AIDS 관리지침",
+     "date": "2026.02.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260202102903689&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2025년 HIV/AIDS 관리지침 개정판",
+     "date": "2025.07.15",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250715090240017&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2025년 HIV/AIDS 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155252342&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2024년 HIV/AIDS 관리지침",
+     "date": "2024.03.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240325155029768&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2023년 HIV/AIDS 관리지침",
+     "date": "2023.04.11",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230411326387664&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "HIV/AIDS 관리지침[2022년]",
+     "date": "2022.03.11",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220311456878346&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 8,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "간흡충증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "급성호흡기감염증",
+   "grade": "제4급",
+   "icon": "🫁",
+   "direct": [
+    {
+     "title": "2023년 제1급감염병 중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS) 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421944839744&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "중증급성호흡기증후군(SARS) 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125546375205&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2019년도 급성호흡기감염증 관리지침",
+     "date": "2019.08.13",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190813189365736&q_clsfNo=0",
+     "year": 2019,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 급성호흡기감염증 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716345021186&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2014년 급성호흡기감염증 표본감시 안내 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716327304255&q_clsfNo=0",
+     "year": 2014,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2003 급성호흡기관리지침(의료인용)",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710940014547&q_clsfNo=0",
+     "year": 2003,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 7,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "다제내성녹농균(MRPA) 감염증",
+   "grade": "제4급",
+   "icon": "🧫",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2024년도 의료관련감염병 관리지침",
+     "date": "2023.12.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "다제내성아시네토박터바우마니균(MRAB) 감염증",
+   "grade": "제4급",
+   "icon": "🧫",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2024년도 의료관련감염병 관리지침",
+     "date": "2023.12.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "메티실린내성황색포도알균(MRSA) 감염증",
+   "grade": "제4급",
+   "icon": "🧫",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2024년도 의료관련감염병 관리지침",
+     "date": "2023.12.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "반코마이신내성장알균(VRE) 감염증",
+   "grade": "제4급",
+   "icon": "🧫",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2024년도 의료관련감염병 관리지침",
+     "date": "2023.12.29",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "2019년도 의료관련감염병(VRSA, CRE) 관리지침",
+     "date": "2019.09.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0",
+     "year": 2019,
+     "kind": "group",
+     "group": "의료관련"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "사람유두종바이러스 감염증",
+   "grade": "제4급",
+   "icon": "🫧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "성기단순포진",
+   "grade": "제4급",
+   "icon": "🫧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "수족구병",
+   "grade": "제4급",
+   "icon": "👶",
+   "direct": [
+    {
+     "title": "2020년 엔테로 바이러스 수족구병 관리지침",
+     "date": "2020.01.09",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200109480038851&q_clsfNo=0",
+     "year": 2020,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 엔테로 바이러스 수족구병 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716517349531&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 엔테로바이러스 수족구병 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716932705536&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2016년 수족구병지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716963872432&q_clsfNo=0",
+     "year": 2016,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2014년 인플루엔자 및 수족구병 표본감시 안내 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716222728036&q_clsfNo=0",
+     "year": 2014,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2011년 수족구병",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710875181666&q_clsfNo=0",
+     "year": 2011,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 6,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "엔테로바이러스감염증",
+   "grade": "제4급",
+   "icon": "🧒",
+   "direct": [
+    {
+     "title": "2022년도 엔테로바이러스 관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302615066215&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2020년 엔테로 바이러스 수족구병 관리지침",
+     "date": "2020.01.09",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200109480038851&q_clsfNo=0",
+     "year": 2020,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2018년 엔테로 바이러스 수족구병 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716517349531&q_clsfNo=0",
+     "year": 2018,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2017년 엔테로바이러스 수족구병 관리지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716932705536&q_clsfNo=0",
+     "year": 2017,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2014년 엔테로바이러스감염증 표본감시 안내 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716538520293&q_clsfNo=0",
+     "year": 2014,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2011년 엔테로바이러스감염증 표본감시 안내지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710326930654&q_clsfNo=0",
+     "year": 2011,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 6,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "연성하감",
+   "grade": "제4급",
+   "icon": "🫧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "요충증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "인플루엔자",
+   "grade": "제4급",
+   "icon": "🤧",
+   "direct": [
+    {
+     "title": "2023-2024절기 인플루엔자 관리지침",
+     "date": "2024.01.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240110132703995&q_clsfNo=-1",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "시설별 인플루엔자 관리 지침(사업장용)",
+     "date": "2023.11.17",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231117751078306&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "시설별 인플루엔자 관리 지침(어린이집, 유치원, 학교용)",
+     "date": "2023.11.17",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231117600440448&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "시설별 인플루엔자 관리 지침(노인복지시설용)",
+     "date": "2023.11.17",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231117328771556&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2023년 제1급감염병 동물인플루엔자 인체감염증 대응지침",
+     "date": "2023.04.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421489669316&q_clsfNo=0",
+     "year": 2023,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "동물인플루엔자 인체감염증 대응지침 입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125784788667&q_clsfNo=0",
+     "year": 2022,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 30,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년 예방접종대상감염병 관리지침",
+     "date": "2025.05.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "2020 예방접종 대상 감염병 관리지침",
+     "date": "2020.01.06",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "예방접종"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "임질",
+   "grade": "제4급",
+   "icon": "🫧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "장관감염증",
+   "grade": "제4급",
+   "icon": "🍽",
+   "direct": [
+    {
+     "title": "2015년 법정감염병 표본감시(급성,장관,엔테로) 신고지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716214619867&q_clsfNo=0",
+     "year": 2015,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2014년 장관감염증_표본감시_안내 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716313338013&q_clsfNo=0",
+     "year": 2014,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2011년 장관감염증 표본감시지침",
+     "date": "2018.07.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710275194671&q_clsfNo=0",
+     "year": 2011,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 3,
+   "group": [
+    {
+     "title": "2022년 수인성, 식품매개감염병관리지침",
+     "date": "2022.03.02",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0",
+     "year": 2022,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "2020년도 수인성 및 식품매개감염병 관리지침",
+     "date": "2020.01.21",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0",
+     "year": 2020,
+     "kind": "group",
+     "group": "수인성"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "장흡충증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "첨규콘딜롬",
+   "grade": "제4급",
+   "icon": "🫧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "칸디다 오리스 감염증",
+   "grade": "제4급",
+   "icon": "🍄",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "코로나바이러스감염증-19",
+   "grade": "제4급",
+   "icon": "🦠",
+   "direct": [
+    {
+     "title": "만성 코로나19증후군 임상진료지침 권고안(2025)",
+     "date": "2026.02.10",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260210094545190&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2025년도 코로나바이러스감염증-19 관리지침",
+     "date": "2025.09.01",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250901094907451&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2024년도 코로나바이러스감염증-19 관리지침 개정본(2024.8.16.)",
+     "date": "2024.08.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240816210535386&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    },
+    {
+     "title": "2024년도 코로나바이러스감염증-19 관리 지침(수정)",
+     "date": "2024.06.19",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240619174638769&q_clsfNo=-1",
+     "year": 2024,
+     "kind": "direct",
+     "group": null
+    }
+   ],
+   "direct_total": 4,
+   "group": [
+    {
+     "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+     "date": "2026.01.30",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "2025년도 호흡기감염병 관리지침",
+     "date": "2025.04.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "호흡기"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "클라미디아감염증",
+   "grade": "제4급",
+   "icon": "🫧",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "2025년 성매개감염병 관리지침",
+     "date": "2025.02.05",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1",
+     "year": 2025,
+     "kind": "group",
+     "group": "성매개"
+    },
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "편충증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "폐흡충증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "해외유입기생충감염증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  },
+  {
+   "disease": "회충증",
+   "grade": "제4급",
+   "icon": "🪱",
+   "direct": [],
+   "direct_total": 0,
+   "group": [
+    {
+     "title": "법정감염병 진단검사 통합지침(제5판)",
+     "date": "2026.07.23",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1",
+     "year": 2026,
+     "kind": "group",
+     "group": "진단검사"
+    }
+   ]
+  }
+ ]
+}
