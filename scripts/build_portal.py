@@ -21,6 +21,7 @@ ARTIFACT_TO_REL = {
 # 포털 번들에만 추가하는 내비 링크(원본 페이지는 아티팩트로도 배포되므로 건드리지 않는다)
 NAV_EXTRA = ('<a href="../dogam/">📖 도감</a>'
              '<a href="../data/">⬇ 자료실</a>'
+             '<a href="../field/">🚑 현장카드</a>'
              '<a href="../cross/">🧪 교차검증</a>'
              '<a href="../lab/">🔬 진단검사</a>'
              '<a href="../quarantine/">🛂 검역</a>')

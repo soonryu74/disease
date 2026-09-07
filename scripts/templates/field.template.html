@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>현장 대응 카드</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A; --caut:#C7712B;
+    --g1:#B23A3A; --g2:#C7712B; --g3:#B8942A; --g4:#2F7D8C;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --caut:#E0A268;
+    --g1:#E07A7A; --g2:#E0A268; --g3:#D8BE6A; --g4:#6FBECB;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --caut:#E0A268;
+    --g1:#E07A7A; --g2:#E0A268; --g3:#D8BE6A; --g4:#6FBECB;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:960px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:960px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:42px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,44px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+  .tiles{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 4px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:14px;box-shadow:var(--shadow)}
+  .tile .b{font-size:clamp(20px,3.4vw,27px);font-weight:800;line-height:1}
+  .tile .l{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.35}
+
+  .tools{position:sticky;top:47px;z-index:10;background:var(--ground);padding:14px 0 10px;border-bottom:1px solid var(--line)}
+  .search{width:100%;font-size:16px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--line-strong);
+    background:var(--surface);color:var(--ink);outline:none}
+  .search:focus{border-color:var(--accent)}
+  .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px;align-items:center}
+  .chip{font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:999px;padding:5px 12px;cursor:pointer}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .cnt{margin-left:auto;font-size:12.5px;color:var(--faint)}
+
+  section{padding:22px 0 4px}
+  h2{font-size:clamp(18px,3vw,23px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:74ch}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:9px;
+    box-shadow:var(--shadow);overflow:hidden}
+  .card[hidden]{display:none}
+  .card summary{display:flex;align-items:center;gap:9px;padding:12px 15px;cursor:pointer;list-style:none;flex-wrap:wrap}
+  .card summary::-webkit-details-marker{display:none}
+  .card summary:hover{background:var(--surface-2)}
+  .gb{flex:none;font-size:11px;font-weight:800;color:#fff;border-radius:6px;padding:2px 7px}
+  .G1{background:var(--g1)}.G2{background:var(--g2)}.G3{background:var(--g3)}.G4{background:var(--g4)}
+  .nm{font-weight:800;font-size:15px}
+  .qk{font-size:12px;color:var(--muted);margin-left:auto;white-space:nowrap}
+  .flag{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 7px;white-space:nowrap}
+  .f-narrower{background:var(--warn);color:#fff}
+  .f-gap{background:var(--caut);color:#231a00}
+  .f-none{background:var(--accent-soft);color:var(--accent-ink)}
+
+  .bd{border-top:1px solid var(--line);padding:14px 17px 16px}
+  .row{display:grid;grid-template-columns:86px 1fr;gap:9px;padding:4px 0;font-size:13.5px}
+  .row .k{color:var(--faint);font-weight:700;font-size:12px;padding-top:2px}
+  .box{border:1px solid var(--line);border-left:3px solid var(--bc);border-radius:10px;
+    padding:11px 13px;margin-top:12px;background:var(--surface-2)}
+  .box h4{margin:0 0 4px;font-size:13px;font-weight:800;color:var(--bc)}
+  .box p{margin:0 0 5px;font-size:12.5px;color:var(--muted)}
+  .box .intl{font-size:12.5px;color:var(--ink);margin:2px 0}
+  .box .intl b{color:var(--faint);font-weight:700}
+  .glist{margin:10px 0 0;padding:0;list-style:none}
+  .glist li{font-size:13px;padding:5px 0;border-bottom:1px solid var(--line)}
+  .glist li:last-child{border:none}
+  .glist .tag{font-size:10px;font-weight:800;border-radius:4px;padding:1px 6px;margin-right:6px}
+  .t-d{background:var(--accent);color:#fff}
+  .t-g{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+  .glist .dt{color:var(--faint);font-size:11.5px;margin-left:6px}
+  .empty{display:none;text-align:center;color:var(--faint);padding:34px 0;font-size:14px}
+
+  .res{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .rc{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
+  .rc h3{margin:0 0 4px;font-size:14.5px;font-weight:800}
+  .rc p{margin:0 0 8px;font-size:12.5px;color:var(--muted)}
+  .rc a{font-size:12.5px;font-weight:700}
+  .vols{margin:8px 0 0;padding-left:16px;font-size:12.5px;color:var(--muted)}
+  .vols li{margin:3px 0}
+  table{border-collapse:collapse;font-size:13px;width:100%}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  thead th{color:var(--muted);font-weight:700;font-size:11.5px;border-bottom:1.5px solid var(--line-strong)}
+  .tw{overflow-x:auto}
+  .sev{font-size:10.5px;font-weight:800;border-radius:5px;padding:1px 6px;white-space:nowrap}
+  .s-big{background:var(--warn);color:#fff}
+  .s-mid{background:var(--caut);color:#231a00}
+  .s-low{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 17px;font-size:13px;margin:18px 0}
+  .note ul{margin:6px 0 0;padding-left:18px}
+  .note li{margin:3px 0}
+  footer{padding:26px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:24px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer .maker a{color:var(--accent-ink)}
+  @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}.res{grid-template-columns:1fr}}
+  @media(max-width:520px){.row{grid-template-columns:70px 1fr}}
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../dogam/">📖 도감</a><a href="../chronicle/">📜 연대기</a><a href="../checker/">🩺 검사기</a><a href="../cross/">🧪 교차검증</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Field Response</p>
+  <h1>현장 대응 카드</h1>
+  <p class="thesis">역학조사 현장에서 한 화면에 있어야 하는 것을 모았다 —
+  <b>지금 이 병의 급·신고기한·격리</b>, <b>펴야 할 지침</b>, <b>잠복기와 그 값이 국제 기준과 맞는지</b>.
+  질병관리청 자료를 US CDC·WHO·UKHSA·ECDC와 대조해 <b>우리 값이 좁은 곳</b>을 표시했다.</p>
+  <div class="tiles" id="tiles"></div>
+</header>
+
+<div class="tools">
+  <input class="search" id="q" type="search" placeholder="감염병 이름 (예: 홍역, 콜레라, 유행성이하선염)" autocomplete="off">
+  <div class="chips" id="chips">
+    <button class="chip on" data-f="all">전체</button>
+    <button class="chip" data-f="1">제1급</button>
+    <button class="chip" data-f="2">제2급</button>
+    <button class="chip" data-f="3">제3급</button>
+    <button class="chip" data-f="4">제4급</button>
+    <button class="chip" data-f="warn">⚠ 국제 기준과 차이</button>
+    <span class="cnt"><span id="shown" class="num"></span>종</span>
+  </div>
+</div>
+
+<section>
+  <div id="cards"></div>
+  <div class="empty" id="empty">해당 감염병을 찾지 못했다. 다른 이름으로 시도해 보라.</div>
+</section>
+
+<section>
+  <h2>국제 기관 사이에서 값이 갈리는 것</h2>
+  <p class="sdesc">한쪽만 보고 판단하면 안 되는 항목이다. <b>같은 기관 안에서 갈리는 것</b>도 있다.</p>
+  <div class="tw"><table>
+    <thead><tr><th>항목</th><th>내용</th><th>영향</th></tr></thead>
+    <tbody id="conf"></tbody>
+  </table></div>
+</section>
+
+<section>
+  <h2>역학조사 실무 자료</h2>
+  <p class="sdesc">질병관리청이 공개하는 교재·서식·매뉴얼. 서식은 HWP로 배포돼 편집해서 바로 쓸 수 있다.</p>
+  <div class="res" id="res"></div>
+  <div id="forms"></div>
+</section>
+
+<div class="note">
+  <b>이 카드를 쓸 때</b>
+  <ul>
+    <li><b>실제 대응은 현행 지침 원문을 따른다.</b> 이 카드는 어디를 펴야 하는지 알려주는 색인이지 지침의 대체물이 아니다.</li>
+    <li><b>지침 연결에는 두 등급이 있다.</b> <span class="tag t-d">직접</span>은 지침 제목에 병명이 있는 확실한 연결이고, <span class="tag t-g">계열</span>은 그 병이 속한 묶음 지침이라 <b>실제 대상 질병은 원문 목차를 봐야</b> 확정된다.</li>
+    <li><b>국제 기준과 다르다고 우리 값이 틀린 것은 아니다.</b> 기준 종점(전구기 vs 발진)·대상·판이 다를 수 있다. 다만 <b>우리 범위가 좁은 경우</b>는 접촉자 감시 기간이 짧아질 수 있어 표시했다.</li>
+    <li><b>급·신고기한·격리는 현행 기준이다.</b> 과거 시점의 지위는 <a href="../chronicle/">📜 연대기</a>에서 날짜를 대고 확인할 것.</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div>출처: 질병관리청 감염병포털 지침 게시판 · 역학조사관 교육 표준교재(2025) · 수인성 및 식품매개감염병 관리지침(2026) ·
+    US CDC · WHO · UKHSA · ECDC —
+    <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/14_%EC%97%AD%ED%95%99%EC%A1%B0%EC%82%AC_%EC%8B%A4%EB%AC%B4" target="_blank" rel="noopener">정리 데이터(GitHub)</a></div>
+  <div style="margin-top:8px">⚠️ 참고용 정리물이다. 국제 기준 대조는 2026.9.7. 조회 기준이며 지침은 개정된다.</div>
+</footer>
+</div>
+
+<script>
+const D = __DATA__;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const gnum = g => (String(g||'').match(/제(\d)급/)||[])[1] || '';
+
+document.getElementById('tiles').innerHTML = [
+  [D.counts.diseases, '감염병<br>현장 카드'],
+  [D.counts.guidelines, '관리지침<br>질병별 연결'],
+  [D.counts.crosschecked, '국제 기준<br>대조 완료'],
+  [D.counts.forms, '역학조사서<br>표준서식'],
+].map(([b,l]) => `<div class="tile"><div class="b num">${b}</div><div class="l">${l}</div></div>`).join('');
+
+const VF = {narrower:['f-narrower','⚠ 우리 범위가 좁음'], gap:['f-gap','빈칸'],
+            differs:['f-none','기준 다름'], wider:['f-none','우리가 더 넓음'],
+            match:['f-none','국제 기준과 일치'], no_international_standard:['f-gap','국제 기준 없음']};
+
+function guideLi(g, kind){
+  return `<li><span class="tag ${kind==='d'?'t-d':'t-g'}">${kind==='d'?'직접':'계열'}</span>`
+    + `<a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.title)}</a>`
+    + `<span class="dt num">${esc(g.date)}</span></li>`;
+}
+
+document.getElementById('cards').innerHTML = D.cards.map(c => {
+  const g = gnum(c.grade);
+  const v = c.cross ? VF[c.cross.verdict] : null;
+  const quick = [c.report, c.iso].filter(Boolean).join(' · ');
+  return `<details class="card" data-g="${g}" data-w="${c.cross && ['narrower','gap','differs','no_international_standard'].includes(c.cross.verdict) ? 1 : 0}"
+      data-s="${esc((c.disease+' '+(c.incub||'')).toLowerCase().replace(/\s/g,''))}">
+    <summary>
+      <span class="gb G${g||4}">${esc(c.grade||'—')}</span>
+      <span class="nm">${c.icon||''} ${esc(c.disease)}</span>
+      ${v ? `<span class="flag ${v[0]}">${v[1]}</span>` : ''}
+      <span class="qk">${esc(quick)}</span>
+    </summary>
+    <div class="bd">
+      ${c.incub ? `<div class="row"><span class="k">잠복기</span><span>${esc(c.incub)}</span></div>` : ''}
+      ${c.report ? `<div class="row"><span class="k">신고</span><span>${esc(c.report)}${c.surv ? ' · '+esc(c.surv) : ''}</span></div>` : ''}
+      ${c.iso ? `<div class="row"><span class="k">격리</span><span>${esc(c.iso)}</span></div>` : ''}
+      ${c.route ? `<div class="row"><span class="k">감염경로</span><span>${esc(c.route)}</span></div>` : ''}
+      ${c.tx ? `<div class="row"><span class="k">치료</span><span>${esc(c.tx)}</span></div>` : ''}
+      ${c.prev ? `<div class="row"><span class="k">예방</span><span>${esc(c.prev)}</span></div>` : ''}
+      ${c.cross ? `<div class="box" style="--bc:${c.cross.verdict==='narrower'?'var(--warn)':c.cross.verdict==='match'?'var(--accent)':'var(--caut)'}">
+        <h4>국제 기준 대조 — ${VF[c.cross.verdict][1]}</h4>
+        <p>${esc(c.cross.why)}</p>
+        ${c.cross.intl.map(i => `<div class="intl"><b>${esc(i.agency)}</b> ${esc(i.value)}${i.url?` · <a href="${esc(i.url)}" target="_blank" rel="noopener">원문</a>`:''}</div>`).join('')}
+        <p style="margin-top:6px"><b>현장 영향</b> ${esc(c.cross.impact)}</p>
+      </div>` : ''}
+      <ul class="glist">
+        ${c.guides.map(x => guideLi(x,'d')).join('')}
+        ${c.group_guides.map(x => guideLi(x,'g')).join('')}
+      </ul>
+      ${c.guides_total > c.guides.length ? `<p style="font-size:12px;color:var(--faint);margin:8px 0 0">제목에 병명이 있는 지침 ${c.guides_total}건 중 최신 ${c.guides.length}건만 표시</p>` : ''}
+    </div>
+  </details>`;
+}).join('');
+
+document.getElementById('conf').innerHTML = D.conflicts.map(c => {
+  const s = /큼/.test(c.severity) ? 's-big' : /있음/.test(c.severity) ? 's-mid' : 's-low';
+  return `<tr><td><b>${esc(c.topic)}</b></td><td style="color:var(--muted)">${esc(c.detail)}</td>`
+    + `<td><span class="sev ${s}">${esc(c.severity)}</span></td></tr>`;
+}).join('');
+
+const E = D.edu;
+document.getElementById('res').innerHTML = `
+  <div class="rc">
+    <h3>${esc(E.textbook.title)}</h3>
+    <p>${esc(E.textbook.edition)} · ${esc(E.textbook.publisher)} · ${esc(E.textbook.license)}</p>
+    <ul class="vols">${E.textbook.volumes.map(v =>
+      `<li><a href="${esc(v.url)}" target="_blank" rel="noopener">${v.vol}권 ${esc(v.title)}</a> · ${v.pages}쪽 · ${esc(v.size)}</li>`).join('')}</ul>
+    <p style="margin-top:8px;font-size:12px">한국판 FETP 공식 교재다. 3권의 튜터(강사)용 학습모듈은 비공개로, 담당부서에 요청해 받고 교육 후 반납한다.</p>
+  </div>
+  <div class="rc">
+    <h3>역학조사관 교육체계</h3>
+    <p>${esc(E.legal_basis)}</p>
+    <div class="tw"><table><thead><tr><th>과정</th><th>대상</th><th>지속교육</th><th>수료요건</th></tr></thead><tbody>
+      ${E.training.tracks.map(t => `<tr><td><b>${esc(t.course)}</b></td><td>${esc(t.target)}</td><td>${esc(t.continuing)}</td><td>${esc(t.requirements)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p style="margin-top:8px">배치 현황(${esc(E.training.workforce.as_of)}): 총 <b class="num">${E.training.workforce.total}</b>명 —
+      수료 ${E.training.workforce['완료']} · 수습 ${E.training.workforce['수습']}
+      (청 ${E.training.workforce['질병관리청']} · 시·도 ${E.training.workforce['시도']} · 시·군·구 ${E.training.workforce['시군구']})</p>
+  </div>
+  <div class="rc" style="grid-column:1/-1">
+    <h3>매뉴얼·지침</h3>
+    <div class="tw"><table><thead><tr><th>분류</th><th>제목</th><th>판/연도</th><th>공개</th></tr></thead><tbody>
+      ${E.manuals.map(m => `<tr><td>${esc(m.cat)}</td><td><a href="${esc(m.url)}" target="_blank" rel="noopener">${esc(m.title)}</a>${m.note?`<br><span style="font-size:11.5px;color:var(--faint)">${esc(m.note)}</span>`:''}</td><td class="num">${esc(m.year)}</td><td>${esc(m.access)}</td></tr>`).join('')}
+    </tbody></table></div>
+  </div>`;
+
+document.getElementById('forms').innerHTML = `
+  <div class="rc" style="margin-top:10px">
+    <h3>${esc(E.forms.title)} ${E.forms.total}종</h3>
+    <p>${esc(E.forms.where)}</p>
+    <p><b>${esc(E.forms.source_doc)}</b> —
+      <a href="${esc(E.forms.hwp)}" target="_blank" rel="noopener">HWP 내려받기</a> ·
+      <a href="${esc(E.forms.pdf)}" target="_blank" rel="noopener">PDF</a> ·
+      <a href="${esc(E.forms.source_url)}" target="_blank" rel="noopener">게시글</a></p>
+    <div class="tw"><table><thead><tr><th>계열</th><th>수</th><th>서식</th></tr></thead><tbody>
+      ${E.forms.groups.map(g => `<tr><td><b>${esc(g.series)}</b></td><td class="num">${g.count}</td><td style="color:var(--muted)">${g.items.map(esc).join(' · ')}${g.note?`<br><span style="font-size:11.5px">${esc(g.note)}</span>`:''}</td></tr>`).join('')}
+    </tbody></table></div>
+    <p style="margin-top:8px">${esc(E.forms.reporting)}</p>
+  </div>`;
+
+/* 필터 */
+(function(){
+  const q = document.getElementById('q'), shown = document.getElementById('shown'),
+        empty = document.getElementById('empty'),
+        cards = [].slice.call(document.querySelectorAll('#cards .card')),
+        chips = [].slice.call(document.querySelectorAll('#chips .chip'));
+  let f = 'all';
+  function apply(){
+    const t = (q.value||'').toLowerCase().replace(/\s/g,'');
+    let n = 0;
+    cards.forEach(c => {
+      const okF = f === 'all' || (f === 'warn' ? c.dataset.w === '1' : c.dataset.g === f);
+      const okQ = !t || c.dataset.s.indexOf(t) > -1 || c.textContent.toLowerCase().replace(/\s/g,'').indexOf(t) > -1;
+      c.hidden = !(okF && okQ);
+      if (!c.hidden) n++;
+    });
+    shown.textContent = n;
+    empty.style.display = n ? 'none' : 'block';
+  }
+  q.addEventListener('input', apply);
+  chips.forEach(ch => ch.addEventListener('click', () => {
+    f = ch.dataset.f;
+    chips.forEach(x => x.classList.toggle('on', x === ch));
+    apply();
+  }));
+  apply();
+})();
+</script>
+</body>
+</html>
