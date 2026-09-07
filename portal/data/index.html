@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자료 내려받기</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:940px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,44px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+  .meta{font-size:13px;color:var(--faint);margin:10px 0 0}
+
+  .grp{margin:26px 0 0}
+  .ghead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:3px}
+  .ghead h2{font-size:19px;margin:0;font-weight:800;letter-spacing:-.02em}
+  .ghead a{font-size:12.5px;font-weight:700}
+  .gdesc{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+
+  .f{display:flex;gap:14px;align-items:flex-start;padding:13px 16px;border:1px solid var(--line);
+    border-radius:12px;background:var(--surface);margin-bottom:8px;flex-wrap:wrap}
+  .f .kind{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 7px;flex:none;margin-top:3px}
+  .k-CSV{background:var(--accent);color:#fff}
+  .k-JSON{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+  .f .body{flex:1;min-width:220px}
+  .f .nm{font-weight:700;font-size:14px;word-break:break-all}
+  .f .no{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .f .ca{font-size:12.5px;color:var(--warn);margin-top:5px}
+  .f .sz{font-size:12px;color:var(--faint);white-space:nowrap;margin-top:3px}
+  .dl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-ink);
+    border:1px solid var(--line-strong);padding:7px 13px;border-radius:9px;background:var(--surface);flex:none}
+  .dl:hover{background:var(--surface-2)}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:15px 18px;font-size:13.5px;margin:22px 0}
+  .note ul{margin:8px 0 0;padding-left:18px}
+  .note li{margin:4px 0}
+  footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer .maker a{color:var(--accent-ink)}
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>자료 내려받기</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../cross/">🧪 교차검증</a><a href="../lab/">🔬 진단검사</a><a href="../quarantine/">🛂 검역</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Open Data</p>
+  <h1>자료 내려받기</h1>
+  <p class="thesis">이 사이트가 쓰는 데이터를 그대로 공개한다. 질병관리청은 PDF로 내지만
+  여기서는 <b>표 계산기·통계 프로그램에 바로 넣을 수 있는 CSV·JSON</b>으로 둔다.
+  모든 표에 <b>출처호</b> 열이 있어 어느 권 몇 호에서 온 수치인지 되짚을 수 있다.</p>
+  <p class="meta num" id="meta"></p>
+</header>
+
+<div class="note">
+  <b>받기 전에 — 이 자료를 잘못 쓰는 가장 흔한 방법</b>
+  <ul>
+    <li><b>단절점을 모르고 연도를 잇는 것.</b> 급수·감시체계·분모가 바뀐 해가 있다. 잇기 전에 <a href="../checker/">단절점 검사기</a>에서 두 해가 비교 가능한지 확인할 것.</li>
+    <li><b>신고수를 발생수로 읽는 것.</b> 신고는 의료기관이 신고한 수다. 검사실 검출과 함께 봐야 한다 — <a href="../cross/">교차검증</a>.</li>
+    <li><b>잠정통계를 확정치로 인용하는 것.</b> 최근 주차일수록 나중에 바뀐다.</li>
+  </ul>
+</div>
+
+<div id="groups"></div>
+
+<div class="note" style="background:var(--surface-2);color:var(--ink)">
+  <b>이용 조건</b>
+  <ul>
+    <li>원자료는 <b>질병관리청·법제처의 공공저작물</b>이며, 이 저장소는 그것을 기계 판독 형식으로 정리한 2차 가공물이다.</li>
+    <li>인용할 때는 <b>원 출처(질병관리청 「주간 건강과 질병」 해당 권·호 등)</b>를 밝히는 것이 정확하다. 이 사이트를 함께 적어 주면 고맙다.</li>
+    <li>잘못된 값을 발견하면 <a href="https://github.com/soonryu74/disease/issues" target="_blank" rel="noopener">GitHub 이슈</a>로 알려 달라. 오류 원장에 반영한다.</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div>원자료: 질병관리청(주간 건강과 질병·감염병포털·검역관리지역 안내) · 법제처 국가법령정보 —
+    <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz" target="_blank" rel="noopener">저장소 전체(GitHub)</a></div>
+</footer>
+</div>
+
+<script>
+const D = {"groups":[{"title":"⑬ 교차검증","page":"../cross/","desc":"신고 축과 검출 축을 겹쳐 놓은 판정 결과.","items":[{"file":"교차검증.json","note":"대조쌍 7 · 이례 26 · 유입국 44 · 원문 발견 4건. 페이지가 그대로 쓰는 원본.","caution":"판정은 이 저장소의 계산이며 질병관리청의 공식 해석이 아니다.","size":"136 KB","rows":null,"kind":"JSON","repo":"13_교차검증/data/교차검증.json"}]},{"title":"⑫ 신고 감시","page":"../lab/","desc":"「주간 건강과 질병」 환자감시(신고) 표. 4주 간격 36개 주차.","items":[{"file":"전수감시_주간신고.csv","note":"62종 × 36주 — 금주 신고수·연 누계·5년 주별 평균·예년대비배수.","caution":"'열부분추출=Y'는 원문에서 5년평균 칸이 비어 열 수가 달랐던 행이다(매독·엠폭스). 앞 두 칸만 신뢰할 것.","size":"96 KB","rows":1675,"kind":"CSV","repo":"12_신고_감시/data/전수감시_주간신고.csv"},{"file":"해외유입_신고국가.csv","note":"유입 신고 193건 — 감염병 × 국가 × 신고수.","caution":"2024년 43주 뎅기열의 '온두리스'는 원문 오기다(온두라스).","size":"8 KB","rows":193,"kind":"CSV","repo":"12_신고_감시/data/해외유입_신고국가.csv"},{"file":"표본감시_의사환자분율.csv","note":"인플루엔자 ILI·수족구·안과감염병 (외래 1,000명당) + 표본기관 수.","caution":"","size":"2 KB","rows":36,"kind":"CSV","repo":"12_신고_감시/data/표본감시_의사환자분율.csv"},{"file":"연도별_확정신고수.csv","note":"감염병 × 연도 확정 통계.","caution":"","size":"15 KB","rows":433,"kind":"CSV","repo":"12_신고_감시/data/연도별_확정신고수.csv"},{"file":"성매개감염병_기관당신고.csv","note":"5종 보고기관당 신고수.","caution":"","size":"6 KB","rows":180,"kind":"CSV","repo":"12_신고_감시/data/성매개감염병_기관당신고.csv"},{"file":"수인성식품매개_집단발생.csv","note":"주간 집단발생 건수·환자수.","caution":"","size":"987 B","rows":36,"kind":"CSV","repo":"12_신고_감시/data/수인성식품매개_집단발생.csv"},{"file":"표기_원장.json","note":"원문 표기 흔들림과 통합 규칙.","caution":"CRE는 3년 사이 표기가 세 번 바뀌었다.","size":"971 B","rows":null,"kind":"JSON","repo":"12_신고_감시/data/표기_원장.json"}]},{"title":"⑩ 진단검사 감시","page":"../lab/","desc":"병원체감시(검출률) 표. 2023년 48주 ~ 2026년 35주.","items":[{"file":"호흡기바이러스_주간검출률.csv","note":"총검출률 + 9종 주별 검출률(%). 139주.","caution":"한 검체에서 둘 이상 검출될 수 있어 개별 병원체의 합은 총검출률과 다르다.","size":"8 KB","rows":139,"kind":"CSV","repo":"10_진단검사_감시/data/호흡기바이러스_주간검출률.csv"},{"file":"급성설사세균_주간분리.csv","note":"검체 수 + 9종 건수·분리율. 138주.","caution":"","size":"12 KB","rows":138,"kind":"CSV","repo":"10_진단검사_감시/data/급성설사세균_주간분리.csv"},{"file":"급성설사바이러스_주간검출.csv","note":"검체 수 + 5종 건수·검출률. 139주.","caution":"5세 이하 아동 검체만 대상이다.","size":"8 KB","rows":139,"kind":"CSV","repo":"10_진단검사_감시/data/급성설사바이러스_주간검출.csv"},{"file":"인플루엔자_양성률.csv","note":"양성률 + 아형(H1N1pdm09·H3N2·B) + 표본의료기관 수.","caution":"주간 시계열이 필요하면 호흡기바이러스 표의 인플루엔자 열을 쓰는 게 낫다.","size":"2 KB","rows":37,"kind":"CSV","repo":"10_진단검사_감시/data/인플루엔자_양성률.csv"},{"file":"엔테로바이러스_주간검출.csv","note":"검출률 + 임상증후군별(무균성수막염·수족구병·합병증 동반·기타).","caution":"","size":"2 KB","rows":37,"kind":"CSV","repo":"10_진단검사_감시/data/엔테로바이러스_주간검출.csv"},{"file":"수집원장.json","note":"어느 호에서 어떤 표를 몇 주치 얻었는지.","caution":"","size":"8 KB","rows":null,"kind":"JSON","repo":"10_진단검사_감시/data/수집원장.json"}]},{"title":"⑪ 검역관리지역","page":"../quarantine/","desc":"검역법 제5조 지정. 원문 매트릭스를 복원하고 공표 국가 수와 대조 검산했다.","items":[{"file":"2026Q3_중점검역관리지역.csv","note":"25개국 × 5종 매트릭스 (2026.7.1. 기준).","caution":"2026.9.7. 개정으로 현행은 31개국이다. 이 표는 대조 검산을 마친 시점의 것이다.","size":"670 B","rows":25,"kind":"CSV","repo":"11_검역관리지역/data/2026Q3_중점검역관리지역.csv"},{"file":"2026Q3_검역관리지역.csv","note":"173개국 × 15종 매트릭스 (2026.7.1. 기준).","caution":"","size":"6 KB","rows":173,"kind":"CSV","repo":"11_검역관리지역/data/2026Q3_검역관리지역.csv"},{"file":"지정이력.json","note":"2024년 상반기~2026년 3분기 시기별 요약 · 단절점 4건 · 세계 상황 매칭.","caution":"분기 도중 개정이 잦다. 분기 시작일 자료만 보면 틀린다.","size":"10 KB","rows":null,"kind":"JSON","repo":"11_검역관리지역/data/지정이력.json"},{"file":"2026Q3_지정내역.json","note":"감염병별 국가 목록과 검산 결과.","caution":"","size":"2 KB","rows":null,"kind":"JSON","repo":"11_검역관리지역/data/2026Q3_지정내역.json"}]},{"title":"⑨ 연대기 · ⑧ 검사기","page":"../chronicle/","desc":"시점 인지형 국면과 비교 가능성 규칙.","items":[{"file":"연대기.json","note":"법정감염병 91종 × 국면(지위·감시·신고·격리·범위·분모) + 단절점 32건 + 오류 원장.","caution":"⭐ 전 구간 원문 대조 12종 외 79종은 매핑표 기반 자동 생성이다.","size":"105 KB","rows":null,"kind":"JSON","repo":"09_감염병연대기/data/연대기.json"},{"file":"비교가능성_규칙.json","note":"81항목 비교 가능성 규칙 — 단절점·결측 구간·부분연도.","caution":"","size":"36 KB","rows":null,"kind":"JSON","repo":"08_비교가능성_검사기/data/비교가능성_규칙.json"},{"file":"별칭사전.json","note":"옛 이름·별칭 사전(나병→한센병, 원숭이두창→엠폭스 등)과 시점별 유효 구간.","caution":"","size":"5 KB","rows":null,"kind":"JSON","repo":"05_감염병_질병정보/별칭사전.json"}]},{"title":"① 법령 · ② 지침 · ③ 백서","page":"../law/","desc":"제도 축.","items":[{"file":"감염병예방법_연혁_전체.csv","note":"감염병예방법 시행 버전 연혁(1954~).","caution":"","size":"22 KB","rows":192,"kind":"CSV","repo":"01_감염병예방법_연혁/data/감염병예방법_연혁_전체.csv"},{"file":"급수변동_이력.json","note":"급수·감시체계 변경 이력 16건.","caution":"","size":"9 KB","rows":null,"kind":"JSON","repo":"01_감염병예방법_연혁/data/급수변동_이력.json"},{"file":"감염병지정고시_연혁.json","note":"고시 지정 연혁.","caution":"","size":"2 KB","rows":null,"kind":"JSON","repo":"01_감염병예방법_연혁/data/감염병지정고시_연혁.json"},{"file":"지침_전체목록_감염병포털.csv","note":"관리지침 358건 목록.","caution":"","size":"66 KB","rows":358,"kind":"CSV","repo":"02_지침_정리/data/지침_전체목록_감염병포털.csv"},{"file":"전수감시_신고수_2016_2025.csv","note":"연보 기반 전수감시 신고수(2016~2025).","caution":"","size":"5 KB","rows":73,"kind":"CSV","repo":"03_백서_정리/data/전수감시_신고수_2016_2025.csv"},{"file":"표본감시_기관수_2001_2025.csv","note":"표본감시 참여기관 수(2001~2025) — 분모 변화 원장.","caution":"기관 수가 바뀐 해는 앞뒤 비교가 불가능하다.","size":"2 KB","rows":9,"kind":"CSV","repo":"03_백서_정리/data/표본감시_기관수_2001_2025.csv"}]}],"total_files":27,"total_size":"574 KB"};
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('meta').textContent =
+  `파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
+document.getElementById('groups').innerHTML = D.groups.map(g => `
+  <div class="grp">
+    <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
+    <p class="gdesc">${esc(g.desc)}</p>
+    ${g.items.map(i => `
+      <div class="f">
+        <span class="kind k-${i.kind}">${i.kind}</span>
+        <div class="body">
+          <div class="nm">${esc(i.file)}</div>
+          <div class="no">${esc(i.note)}</div>
+          ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
+          <div class="sz num">${i.rows != null ? i.rows.toLocaleString() + '행 · ' : ''}${esc(i.size)} · 저장소 경로 ${esc(i.repo)}</div>
+        </div>
+        <a class="dl" href="files/${encodeURIComponent(i.file)}" download>⬇ 내려받기</a>
+      </div>`).join('')}
+  </div>`).join('');
+</script>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body>
+</html>

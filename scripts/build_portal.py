@@ -5,6 +5,9 @@ claude.ai 아티팩트 링크를 포털 내부 상대경로로 바꾸고, 완전
 실행 전 09_감염병연대기/build_chronicle.py, 08_비교가능성_검사기 빌드가 끝나 있어야 한다.
 """
 import os, re, sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+from portal_tools import inject_all
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -17,6 +20,7 @@ ARTIFACT_TO_REL = {
 
 # 포털 번들에만 추가하는 내비 링크(원본 페이지는 아티팩트로도 배포되므로 건드리지 않는다)
 NAV_EXTRA = ('<a href="../dogam/">📖 도감</a>'
+             '<a href="../data/">⬇ 자료실</a>'
              '<a href="../cross/">🧪 교차검증</a>'
              '<a href="../lab/">🔬 진단검사</a>'
              '<a href="../quarantine/">🛂 검역</a>')
@@ -55,4 +59,7 @@ def check_no_root_abs():
 if __name__ == '__main__':
     wrap('09_감염병연대기/연대기.html', 'portal/chronicle/index.html')
     wrap('08_비교가능성_검사기/단절점_검사기.html', 'portal/checker/index.html')
+    # 모든 쪽에 인쇄 스타일과 도구 막대를 같은 방식으로 넣는다
+    n = inject_all(os.path.join(ROOT, 'portal'))
+    print(f'🖨  인쇄·자료받기 도구 {n}쪽에 주입')
     check_no_root_abs()

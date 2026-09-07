@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>자료 내려받기</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:940px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,44px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+  .meta{font-size:13px;color:var(--faint);margin:10px 0 0}
+
+  .grp{margin:26px 0 0}
+  .ghead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:3px}
+  .ghead h2{font-size:19px;margin:0;font-weight:800;letter-spacing:-.02em}
+  .ghead a{font-size:12.5px;font-weight:700}
+  .gdesc{font-size:13.5px;color:var(--muted);margin:0 0 12px}
+
+  .f{display:flex;gap:14px;align-items:flex-start;padding:13px 16px;border:1px solid var(--line);
+    border-radius:12px;background:var(--surface);margin-bottom:8px;flex-wrap:wrap}
+  .f .kind{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 7px;flex:none;margin-top:3px}
+  .k-CSV{background:var(--accent);color:#fff}
+  .k-JSON{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
+  .f .body{flex:1;min-width:220px}
+  .f .nm{font-weight:700;font-size:14px;word-break:break-all}
+  .f .no{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .f .ca{font-size:12.5px;color:var(--warn);margin-top:5px}
+  .f .sz{font-size:12px;color:var(--faint);white-space:nowrap;margin-top:3px}
+  .dl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-ink);
+    border:1px solid var(--line-strong);padding:7px 13px;border-radius:9px;background:var(--surface);flex:none}
+  .dl:hover{background:var(--surface-2)}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:15px 18px;font-size:13.5px;margin:22px 0}
+  .note ul{margin:8px 0 0;padding-left:18px}
+  .note li{margin:4px 0}
+  footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer .maker a{color:var(--accent-ink)}
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../cross/">🧪 교차검증</a><a href="../lab/">🔬 진단검사</a><a href="../quarantine/">🛂 검역</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">Open Data</p>
+  <h1>자료 내려받기</h1>
+  <p class="thesis">이 사이트가 쓰는 데이터를 그대로 공개한다. 질병관리청은 PDF로 내지만
+  여기서는 <b>표 계산기·통계 프로그램에 바로 넣을 수 있는 CSV·JSON</b>으로 둔다.
+  모든 표에 <b>출처호</b> 열이 있어 어느 권 몇 호에서 온 수치인지 되짚을 수 있다.</p>
+  <p class="meta num" id="meta"></p>
+</header>
+
+<div class="note">
+  <b>받기 전에 — 이 자료를 잘못 쓰는 가장 흔한 방법</b>
+  <ul>
+    <li><b>단절점을 모르고 연도를 잇는 것.</b> 급수·감시체계·분모가 바뀐 해가 있다. 잇기 전에 <a href="../checker/">단절점 검사기</a>에서 두 해가 비교 가능한지 확인할 것.</li>
+    <li><b>신고수를 발생수로 읽는 것.</b> 신고는 의료기관이 신고한 수다. 검사실 검출과 함께 봐야 한다 — <a href="../cross/">교차검증</a>.</li>
+    <li><b>잠정통계를 확정치로 인용하는 것.</b> 최근 주차일수록 나중에 바뀐다.</li>
+  </ul>
+</div>
+
+<div id="groups"></div>
+
+<div class="note" style="background:var(--surface-2);color:var(--ink)">
+  <b>이용 조건</b>
+  <ul>
+    <li>원자료는 <b>질병관리청·법제처의 공공저작물</b>이며, 이 저장소는 그것을 기계 판독 형식으로 정리한 2차 가공물이다.</li>
+    <li>인용할 때는 <b>원 출처(질병관리청 「주간 건강과 질병」 해당 권·호 등)</b>를 밝히는 것이 정확하다. 이 사이트를 함께 적어 주면 고맙다.</li>
+    <li>잘못된 값을 발견하면 <a href="https://github.com/soonryu74/disease/issues" target="_blank" rel="noopener">GitHub 이슈</a>로 알려 달라. 오류 원장에 반영한다.</li>
+  </ul>
+</div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div>원자료: 질병관리청(주간 건강과 질병·감염병포털·검역관리지역 안내) · 법제처 국가법령정보 —
+    <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz" target="_blank" rel="noopener">저장소 전체(GitHub)</a></div>
+</footer>
+</div>
+
+<script>
+const D = __DATA__;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('meta').textContent =
+  `파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
+document.getElementById('groups').innerHTML = D.groups.map(g => `
+  <div class="grp">
+    <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
+    <p class="gdesc">${esc(g.desc)}</p>
+    ${g.items.map(i => `
+      <div class="f">
+        <span class="kind k-${i.kind}">${i.kind}</span>
+        <div class="body">
+          <div class="nm">${esc(i.file)}</div>
+          <div class="no">${esc(i.note)}</div>
+          ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
+          <div class="sz num">${i.rows != null ? i.rows.toLocaleString() + '행 · ' : ''}${esc(i.size)} · 저장소 경로 ${esc(i.repo)}</div>
+        </div>
+        <a class="dl" href="files/${encodeURIComponent(i.file)}" download>⬇ 내려받기</a>
+      </div>`).join('')}
+  </div>`).join('');
+</script>
+</body>
+</html>

@@ -3,9 +3,89 @@
 .box{max-width:560px;background:#fff;border:1px solid #e3e8f0;border-radius:14px;padding:36px;margin:20px;box-shadow:0 8px 28px rgba(0,0,0,.06)}
 h1{font-size:22px;color:#1F3864;margin:0 0 12px}p{font-size:14px;color:#5a6478;line-height:1.7;margin:0 0 10px}
 code{background:#eef1f7;padding:2px 8px;border-radius:6px;font-size:12.5px}
-a{color:#2b4a80}</style></head><body><div class="box">
+a{color:#2b4a80}
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+</style></head><body>
+<div class="printonly printhead" id="printhead"><b>감염병 실시간 상황판</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div><div class="box">
 <h1>📡 감염병 실시간 상황판 — 고정 주소</h1>
 <p>이 페이지가 일일 상황판의 <b>영구 주소</b>입니다. 데일리 세션이 매일 이 자리를 최신판으로 덮어쓰고, 이전 판은 <code>/daily/YYYY-MM-DD.html</code>로 보관됩니다.</p>
 <p><b>연동 방법(데일리 세션에 1줄):</b><br>"완성된 상황판 HTML을 GitHub <code>soonryu74/disease</code> 저장소 <code>portal/daily/index.html</code>(+ 날짜본)으로 커밋·푸시해줘"</p>
 <p>← <a href="../">통합 허브로 돌아가기</a></p>
-</div></body></html>
+</div><div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body></html>

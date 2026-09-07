@@ -1,0 +1,178 @@
+{
+ "schema": "periods[{period,kind,effective,priority{diseases,countries},general{diseases,countries},source,confidence,note}] / changes[] / matched_context[]",
+ "as_of": "2026-09-07",
+ "principle": "지정은 시점 종속 사실이다. '분기별 지정'이라는 말만 믿고 분기 시작일 자료만 쓰면 틀린다 — 분기 도중 개정 고시가 잦다.",
+ "legal_basis": "「검역법」 제5조(검역관리지역등의 지정) — 질병관리청장이 검역전문위원회 심의를 거쳐 지정·해제. 제출 의무는 제2조·제12조의2, 위반 시 1천만원 이하 과태료.",
+ "definitions": {
+  "검역관리지역": "검역감염병이 유행하거나 유행할 우려가 있어 국내 유입 가능성이 있는 지역. 방문(체류·경유)자 중 '증상이 있는 사람'이 Q-CODE(또는 건강상태질문서) 제출 의무.",
+  "중점검역관리지역": "검역관리지역 중 유행 검역감염병이 치명적이고 감염력이 높아 집중 검역이 필요한 지역. 방문자는 '증상 유무와 무관하게' 전원 제출 의무."
+ },
+ "structural_breaks": [
+  {
+   "date": "2024-09-01",
+   "type": "break",
+   "title": "중점검역관리지역 제도 신설",
+   "detail": "이전에는 '검역관리지역' 단일 체계였다. 이 날부터 상위 등급인 중점검역관리지역(3종 21개국)이 생겼고, 검역감염병도 14종→18종으로 확대됐다(엠폭스·라싸열·크리미안콩고출혈열 신규).",
+   "impact": "2024.9. 이전과 이후의 '검역관리지역 국가 수'는 같은 뜻이 아니다. 시계열로 이으면 안 된다."
+  },
+  {
+   "date": "2025-01-01",
+   "type": "break",
+   "title": "반기 지정 → 분기 지정 전환",
+   "detail": "질병관리청 보도자료: \"올해부터는 기존 반기마다 지정하던 중점·검역관리지역을 분기마다 지정하여 해외 감염병 발생 상황을 더욱 신속하게 반영\". 첫 분기 지정 시행일이 2025.1.1.",
+   "impact": "2024년까지는 연 2회, 2025년부터 연 4회. 갱신 주기가 바뀌었으므로 '변경 횟수'를 연도 간 비교하면 안 된다.",
+   "caveat": "같은 발표(2024.12.17.)를 Q-CODE 게시판은 '2025년 상반기'로 올렸다가 2월 개정 때 파일명이 '2025년 1분기'로 바뀌었다. 정정 경위를 밝힌 질병관리청 원문은 확인하지 못했다."
+  },
+  {
+   "date": "2026-01-01",
+   "type": "break",
+   "title": "엠폭스 검역감염병 해제",
+   "detail": "WHO의 엠폭스 국제공중보건위기상황(PHEIC) 공식 종료를 반영. 2024.10.21. 검역관리지역에 추가됐던 엠폭스가 대상에서 빠졌다.",
+   "impact": "검역감염병 종수 변화(15종 유지)와 국가 수 감소(184→176개국)의 상당 부분이 이 해제 때문이다."
+  },
+  {
+   "date": "2026-05-19",
+   "type": "caution",
+   "title": "에볼라 PHEIC → 분기 중 수시 개정",
+   "detail": "WHO의 에볼라 PHEIC 선언에 따라 2분기 도중 에볼라 중점검역관리지역 5개국(남수단·르완다·에티오피아·우간다·콩고민주공화국)이 추가돼 21→25개국이 됐다.",
+   "impact": "분기 시작일(4.1.) 자료만 보면 이 5개국을 놓친다."
+  }
+ ],
+ "periods": [
+  {
+   "period": "2024-H1", "kind": "half", "effective": "2024-01-01",
+   "priority": {"diseases": null, "countries": null, "note": "제도 없음"},
+   "general": {"diseases": 14, "countries": 156},
+   "source": "PHWR 17(15) — 질병관리청 발간",
+   "confidence": "질병관리청 발간물",
+   "note": "검역감염병 11종→14종 확대(뎅기열·치쿤구니야열·지카·홍역 추가). 검역관리지역 74→156개국."
+  },
+  {
+   "period": "2024-H2", "kind": "half", "effective": "2024-09-01",
+   "priority": {"diseases": 3, "countries": 21},
+   "general": {"diseases": 18, "countries": 157},
+   "source": "PHWR 영문판(PMC12480098) · Q-CODE 공지",
+   "confidence": "질병관리청 발간물",
+   "note": "중점검역관리지역 제도 신설. 페스트 5 · 동물인플루엔자 인체감염증 5 · 중동호흡기증후군 13."
+  },
+  {
+   "period": "2024-H2-rev", "kind": "half", "effective": "2024-10-21",
+   "priority": {"diseases": 3, "countries": 21},
+   "general": {"diseases": 18, "countries": null},
+   "source": "Q-CODE 공지",
+   "confidence": "질병관리청 공지",
+   "note": "엠폭스를 검역관리지역에 추가. 추가 후 총 국가 수는 미확인."
+  },
+  {
+   "period": "2025-Q1", "kind": "quarter", "effective": "2025-01-01",
+   "priority": {"diseases": 3, "countries": 19},
+   "general": {"diseases": null, "countries": 159},
+   "source": "질병관리청 보도자료(2024.12.17.)",
+   "confidence": "질병관리청 보도자료",
+   "note": "첫 분기 단위 지정. 동물인플루엔자에서 영국 제외, 페스트 중점 5→2개국."
+  },
+  {
+   "period": "2025-Q1-rev", "kind": "quarter", "effective": "2025-02-26",
+   "priority": {"diseases": 3, "countries": 19},
+   "general": {"diseases": null, "countries": null},
+   "source": "Q-CODE 공지",
+   "confidence": "질병관리청 공지",
+   "note": "에볼라바이러스병 관련 개정."
+  },
+  {
+   "period": "2025-Q2", "kind": "quarter", "effective": "2025-04-01",
+   "priority": {"diseases": 3, "countries": 18},
+   "general": {"diseases": 15, "countries": 167},
+   "source": "질병관리청 안내 PDF · 보도자료",
+   "confidence": "질병관리청 원문",
+   "note": "멕시코 중점 해제. 검역관리지역에 엠폭스 15개국 포함."
+  },
+  {
+   "period": "2025-Q3", "kind": "quarter", "effective": "2025-07-01",
+   "priority": {"diseases": 3, "countries": 20},
+   "general": {"diseases": 15, "countries": 182},
+   "source": "질병관리청 보도자료(2025.6.20.)",
+   "confidence": "질병관리청 보도자료",
+   "note": "방글라데시·베트남(남동부·메콩삼각주) 신규."
+  },
+  {
+   "period": "2025-Q3-rev", "kind": "quarter", "effective": "2025-09-08",
+   "priority": {"diseases": null, "countries": 20},
+   "general": {"diseases": null, "countries": null},
+   "source": "Q-CODE 공지",
+   "confidence": "질병관리청 공지",
+   "note": "분기 중 개정."
+  },
+  {
+   "period": "2025-Q4", "kind": "quarter", "effective": "2025-10-01",
+   "priority": {"diseases": null, "countries": 21},
+   "general": {"diseases": null, "countries": null},
+   "source": "Q-CODE 공지",
+   "confidence": "질병관리청 공지",
+   "note": "인도 추가. 검역관리지역 184개국은 2026-Q1 보도자료의 '8개국 감소' 문구에서 역산한 값으로 원문 미확인 — 채택하지 않는다."
+  },
+  {
+   "period": "2026-Q1", "kind": "quarter", "effective": "2026-01-01",
+   "priority": {"diseases": null, "countries": 24},
+   "general": {"diseases": null, "countries": 176},
+   "source": "질병관리청 보도자료(2025.12.17.)",
+   "confidence": "질병관리청 보도자료",
+   "note": "에티오피아 마버그열 중점 신규. 엠폭스 검역감염병 해제."
+  },
+  {
+   "period": "2026-Q1-rev", "kind": "quarter", "effective": "2026-02-12",
+   "priority": {"diseases": null, "countries": 24},
+   "general": {"diseases": null, "countries": null},
+   "source": "질병관리청 공지 310091",
+   "confidence": "질병관리청 공지",
+   "note": "니파바이러스감염증 중점 신규 지정(인도·방글라데시)."
+  },
+  {
+   "period": "2026-Q2", "kind": "quarter", "effective": "2026-04-01",
+   "priority": {"diseases": 4, "countries": 21},
+   "general": {"diseases": null, "countries": 172},
+   "source": "질병관리청 보도자료 310527",
+   "confidence": "질병관리청 보도자료",
+   "note": "멕시코·베트남·에티오피아 중점 해제(마버그열 유행 종료 선언)."
+  },
+  {
+   "period": "2026-Q2-rev", "kind": "quarter", "effective": "2026-05-26",
+   "priority": {"diseases": 5, "countries": 25},
+   "general": {"diseases": null, "countries": null},
+   "source": "Q-CODE 공지",
+   "confidence": "질병관리청 공지",
+   "note": "WHO 에볼라 PHEIC 선언에 따라 에볼라 중점 5개국 추가."
+  },
+  {
+   "period": "2026-Q3", "kind": "quarter", "effective": "2026-07-01",
+   "priority": {"diseases": 5, "countries": 25},
+   "general": {"diseases": 15, "countries": 173},
+   "source": "질병관리청 공지 311514 + 안내 PDF",
+   "confidence": "원문 PDF 파싱·검산 완료",
+   "verified": true,
+   "note": "본 저장소가 국가×감염병 매트릭스를 원문에서 복원하고 열별 국가 수를 공표치와 대조해 전부 일치를 확인한 유일한 시기. data/2026Q3_*.csv 참조."
+  },
+  {
+   "period": "2026-Q3-rev", "kind": "quarter", "effective": "2026-09-07",
+   "priority": {"diseases": 5, "countries": 31},
+   "general": {"diseases": 15, "countries": 172},
+   "source": "질병관리청 공지 312514",
+   "confidence": "질병관리청 공지",
+   "note": "현행. 에볼라 중점 6개국 추가(부룬디·앙골라·잠비아·중앙아프리카공화국·콩고공화국·탄자니아), 검역관리지역에서 케냐 해제. 매트릭스 원문 대조는 미완료."
+  }
+ ],
+ "matched_context": [
+  {"period": "2024-H2", "world": "엠폭스 PHEIC 재선언(2024.8., WHO)", "korea": "엠폭스·라싸열·크리미안콩고출혈열을 검역감염병에 추가하고 중점검역관리지역 제도 신설"},
+  {"period": "2025-Q1~Q4", "world": "북미·동아시아 고병원성 조류인플루엔자(H5N1) 확산", "korea": "미국 주(州) 단위·중국 성(省) 단위 지정이 분기마다 재편 — 동물인플루엔자 인체감염증 중점 대상 지역이 가장 자주 바뀐 축"},
+  {"period": "2026-Q1", "world": "WHO 엠폭스 PHEIC 종료", "korea": "엠폭스 검역감염병 해제, 검역관리지역 176개국으로 축소"},
+  {"period": "2026-Q2~Q3", "world": "WHO 에볼라 PHEIC 선언(2026.5.)", "korea": "에볼라 중점 5개국 추가(5월) → 6개국 추가(9월)로 확대. 중점 25→31개국"}
+ ],
+ "unverified": [
+  "2025-Q4 검역관리지역 국가 수(184개국은 역산값)",
+  "2025-Q1·Q3, 2026-Q1의 검역관리지역 감염병별 국가 수",
+  "2025-Q1 원본(1.1. 기준) 및 2025-Q3 원본(7.1. 기준) 국가 목록 — 개정본만 확보",
+  "2026-Q3 개정본(9.7.) 국가×감염병 매트릭스 원문 대조",
+  "각 분기 지정의 관보 고시 번호",
+  "2023년 이전 지정 내역(검역관리지역 74개국이었다는 비교값만 확인)"
+ ]
+}

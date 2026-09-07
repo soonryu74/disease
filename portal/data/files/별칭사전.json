@@ -1,0 +1,298 @@
+{
+ "schema": "canonical/english/aliases[{name,type,valid_from,valid_to}]/grade_history[{grade,surv,valid_from,valid_to}]",
+ "as_of": "2026-08-15",
+ "principle": "시점 미인지 검색은 폐지된 신고기준을 정답으로 반환한다(토론 5위). 질의에 기준시점이 있으면 valid 구간으로 필터할 것.",
+ "test_cases": [
+  {
+   "q": "2023년 12월의 매독 신고기한은?",
+   "expect": "표본감시 주간 신고(당시 제4급) — 24시간 아님",
+   "why": "2024-01-01 전은 4급"
+  },
+  {
+   "q": "원숭이두창 지금 몇 급?",
+   "expect": "엠폭스(2022-12 개칭)로 정규화 후 제3급(2024-01-01~)"
+  },
+  {
+   "q": "2021년 코로나 신고기한?",
+   "expect": "즉시(당시 제1급)"
+  }
+ ],
+ "entries": [
+  {
+   "canonical": "한센병",
+   "english": "Hansen disease",
+   "aliases": [
+    {
+     "name": "나병",
+     "type": "구공식",
+     "valid_to": "2000년대(법령·행정용어 순화)"
+    },
+    {
+     "name": "문둥병",
+     "type": "속칭(비하)",
+     "note": "사용 지양"
+    }
+   ]
+  },
+  {
+   "canonical": "엠폭스",
+   "english": "Mpox",
+   "aliases": [
+    {
+     "name": "원숭이두창",
+     "type": "구공식",
+     "valid_to": "2022-12",
+     "note": "WHO 권고로 개칭"
+    },
+    {
+     "name": "monkeypox",
+     "type": "구영문",
+     "valid_to": "2022-11"
+    }
+   ],
+   "grade_history": [
+    {
+     "grade": "제2급",
+     "surv": "전수",
+     "vf": "2022-06-08",
+     "vt": "2023-12-31"
+    },
+    {
+     "grade": "제3급",
+     "surv": "전수",
+     "vf": "2024-01-01"
+    }
+   ]
+  },
+  {
+   "canonical": "신증후군출혈열",
+   "english": "HFRS",
+   "aliases": [
+    {
+     "name": "유행성출혈열",
+     "type": "구공식"
+    },
+    {
+     "name": "한국형출혈열",
+     "type": "구칭"
+    }
+   ]
+  },
+  {
+   "canonical": "두창",
+   "english": "Smallpox",
+   "aliases": [
+    {
+     "name": "천연두",
+     "type": "옛말"
+    },
+    {
+     "name": "마마",
+     "type": "옛말"
+    },
+    {
+     "name": "손님",
+     "type": "옛말"
+    }
+   ]
+  },
+  {
+   "canonical": "페스트",
+   "english": "Plague",
+   "aliases": [
+    {
+     "name": "흑사병",
+     "type": "속칭·역사어"
+    }
+   ]
+  },
+  {
+   "canonical": "콜레라",
+   "english": "Cholera",
+   "aliases": [
+    {
+     "name": "호열자",
+     "type": "옛말"
+    },
+    {
+     "name": "호역",
+     "type": "옛말"
+    }
+   ]
+  },
+  {
+   "canonical": "장티푸스",
+   "english": "Typhoid fever",
+   "aliases": [
+    {
+     "name": "장질부사",
+     "type": "옛말"
+    },
+    {
+     "name": "염병",
+     "type": "옛말(비하 파생)"
+    }
+   ]
+  },
+  {
+   "canonical": "세균성이질",
+   "english": "Shigellosis",
+   "aliases": [
+    {
+     "name": "적리",
+     "type": "옛말"
+    }
+   ]
+  },
+  {
+   "canonical": "말라리아",
+   "english": "Malaria",
+   "aliases": [
+    {
+     "name": "학질",
+     "type": "옛말"
+    },
+    {
+     "name": "하루거리",
+     "type": "옛말"
+    }
+   ]
+  },
+  {
+   "canonical": "유행성이하선염",
+   "english": "Mumps",
+   "aliases": [
+    {
+     "name": "볼거리",
+     "type": "통칭"
+    }
+   ]
+  },
+  {
+   "canonical": "결핵",
+   "english": "Tuberculosis",
+   "aliases": [
+    {
+     "name": "폐병",
+     "type": "옛말"
+    },
+    {
+     "name": "노채",
+     "type": "옛말"
+    }
+   ]
+  },
+  {
+   "canonical": "레지오넬라증",
+   "english": "Legionellosis",
+   "aliases": [
+    {
+     "name": "재향군인병",
+     "type": "유래명"
+    }
+   ]
+  },
+  {
+   "canonical": "폴리오",
+   "english": "Polio",
+   "aliases": [
+    {
+     "name": "소아마비",
+     "type": "구공식·통칭"
+    }
+   ]
+  },
+  {
+   "canonical": "공수병",
+   "english": "Rabies(인체)",
+   "aliases": [
+    {
+     "name": "광견병",
+     "type": "동물측 병명",
+     "note": "동일 바이러스 — 사람=공수병/동물=광견병"
+    }
+   ]
+  },
+  {
+   "canonical": "코로나바이러스감염증-19",
+   "english": "COVID-19",
+   "aliases": [
+    {
+     "name": "코로나19",
+     "type": "공식 약칭"
+    },
+    {
+     "name": "신종코로나",
+     "type": "초기 언론명",
+     "valid_to": "2020-02"
+    },
+    {
+     "name": "우한폐렴",
+     "type": "초기 속칭(지역낙인)",
+     "valid_to": "2020-02",
+     "note": "WHO 명명원칙상 사용 지양"
+    }
+   ],
+   "grade_history": [
+    {
+     "grade": "제1급",
+     "surv": "전수",
+     "vf": "2020-01-20",
+     "vt": "2022-04-24"
+    },
+    {
+     "grade": "제2급",
+     "surv": "전수",
+     "vf": "2022-04-25",
+     "vt": "2023-08-30"
+    },
+    {
+     "grade": "제4급",
+     "surv": "표본(양성자)",
+     "vf": "2023-08-31"
+    }
+   ]
+  },
+  {
+   "canonical": "매독",
+   "english": "Syphilis",
+   "grade_history": [
+    {
+     "grade": "제4급",
+     "surv": "표본(주간)",
+     "case_def": "3종",
+     "vf": "2020-01-01",
+     "vt": "2023-12-31"
+    },
+    {
+     "grade": "제3급",
+     "surv": "전수(24h)",
+     "case_def": "5종",
+     "vf": "2024-01-01",
+     "note": "법률 제19603호(2023.8.8 공포)"
+    }
+   ]
+  },
+  {
+   "canonical": "후천성면역결핍증",
+   "english": "HIV/AIDS",
+   "aliases": [
+    {
+     "name": "에이즈",
+     "type": "통칭"
+    }
+   ]
+  },
+  {
+   "canonical": "중증열성혈소판감소증후군",
+   "english": "SFTS",
+   "aliases": [
+    {
+     "name": "중증열성혈소판증후군",
+     "type": "오기",
+     "note": "'감소' 누락 오기 — §02 검수 #226 실사례"
+    }
+   ]
+  }
+ ]
+}
