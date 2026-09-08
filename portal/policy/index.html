@@ -72,6 +72,7 @@
 
   /* ── 편집기 ── */
   .editor{display:grid;grid-template-columns:230px 1fr;gap:0;padding:0;overflow:hidden}
+  .editor>*{min-width:0}   /* 그리드 칸이 내용 크기만큼 부풀어 표를 밀어내는 것을 막는다 */
   @media (max-width:760px){.editor{grid-template-columns:1fr}}
   .dzlist{border-right:1px solid var(--line);background:var(--surface-2);padding:8px;max-height:640px;overflow:auto}
   @media (max-width:760px){.dzlist{display:flex;overflow-x:auto;max-height:none;border-right:0;border-bottom:1px solid var(--line);gap:4px}}
@@ -90,7 +91,9 @@
   table.ct{width:100%;border-collapse:collapse;font-size:13px}
   table.ct th,table.ct td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
   table.ct th:nth-child(-n+2),table.ct td:nth-child(-n+2){text-align:left}
-  table.ct th{font-size:11px;color:var(--muted);font-weight:700;position:sticky;top:0;background:var(--surface)}
+  /* 머리글 고정 — z-index 가 없으면 뒤 행이 위에 그려져 겹친다 */
+  table.ct thead th{font-size:11px;color:var(--muted);font-weight:700;position:sticky;top:0;z-index:3;
+    background:var(--surface);box-shadow:0 1px 0 var(--line)}
   table.ct tr.on td{background:var(--accent-soft)}
   table.ct tr.rep td:first-child::after{content:" ●";color:var(--s2)}
   .tg{width:38px;height:22px;border-radius:11px;border:1px solid var(--line-strong);background:var(--surface-2);position:relative;cursor:pointer;padding:0;vertical-align:middle}
@@ -98,6 +101,17 @@
   .tg.on{background:var(--accent);border-color:var(--accent)} .tg.on::after{left:18px;background:#fff}
   .tg.base{outline:2px dashed var(--s4);outline-offset:1px}
   .dim{color:var(--faint)}
+  /* 좁은 화면에서는 표 안에 또 스크롤을 만들지 않는다 — 쪽 스크롤과 엉켜 머리글이 떠다닌다.
+     이 블록은 .cl / table.ct 규칙보다 뒤에 와야 덮이지 않는다. */
+  @media (max-width:760px){
+    .cl{max-height:none;overflow:visible;padding:12px 0 12px 12px}
+    .cl .head{padding-right:12px}
+    .dzlist{max-height:none}
+    table.ct thead th{position:static;box-shadow:none}
+    .ctw{overflow-x:auto;-webkit-overflow-scrolling:touch}  /* 표만 가로로 민다 */
+    table.ct{min-width:520px}
+    table.ct th,table.ct td{padding:5px 6px}
+  }
 
   /* ── 결과 ── */
   .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
@@ -332,12 +346,12 @@ function renderList(){
   const covered=REPORTS.filter(x=>x.disease===curDz && S.has(key(x.iso,curDz))).reduce((s,x)=>s+x.n,0);
   document.getElementById('cl').innerHTML = `<div class="head"><h3>${curDz}</h3><span class="mini num">지정 ${n}개국 · 표본 유입 ${repN}건 중 ${covered}건 잡힘</span><span class="sp"></span>
     <input id="q" placeholder="나라 검색" value="${q}"><button id="allOff">이 병 전부 해제</button><button id="allBase">이 병 현행으로</button></div>
-    <table class="ct"><thead><tr><th>나라</th><th>지역</th><th>지정</th><th>직항 여객</th><th>국적 입국</th><th>이 병 유입</th></tr></thead><tbody>
+    <div class="ctw"><table class="ct"><thead><tr><th>나라</th><th>지역</th><th>지정</th><th>직항 여객</th><th>국적 입국</th><th>이 병 유입</th></tr></thead><tbody>
     ${rows.map(r=>{ const k=key(r.iso,curDz), on=S.has(k), b=BASE.has(k), rep=REP_BY[k];
       return `<tr class="${on?'on':''}${rep?' rep':''}"><td>${r.ko}${PRI.has(k)?' <span style="color:var(--warn)">●</span>':''}</td><td class="dim">${r.region||''}</td>
       <td><button class="tg ${on?'on':''} ${on!==b?'base':''}" data-k="${k}" aria-label="${r.ko} ${curDz} 지정 ${on?'해제':'추가'}"></button></td>
       <td class="num ${r.air_direct==null?'dim':''}">${fmt(r.air_direct)}</td><td class="num ${r.nat_entries==null?'dim':''}">${fmt(r.nat_entries)}</td><td class="num">${rep||'<span class="dim">—</span>'}</td></tr>`; }).join('')}
-    </tbody></table>`;
+    </tbody></table></div>`;
   const qi=document.getElementById('q'); qi.oninput=()=>{ q=qi.value.trim(); const pos=qi.selectionStart; renderList(); const q2=document.getElementById('q'); q2.focus(); q2.setSelectionRange(pos,pos); };
   document.getElementById('allOff').onclick=()=>{ [...S].filter(k=>k.endsWith('|'+curDz)).forEach(k=>S.delete(k)); scenOff(); render(); };
   document.getElementById('allBase').onclick=()=>{ [...S].filter(k=>k.endsWith('|'+curDz)).forEach(k=>S.delete(k)); [...BASE].filter(k=>k.endsWith('|'+curDz)).forEach(k=>S.add(k)); scenOff(); render(); };

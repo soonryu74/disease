@@ -76,7 +76,10 @@ def build():
         k = norm(d['name'])
         d['annual'] = annual.get(k) or next((v for kk, v in annual.items() if kk.startswith(k[:6])), None)
     data = {'diseases': out, 'defaults': P['intervention_defaults'], 'about': P['_about'],
-            'references': P.get('references', {}), 'scenario_provenance': P.get('scenario_provenance', '')}
+            'references': P.get('references', {}), 'scenario_provenance': P.get('scenario_provenance', ''),
+            'population': 51_700_000,
+            'population_note': '전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.',
+            'annual_source': '③ 백서 정리 · 연보 기반 전수감시 신고수 2016~2025'}
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'sim.template.html'), encoding='utf-8').read()
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
