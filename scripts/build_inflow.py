@@ -302,6 +302,12 @@ def build():
                         x['rep_n'], '; '.join(f'{d}({n})' for d, n in x['rep_diseases']),
                         x['rate_air'], x['rate_nat'], x['nat_over_air']])
 
+    # 다른 축(⑯ 검역 정책 실험)이 같은 숫자를 쓰도록 결합 결과를 따로 남긴다
+    slim = {'meta': data['meta'], 'quar_diseases': sorted(QUAR_DISEASES),
+            'rows': [{k: v for k, v in x.items() if k not in ('c', 'air_years')} for x in rows]}
+    json.dump(slim, open(os.path.join(D15, '유입_종합.json'), 'w', encoding='utf-8'),
+              ensure_ascii=False, separators=(',', ':'))
+
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'inflow.template.html'),
                 encoding='utf-8').read()
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')

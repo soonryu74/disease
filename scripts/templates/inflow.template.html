@@ -700,6 +700,8 @@ tbody.addEventListener('click',e=>{ const tr=e.target.closest('tr'); if(tr){ sel
 
 /* ── 시동 ── */
 renderPanel(null); renderTable(); resize();
+/* #ISO3 로 들어오면 그 나라를 골라 보여 준다 (상황판·정책실험에서 연결) */
+(function(){ const h=location.hash.slice(1).toUpperCase(); if(h && BY[h]){ S.spin=false; select(h, true); } })();
 addEventListener('resize', resize);
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', req);
 new MutationObserver(req).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});

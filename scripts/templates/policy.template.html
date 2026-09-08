@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>검역 정책 실험실</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s4:#eda100; --warn:#B23A3A; --ok:#0E6E63;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500; --warn:#E07A7A; --ok:#54B7AA;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500; --warn:#E07A7A; --ok:#54B7AA;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,46px);line-height:1.05;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(15px,2.3vw,17.5px);color:var(--muted);max-width:62ch;margin:16px 0 0}
+  .thesis b{color:var(--ink)}
+  section{padding:30px 0 6px}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14.5px;margin:0 0 18px;max-width:76ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:14px;min-width:0}
+  .card h3{margin:0 0 6px;font-size:16px;font-weight:800}
+  .muted{color:var(--muted)} .small{font-size:12.5px}
+  button{font:inherit}
+
+  /* ── 계기판 ── */
+  .gauges{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;position:sticky;top:52px;z-index:10;
+    background:var(--ground);padding:10px 0 8px;border-bottom:1px solid var(--line)}
+  @media (max-width:900px){.gauges{grid-template-columns:repeat(3,1fr);position:static}}
+  @media (max-width:560px){.gauges{grid-template-columns:repeat(2,1fr)}}
+  .g{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+  .g .k{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.04em}
+  .g .v{font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.1;margin-top:3px}
+  .g .v small{font-size:12px;font-weight:600;color:var(--muted);margin-left:3px}
+  .g .d{font-size:12px;margin-top:3px;font-weight:700}
+  .g .d.up{color:var(--warn)} .g .d.down{color:var(--ok)} .g .d.same{color:var(--faint)}
+  .g .base{font-size:11px;color:var(--faint)}
+  .bar{height:5px;border-radius:3px;background:var(--surface-2);margin-top:6px;overflow:hidden}
+  .bar i{display:block;height:100%;background:var(--accent)}
+
+  /* ── 시나리오 ── */
+  .scen{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0}
+  .scen button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .scen button:hover{background:var(--surface-2)}
+  .scen button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .scen button.reset{border-style:dashed;color:var(--muted)}
+
+  /* ── 편집기 ── */
+  .editor{display:grid;grid-template-columns:230px 1fr;gap:0;padding:0;overflow:hidden}
+  @media (max-width:760px){.editor{grid-template-columns:1fr}}
+  .dzlist{border-right:1px solid var(--line);background:var(--surface-2);padding:8px;max-height:640px;overflow:auto}
+  @media (max-width:760px){.dzlist{display:flex;overflow-x:auto;max-height:none;border-right:0;border-bottom:1px solid var(--line);gap:4px}}
+  .dzlist button{display:flex;justify-content:space-between;align-items:center;width:100%;text-align:left;border:0;background:transparent;color:var(--ink);padding:7px 10px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap}
+  .dzlist button:hover{background:var(--surface)}
+  .dzlist button.on{background:var(--accent);color:#fff}
+  .dzlist button .n{font-size:11px;font-weight:700;opacity:.75;margin-left:8px}
+  .dzlist button.pri{border-left:3px solid var(--warn)}
+  .cl{padding:14px 16px;max-height:640px;overflow:auto}
+  .cl .head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+  .cl .head h3{margin:0}
+  .cl .head input{font:inherit;font-size:12.5px;padding:5px 8px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink)}
+  .cl .head .sp{flex:1}
+  .cl .head .mini{font-size:12px;color:var(--muted)}
+  .cl .head button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700;cursor:pointer}
+  table.ct{width:100%;border-collapse:collapse;font-size:13px}
+  table.ct th,table.ct td{padding:5px 8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}
+  table.ct th:nth-child(-n+2),table.ct td:nth-child(-n+2){text-align:left}
+  table.ct th{font-size:11px;color:var(--muted);font-weight:700;position:sticky;top:0;background:var(--surface)}
+  table.ct tr.on td{background:var(--accent-soft)}
+  table.ct tr.rep td:first-child::after{content:" ●";color:var(--s2)}
+  .tg{width:38px;height:22px;border-radius:11px;border:1px solid var(--line-strong);background:var(--surface-2);position:relative;cursor:pointer;padding:0;vertical-align:middle}
+  .tg::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--faint);transition:left .12s}
+  .tg.on{background:var(--accent);border-color:var(--accent)} .tg.on::after{left:18px;background:#fff}
+  .tg.base{outline:2px dashed var(--s4);outline-offset:1px}
+  .dim{color:var(--faint)}
+
+  /* ── 결과 ── */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid2>*{min-width:0}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr}}
+  ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px}
+  ul.tight li{margin:3px 0}
+  .miss li{color:var(--warn)} .gain li{color:var(--ok)}
+  .cmp{width:100%;border-collapse:collapse;font-size:13px}
+  .cmp th,.cmp td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:right}
+  .cmp th:first-child,.cmp td:first-child{text-align:left}
+  .cmp th{font-size:11.5px;color:var(--muted);font-weight:700}
+  .share{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+  .share input{flex:1;min-width:200px;font:inherit;font-size:12px;padding:6px 8px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface-2);color:var(--muted)}
+  .share button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
+  footer a{color:var(--muted)}
+  @media print{.scen,.tg,.share{display:none!important}.gauges{position:static}.dzlist{display:none}.editor{grid-template-columns:1fr}.cl{max-height:none}.card{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <p class="eyebrow">⑯ 검역 정책 실험실</p>
+  <h1>이 나라를 빼면<br>무엇이 새고, 얼마나 가벼워지나</h1>
+  <p class="thesis">검역관리지역 지정은 두 값 사이의 거래다. <b>넓게 지정하면</b> 유입을 더 잡지만 그 나라에서 오는 모든 사람이 Q-CODE를 내야 한다.
+  <b>좁게 지정하면</b> 가벼워지지만 새는 것이 생긴다. 여기서는 2026년 3분기 지정(173개국 × 15종)에서 출발해 나라를 넣고 빼면서
+  <b>표본 유입 신고 중 잡히는 비율</b>과 <b>Q-CODE 대상 인원</b>이 어떻게 움직이는지를 본다.</p>
+</header>
+
+<section id="lab">
+  <div class="gauges" id="gauges"></div>
+  <div class="scen" id="scen"></div>
+  <p class="sdesc" style="margin-top:0">실험 버튼은 출발점을 바꾼다. 그 위에서 오른쪽 표의 스위치를 눌러 나라를 하나씩 넣고 뺀다. 점선 테두리는 현행과 다른 상태. 이름 옆 <span style="color:var(--s2)">●</span>는 표본에 그 병의 유입 신고가 있는 나라.</p>
+  <div class="card editor">
+    <div class="dzlist" id="dzlist"></div>
+    <div class="cl" id="cl"></div>
+  </div>
+</section>
+
+<section id="result">
+  <h2>결과 — 현행 대비</h2>
+  <div class="grid2">
+    <div class="card"><h3>새는 것</h3><p class="small muted">표본에 유입 신고가 있었는데 이 실험에서는 지정되지 않은 (병, 나라).</p><div id="miss"></div></div>
+    <div class="card"><h3>새로 잡는 것 · 새로 지는 부담</h3><p class="small muted">현행에 없던 지정. 잡히는 유입이 표본에 없다면 그 지정은 부담만 늘린 것이다 — 표본 기준으로.</p><div id="gain"></div></div>
+  </div>
+  <div class="card">
+    <h3>비교표</h3>
+    <table class="cmp" id="cmp"></table>
+    <div class="share"><input id="link" readonly><button id="copy">실험 주소 복사</button><span class="small muted">주소에 지정 차이만 담긴다. 붙여 넣으면 같은 실험이 열린다.</span></div>
+  </div>
+</section>
+
+<section id="honest">
+  <h2>이 실험이 말하지 않는 것</h2>
+  <div class="grid2">
+    <div class="card">
+      <ul class="tight">
+        <li><b>"잡힌다"는 표본 기준이다.</b> 유입 신고는 확보한 주간 건강과 질병 <span id="h-issues"></span>호에서 뽑은 것이다. 표본에 없다고 유입이 없는 것이 아니다. 지정 해제로 "새는 것 0"이 나와도 그것은 <em>지난 표본에서</em> 0이라는 뜻이다.</li>
+        <li><b>검역은 유입을 막는 장치가 아니라 찾아내는 장치다.</b> 지정은 Q-CODE·발열 감시·역학조사 우선순위를 정한다. 지정 여부와 무관하게 의료기관 신고로 발견되는 유입이 대부분이다.</li>
+        <li><b>부담은 직항 기준이다.</b> Q-CODE는 경유자도 내야 하지만 경유 입국자 수는 공개돼 있지 않다. 직항 없는 나라의 부담은 국적별 입국자로만 가늠한다.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <ul class="tight">
+        <li><b>세계 발생 상황이 없다.</b> 실제 지정은 WHO 발생 보고·풍토성을 근거로 한다. 이 실험은 "우리 쪽에서 무엇이 들어왔나"만 본다. 발생이 없는 해에 지정을 유지하는 것이 잘못이라는 뜻이 아니다.</li>
+        <li><b>중점검역관리지역</b>(붉은 줄)은 해제해도 여기서는 일반 지정 해제와 같게 센다. 실제로는 사전 신고 의무의 강도가 다르다.</li>
+        <li><b>2026.9.7. 개정본</b>(중점 31개국)은 아직 원문 대조를 하지 않아 출발점에 반영하지 않았다.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>자료 — ⑪ 검역관리지역 2026Q3 · ⑫ 해외유입 신고(표본) · 국토교통부 항공통계 · 법무부 출입국통계. 계산은 브라우저에서, 코드는 <code>scripts/build_policy.py</code>.</div>
+  <div style="margin-top:6px">Built by <a href="https://jieumworks.com" target="_blank" rel="noopener">지음웍스 jieumworks.com</a> · 2026년 9월</div>
+</footer>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+'use strict';
+const D = JSON.parse(document.getElementById('data').textContent);
+const DZ = D.diseases, ROWS = D.rows, BY = Object.fromEntries(ROWS.map(r=>[r.iso,r]));
+const fmt = n => n==null ? '—' : Math.round(n).toLocaleString('ko-KR');
+const fmtM = n => n==null ? '—' : (n/1e6).toFixed(2)+'M';
+const key = (iso,d) => iso+'|'+d;
+document.getElementById('h-issues').textContent = D.meta.report_issues.length;
+
+/* 출발점: 현행 */
+const BASE = new Set();
+const PRI = new Set();
+for(const r of ROWS){ for(const d of r.q_general) BASE.add(key(r.iso,d)); for(const d of r.q_priority){ BASE.add(key(r.iso,d)); PRI.add(key(r.iso,d)); } }
+const REPORTS = []; // {iso, disease, n}
+for(const r of ROWS) for(const x of r.rep_quar) REPORTS.push({iso:r.iso, ko:r.ko, disease:x.disease, n:x.n});
+const REP_TOTAL = REPORTS.reduce((s,x)=>s+x.n,0);
+const REP_BY = {}; for(const x of REPORTS) REP_BY[key(x.iso,x.disease)] = x.n;
+
+let S = new Set(BASE); let curDz = DZ.includes('뎅기열') ? '뎅기열' : DZ[0]; let scenOn = 'base';
+
+function metrics(set){
+  const countries = new Set(); let pairs=0;
+  for(const k of set){ countries.add(k.split('|')[0]); pairs++; }
+  let covN=0, covPairs=0; const miss=[];
+  for(const x of REPORTS){ if(set.has(key(x.iso,x.disease))){ covN+=x.n; covPairs++; } else miss.push(x); }
+  let air=0, nat=0, noFlight=0;
+  for(const iso of countries){ const r=BY[iso]; if(!r) continue; if(r.air_direct!=null) air+=r.air_direct; else noFlight++; nat+=r.nat_entries||0; }
+  return {countries:countries.size, pairs, covN, covPairs, miss, air, nat, noFlight,
+          cov: REP_TOTAL? covN/REP_TOTAL : 0, eff: air? covN/air*1e6 : null};
+}
+const M0 = metrics(BASE);
+
+/* ── 계기판 ── */
+function gauge(k, v, base, unit, fmtf, lowerIsBetter, bar){
+  const d = v-base; const cls = d===0?'same':(d>0)===!!lowerIsBetter?'up':'down';
+  const sign = d>0?'+':'';
+  return `<div class="g"><div class="k">${k}</div><div class="v num">${fmtf(v)}<small>${unit}</small></div>
+    <div class="d ${cls} num">${d===0?'현행과 같음':sign+fmtf(d)}</div>
+    ${bar!=null?`<div class="bar"><i style="width:${Math.round(bar*100)}%"></i></div>`:`<div class="base num">현행 ${fmtf(base)}${unit}</div>`}</div>`;
+}
+function renderGauges(){
+  const m = metrics(S);
+  document.getElementById('gauges').innerHTML =
+    gauge('잡히는 유입 (표본)', m.cov*100, M0.cov*100, '%', x=>x.toFixed(0), false, m.cov) +
+    gauge('Q-CODE 대상 · 직항 여객', m.air, M0.air, '', fmtM, true) +
+    gauge('Q-CODE 대상 · 국적 입국자', m.nat, M0.nat, '', fmtM, true) +
+    gauge('지정국', m.countries, M0.countries, '개국', fmt, true) +
+    gauge('백만 여객당 잡는 건수', m.eff||0, M0.eff||0, '', x=>x.toFixed(2), false);
+  renderResult(m);
+}
+
+/* ── 시나리오 ── */
+const SCEN = [
+  ['base','현행 2026Q3', ()=>new Set(BASE)],
+  ['direct','직항 있는 나라만', ()=>new Set([...BASE].filter(k=>BY[k.split('|')[0]]?.air_direct!=null))],
+  ['reported','표본 유입국만 (후견지명)', ()=>new Set(REPORTS.map(x=>key(x.iso,x.disease)))],
+  ['pri','중점검역관리지역만', ()=>new Set(PRI)],
+  ['nodengue','뎅기열 지정 전부 해제', ()=>new Set([...BASE].filter(k=>!k.endsWith('|뎅기열')))],
+  ['nomeasles','홍역 지정 전부 해제', ()=>new Set([...BASE].filter(k=>!k.endsWith('|홍역')))],
+  ['top20','직항 상위 20개국 15종 전부 지정', ()=>{ const s=new Set(BASE); ROWS.filter(r=>r.air_direct).sort((a,b)=>b.air_direct-a.air_direct).slice(0,20).forEach(r=>DZ.forEach(d=>s.add(key(r.iso,d)))); return s; }],
+];
+const scenEl=document.getElementById('scen');
+scenEl.innerHTML = SCEN.map(([id,l])=>`<button data-id="${id}" class="${id===scenOn?'on':''}">${l}</button>`).join('') + `<button class="reset" data-id="reset">↺ 현행으로</button>`;
+scenEl.addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; const id=b.dataset.id==='reset'?'base':b.dataset.id;
+  S = SCEN.find(s=>s[0]===id)[2](); scenOn=id; scenEl.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x.dataset.id===id)); render(); });
+
+/* ── 편집기 ── */
+function renderDz(){
+  document.getElementById('dzlist').innerHTML = DZ.map(d=>{ const n=[...S].filter(k=>k.endsWith('|'+d)).length; const n0=[...BASE].filter(k=>k.endsWith('|'+d)).length; const rep=REPORTS.filter(x=>x.disease===d).reduce((s,x)=>s+x.n,0);
+    const pri=[...PRI].some(k=>k.endsWith('|'+d));
+    return `<button data-d="${d}" class="${d===curDz?'on':''}${pri?' pri':''}">${d}<span class="n num">${n}${n!==n0?` <s>${n0}</s>`:''}${rep?` · 유입 ${rep}`:''}</span></button>`; }).join('');
+}
+document.getElementById('dzlist').addEventListener('click',e=>{ const b=e.target.closest('button'); if(!b) return; curDz=b.dataset.d; renderDz(); renderList(); });
+let q='';
+function renderList(){
+  const rows = ROWS.filter(r=>!q || r.ko.includes(q) || r.iso.includes(q.toUpperCase()))
+    .sort((a,b)=>{ const oa=S.has(key(a.iso,curDz)), ob=S.has(key(b.iso,curDz)); if(oa!==ob) return oa?-1:1; return (b.air_direct||0)-(a.air_direct||0) || (b.nat_entries||0)-(a.nat_entries||0); });
+  const n=[...S].filter(k=>k.endsWith('|'+curDz)).length;
+  const repN=REPORTS.filter(x=>x.disease===curDz).reduce((s,x)=>s+x.n,0);
+  const covered=REPORTS.filter(x=>x.disease===curDz && S.has(key(x.iso,curDz))).reduce((s,x)=>s+x.n,0);
+  document.getElementById('cl').innerHTML = `<div class="head"><h3>${curDz}</h3><span class="mini num">지정 ${n}개국 · 표본 유입 ${repN}건 중 ${covered}건 잡힘</span><span class="sp"></span>
+    <input id="q" placeholder="나라 검색" value="${q}"><button id="allOff">이 병 전부 해제</button><button id="allBase">이 병 현행으로</button></div>
+    <table class="ct"><thead><tr><th>나라</th><th>지역</th><th>지정</th><th>직항 여객</th><th>국적 입국</th><th>이 병 유입</th></tr></thead><tbody>
+    ${rows.map(r=>{ const k=key(r.iso,curDz), on=S.has(k), b=BASE.has(k), rep=REP_BY[k];
+      return `<tr class="${on?'on':''}${rep?' rep':''}"><td>${r.ko}${PRI.has(k)?' <span style="color:var(--warn)">●</span>':''}</td><td class="dim">${r.region||''}</td>
+      <td><button class="tg ${on?'on':''} ${on!==b?'base':''}" data-k="${k}" aria-label="${r.ko} ${curDz} 지정 ${on?'해제':'추가'}"></button></td>
+      <td class="num ${r.air_direct==null?'dim':''}">${fmt(r.air_direct)}</td><td class="num ${r.nat_entries==null?'dim':''}">${fmt(r.nat_entries)}</td><td class="num">${rep||'<span class="dim">—</span>'}</td></tr>`; }).join('')}
+    </tbody></table>`;
+  const qi=document.getElementById('q'); qi.oninput=()=>{ q=qi.value.trim(); const pos=qi.selectionStart; renderList(); const q2=document.getElementById('q'); q2.focus(); q2.setSelectionRange(pos,pos); };
+  document.getElementById('allOff').onclick=()=>{ [...S].filter(k=>k.endsWith('|'+curDz)).forEach(k=>S.delete(k)); scenOff(); render(); };
+  document.getElementById('allBase').onclick=()=>{ [...S].filter(k=>k.endsWith('|'+curDz)).forEach(k=>S.delete(k)); [...BASE].filter(k=>k.endsWith('|'+curDz)).forEach(k=>S.add(k)); scenOff(); render(); };
+}
+document.getElementById('cl').addEventListener('click',e=>{ const b=e.target.closest('.tg'); if(!b) return; const k=b.dataset.k; if(S.has(k)) S.delete(k); else S.add(k); scenOff(); render(); });
+function scenOff(){ scenOn='custom'; scenEl.querySelectorAll('button').forEach(x=>x.classList.remove('on')); }
+
+/* ── 결과 ── */
+function renderResult(m){
+  const miss=m.miss.slice().sort((a,b)=>b.n-a.n);
+  document.getElementById('miss').innerHTML = miss.length ? `<ul class="tight miss">${miss.map(x=>`<li><b>${x.ko}</b> — ${x.disease} ${x.n}건</li>`).join('')}</ul><p class="small muted">합계 ${miss.reduce((s,x)=>s+x.n,0)}건 / 표본 ${REP_TOTAL}건</p>` : `<p class="small" style="color:var(--ok)">없음 — 표본의 검역감염병 유입 ${REP_TOTAL}건이 모두 지정 안에 있다.</p>`;
+  const added=[...S].filter(k=>!BASE.has(k)); const removed=[...BASE].filter(k=>!S.has(k));
+  const addedRows=added.map(k=>{ const [iso,d]=k.split('|'); const r=BY[iso]; return {ko:r?.ko||iso, d, air:r?.air_direct, rep:REP_BY[k]||0}; }).sort((a,b)=>(b.air||0)-(a.air||0));
+  const newAir = new Set(added.map(k=>k.split('|')[0])).size ? [...new Set(added.map(k=>k.split('|')[0]))].filter(iso=>![...BASE].some(k=>k.startsWith(iso+'|'))).reduce((s,iso)=>s+(BY[iso]?.air_direct||0),0) : 0;
+  document.getElementById('gain').innerHTML = added.length ? `<ul class="tight gain">${addedRows.slice(0,12).map(x=>`<li><b>${x.ko}</b> — ${x.d}${x.rep?` · 표본 유입 ${x.rep}건 잡음`:' · <span class="muted">표본에 유입 없음</span>'}</li>`).join('')}${addedRows.length>12?`<li class="muted">… 외 ${addedRows.length-12}쌍</li>`:''}</ul>
+    <p class="small muted">추가 ${added.length}쌍 · 그중 표본 유입을 잡는 것 ${addedRows.filter(x=>x.rep).length}쌍 · 새로 Q-CODE 대상이 되는 직항 여객 ${fmt(newAir)}명</p>` : `<p class="small muted">현행에 없는 지정 없음${removed.length?` · 해제 ${removed.length}쌍`:''}</p>`;
+  const rows=[['지정 (병, 나라) 쌍',M0.pairs,m.pairs,fmt],['지정국',M0.countries,m.countries,fmt],['그중 직항 없는 나라',M0.noFlight,m.noFlight,fmt],
+    ['표본 유입 잡힘 (건)',M0.covN,m.covN,fmt],['표본 유입 잡힘 (쌍)',M0.covPairs,m.covPairs,fmt],['Q-CODE 대상 직항 여객',M0.air,m.air,fmt],['Q-CODE 대상 국적 입국자',M0.nat,m.nat,fmt],['백만 직항 여객당 잡는 건수',M0.eff,m.eff,x=>x==null?'—':x.toFixed(2)]];
+  document.getElementById('cmp').innerHTML = `<tr><th>지표</th><th>현행</th><th>실험</th><th>차이</th></tr>`+rows.map(([k,a,b,f])=>`<tr><td>${k}</td><td class="num">${f(a)}</td><td class="num"><b>${f(b)}</b></td><td class="num">${a==null||b==null?'—':(b-a>0?'+':'')+f(b-a)}</td></tr>`).join('');
+  // 주소
+  const diff = added.map(k=>'+'+k).concat(removed.map(k=>'-'+k)).join(',');
+  const url = location.href.split('#')[0] + (diff?'#'+encodeURIComponent(diff):'');
+  document.getElementById('link').value = url;
+  history.replaceState(null,'', diff?'#'+encodeURIComponent(diff):location.pathname);
+}
+document.getElementById('copy').onclick=()=>{ const i=document.getElementById('link'); i.select(); try{ navigator.clipboard.writeText(i.value); }catch(e){ document.execCommand('copy'); } };
+
+function render(){ renderGauges(); renderDz(); renderList(); }
+/* 주소에서 실험 복원 */
+(function(){ const h=decodeURIComponent(location.hash.slice(1)); if(!h) return; let ok=0; for(const t of h.split(',')){ const k=t.slice(1); if(!k.includes('|')) continue; if(t[0]==='+'){ S.add(k); ok++; } else if(t[0]==='-'){ S.delete(k); ok++; } } if(ok) scenOff(); })();
+render();
+})();
+</script>
+</body>
+</html>

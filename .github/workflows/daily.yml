@@ -1,0 +1,84 @@
+name: Daily situation board
+
+# 매일 06:00 KST(21:00 UTC)에 공개 출처를 긁어 portal/daily/ 를 갱신하고, 커밋하고, 페이지를 다시 배포한다.
+# 기본 토큰으로 한 푸시는 다른 워크플로를 깨우지 못하므로 배포까지 여기서 끝낸다.
+on:
+  schedule:
+    - cron: "0 21 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  daily:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: claude/infectious-disease-resources-org-kbjcfz
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: 수집·결합·렌더
+        env:
+          SUBSCRIBE_FORM_URL: ${{ vars.SUBSCRIBE_FORM_URL }}
+        run: python3 scripts/fetch_daily.py
+
+      - name: 커밋
+        id: commit
+        run: |
+          git config user.name "daily-board[bot]"
+          git config user.email "daily-board[bot]@users.noreply.github.com"
+          git add portal/daily
+          if git diff --cached --quiet; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "상황판 $(TZ=Asia/Seoul date +%Y-%m-%d) — 새 항목 $(cat portal/daily/data/new_count.txt)건"
+            git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - uses: actions/configure-pages@v5
+        if: steps.commit.outputs.changed == 'true'
+        with:
+          enablement: true
+      - uses: actions/upload-pages-artifact@v3
+        if: steps.commit.outputs.changed == 'true'
+        with:
+          path: portal
+      - id: deployment
+        if: steps.commit.outputs.changed == 'true'
+        uses: actions/deploy-pages@v4
+
+      # 이메일 — 저장소 Secrets에 SMTP_SERVER · SMTP_USER · SMTP_PASS · NEWSLETTER_TO(쉼표 구분)를 넣으면 켜진다.
+      # 새 항목이 없는 날은 보내지 않는다. 받는 사람 주소는 저장소에 남지 않는다.
+      - name: 새 항목 수
+        id: newc
+        run: echo "n=$(cat portal/daily/data/new_count.txt)" >> "$GITHUB_OUTPUT"
+      - name: 이메일 발송
+        if: steps.newc.outputs.n != '0' && env.SMTP_USER != ''
+        env:
+          SMTP_USER: ${{ secrets.SMTP_USER }}
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.SMTP_SERVER }}
+          server_port: 465
+          secure: true
+          username: ${{ secrets.SMTP_USER }}
+          password: ${{ secrets.SMTP_PASS }}
+          subject: file://portal/daily/data/mail_subject.txt
+          html_body: file://portal/daily/data/mail.html
+          to: ${{ secrets.NEWSLETTER_TO }}
+          from: 감염병 상황판 <${{ secrets.SMTP_USER }}>

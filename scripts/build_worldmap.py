@@ -110,6 +110,8 @@ def build():
         iso = p.get('ISO_A3')
         if not iso or iso == '-99':
             iso = p.get('ADM0_ISO') or p.get('ADM0_A3')
+        if p['NAME'] == 'Kosovo':
+            iso = 'XKX'  # NE는 ADM0_ISO를 SRB로 두어 세르비아와 겹친다. 관용 코드 XKX를 쓴다.
         geom = f['geometry']
         polys = geom['coordinates'] if geom['type'] == 'MultiPolygon' else [geom['coordinates']]
         rings, biggest, big_area = [], None, -1
@@ -129,8 +131,12 @@ def build():
             rings.append(simp)
         c = centroid(biggest)
         rec = {'iso': iso, 'ko': p.get('NAME_KO') or p['NAME'], 'name': p['NAME'],
+               'name_long': p.get('NAME_LONG') or p['NAME'], 'admin': p.get('ADMIN') or p['NAME'],
                'region': REGION_KO.get(p.get('REGION_UN'), p.get('REGION_UN')),
                'c': [round(c[0], 2), round(c[1], 2)]}
+        # 소말릴란드·북키프로스는 모국 코드(SOM·CYP)를 덮어쓰므로 뺀다. 코소보는 남긴다.
+        if p['NAME'] in ('Somaliland', 'N. Cyprus'):
+            continue
         if rings:
             out.append(dict(rec, rings=rings))
         else:

@@ -165,7 +165,7 @@ nav:not(.gnav){display:none !important}
 
 </style>
 <div class="printonly printhead" id="printhead"><b>감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
-<nav class="gnav"><div class="gin"><a class="gbrand" href="./">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi on" href="./">🏠 허브</a><a class="gi" href="dogam/">📖 도감</a><a class="gi" href="pathogen/">🧫 병원체</a><a class="gi" href="chronicle/">📜 연대기</a><a class="gi" href="checker/">🩺 검사기</a><a class="gi" href="field/">🚑 현장카드</a><a class="gi" href="inflow/">🌐 유입지도</a><a class="gi" href="cross/">🧪 교차검증</a><a class="gi" href="lab/">🔬 진단검사</a><a class="gi" href="quarantine/">🛂 검역</a><a class="gi" href="daily/">📡 상황판</a><a class="gi" href="flu/">🦠 인플루엔자</a><a class="gi" href="law/">⚖ 법령</a><a class="gi" href="data/">⬇ 자료실</a></div></nav><script>(function(){var a=document.querySelector(".gnav a.on");if(a){var p=a.parentNode;p.scrollLeft=a.offsetLeft-p.clientWidth/2+a.offsetWidth/2;}})();</script>
+<nav class="gnav"><div class="gin"><a class="gbrand" href="./">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi on" href="./">🏠 허브</a><a class="gi" href="dogam/">📖 도감</a><a class="gi" href="pathogen/">🧫 병원체</a><a class="gi" href="chronicle/">📜 연대기</a><a class="gi" href="checker/">🩺 검사기</a><a class="gi" href="field/">🚑 현장카드</a><a class="gi" href="inflow/">🌐 유입지도</a><a class="gi" href="cross/">🧪 교차검증</a><a class="gi" href="lab/">🔬 진단검사</a><a class="gi" href="quarantine/">🛂 검역</a><a class="gi" href="policy/">🎛 정책실험</a><a class="gi" href="daily/">📡 상황판</a><a class="gi" href="flu/">🦠 인플루엔자</a><a class="gi" href="law/">⚖ 법령</a><a class="gi" href="data/">⬇ 자료실</a></div></nav><script>(function(){var a=document.querySelector(".gnav a.on");if(a){var p=a.parentNode;p.scrollLeft=a.offsetLeft-p.clientWidth/2+a.offsetWidth/2;}})();</script>
 
 <nav><div class="in">
   <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
@@ -192,8 +192,15 @@ nav:not(.gnav){display:none !important}
 
   <section id="sd"><div class="card s5" style="border-top-color:var(--c1)">
     <div class="chead"><span class="cno" style="color:var(--c1)">DAILY</span><h2>감염병 실시간 상황판 📡</h2><span class="cstat" style="color:var(--c1)">매일 갱신 · 고정 주소</span></div>
-    <p class="cdesc">국제 이벤트(WHO·ECDC·CDC)·국내 경보·금일 보고를 담은 일일 상황판. <b>이 주소는 매일 같고, 내용만 갱신됩니다.</b></p>
+    <p class="cdesc">WHO 질병 발생 뉴스 · CDC 여행 건강 알림 · KDCA 지침 게시판을 <b>매일 06:00에 자동 수집</b>하고, 항목마다 <b>그 병의 도감·현장카드 + 그 나라의 검역 지정 여부·직항 여객</b>을 한 줄로 붙인다. 이 주소는 매일 같고 내용만 바뀐다.</p>
+    <ul class="hl">
+      <li><b>모으는 것은 남도 한다, 붙이는 것은 여기만</b> — "WHO가 오늘 보고한 그 나라, 우리는 지정돼 있나, 직항은 있나"</li>
+      <li><b>출처별 성공·실패를 숨기지 않는다</b> — 죽은 출처는 마지막 성공 시각과 함께 표시</li>
+      <li><b>RSS 피드</b> — 피드 리더·Slack·Notion에 넣으면 같은 내용이 들어간다</li>
+      <li><b>이메일 구독</b> — 새 항목이 있는 날만 한 통</li>
+    </ul>
     <a class="clink" style="color:var(--c1)" href="daily/">📡 오늘의 상황판 열기 →</a>
+    <a class="clink" style="color:var(--c1)" href="daily/feed.xml">📡 RSS</a>
   </div></section>
 
   <div class="divider"><h3>정리한 것</h3><span class="ln"></span></div>
@@ -286,6 +293,18 @@ nav:not(.gnav){display:none !important}
     <a class="clink" href="dogam/">📖 질병도감 열기 →</a>
     <a class="clink" href="pathogen/">🧫 병원체 3D 형태 열기 →</a>
     <a class="clink" href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/05_%EA%B0%90%EC%97%BC%EB%B3%91_%EC%A7%88%EB%B3%91%EC%A0%95%EB%B3%B4" target="_blank" rel="noopener">📁 원자료 (GitHub)</a>
+  </div></section>
+
+  <section id="s16"><div class="card s2" style="border-top-color:var(--c5)">
+    <div class="chead"><span class="cno" style="color:var(--c5)">16</span><h2>검역 정책 실험실 🎛</h2><span class="cstat" style="color:var(--c5)">감염병Lab · 넣고 빼 보기</span></div>
+    <p class="cdesc">검역관리지역 지정은 <b>잡히는 유입</b>과 <b>Q-CODE를 내야 하는 사람 수</b> 사이의 거래다. 2026년 3분기 지정(173개국×15종)에서 출발해 나라를 넣고 빼면 두 값이 그 자리에서 움직인다.</p>
+    <ul class="hl">
+      <li><b>직항 있는 45개국만 지정해도 표본 유입의 94%가 잡힌다</b> — 지정국 173 → 45, Q-CODE 대상 직항 여객은 그대로</li>
+      <li><b>뎅기열 지정을 전부 풀면 잡히는 유입이 100% → 14%</b> — 검역감염병 유입의 86%가 뎅기열이다</li>
+      <li><b>중점검역관리지역 25개국만으로는 0%</b> — 중점은 출혈열·MERS·페스트용이지 실제 유입과는 다른 축</li>
+      <li><b>실험 주소 공유</b> — 지정 차이만 주소에 담겨 붙여 넣으면 같은 실험이 열린다</li>
+    </ul>
+    <a class="clink" style="color:var(--c5)" href="policy/">🎛 정책 실험실 열기 →</a>
   </div></section>
 
   <section id="s15"><div class="card s2">
