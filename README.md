@@ -69,3 +69,16 @@
 
 ---
 *본 저장소의 정리물은 참고용이며, 법적·의학적 판단은 반드시 원문과 전문가 확인을 거쳐야 한다.*
+
+---
+
+## 브랜치와 배포
+
+| 브랜치 | 쓰임 |
+|---|---|
+| **`main`** | 본선. GitHub Pages가 여기서 배포한다. |
+| `claude/infectious-disease-resources-org-kbjcfz` | 작업 브랜치. 여기서 만들고 **PR로 `main`에 병합**한다. |
+
+- `portal/**` 이 바뀐 채로 `main`에 들어오면 [Deploy portal to GitHub Pages](../../actions)가 돌아 <https://soonryu74.github.io/disease/> 를 갱신한다.
+- 매일 06:00 KST에 [Daily situation board](../../actions)가 공개 출처를 긁어 `portal/daily/`를 `main`에 커밋하고 다시 배포한다. 이건 사람 검토 없이 본선에 바로 쌓인다(자동 수집이라).
+- 전환기 동안에는 작업 브랜치 푸시도 계속 배포한다. 기본 브랜치를 `main`으로 바꾼 뒤에 그 줄을 빼면 된다.

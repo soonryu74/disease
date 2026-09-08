@@ -2,7 +2,9 @@ name: Deploy portal to GitHub Pages
 
 on:
   push:
-    branches: ["claude/infectious-disease-resources-org-kbjcfz"]
+    # main 이 본선이다. 작업 브랜치는 PR로 main 에 병합한다.
+    # 전환기 동안 기존 작업 브랜치 푸시도 계속 배포한다(끊김 방지).
+    branches: ["main", "claude/infectious-disease-resources-org-kbjcfz"]
     paths: ["portal/**", ".github/workflows/pages.yml"]
   workflow_dispatch:
 
