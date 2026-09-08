@@ -110,6 +110,7 @@
   .empty{display:none;text-align:center;color:var(--faint);padding:34px 0;font-size:14px}
 
   .res{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .res>*{min-width:0}   /* 그리드 칸이 표 너비만큼 부풀어 쪽 전체를 옆으로 미는 것을 막는다 */
   .rc{border:1px solid var(--line);border-radius:12px;padding:14px 16px;background:var(--surface)}
   .rc h3{margin:0 0 4px;font-size:14.5px;font-weight:800}
   .rc p{margin:0 0 8px;font-size:12.5px;color:var(--muted)}

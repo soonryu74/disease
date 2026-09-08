@@ -111,16 +111,23 @@ nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
   font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
-.gnav .gin{max-width:1100px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:2px;
-  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.gnav .gin::-webkit-scrollbar{display:none}
+/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
+   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
+.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
+  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
 .gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
 .gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
 .gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
   white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
 .gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
 .gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
-@media (min-width:1000px){.gnav .gin{flex-wrap:wrap;overflow:visible}}
+@media (max-width:760px){
+  /* 줄바꿈한 메뉴는 좁은 화면에서 네 줄이 된다. 그대로 고정하면 화면의 1/5을 먹으므로
+     따라다니지 않게 하고 위로 올려 보내 준다. 항목은 하나도 가리지 않는다. */
+  .gnav{position:static}
+  .gnav .gbrand{font-size:12.5px;margin-right:6px}
+  .gnav a.gi{font-size:12px;padding:4px 6px}
+}
 """
 
 
@@ -131,10 +138,7 @@ def nav_html(up, current):
         items.append(f'<a class="gi{on}" href="{up}{href or "./"}">{icon} {label}</a>')
     return (f'<nav class="gnav"><div class="gin">'
             f'<a class="gbrand" href="{up}./">🦠 감염병 자료 아카이브<i>.</i></a>'
-            + ''.join(items) + '</div></nav>'
-            # 좁은 화면에서 현재 쪽 항목이 보이도록 가로로 굴린다
-            '<script>(function(){var a=document.querySelector(".gnav a.on");'
-            'if(a){var p=a.parentNode;p.scrollLeft=a.offsetLeft-p.clientWidth/2+a.offsetWidth/2;}})();</script>')
+            + ''.join(items) + '</div></nav>')
 
 
 def inject_nav(path, depth, current):

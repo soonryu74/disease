@@ -60,11 +60,12 @@
   .f .kind{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 7px;flex:none;margin-top:3px}
   .k-CSV{background:var(--accent);color:#fff}
   .k-JSON{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
-  .f .body{flex:1;min-width:220px}
+  .f .body{flex:1;min-width:0}
   .f .nm{font-weight:700;font-size:14px;word-break:break-all}
   .f .no{font-size:12.5px;color:var(--muted);margin-top:2px}
   .f .ca{font-size:12.5px;color:var(--warn);margin-top:5px}
-  .f .sz{font-size:12px;color:var(--faint);white-space:nowrap;margin-top:3px}
+  /* 저장소 경로가 길어 nowrap 이면 좁은 화면에서 쪽 전체를 옆으로 민다 */
+  .f .sz{font-size:12px;color:var(--faint);margin-top:3px;overflow-wrap:anywhere}
   .dl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-ink);
     border:1px solid var(--line-strong);padding:7px 13px;border-radius:9px;background:var(--surface);flex:none}
   .dl:hover{background:var(--surface-2)}
