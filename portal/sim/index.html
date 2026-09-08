@@ -100,6 +100,13 @@
   .yrs th,.yrs td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right}
   .yrs th{font-size:11px;color:var(--muted)}
   .yrs td:first-child,.yrs th:first-child{text-align:left}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  @media (max-width:760px){
+    table.cmp{min-width:430px}
+    table.yrs{min-width:560px}
+    table.refs{min-width:520px}
+    .shared{gap:8px} .shared label{font-size:12.5px}
+  }
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
   @media print{.quick,.shared .tg{display:none!important}.card{break-inside:avoid;box-shadow:none}}
@@ -227,14 +234,25 @@ nav:not(.gnav){display:none !important}
 </section>
 
 <section id="real">
-  <h2>실제 기록과 나란히 — 모형은 얼마나 틀리나</h2>
-  <p class="sdesc">모형 기본값은 <b>면역이 전혀 없는 인구 10만 명</b>에 첫 감염자 10명이다. 실제 한국은 접종률이 높고 유입은 산발적이다. 그래서 모형의 누적 감염과 실제 연간 신고수는 자릿수가 다르다 — 그 차이가 접종의 크기다.</p>
+  <h2>실제와 맞춰 보기 — 한 해를 맞추면 다른 해가 틀어진다</h2>
+  <p class="sdesc">모형을 실제에 대 보는 가장 직접적인 방법: <b>전국 인구에 이 병을 풀어놓고, 실제 그 해 신고수가 나오려면 접종률을 몇 %로 놓아야 하는지</b> 거꾸로 푼다.
+  한 해만 맞추는 것은 쉽다 — 손잡이가 있으니까. 진짜 물음은 <b>같은 접종률로 여러 해가 함께 맞는가</b>이다. 안 맞으면 모형에 없는 기전이 있다는 뜻이다.</p>
+  <div class="card">
+    <div class="shared" style="margin:0 0 10px">
+      <label>전국 인구 <input type="number" id="POP" min="1000000" step="100000"></label>
+      <span class="small muted" id="popnote"></span>
+    </div>
+    <div id="fit"></div>
+  </div>
   <div class="grid2">
-    <div class="card"><h3>실제 전수감시 신고수 2016–2025 <span class="small muted">③ 연보</span></h3><div id="annual"></div></div>
-    <div class="card"><h3>역학조사 결과보고서로 검증할 수 있나</h3>
-      <p style="font-size:13.5px">할 수 있고, 해야 한다. 개별 유행의 역학조사 보고(주간 건강과 질병에 실리는 집단발생 조사, 백서의 유행 기술)는 <b>규모·기간·발단환자→2차감염 수(실측 R)</b>를 준다. 그 값에 슬라이더를 맞추면 모형이 그 유행을 재현하는지 검산할 수 있다.</p>
-      <p style="font-size:13.5px"><b>아직 하지 않았다.</b> 이 저장소에 있는 것은 연간 신고수(왼쪽)뿐이고, 유행 단위의 보고서는 수집하지 않았다. 다음 단계는 ⑫ 주간 건강과 질병에서 집단발생·역학조사 보고를 뽑아 <em>유행 규모·기간·추정 R</em> 표를 만드는 것이다. 그 표가 생기면 이 페이지에 "이 유행 재현" 버튼이 붙는다.</p>
-      <p class="small muted">단, 균질 혼합 SEIR은 병원 안 슈퍼전파(2015 MERS 186명)나 학교·군부대 집단발생을 구조적으로 재현하지 못한다. 재현되지 않는 것도 결과다.</p>
+    <div class="card"><h3>실제 전수감시 신고수 <span class="small muted">③ 연보</span></h3><div id="annual"></div></div>
+    <div class="card"><h3>이 맞춤이 증명하지 않는 것</h3>
+      <ul class="tight">
+        <li><b>신고수 ≠ 감염자수.</b> 경증·무증상은 신고되지 않는다. 실제 감염은 신고보다 크다. 그래서 "필요 접종률"은 실제 접종률보다 높게 나오는 쪽으로 치우친다.</li>
+        <li><b>손잡이가 하나면 어떤 숫자든 맞출 수 있다.</b> 한 해를 맞춘 것은 검증이 아니라 <em>맞춤</em>이다. 여러 해가 한 값으로 함께 맞을 때만 모형이 뭔가를 설명한 것이다.</li>
+        <li><b>모형에 없는 것</b> — 시간이 지나며 약해지는 면역, 해마다 새로 들어오는 유입, 나이·집단 구조. 백일해·유행성이하선염처럼 이 셋이 결정적인 병은 한 값으로 여러 해가 맞지 않는다.</li>
+        <li><b>개별 유행 단위 검증은 아직 못 했다.</b> 「주간 건강과 질병」의 집단발생 역학조사 보고(규모·기간·실측 R)가 있어야 하는데, 발행처 누리집(phwr.org)이 이 환경에서 접속되지 않아 수집하지 못했다. <b>미완</b>으로 남긴다.</li>
+      </ul>
     </div>
   </div>
 </section>
@@ -248,7 +266,7 @@ nav:not(.gnav){display:none !important}
   <div class="card">
     <h3>병 매개변수의 출처</h3>
     <p class="small muted">R₀·전염 기간·증상 전 전염 일수. 잠복기·전파경로는 ⑤ 도감(질병관리청 자료)에서 온다. '확인 필요'로 적힌 것은 개별 논문을 특정하지 못한 것이다.</p>
-    <table class="refs" id="refs"></table>
+    <div class="tw"><table class="refs" id="refs"></table></div>
   </div>
 </section>
 
@@ -278,7 +296,7 @@ nav:not(.gnav){display:none !important}
 </footer>
 </div>
 
-<script id="data" type="application/json">{"diseases":[{"name":"홍역","r0":[12,18],"d_inf":8,"presym":2,"note":"발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":7.0,"hi":21.0,"typ":11.0,"text":"7~21일(흔히 10~12일)"},"route":"공기·비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":18,"2017":7,"2018":15,"2019":194,"2020":6,"2021":0,"2022":0,"2023":8,"2024":49,"2025":78},"note":""}},{"name":"백일해","r0":[12,17],"d_inf":21,"presym":0,"note":"카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.","src":"Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)","incubation":{"lo":7.0,"hi":10.0,"typ":8.5,"text":"통상 7~10일(최장 약 21일)"},"route":"호흡기 비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":129,"2017":318,"2018":980,"2019":496,"2020":123,"2021":21,"2022":31,"2023":292,"2024":48048,"2025":5491},"note":""}},{"name":"수두","r0":[8,10],"d_inf":7,"presym":2,"note":"발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.","src":"CDC Pink Book","incubation":{"lo":10.0,"hi":21.0,"typ":15.0,"text":"통상 10~21일(대개 14~16일)"},"route":"공기·비말, 수포액 접촉","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":54060,"2017":80092,"2018":96467,"2019":82868,"2020":31430,"2021":20929,"2022":18547,"2023":26964,"2024":31892,"2025":30248},"note":""}},{"name":"유행성이하선염","r0":[4,7],"d_inf":7,"presym":2,"note":"이하선 부종 2일 전~5일 후.","src":"Anderson & May 1991 · CDC","incubation":{"lo":14.0,"hi":18.0,"typ":16.0,"text":"14~18일"},"route":"호흡기 비말","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":17057,"2017":16924,"2018":19237,"2019":15967,"2020":9922,"2021":9708,"2022":6358,"2023":7737,"2024":6425,"2025":6720},"note":""}},{"name":"풍진","r0":[6,7],"d_inf":11,"presym":7,"note":"발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":12.0,"hi":23.0,"typ":16.0,"text":"12~23일(평균 14~18일)"},"route":"호흡기 비말, 태반 수직감염","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":11,"2017":7,"2018":0,"2019":8,"2020":2,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"디프테리아","r0":[6,7],"d_inf":14,"presym":0,"note":"치료 없으면 2~4주 균 배출. 항생제로 단축.","src":"Anderson & May 1991 (고전 추정, 백신 전 시대)","incubation":{"lo":2.0,"hi":5.0,"typ":3.5,"text":"2~5일"},"route":"비말핵·매개물, 피부 병변 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"폴리오","r0":[5,7],"d_inf":14,"presym":7,"note":"발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":3.0,"hi":35.0,"typ":4.5,"text":"3~35일(비마비성 3~6일, 마비성 평균 7~21일)"},"route":"분변-경구 또는 경구-경구. 전염기간 증상발생 11일 전 ~ 6주 후","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"인플루엔자","r0":[1.2,1.8],"d_inf":5,"presym":1,"note":"계절 인플루엔자. 증상 1일 전~5일 후.","src":"Biggerstaff 2014 (계통고찰)","incubation":{"lo":1.0,"hi":4.0,"typ":2.0,"text":"1~4일(평균 2일)"},"route":"비말, 오염된 손·물건 접촉","grade":"제4급","iso":null,"report":"7일 이내","annual":null},{"name":"신종인플루엔자","r0":[1.4,1.6],"d_inf":5,"presym":1,"note":"2009 A(H1N1)pdm09 기준.","src":"Biggerstaff 2014 · Fraser 2009","incubation":{"lo":null,"hi":null,"typ":2.5,"text":"미확인(계절인플루엔자 기준 통상 1~4일)"},"route":"비말, 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"코로나바이러스감염증-19","r0":[2.5,3.5],"d_inf":8,"presym":2,"note":"2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.","src":"Liu 2020 (계통고찰) · WHO","incubation_fallback":"1~14일(보통 5~7일)","incubation_fallback_src":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값","incubation":{"lo":1.0,"hi":14.0,"typ":6.0,"text":"1~14일(보통 5~7일)","fallback":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"},"route":null,"grade":"제4급","iso":null,"report":"주 1회","annual":{"years":{"2022":28424349,"2023":5517540},"note":"2023 통계는 8.30까지(8.31 제4급 전환). 2024~ 표본감시라 전수표에 없음"}},{"name":"중증급성호흡기증후군","r0":[2,4],"d_inf":10,"presym":0,"note":"증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.","src":"Lipsitch 2003 · WHO","incubation_fallback":"2~10일(보통 4~6일)","incubation_fallback_src":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값","incubation":{"lo":2.0,"hi":10.0,"typ":5.0,"text":"2~10일(보통 4~6일)","fallback":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값"},"route":"호흡기 비말, 분비액의 점막 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"중동호흡기증후군","r0":[0.5,0.9],"d_inf":10,"presym":0,"note":"지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.","src":"Breban 2013 · Cauchemez 2014","incubation_fallback":"2~14일(보통 5~6일)","incubation_fallback_src":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값","incubation":{"lo":2.0,"hi":14.0,"typ":5.5,"text":"2~14일(보통 5~6일)","fallback":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"},"route":"낙타 접촉, 환자 밀접접촉(의료기관 내 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":1,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"에볼라바이러스병","r0":[1.5,2.5],"d_inf":10,"presym":0,"note":"증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.","src":"WHO Ebola Response Team 2014 · Althaus 2014","incubation":{"lo":2.0,"hi":21.0,"typ":11.5,"text":"2~21일"},"route":"감염 동물(과일박쥐·영장류) 접촉, 환자·사망자 혈액·체액 직·간접 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"엠폭스","r0":[1.1,2.4],"d_inf":21,"presym":1,"note":"2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.","src":"WHO mpox 2022","incubation":{"lo":5.0,"hi":21.0,"typ":9.5,"text":"5~21일(보통 6~13일)"},"route":"병변·체액 직접접촉, 성접촉, 밀접 비말, 오염물·감염동물 접촉, 수직감염","grade":"제3급","iso":"격리 해제(일반의료체계)","report":"24시간 이내","annual":{"years":{"2022":4,"2023":151,"2024":17,"2025":27},"note":"고시 2024.1.1 개정으로 제2급→제3급. 2022-2023은 제2급 행에 기재"}},{"name":"니파바이러스감염증","r0":[0.2,0.5],"d_inf":10,"presym":0,"note":"사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.","src":"Luby 2009 · Nikolay 2019","incubation_fallback":"4~14일(최대 45일 보고)","incubation_fallback_src":"도감이 잠복기를 병원체 항목에 병기 → 같은 값","incubation":{"lo":4.0,"hi":14.0,"typ":9.0,"text":"4~14일(최대 45일 보고)","fallback":"도감이 잠복기를 병원체 항목에 병기 → 같은 값"},"route":"병원소 과일박쥐(*Pteropus*)·돼지. ① 감염동물 접촉 ② ⭐오염된 과일·생 대추야자 수액 섭취 ③ 환자 체액 접촉(사람 간 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2025":0},"note":"2025.9.8 고시 신규 지정. 2025 통계는 9.8 이후분"}}],"defaults":{"iso_delay":2,"iso_eff":0.8,"trace":0.0,"trace_eff":0.9,"vacc":0.0,"vacc_eff":0.9,"N":100000,"I0":10,"days":365},"about":"사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.","references":{"Anderson & May 1991":{"cite":"Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.","what":"R₀ 고전 추정표(백신 도입 전 인구)","confidence":"표준 교과서"},"CDC Pink Book":{"cite":"CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.","what":"전염 기간·잠복기·증상 전 전염","confidence":"표준"},"Heymann CCDM":{"cite":"Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.","what":"전염 기간·증상 전 전염 일수의 일반 출처","confidence":"표준"},"Biggerstaff 2014":{"cite":"Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.","what":"인플루엔자 R₀ 계통고찰","confidence":"표준"},"Fraser 2009":{"cite":"Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.","what":"2009 신종인플루엔자 R₀","confidence":"표준"},"Liu 2020":{"cite":"Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.","what":"코로나19 원형주 R₀ 계통고찰","confidence":"표준"},"Lipsitch 2003":{"cite":"Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.","what":"SARS R₀·격리 효과","confidence":"표준"},"Breban 2013":{"cite":"Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.","what":"MERS R₀ < 1","confidence":"표준"},"Cauchemez 2014":{"cite":"Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.","what":"MERS R₀","confidence":"표준"},"WHO Ebola Response Team 2014":{"cite":"WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.","what":"에볼라 R₀·잠복기","confidence":"표준"},"Althaus 2014":{"cite":"Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.","what":"에볼라 R₀","confidence":"표준"},"WHO mpox 2022":{"cite":"WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.","what":"엠폭스(clade IIb) R₀ 1.1–2.4","confidence":"확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"},"Luby 2009":{"cite":"Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.","what":"니파 사람 간 전파","confidence":"표준"},"Nikolay 2019":{"cite":"Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.","what":"니파 R₀ 0.33","confidence":"표준"},"Keeling & Rohani 2008":{"cite":"Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.","what":"SEIR 모형 자체","confidence":"표준"}},"scenario_provenance":"시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다."}</script>
+<script id="data" type="application/json">{"diseases":[{"name":"홍역","r0":[12,18],"d_inf":8,"presym":2,"note":"발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":7.0,"hi":21.0,"typ":11.0,"text":"7~21일(흔히 10~12일)"},"route":"공기·비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":18,"2017":7,"2018":15,"2019":194,"2020":6,"2021":0,"2022":0,"2023":8,"2024":49,"2025":78},"note":""}},{"name":"백일해","r0":[12,17],"d_inf":21,"presym":0,"note":"카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.","src":"Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)","incubation":{"lo":7.0,"hi":10.0,"typ":8.5,"text":"통상 7~10일(최장 약 21일)"},"route":"호흡기 비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":129,"2017":318,"2018":980,"2019":496,"2020":123,"2021":21,"2022":31,"2023":292,"2024":48048,"2025":5491},"note":""}},{"name":"수두","r0":[8,10],"d_inf":7,"presym":2,"note":"발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.","src":"CDC Pink Book","incubation":{"lo":10.0,"hi":21.0,"typ":15.0,"text":"통상 10~21일(대개 14~16일)"},"route":"공기·비말, 수포액 접촉","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":54060,"2017":80092,"2018":96467,"2019":82868,"2020":31430,"2021":20929,"2022":18547,"2023":26964,"2024":31892,"2025":30248},"note":""}},{"name":"유행성이하선염","r0":[4,7],"d_inf":7,"presym":2,"note":"이하선 부종 2일 전~5일 후.","src":"Anderson & May 1991 · CDC","incubation":{"lo":14.0,"hi":18.0,"typ":16.0,"text":"14~18일"},"route":"호흡기 비말","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":17057,"2017":16924,"2018":19237,"2019":15967,"2020":9922,"2021":9708,"2022":6358,"2023":7737,"2024":6425,"2025":6720},"note":""}},{"name":"풍진","r0":[6,7],"d_inf":11,"presym":7,"note":"발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":12.0,"hi":23.0,"typ":16.0,"text":"12~23일(평균 14~18일)"},"route":"호흡기 비말, 태반 수직감염","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":11,"2017":7,"2018":0,"2019":8,"2020":2,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"디프테리아","r0":[6,7],"d_inf":14,"presym":0,"note":"치료 없으면 2~4주 균 배출. 항생제로 단축.","src":"Anderson & May 1991 (고전 추정, 백신 전 시대)","incubation":{"lo":2.0,"hi":5.0,"typ":3.5,"text":"2~5일"},"route":"비말핵·매개물, 피부 병변 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"폴리오","r0":[5,7],"d_inf":14,"presym":7,"note":"발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":3.0,"hi":35.0,"typ":4.5,"text":"3~35일(비마비성 3~6일, 마비성 평균 7~21일)"},"route":"분변-경구 또는 경구-경구. 전염기간 증상발생 11일 전 ~ 6주 후","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"인플루엔자","r0":[1.2,1.8],"d_inf":5,"presym":1,"note":"계절 인플루엔자. 증상 1일 전~5일 후.","src":"Biggerstaff 2014 (계통고찰)","incubation":{"lo":1.0,"hi":4.0,"typ":2.0,"text":"1~4일(평균 2일)"},"route":"비말, 오염된 손·물건 접촉","grade":"제4급","iso":null,"report":"7일 이내","annual":null},{"name":"신종인플루엔자","r0":[1.4,1.6],"d_inf":5,"presym":1,"note":"2009 A(H1N1)pdm09 기준.","src":"Biggerstaff 2014 · Fraser 2009","incubation":{"lo":null,"hi":null,"typ":2.5,"text":"미확인(계절인플루엔자 기준 통상 1~4일)"},"route":"비말, 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"코로나바이러스감염증-19","r0":[2.5,3.5],"d_inf":8,"presym":2,"note":"2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.","src":"Liu 2020 (계통고찰) · WHO","incubation_fallback":"1~14일(보통 5~7일)","incubation_fallback_src":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값","incubation":{"lo":1.0,"hi":14.0,"typ":6.0,"text":"1~14일(보통 5~7일)","fallback":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"},"route":null,"grade":"제4급","iso":null,"report":"주 1회","annual":{"years":{"2022":28424349,"2023":5517540},"note":"2023 통계는 8.30까지(8.31 제4급 전환). 2024~ 표본감시라 전수표에 없음"}},{"name":"중증급성호흡기증후군","r0":[2,4],"d_inf":10,"presym":0,"note":"증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.","src":"Lipsitch 2003 · WHO","incubation_fallback":"2~10일(보통 4~6일)","incubation_fallback_src":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값","incubation":{"lo":2.0,"hi":10.0,"typ":5.0,"text":"2~10일(보통 4~6일)","fallback":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값"},"route":"호흡기 비말, 분비액의 점막 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"중동호흡기증후군","r0":[0.5,0.9],"d_inf":10,"presym":0,"note":"지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.","src":"Breban 2013 · Cauchemez 2014","incubation_fallback":"2~14일(보통 5~6일)","incubation_fallback_src":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값","incubation":{"lo":2.0,"hi":14.0,"typ":5.5,"text":"2~14일(보통 5~6일)","fallback":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"},"route":"낙타 접촉, 환자 밀접접촉(의료기관 내 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":1,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"에볼라바이러스병","r0":[1.5,2.5],"d_inf":10,"presym":0,"note":"증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.","src":"WHO Ebola Response Team 2014 · Althaus 2014","incubation":{"lo":2.0,"hi":21.0,"typ":11.5,"text":"2~21일"},"route":"감염 동물(과일박쥐·영장류) 접촉, 환자·사망자 혈액·체액 직·간접 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"엠폭스","r0":[1.1,2.4],"d_inf":21,"presym":1,"note":"2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.","src":"WHO mpox 2022","incubation":{"lo":5.0,"hi":21.0,"typ":9.5,"text":"5~21일(보통 6~13일)"},"route":"병변·체액 직접접촉, 성접촉, 밀접 비말, 오염물·감염동물 접촉, 수직감염","grade":"제3급","iso":"격리 해제(일반의료체계)","report":"24시간 이내","annual":{"years":{"2022":4,"2023":151,"2024":17,"2025":27},"note":"고시 2024.1.1 개정으로 제2급→제3급. 2022-2023은 제2급 행에 기재"}},{"name":"니파바이러스감염증","r0":[0.2,0.5],"d_inf":10,"presym":0,"note":"사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.","src":"Luby 2009 · Nikolay 2019","incubation_fallback":"4~14일(최대 45일 보고)","incubation_fallback_src":"도감이 잠복기를 병원체 항목에 병기 → 같은 값","incubation":{"lo":4.0,"hi":14.0,"typ":9.0,"text":"4~14일(최대 45일 보고)","fallback":"도감이 잠복기를 병원체 항목에 병기 → 같은 값"},"route":"병원소 과일박쥐(*Pteropus*)·돼지. ① 감염동물 접촉 ② ⭐오염된 과일·생 대추야자 수액 섭취 ③ 환자 체액 접촉(사람 간 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2025":0},"note":"2025.9.8 고시 신규 지정. 2025 통계는 9.8 이후분"}}],"defaults":{"iso_delay":2,"iso_eff":0.8,"trace":0.0,"trace_eff":0.9,"vacc":0.0,"vacc_eff":0.9,"N":100000,"I0":10,"days":365},"about":"사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.","references":{"Anderson & May 1991":{"cite":"Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.","what":"R₀ 고전 추정표(백신 도입 전 인구)","confidence":"표준 교과서"},"CDC Pink Book":{"cite":"CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.","what":"전염 기간·잠복기·증상 전 전염","confidence":"표준"},"Heymann CCDM":{"cite":"Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.","what":"전염 기간·증상 전 전염 일수의 일반 출처","confidence":"표준"},"Biggerstaff 2014":{"cite":"Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.","what":"인플루엔자 R₀ 계통고찰","confidence":"표준"},"Fraser 2009":{"cite":"Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.","what":"2009 신종인플루엔자 R₀","confidence":"표준"},"Liu 2020":{"cite":"Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.","what":"코로나19 원형주 R₀ 계통고찰","confidence":"표준"},"Lipsitch 2003":{"cite":"Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.","what":"SARS R₀·격리 효과","confidence":"표준"},"Breban 2013":{"cite":"Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.","what":"MERS R₀ < 1","confidence":"표준"},"Cauchemez 2014":{"cite":"Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.","what":"MERS R₀","confidence":"표준"},"WHO Ebola Response Team 2014":{"cite":"WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.","what":"에볼라 R₀·잠복기","confidence":"표준"},"Althaus 2014":{"cite":"Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.","what":"에볼라 R₀","confidence":"표준"},"WHO mpox 2022":{"cite":"WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.","what":"엠폭스(clade IIb) R₀ 1.1–2.4","confidence":"확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"},"Luby 2009":{"cite":"Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.","what":"니파 사람 간 전파","confidence":"표준"},"Nikolay 2019":{"cite":"Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.","what":"니파 R₀ 0.33","confidence":"표준"},"Keeling & Rohani 2008":{"cite":"Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.","what":"SEIR 모형 자체","confidence":"표준"}},"scenario_provenance":"시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다.","population":51700000,"population_note":"전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.","annual_source":"③ 백서 정리 · 연보 기반 전수감시 신고수 2016~2025"}</script>
 <script>
 (function(){
 'use strict';
@@ -291,7 +309,7 @@ const f2 = n => n==null ? '—' : n.toFixed(2);
 
 /* ── 상태 ── */
 const S = {dz: DZ.findIndex(d=>d.name==='홍역')>=0 ? DZ.findIndex(d=>d.name==='홍역') : 0,
-           N: DEF.N, I0: DEF.I0, days: DEF.days, log: false,
+           N: DEF.N, I0: DEF.I0, days: DEF.days, log: false, POP: D.population,
            A: {r0:null, delay:DEF.iso_delay, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100},
            B: {r0:null, delay:DEF.iso_delay+1, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100}};
 function dz(){ return DZ[S.dz]; }
@@ -395,14 +413,69 @@ function why(ra){
   document.getElementById('why').innerHTML=t;
 }
 
-/* ── 실제 기록·출처 ── */
+/* ── 실제와 맞춰 보기 ── */
+/* 전국 인구에 이 병을 풀어놓고, 그 해 실제 신고수가 나오려면 접종률이 몇 %여야 하는지 역산한다.
+   접종률이 오르면 유행 규모는 단조 감소하므로 이분법으로 푼다. */
+function attackAt(vacc, pop){
+  const p = {...S.A, vacc}; const save = {N: S.N};
+  S.N = pop; const r = run(p); S.N = save.N;
+  return r.cum / pop;
+}
+function requiredVacc(cases, pop){
+  const target = cases / pop;
+  const lo = attackAt(100, pop), hi = attackAt(0, pop);
+  if (hi < target) return {status:'under', note:'접종 0%로도 실제보다 작다 — 모형이 이 규모를 못 낸다'};
+  if (lo > target) return {status:'over', note:'접종 100%로도 실제보다 크다 — 모형이 과대하다'};
+  let a = 0, b = 100;
+  for (let i = 0; i < 40; i++) { const m = (a+b)/2; if (attackAt(m, pop) > target) a = m; else b = m; }
+  return {status:'ok', vacc:(a+b)/2};
+}
 function renderReal(ra){
-  const d=dz(); const el=document.getElementById('annual');
-  if(!d.annual){ el.innerHTML=`<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`; return; }
-  const ys=Object.keys(d.annual.years).sort(); const mx=Math.max(1,...ys.map(y=>d.annual.years[y]));
-  el.innerHTML=`<table class="yrs"><tr><th>연도</th>${ys.map(y=>`<th>${y}</th>`).join('')}</tr><tr><td>신고</td>${ys.map(y=>`<td class="num">${fmt(d.annual.years[y])}</td>`).join('')}</tr></table>
-    ${d.annual.note?`<p class="small muted" style="margin:6px 0 0">${d.annual.note}</p>`:''}
-    <p style="font-size:13px;margin:10px 0 0">모형 A 누적 감염 <b class="num">${fmt(ra.cum)}</b>명(10만 명 중) vs 실제 최고 연간 신고 <b class="num">${fmt(mx)}</b>명(전국 5천만). 접종률 슬라이더를 실제 접종률로 올리면 어디까지 가까워지는지 보라 — 남는 차이가 유입의 산발성·접촉자 관리·행동 변화다.</p>`;
+  const d = dz(), el = document.getElementById('annual'), fit = document.getElementById('fit');
+  document.getElementById('popnote').textContent = D.population_note;
+  if (!d.annual) {
+    el.innerHTML = `<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`;
+    fit.innerHTML = `<p class="small muted">이 병은 연보 전수감시 표에 없어 맞춰 볼 실제 값이 없다.</p>`;
+    return;
+  }
+  const ys = Object.keys(d.annual.years).sort();
+  const mx = Math.max(1, ...ys.map(y => d.annual.years[y]));
+  el.innerHTML = `<div class="tw"><table class="yrs"><tr><th>연도</th>${ys.map(y=>`<th>${y}</th>`).join('')}</tr>`
+    + `<tr><td>신고</td>${ys.map(y=>`<td class="num">${fmt(d.annual.years[y])}</td>`).join('')}</tr></table></div>`
+    + (d.annual.note ? `<p class="small muted" style="margin:6px 0 0">${d.annual.note}</p>` : '')
+    + `<p class="small muted" style="margin:8px 0 0">출처 — ${D.annual_source}</p>`;
+
+  const nz = ys.filter(y => d.annual.years[y] > 0);
+  if (!nz.length) {
+    fit.innerHTML = `<p style="font-size:13.5px"><b>${d.name}은 2016~2025년 신고가 전부 0이다.</b> 맞출 대상이 없다 — 이 병에 대해 모형은 "만약 들어온다면"만 말한다. 그것이 이 병의 현실이다.</p>`;
+    return;
+  }
+  const pop = S.POP;
+  const rows = nz.map(y => ({year:y, cases:d.annual.years[y], per100k:d.annual.years[y]/pop*1e5, ...requiredVacc(d.annual.years[y], pop)}));
+  const ok = rows.filter(r => r.status === 'ok');
+  const over = rows.filter(r => r.status === 'over');
+  const spread = ok.length > 1 ? Math.max(...ok.map(r=>r.vacc)) - Math.min(...ok.map(r=>r.vacc)) : null;
+  let verdict;
+  if (over.length >= rows.length / 2) {
+    verdict = `<b style="color:var(--warn)">이 병에는 모형 자체가 맞지 않는다.</b> ${rows.length}개 해 중 ${over.length}개에서 "접종 100%로도 모형이 실제보다 크다"가 나왔다.`
+      + ` 모형은 <em>한번 들어오면 인구 안에서 스스로 퍼져 나가는 병</em>을 그린다. 실제 ${d.name}은 국내에서 지속 전파되지 않고 <b>유입에서 시작해 몇 명에서 그친다.</b>`
+      + ` 접종률을 아무리 올려도 모형은 "유행이 나거나 안 나거나"만 말하지, 실제처럼 <b>해마다 한 자리~두 자리 수</b>를 내지 못한다. 이 병의 규모를 정하는 것은 국내 전파력이 아니라 <b>유입 횟수</b>다 — 모형에 없는 축이다.`;
+  } else if (spread == null) {
+    verdict = `맞춰 볼 수 있는 해가 ${ok.length}개뿐이라 여러 해를 견줄 수 없다.`;
+  } else if (spread < 5) {
+    verdict = `필요 접종률이 ${ok.length}개 해에 걸쳐 <b style="color:var(--accent-ink)">${spread.toFixed(1)}%포인트</b> 안에 모인다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
+      + ` <b>한 값으로 10년이 함께 맞는다.</b> 이 병의 해마다 규모가 <em>인구의 면역 수준 하나</em>로 대체로 설명된다는 뜻이다 — 모형이 이 병에 대해서는 뭔가를 잡고 있다.`
+      + ` 다만 이것은 맞춤이지 예측이 아니다. 그리고 여기서 나온 값은 실제 접종률이 아니라 <em>신고 기준으로 본 유효 면역 수준</em>이다(신고되지 않은 감염이 있으니).`;
+  } else {
+    verdict = `필요 접종률이 해마다 <b style="color:var(--warn)">${spread.toFixed(1)}%포인트</b> 벌어진다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
+      + ` <b>한 값으로 여러 해를 설명하지 못한다.</b> 접종률이 해마다 그만큼 출렁이지 않으니, 규모를 움직인 것은 접종이 아니라 모형에 없는 기전이다 — 시간이 지나며 약해지는 면역, 해마다 다른 유입, 나이·집단 구조.`;
+  }
+  fit.innerHTML = `<div class="tw"><table class="cmp"><tr><th>연도</th><th>실제 신고</th><th>10만 명당</th><th>이 해를 맞추는 데 필요한 접종률</th></tr>`
+    + rows.map(r => `<tr><td>${r.year}</td><td class="num">${fmt(r.cases)}</td><td class="num">${r.per100k<0.01?'&lt;0.01':f2(r.per100k)}</td>`
+        + `<td class="num">${r.status==='ok' ? `<b>${r.vacc.toFixed(1)}%</b>` : `<span style="color:var(--warn)">${r.note}</span>`}</td></tr>`).join('')
+    + `</table></div>`
+    + `<p style="font-size:13.5px;margin:12px 0 0">${verdict}</p>`
+    + `<p class="small muted" style="margin:8px 0 0">인구 ${fmt(pop)}명 · 현재 A 시나리오의 나머지 손잡이(R₀ ${f1(S.A.r0 ?? r0mid())}, 증상→격리 ${S.A.delay}일, 격리 효과 ${S.A.eff}%, 추적 ${S.A.trace}%)를 그대로 두고 접종률만 역산했다.</p>`;
 }
 (function refs(){
   const R=D.references||{}; document.getElementById('prov').textContent=D.scenario_provenance||'';
@@ -419,7 +492,7 @@ document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{
   if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1); if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
   if(q==='trace50') S.B.trace=50; if(q==='vacc80') S.B.vacc=80; if(q==='vacc95') S.B.vacc=95; if(q==='iso0') S.B.eff=0;
   renderSliders('B'); renderOut(); });
-for(const k of ['N','I0','days']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
+for(const k of ['N','I0','days','POP']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
 document.getElementById('logy').onclick=e=>{ S.log=!S.log; e.target.classList.toggle('on',S.log); renderOut(); };
 (function(){ const h=decodeURIComponent(location.hash.slice(1)); const i=DZ.findIndex(d=>d.name===h); if(i>=0){ S.dz=i; sel.value=i; } })();
 renderAll();

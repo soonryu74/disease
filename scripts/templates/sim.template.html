@@ -100,6 +100,13 @@
   .yrs th,.yrs td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right}
   .yrs th{font-size:11px;color:var(--muted)}
   .yrs td:first-child,.yrs th:first-child{text-align:left}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  @media (max-width:760px){
+    table.cmp{min-width:430px}
+    table.yrs{min-width:560px}
+    table.refs{min-width:520px}
+    .shared{gap:8px} .shared label{font-size:12.5px}
+  }
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
   @media print{.quick,.shared .tg{display:none!important}.card{break-inside:avoid;box-shadow:none}}
@@ -188,7 +195,7 @@
   <div class="card">
     <h3>병 매개변수의 출처</h3>
     <p class="small muted">R₀·전염 기간·증상 전 전염 일수. 잠복기·전파경로는 ⑤ 도감(질병관리청 자료)에서 온다. '확인 필요'로 적힌 것은 개별 논문을 특정하지 못한 것이다.</p>
-    <table class="refs" id="refs"></table>
+    <div class="tw"><table class="refs" id="refs"></table></div>
   </div>
 </section>
 
@@ -231,7 +238,7 @@ const f2 = n => n==null ? '—' : n.toFixed(2);
 
 /* ── 상태 ── */
 const S = {dz: DZ.findIndex(d=>d.name==='홍역')>=0 ? DZ.findIndex(d=>d.name==='홍역') : 0,
-           N: DEF.N, I0: DEF.I0, days: DEF.days, log: false,
+           N: DEF.N, I0: DEF.I0, days: DEF.days, log: false, POP: D.population,
            A: {r0:null, delay:DEF.iso_delay, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100},
            B: {r0:null, delay:DEF.iso_delay+1, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100}};
 function dz(){ return DZ[S.dz]; }
@@ -335,14 +342,69 @@ function why(ra){
   document.getElementById('why').innerHTML=t;
 }
 
-/* ── 실제 기록·출처 ── */
+/* ── 실제와 맞춰 보기 ── */
+/* 전국 인구에 이 병을 풀어놓고, 그 해 실제 신고수가 나오려면 접종률이 몇 %여야 하는지 역산한다.
+   접종률이 오르면 유행 규모는 단조 감소하므로 이분법으로 푼다. */
+function attackAt(vacc, pop){
+  const p = {...S.A, vacc}; const save = {N: S.N};
+  S.N = pop; const r = run(p); S.N = save.N;
+  return r.cum / pop;
+}
+function requiredVacc(cases, pop){
+  const target = cases / pop;
+  const lo = attackAt(100, pop), hi = attackAt(0, pop);
+  if (hi < target) return {status:'under', note:'접종 0%로도 실제보다 작다 — 모형이 이 규모를 못 낸다'};
+  if (lo > target) return {status:'over', note:'접종 100%로도 실제보다 크다 — 모형이 과대하다'};
+  let a = 0, b = 100;
+  for (let i = 0; i < 40; i++) { const m = (a+b)/2; if (attackAt(m, pop) > target) a = m; else b = m; }
+  return {status:'ok', vacc:(a+b)/2};
+}
 function renderReal(ra){
-  const d=dz(); const el=document.getElementById('annual');
-  if(!d.annual){ el.innerHTML=`<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`; return; }
-  const ys=Object.keys(d.annual.years).sort(); const mx=Math.max(1,...ys.map(y=>d.annual.years[y]));
-  el.innerHTML=`<table class="yrs"><tr><th>연도</th>${ys.map(y=>`<th>${y}</th>`).join('')}</tr><tr><td>신고</td>${ys.map(y=>`<td class="num">${fmt(d.annual.years[y])}</td>`).join('')}</tr></table>
-    ${d.annual.note?`<p class="small muted" style="margin:6px 0 0">${d.annual.note}</p>`:''}
-    <p style="font-size:13px;margin:10px 0 0">모형 A 누적 감염 <b class="num">${fmt(ra.cum)}</b>명(10만 명 중) vs 실제 최고 연간 신고 <b class="num">${fmt(mx)}</b>명(전국 5천만). 접종률 슬라이더를 실제 접종률로 올리면 어디까지 가까워지는지 보라 — 남는 차이가 유입의 산발성·접촉자 관리·행동 변화다.</p>`;
+  const d = dz(), el = document.getElementById('annual'), fit = document.getElementById('fit');
+  document.getElementById('popnote').textContent = D.population_note;
+  if (!d.annual) {
+    el.innerHTML = `<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`;
+    fit.innerHTML = `<p class="small muted">이 병은 연보 전수감시 표에 없어 맞춰 볼 실제 값이 없다.</p>`;
+    return;
+  }
+  const ys = Object.keys(d.annual.years).sort();
+  const mx = Math.max(1, ...ys.map(y => d.annual.years[y]));
+  el.innerHTML = `<div class="tw"><table class="yrs"><tr><th>연도</th>${ys.map(y=>`<th>${y}</th>`).join('')}</tr>`
+    + `<tr><td>신고</td>${ys.map(y=>`<td class="num">${fmt(d.annual.years[y])}</td>`).join('')}</tr></table></div>`
+    + (d.annual.note ? `<p class="small muted" style="margin:6px 0 0">${d.annual.note}</p>` : '')
+    + `<p class="small muted" style="margin:8px 0 0">출처 — ${D.annual_source}</p>`;
+
+  const nz = ys.filter(y => d.annual.years[y] > 0);
+  if (!nz.length) {
+    fit.innerHTML = `<p style="font-size:13.5px"><b>${d.name}은 2016~2025년 신고가 전부 0이다.</b> 맞출 대상이 없다 — 이 병에 대해 모형은 "만약 들어온다면"만 말한다. 그것이 이 병의 현실이다.</p>`;
+    return;
+  }
+  const pop = S.POP;
+  const rows = nz.map(y => ({year:y, cases:d.annual.years[y], per100k:d.annual.years[y]/pop*1e5, ...requiredVacc(d.annual.years[y], pop)}));
+  const ok = rows.filter(r => r.status === 'ok');
+  const over = rows.filter(r => r.status === 'over');
+  const spread = ok.length > 1 ? Math.max(...ok.map(r=>r.vacc)) - Math.min(...ok.map(r=>r.vacc)) : null;
+  let verdict;
+  if (over.length >= rows.length / 2) {
+    verdict = `<b style="color:var(--warn)">이 병에는 모형 자체가 맞지 않는다.</b> ${rows.length}개 해 중 ${over.length}개에서 "접종 100%로도 모형이 실제보다 크다"가 나왔다.`
+      + ` 모형은 <em>한번 들어오면 인구 안에서 스스로 퍼져 나가는 병</em>을 그린다. 실제 ${d.name}은 국내에서 지속 전파되지 않고 <b>유입에서 시작해 몇 명에서 그친다.</b>`
+      + ` 접종률을 아무리 올려도 모형은 "유행이 나거나 안 나거나"만 말하지, 실제처럼 <b>해마다 한 자리~두 자리 수</b>를 내지 못한다. 이 병의 규모를 정하는 것은 국내 전파력이 아니라 <b>유입 횟수</b>다 — 모형에 없는 축이다.`;
+  } else if (spread == null) {
+    verdict = `맞춰 볼 수 있는 해가 ${ok.length}개뿐이라 여러 해를 견줄 수 없다.`;
+  } else if (spread < 5) {
+    verdict = `필요 접종률이 ${ok.length}개 해에 걸쳐 <b style="color:var(--accent-ink)">${spread.toFixed(1)}%포인트</b> 안에 모인다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
+      + ` <b>한 값으로 10년이 함께 맞는다.</b> 이 병의 해마다 규모가 <em>인구의 면역 수준 하나</em>로 대체로 설명된다는 뜻이다 — 모형이 이 병에 대해서는 뭔가를 잡고 있다.`
+      + ` 다만 이것은 맞춤이지 예측이 아니다. 그리고 여기서 나온 값은 실제 접종률이 아니라 <em>신고 기준으로 본 유효 면역 수준</em>이다(신고되지 않은 감염이 있으니).`;
+  } else {
+    verdict = `필요 접종률이 해마다 <b style="color:var(--warn)">${spread.toFixed(1)}%포인트</b> 벌어진다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
+      + ` <b>한 값으로 여러 해를 설명하지 못한다.</b> 접종률이 해마다 그만큼 출렁이지 않으니, 규모를 움직인 것은 접종이 아니라 모형에 없는 기전이다 — 시간이 지나며 약해지는 면역, 해마다 다른 유입, 나이·집단 구조.`;
+  }
+  fit.innerHTML = `<div class="tw"><table class="cmp"><tr><th>연도</th><th>실제 신고</th><th>10만 명당</th><th>이 해를 맞추는 데 필요한 접종률</th></tr>`
+    + rows.map(r => `<tr><td>${r.year}</td><td class="num">${fmt(r.cases)}</td><td class="num">${r.per100k<0.01?'&lt;0.01':f2(r.per100k)}</td>`
+        + `<td class="num">${r.status==='ok' ? `<b>${r.vacc.toFixed(1)}%</b>` : `<span style="color:var(--warn)">${r.note}</span>`}</td></tr>`).join('')
+    + `</table></div>`
+    + `<p style="font-size:13.5px;margin:12px 0 0">${verdict}</p>`
+    + `<p class="small muted" style="margin:8px 0 0">인구 ${fmt(pop)}명 · 현재 A 시나리오의 나머지 손잡이(R₀ ${f1(S.A.r0 ?? r0mid())}, 증상→격리 ${S.A.delay}일, 격리 효과 ${S.A.eff}%, 추적 ${S.A.trace}%)를 그대로 두고 접종률만 역산했다.</p>`;
 }
 (function refs(){
   const R=D.references||{}; document.getElementById('prov').textContent=D.scenario_provenance||'';
@@ -359,7 +421,7 @@ document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{
   if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1); if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
   if(q==='trace50') S.B.trace=50; if(q==='vacc80') S.B.vacc=80; if(q==='vacc95') S.B.vacc=95; if(q==='iso0') S.B.eff=0;
   renderSliders('B'); renderOut(); });
-for(const k of ['N','I0','days']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
+for(const k of ['N','I0','days','POP']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
 document.getElementById('logy').onclick=e=>{ S.log=!S.log; e.target.classList.toggle('on',S.log); renderOut(); };
 (function(){ const h=decodeURIComponent(location.hash.slice(1)); const i=DZ.findIndex(d=>d.name===h); if(i>=0){ S.dz=i; sel.value=i; } })();
 renderAll();
