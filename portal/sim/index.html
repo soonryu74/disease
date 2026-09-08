@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>유행 시뮬레이터</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s4:#eda100; --warn:#B23A3A; --grid:#E4EAE7;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500; --warn:#E07A7A; --grid:#22302C;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500; --warn:#E07A7A; --grid:#22302C;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,46px);line-height:1.05;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(15px,2.3vw,17.5px);color:var(--muted);max-width:62ch;margin:16px 0 0}
+  .thesis b{color:var(--ink)}
+  section{padding:30px 0 6px}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14.5px;margin:0 0 18px;max-width:76ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:14px;min-width:0}
+  .card h3{margin:0 0 6px;font-size:16px;font-weight:800}
+  .muted{color:var(--muted)} .small{font-size:12.5px}
+  button,select,input{font:inherit}
+
+  .top{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .top>*{min-width:0}
+  @media (max-width:820px){.top{grid-template-columns:1fr}}
+  .dz select{width:100%;font-size:15px;font-weight:700;padding:9px 12px;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);color:var(--ink)}
+  .kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:13px;margin:12px 0 0}
+  .kv dt{color:var(--muted)} .kv dd{margin:0;font-weight:700}
+  .kv dd .src{font-weight:500;color:var(--faint);font-size:11.5px}
+  .kv .gb{display:inline-block;font-size:11px;font-weight:800;padding:1px 7px;border-radius:6px;color:#fff;background:var(--warn);margin-right:4px}
+
+  .scen{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .scen>*{min-width:0}
+  @media (max-width:820px){.scen{grid-template-columns:1fr}}
+  .sc{border-top:4px solid var(--sc)}
+  .sc h3{display:flex;align-items:center;gap:8px}
+  .sc h3 .dot{width:12px;height:12px;border-radius:50%;background:var(--sc)}
+  .sl{display:grid;grid-template-columns:110px 1fr 64px;gap:8px;align-items:center;font-size:13px;margin:8px 0}
+  .sl label{color:var(--muted);font-weight:600}
+  .sl input[type=range]{width:100%;accent-color:var(--sc)}
+  .sl .v{text-align:right;font-weight:800}
+  .tiles{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:12px}
+  @media (max-width:560px){.tiles{grid-template-columns:repeat(3,1fr)}}
+  .t{background:var(--surface-2);border-radius:10px;padding:8px 10px;min-width:0}
+  .t .k{font-size:10.5px;color:var(--muted);font-weight:700;letter-spacing:.04em}
+  .t .v{font-size:19px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-top:2px}
+  .t .v small{font-size:11px;color:var(--muted);font-weight:600}
+  .t.hot .v{color:var(--warn)} .t.ok .v{color:var(--accent-ink)}
+  .quick{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+  .quick button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:700;cursor:pointer}
+  .quick button:hover{background:var(--surface-2)}
+  .shared{display:flex;gap:14px;flex-wrap:wrap;align-items:center;font-size:13px;color:var(--muted);margin:0 0 10px}
+  .shared label{display:inline-flex;align-items:center;gap:6px}
+  .shared input[type=number]{width:96px;font-size:13px;padding:5px 8px;border:1px solid var(--line-strong);border-radius:8px;background:var(--surface);color:var(--ink)}
+  .shared .tg{border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);border-radius:8px;padding:5px 9px;font-size:12px;font-weight:700;cursor:pointer}
+  .shared .tg.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+
+  .chart{width:100%;height:auto;display:block}
+  .legend{display:flex;gap:16px;font-size:12.5px;color:var(--muted);margin:6px 0 0;flex-wrap:wrap}
+  .legend i{display:inline-block;width:18px;height:0;border-top:3px solid;vertical-align:middle;margin-right:6px}
+  .why{font-size:13.5px;background:var(--surface-2);border-radius:10px;padding:10px 12px;margin-top:10px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid2>*{min-width:0}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr}}
+  ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px} ul.tight li{margin:3px 0}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
+  footer a{color:var(--muted)}
+  @media print{.quick,.shared .tg{display:none!important}.card{break-inside:avoid;box-shadow:none}}
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:2px;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnav .gin::-webkit-scrollbar{display:none}
+.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
+  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
+.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
+@media (min-width:1000px){.gnav .gin{flex-wrap:wrap;overflow:visible}}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>유행 시뮬레이터</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi on" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi" href="../data/">⬇ 자료실</a></div></nav><script>(function(){var a=document.querySelector(".gnav a.on");if(a){var p=a.parentNode;p.scrollLeft=a.offsetLeft-p.clientWidth/2+a.offsetWidth/2;}})();</script>
+<div class="wrap">
+<header>
+  <p class="eyebrow">⑰ 유행 시뮬레이터 · 감염병Lab</p>
+  <h1>격리를 하루 늦추면<br>얼마나 달라지나</h1>
+  <p class="thesis">병마다 <b>도감의 잠복기</b>, <b>문헌의 기초재생산수(R₀)</b>, <b>증상 전 전염 일수</b>를 넣고 SEIR 모형을 돌린다.
+  격리 시점·격리 효과·접촉자 추적·접종률을 두 시나리오로 나란히 놓고 곡선이 어떻게 갈라지는지 본다.
+  답은 숫자가 아니라 <b>어느 손잡이가 이 병에 듣고 어느 손잡이가 안 듣는지</b>다.</p>
+</header>
+
+<section id="lab">
+  <div class="top">
+    <div class="card dz">
+      <h3>병</h3>
+      <select id="dz"></select>
+      <dl class="kv" id="dzinfo"></dl>
+    </div>
+    <div class="card">
+      <h3>이 병에서 격리가 듣는 이유·안 듣는 이유</h3>
+      <div id="why" class="why"></div>
+      <p class="small muted" style="margin:10px 0 0">전염 기간 <span id="dinf"></span>일 중 <b>증상이 나기 전</b>이 <span id="presym"></span>일이다. 격리는 증상 뒤에야 시작되므로 그 앞은 어떤 격리도 못 건드린다. 그 몫이 클수록 접촉자 추적·접종이 격리보다 낫다.</p>
+    </div>
+  </div>
+
+  <div class="shared">
+    <label>인구 <input type="number" id="N" min="1000" step="1000"></label>
+    <label>첫 감염자 <input type="number" id="I0" min="1" step="1"></label>
+    <label>기간(일) <input type="number" id="days" min="60" max="730" step="10"></label>
+    <button class="tg" id="logy">세로 로그</button>
+    <span class="small">·  두 시나리오 공통</span>
+  </div>
+
+  <div class="scen">
+    <div class="card sc" id="scA" style="--sc:var(--s1)"><h3><span class="dot"></span>시나리오 A</h3><div class="sliders"></div><div class="tiles"></div></div>
+    <div class="card sc" id="scB" style="--sc:var(--s2)"><h3><span class="dot"></span>시나리오 B</h3><div class="sliders"></div><div class="tiles"></div></div>
+  </div>
+  <div class="quick">
+    <span class="small muted" style="align-self:center">B를 A에서 하나만 바꿔서:</span>
+    <button data-q="delay+1">격리 하루 늦게</button><button data-q="delay+3">격리 사흘 늦게</button>
+    <button data-q="trace50">접촉자 추적 50%</button><button data-q="vacc80">접종률 80%</button><button data-q="vacc95">접종률 95%</button>
+    <button data-q="iso0">격리 안 함</button><button data-q="same">B = A</button>
+  </div>
+
+  <div class="card">
+    <h3>하루 새 감염자</h3>
+    <svg class="chart" id="chart" viewBox="0 0 1000 380" role="img" aria-label="두 시나리오의 일별 새 감염자 곡선"></svg>
+    <div class="legend"><span><i style="border-color:var(--s1)"></i>시나리오 A</span><span><i style="border-color:var(--s2)"></i>시나리오 B</span><span class="muted">· 점은 정점</span></div>
+  </div>
+</section>
+
+<section id="honest">
+  <h2>이 모형이 말하지 않는 것</h2>
+  <div class="grid2">
+    <div class="card">
+      <ul class="tight">
+        <li><b>모두가 모두와 똑같이 섞인다고 본다.</b> 나이·가정·학교·병원 같은 구조가 없다. 2015년 MERS처럼 병원 안 슈퍼전파로 번진 유행은 이 모형에 없다.</li>
+        <li><b>R₀는 범위다.</b> 홍역 12~18, 코로나19 원형 2.5~3.5처럼 문헌마다 다르고 시대·인구에 따라 다르다. 슬라이더의 기본값은 범위 중앙이다.</li>
+        <li><b>잠복기 ≠ 잠재기.</b> 도감의 잠복기(감염→증상)에서 증상 전 전염 일수를 뺀 것을 잠재기(감염→전염 시작)로 쓴다. 근사다.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <ul class="tight">
+        <li><b>사람은 행동을 바꾼다.</b> 유행이 커지면 접촉을 줄인다. 모형은 안 줄인다. 그래서 정점은 실제보다 높고 이르게 나온다.</li>
+        <li><b>무증상 감염</b>은 따로 없다. 폴리오처럼 대다수가 무증상인 병은 '증상 후 격리'가 거의 안 듣는데, 모형은 증상 전 전염 일수로만 그 사정을 흉내 낸다.</li>
+        <li><b>이 페이지는 정책 근거가 아니다.</b> 손잡이 사이의 관계를 눈으로 익히는 도구다. 실제 판단은 ⑭ 현장 대응 카드의 지침과 국제 기준으로.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>매개변수 <code>17_유행_시뮬레이터/data/모형_매개변수.json</code> · 잠복기·전파경로는 ⑤ 도감 · 계산은 브라우저(<code>scripts/templates/sim.template.html</code>).</div>
+  <div style="margin-top:6px">Built by <a href="https://jieumworks.com" target="_blank" rel="noopener">지음웍스 jieumworks.com</a> · 2026년 9월</div>
+</footer>
+</div>
+
+<script id="data" type="application/json">{"diseases":[{"name":"홍역","r0":[12,18],"d_inf":8,"presym":2,"note":"발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":7.0,"hi":21.0,"typ":11.0,"text":"7~21일(흔히 10~12일)"},"route":"공기·비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내"},{"name":"백일해","r0":[12,17],"d_inf":21,"presym":0,"note":"카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.","src":"Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)","incubation":{"lo":7.0,"hi":10.0,"typ":8.5,"text":"통상 7~10일(최장 약 21일)"},"route":"호흡기 비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내"},{"name":"수두","r0":[8,10],"d_inf":7,"presym":2,"note":"발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.","src":"CDC Pink Book","incubation":{"lo":10.0,"hi":21.0,"typ":15.0,"text":"통상 10~21일(대개 14~16일)"},"route":"공기·비말, 수포액 접촉","grade":"제2급","iso":"격리","report":"24시간 이내"},{"name":"유행성이하선염","r0":[4,7],"d_inf":7,"presym":2,"note":"이하선 부종 2일 전~5일 후.","src":"Anderson & May 1991 · CDC","incubation":{"lo":14.0,"hi":18.0,"typ":16.0,"text":"14~18일"},"route":"호흡기 비말","grade":"제2급","iso":"격리","report":"24시간 이내"},{"name":"풍진","r0":[6,7],"d_inf":11,"presym":7,"note":"발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":12.0,"hi":23.0,"typ":16.0,"text":"12~23일(평균 14~18일)"},"route":"호흡기 비말, 태반 수직감염","grade":"제2급","iso":"격리","report":"24시간 이내"},{"name":"디프테리아","r0":[6,7],"d_inf":14,"presym":0,"note":"치료 없으면 2~4주 균 배출. 항생제로 단축.","src":"Anderson & May 1991 (고전 추정, 백신 전 시대)","incubation":{"lo":2.0,"hi":5.0,"typ":3.5,"text":"2~5일"},"route":"비말핵·매개물, 피부 병변 접촉","grade":"제1급","iso":"음압격리","report":"즉시"},{"name":"폴리오","r0":[5,7],"d_inf":14,"presym":7,"note":"발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":3.0,"hi":35.0,"typ":4.5,"text":"3~35일(비마비성 3~6일, 마비성 평균 7~21일)"},"route":"분변-경구 또는 경구-경구. 전염기간 증상발생 11일 전 ~ 6주 후","grade":"제2급","iso":"격리","report":"24시간 이내"},{"name":"인플루엔자","r0":[1.2,1.8],"d_inf":5,"presym":1,"note":"계절 인플루엔자. 증상 1일 전~5일 후.","src":"Biggerstaff 2014 (계통고찰)","incubation":{"lo":1.0,"hi":4.0,"typ":2.0,"text":"1~4일(평균 2일)"},"route":"비말, 오염된 손·물건 접촉","grade":"제4급","iso":null,"report":"7일 이내"},{"name":"신종인플루엔자","r0":[1.4,1.6],"d_inf":5,"presym":1,"note":"2009 A(H1N1)pdm09 기준.","src":"Biggerstaff 2014 · Fraser 2009","incubation":{"lo":null,"hi":null,"typ":2.5,"text":"미확인(계절인플루엔자 기준 통상 1~4일)"},"route":"비말, 접촉","grade":"제1급","iso":"음압격리","report":"즉시"},{"name":"코로나바이러스감염증-19","r0":[2.5,3.5],"d_inf":8,"presym":2,"note":"2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.","src":"Liu 2020 (계통고찰) · WHO","incubation_fallback":"1~14일(보통 5~7일)","incubation_fallback_src":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값","incubation":{"lo":1.0,"hi":14.0,"typ":6.0,"text":"1~14일(보통 5~7일)","fallback":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"},"route":null,"grade":"제4급","iso":null,"report":"주 1회"},{"name":"중증급성호흡기증후군","r0":[2,4],"d_inf":10,"presym":0,"note":"증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.","src":"Lipsitch 2003 · WHO","incubation_fallback":"2~10일(보통 4~6일)","incubation_fallback_src":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값","incubation":{"lo":2.0,"hi":10.0,"typ":5.0,"text":"2~10일(보통 4~6일)","fallback":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값"},"route":"호흡기 비말, 분비액의 점막 접촉","grade":"제1급","iso":"음압격리","report":"즉시"},{"name":"중동호흡기증후군","r0":[0.5,0.9],"d_inf":10,"presym":0,"note":"지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.","src":"Breban 2013 · Cauchemez 2014","incubation_fallback":"2~14일(보통 5~6일)","incubation_fallback_src":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값","incubation":{"lo":2.0,"hi":14.0,"typ":5.5,"text":"2~14일(보통 5~6일)","fallback":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"},"route":"낙타 접촉, 환자 밀접접촉(의료기관 내 전파)","grade":"제1급","iso":"음압격리","report":"즉시"},{"name":"에볼라바이러스병","r0":[1.5,2.5],"d_inf":10,"presym":0,"note":"증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.","src":"WHO Ebola Response Team 2014 · Althaus 2014","incubation":{"lo":2.0,"hi":21.0,"typ":11.5,"text":"2~21일"},"route":"감염 동물(과일박쥐·영장류) 접촉, 환자·사망자 혈액·체액 직·간접 접촉","grade":"제1급","iso":"음압격리","report":"즉시"},{"name":"엠폭스","r0":[1.1,2.4],"d_inf":21,"presym":1,"note":"2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.","src":"Kwok 2022 · WHO","incubation":{"lo":5.0,"hi":21.0,"typ":9.5,"text":"5~21일(보통 6~13일)"},"route":"병변·체액 직접접촉, 성접촉, 밀접 비말, 오염물·감염동물 접촉, 수직감염","grade":"제3급","iso":"격리 해제(일반의료체계)","report":"24시간 이내"},{"name":"니파바이러스감염증","r0":[0.2,0.5],"d_inf":10,"presym":0,"note":"사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.","src":"Luby 2009 · Nikolay 2019","incubation_fallback":"4~14일(최대 45일 보고)","incubation_fallback_src":"도감이 잠복기를 병원체 항목에 병기 → 같은 값","incubation":{"lo":4.0,"hi":14.0,"typ":9.0,"text":"4~14일(최대 45일 보고)","fallback":"도감이 잠복기를 병원체 항목에 병기 → 같은 값"},"route":"병원소 과일박쥐(*Pteropus*)·돼지. ① 감염동물 접촉 ② ⭐오염된 과일·생 대추야자 수액 섭취 ③ 환자 체액 접촉(사람 간 전파)","grade":"제1급","iso":"음압격리","report":"즉시"}],"defaults":{"iso_delay":2,"iso_eff":0.8,"trace":0.0,"trace_eff":0.9,"vacc":0.0,"vacc_eff":0.9,"N":100000,"I0":10,"days":365},"about":"사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다."}</script>
+<script>
+(function(){
+'use strict';
+const D = JSON.parse(document.getElementById('data').textContent);
+const DZ = D.diseases, DEF = D.defaults;
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const fmt = n => n==null ? '—' : Math.round(n).toLocaleString('ko-KR');
+const f1 = n => n==null ? '—' : (Math.round(n*10)/10).toFixed(1);
+const f2 = n => n==null ? '—' : n.toFixed(2);
+
+/* ── 상태 ── */
+const S = {dz: DZ.findIndex(d=>d.name==='홍역')>=0 ? DZ.findIndex(d=>d.name==='홍역') : 0,
+           N: DEF.N, I0: DEF.I0, days: DEF.days, log: false,
+           A: {r0:null, delay:DEF.iso_delay, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100},
+           B: {r0:null, delay:DEF.iso_delay+1, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100}};
+function dz(){ return DZ[S.dz]; }
+function r0mid(){ const r=dz().r0; return Math.round((r[0]+r[1])/2*10)/10; }
+
+/* ── 모형 ── */
+function run(p){
+  const d = dz(); const R0 = p.r0 ?? r0mid();
+  const Dinf = d.d_inf, presym = d.presym;
+  const latent = Math.max(1, d.incubation.typ - presym);
+  const tIso = presym + p.delay;                       // 감염력 시작 후 격리까지 (일)
+  const cov = Math.min(tIso, Dinf)/Dinf;                // 격리 전에 지나가는 전염 기간 몫
+  const fIso = cov + (1-cov)*(1-p.eff/100);
+  const fCt = 1 - (p.trace/100)*DEF.trace_eff;
+  const S0 = S.N*(1 - (p.vacc/100)*DEF.vacc_eff);
+  const beta = R0/Dinf*fIso*fCt;
+  const Reff = R0*fIso*fCt*S0/S.N;
+  let s=S0 - S.I0, e=0, i=S.I0, r=S.N-S0;
+  const dt=0.25, inc=[]; let peak=0, peakDay=0, cum=S.I0, endDay=null;
+  for(let day=0; day<S.days; day++){
+    let newDay=0;
+    for(let k=0;k<1/dt;k++){
+      const ne = beta*i*s/S.N*dt, ei = e/latent*dt, ir = i/Dinf*dt;
+      s-=ne; e+=ne-ei; i+=ei-ir; r+=ir; newDay+=ne;
+    }
+    inc.push(newDay); cum+=newDay;
+    if(newDay>peak){ peak=newDay; peakDay=day; }
+    if(endDay==null && day>peakDay && e+i<1) endDay=day;
+  }
+  return {R0, Reff, latent, fIso, fCt, cov, S0, inc, peak, peakDay, cum, endDay, attack: cum/S.N};
+}
+
+/* ── 병 정보 ── */
+const sel=document.getElementById('dz');
+DZ.forEach((d,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${d.name} · R₀ ${d.r0[0]}–${d.r0[1]}`; sel.appendChild(o); });
+sel.value=S.dz;
+sel.onchange=()=>{ S.dz=+sel.value; S.A.r0=null; S.B.r0=null; renderAll(); history.replaceState(null,'','#'+encodeURIComponent(dz().name)); };
+function renderDz(){
+  const d=dz();
+  document.getElementById('dzinfo').innerHTML=`
+    <dt>지위</dt><dd>${d.grade?`<span class="gb">${d.grade}</span>`:''}${d.iso||''} · 신고 ${d.report||'—'}</dd>
+    <dt>잠복기 (도감)</dt><dd>${d.incubation.text} <span class="src">→ 대표값 ${d.incubation.typ}일</span></dd>
+    <dt>전파경로 (도감)</dt><dd style="font-weight:600">${d.route||'—'}</dd>
+    <dt>R₀ (문헌)</dt><dd>${d.r0[0]}–${d.r0[1]} <span class="src">${d.src}</span></dd>
+    <dt>전염 기간</dt><dd>${d.d_inf}일 <span class="src">대표값</span></dd>
+    <dt>증상 전 전염</dt><dd>${d.presym}일</dd>
+    <dt>메모</dt><dd style="font-weight:500">${d.note}</dd>`;
+  document.getElementById('dinf').textContent=d.d_inf; document.getElementById('presym').textContent=d.presym;
+}
+
+/* ── 슬라이더 ── */
+const SL=[['r0','R₀',null,null,0.1,v=>f1(v)],['delay','증상→격리',0,14,1,v=>v+'일'],['eff','격리 효과',0,100,5,v=>v+'%'],['trace','접촉자 추적',0,100,5,v=>v+'%'],['vacc','접종률',0,100,5,v=>v+'%']];
+function renderSliders(id){
+  const p=S[id], d=dz(); const box=document.querySelector(`#sc${id} .sliders`);
+  box.innerHTML=SL.map(([k,l,lo,hi,st,f])=>{ const mn=k==='r0'?Math.max(0.1,d.r0[0]*0.5):lo, mx=k==='r0'?d.r0[1]*1.5:hi; const v=k==='r0'?(p.r0??r0mid()):p[k];
+    return `<div class="sl"><label>${l}</label><input type="range" data-k="${k}" min="${mn}" max="${mx}" step="${st}" value="${v}"><span class="v num">${f(v)}</span></div>`; }).join('');
+  box.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{ const k=inp.dataset.k; p[k]=+inp.value; inp.nextElementSibling.textContent=SL.find(s=>s[0]===k)[5](+inp.value); renderOut(); });
+}
+function tiles(id,res){
+  const el=document.querySelector(`#sc${id} .tiles`);
+  el.innerHTML=[
+    ['유효 재생산수', f2(res.Reff), res.Reff>=1?'hot':'ok', res.Reff>=1?'1 이상 — 번진다':'1 미만 — 잦아든다'],
+    ['정점', res.peak<1?'—':fmt(res.peak)+'<small>명/일</small>', '', res.peak<1?'유행 안 됨':`${res.peakDay+1}일째`],
+    ['누적 감염', fmt(res.cum), '', `${(res.attack*100).toFixed(1)}%`],
+    ['격리가 못 건드리는 전염', Math.round(res.cov*100)+'<small>%</small>', res.cov>0.5?'hot':'', '증상 전 + 지연'],
+    ['유행 끝', res.endDay==null?'—':fmt(res.endDay)+'<small>일</small>', '', res.endDay==null?(res.peak<1?'시작 안 함':'기간 안에 안 끝남'):'하루 1명 미만'],
+  ].map(([k,v,c,s])=>`<div class="t ${c}"><div class="k">${k}</div><div class="v num">${v}</div><div class="k" style="letter-spacing:0">${s}</div></div>`).join('');
+}
+
+/* ── 차트 ── */
+function chart(ra, rb){
+  const W=1000,H=380,L=64,R=16,T=18,B=44; const w=W-L-R, h=H-T-B;
+  const n=S.days; const maxv=Math.max(1,...ra.inc,...rb.inc);
+  const y = v => S.log ? T + h - (Math.log10(Math.max(v,0.5)+0.5)/Math.log10(maxv+0.5))*h : T + h - v/maxv*h;
+  const x = i => L + i/(n-1)*w;
+  const path = inc => inc.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+  const ticks=[]; const step = maxv>5000?Math.pow(10,Math.floor(Math.log10(maxv)))/2: maxv>500?100: maxv>50?10:5;
+  if(!S.log){ for(let v=0; v<=maxv; v+=step){ ticks.push(v); if(ticks.length>8) break; } }
+  else { for(let e=0; Math.pow(10,e)<=maxv; e++) ticks.push(Math.pow(10,e)); ticks.unshift(0); }
+  const xt=[]; for(let d=0; d<=n; d+=n>400?90:n>180?60:30) xt.push(d);
+  const grid=css('--grid'), faint=css('--faint'), ink=css('--ink');
+  let s=`<g font-size="12" fill="${faint}">`;
+  for(const v of ticks) s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${grid}"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${fmt(v)}</text>`;
+  for(const d of xt) s+=`<text x="${x(Math.min(d,n-1))}" y="${H-18}" text-anchor="middle">${d}일</text>`;
+  s+=`<text x="${L}" y="${H-2}" fill="${faint}">→ 첫 감염자 유입 후 경과일</text></g>`;
+  s+=`<path d="${path(rb.inc)}" fill="none" stroke="${css('--s2')}" stroke-width="2.6" stroke-linejoin="round"/>`;
+  s+=`<path d="${path(ra.inc)}" fill="none" stroke="${css('--s1')}" stroke-width="2.6" stroke-linejoin="round"/>`;
+  for(const [r,c] of [[ra,'--s1'],[rb,'--s2']]) if(r.peak>=1) s+=`<circle cx="${x(r.peakDay)}" cy="${y(r.peak)}" r="4.5" fill="${css(c)}" stroke="${css('--surface')}" stroke-width="2"/><text x="${x(r.peakDay)+8}" y="${y(r.peak)-8}" font-size="12" font-weight="700" fill="${ink}">${fmt(r.peak)}명 · ${r.peakDay+1}일째</text>`;
+  document.getElementById('chart').innerHTML=s;
+}
+
+/* ── 설명 ── */
+function why(ra){
+  const d=dz(); const share=Math.round(d.presym/d.d_inf*100);
+  let t=`<b>${d.name}</b>은 R₀ ${d.r0[0]}–${d.r0[1]}, 전염 기간 ${d.d_inf}일 중 증상 전 ${d.presym}일(${share}%). `;
+  if(d.r0[1]<1) t+=`R₀가 1 미만이라 사람 사이에서는 스스로 잦아든다. 격리보다 <b>유입 자체를 막는 검역</b>이 관건.`;
+  else if(share>=25) t+=`전염의 ${share}%가 증상 전에 일어난다. <b>증상 후 격리는 늦다</b> — 접촉자 추적과 접종이 R을 낮추는 실제 손잡이다.`;
+  else if(d.r0[0]>=8) t+=`증상 전 전염은 적지만 R₀가 커서 격리로 R을 1 밑으로 끌어내리기 어렵다. <b>접종률 ${Math.ceil((1-1/d.r0[1])*100)}% 이상</b>이 집단면역 문턱.`;
+  else t+=`증상 뒤에 전염이 집중된다. <b>빠른 격리가 실제로 듣는 병</b> — 2003년 SARS가 그랬다.`;
+  t+=` 지금 A의 유효 재생산수 ${f2(ra.Reff)}, 격리가 못 건드리는 전염 ${Math.round(ra.cov*100)}%.`;
+  document.getElementById('why').innerHTML=t;
+}
+
+/* ── 조립 ── */
+function renderOut(){ const ra=run(S.A), rb=run(S.B); tiles('A',ra); tiles('B',rb); chart(ra,rb); why(ra); }
+function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); }
+document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{
+  const q=b.dataset.q; S.B={...S.A};
+  if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1); if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
+  if(q==='trace50') S.B.trace=50; if(q==='vacc80') S.B.vacc=80; if(q==='vacc95') S.B.vacc=95; if(q==='iso0') S.B.eff=0;
+  renderSliders('B'); renderOut(); });
+for(const k of ['N','I0','days']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
+document.getElementById('logy').onclick=e=>{ S.log=!S.log; e.target.classList.toggle('on',S.log); renderOut(); };
+(function(){ const h=decodeURIComponent(location.hash.slice(1)); const i=DZ.findIndex(d=>d.name===h); if(i>=0){ S.dz=i; sel.value=i; } })();
+renderAll();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderOut);
+new MutationObserver(renderOut).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+})();
+</script>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body>
+</html>

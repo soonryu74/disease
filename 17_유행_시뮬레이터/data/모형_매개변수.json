@@ -1,0 +1,189 @@
+{
+  "_about": "사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.",
+  "diseases": [
+    {
+      "name": "홍역",
+      "r0": [
+        12,
+        18
+      ],
+      "d_inf": 8,
+      "presym": 2,
+      "note": "발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.",
+      "src": "Anderson & May 1991 · CDC Pink Book"
+    },
+    {
+      "name": "백일해",
+      "r0": [
+        12,
+        17
+      ],
+      "d_inf": 21,
+      "presym": 0,
+      "note": "카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.",
+      "src": "Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)"
+    },
+    {
+      "name": "수두",
+      "r0": [
+        8,
+        10
+      ],
+      "d_inf": 7,
+      "presym": 2,
+      "note": "발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.",
+      "src": "CDC Pink Book"
+    },
+    {
+      "name": "유행성이하선염",
+      "r0": [
+        4,
+        7
+      ],
+      "d_inf": 7,
+      "presym": 2,
+      "note": "이하선 부종 2일 전~5일 후.",
+      "src": "Anderson & May 1991 · CDC"
+    },
+    {
+      "name": "풍진",
+      "r0": [
+        6,
+        7
+      ],
+      "d_inf": 11,
+      "presym": 7,
+      "note": "발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.",
+      "src": "Anderson & May 1991 · CDC Pink Book"
+    },
+    {
+      "name": "디프테리아",
+      "r0": [
+        6,
+        7
+      ],
+      "d_inf": 14,
+      "presym": 0,
+      "note": "치료 없으면 2~4주 균 배출. 항생제로 단축.",
+      "src": "Anderson & May 1991 (고전 추정, 백신 전 시대)"
+    },
+    {
+      "name": "폴리오",
+      "r0": [
+        5,
+        7
+      ],
+      "d_inf": 14,
+      "presym": 7,
+      "note": "발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.",
+      "src": "Anderson & May 1991 · CDC Pink Book"
+    },
+    {
+      "name": "인플루엔자",
+      "r0": [
+        1.2,
+        1.8
+      ],
+      "d_inf": 5,
+      "presym": 1,
+      "note": "계절 인플루엔자. 증상 1일 전~5일 후.",
+      "src": "Biggerstaff 2014 (계통고찰)"
+    },
+    {
+      "name": "신종인플루엔자",
+      "r0": [
+        1.4,
+        1.6
+      ],
+      "d_inf": 5,
+      "presym": 1,
+      "note": "2009 A(H1N1)pdm09 기준.",
+      "src": "Biggerstaff 2014 · Fraser 2009"
+    },
+    {
+      "name": "코로나바이러스감염증-19",
+      "r0": [
+        2.5,
+        3.5
+      ],
+      "d_inf": 8,
+      "presym": 2,
+      "note": "2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.",
+      "src": "Liu 2020 (계통고찰) · WHO",
+      "incubation_fallback": "1~14일(보통 5~7일)",
+      "incubation_fallback_src": "도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"
+    },
+    {
+      "name": "중증급성호흡기증후군",
+      "r0": [
+        2,
+        4
+      ],
+      "d_inf": 10,
+      "presym": 0,
+      "note": "증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.",
+      "src": "Lipsitch 2003 · WHO",
+      "incubation_fallback": "2~10일(보통 4~6일)",
+      "incubation_fallback_src": "도감: KDCA 미명시(문헌상 2~10일) → WHO 값"
+    },
+    {
+      "name": "중동호흡기증후군",
+      "r0": [
+        0.5,
+        0.9
+      ],
+      "d_inf": 10,
+      "presym": 0,
+      "note": "지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.",
+      "src": "Breban 2013 · Cauchemez 2014",
+      "incubation_fallback": "2~14일(보통 5~6일)",
+      "incubation_fallback_src": "도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"
+    },
+    {
+      "name": "에볼라바이러스병",
+      "r0": [
+        1.5,
+        2.5
+      ],
+      "d_inf": 10,
+      "presym": 0,
+      "note": "증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.",
+      "src": "WHO Ebola Response Team 2014 · Althaus 2014"
+    },
+    {
+      "name": "엠폭스",
+      "r0": [
+        1.1,
+        2.4
+      ],
+      "d_inf": 21,
+      "presym": 1,
+      "note": "2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.",
+      "src": "Kwok 2022 · WHO"
+    },
+    {
+      "name": "니파바이러스감염증",
+      "r0": [
+        0.2,
+        0.5
+      ],
+      "d_inf": 10,
+      "presym": 0,
+      "note": "사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.",
+      "src": "Luby 2009 · Nikolay 2019",
+      "incubation_fallback": "4~14일(최대 45일 보고)",
+      "incubation_fallback_src": "도감이 잠복기를 병원체 항목에 병기 → 같은 값"
+    }
+  ],
+  "intervention_defaults": {
+    "iso_delay": 2,
+    "iso_eff": 0.8,
+    "trace": 0.0,
+    "trace_eff": 0.9,
+    "vacc": 0.0,
+    "vacc_eff": 0.9,
+    "N": 100000,
+    "I0": 10,
+    "days": 365
+  }
+}
