@@ -223,7 +223,7 @@ document.getElementById('cards').innerHTML = D.cards.map(c => {
   const g = gnum(c.grade);
   const v = c.cross ? VF[c.cross.verdict] : null;
   const quick = [c.report, c.iso].filter(Boolean).join(' · ');
-  return `<details class="card" data-g="${g}" data-w="${c.cross && ['narrower','gap','differs','no_international_standard'].includes(c.cross.verdict) ? 1 : 0}"
+  return `<details class="card" id="${esc(c.disease)}" data-g="${g}" data-w="${c.cross && ['narrower','gap','differs','no_international_standard'].includes(c.cross.verdict) ? 1 : 0}"
       data-s="${esc((c.disease+' '+(c.incub||'')).toLowerCase().replace(/\s/g,''))}">
     <summary>
       <span class="gb G${g||4}">${esc(c.grade||'—')}</span>
@@ -325,6 +325,15 @@ document.getElementById('forms').innerHTML = `
     apply();
   }));
   apply();
+  /* #질병명 으로 들어오면 필터를 풀고 그 카드를 펴서 보여 준다 */
+  function goHash(){
+    const h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
+    const el = document.getElementById(h); if (!el || !el.classList.contains('card')) return;
+    f = 'all'; q.value = '';
+    chips.forEach(x => x.classList.toggle('on', x.dataset.f === 'all'));
+    apply(); el.open = true; el.scrollIntoView({block:'start'});
+  }
+  goHash(); addEventListener('hashchange', goHash);
 })();
 </script>
 </body>

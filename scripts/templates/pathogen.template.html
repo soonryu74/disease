@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>병원체 형태 도감</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --s1:#2a78d6; --s2:#eb6834; --s4:#eda100; --c5:#6A4C93; --warn:#B23A3A;
+    --stage:#EEF2F0; --stage-2:#E2E9E6;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500; --c5:#B49BDC; --warn:#E07A7A;
+    --stage:#0F1A17; --stage-2:#16231F;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --s1:#3987e5; --s2:#d95926; --s4:#c98500; --c5:#B49BDC; --warn:#E07A7A;
+    --stage:#0F1A17; --stage-2:#16231F;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  nav{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--ground) 88%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .in{max-width:1100px;margin:0 auto;padding:11px 20px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+  nav .brand{font-weight:800;font-size:14px;margin-right:auto}
+  nav .brand .dot{color:var(--accent)}
+  nav a{font-size:12.5px;color:var(--muted);padding:5px 9px;border-radius:8px;font-weight:600;white-space:nowrap}
+  nav a:hover{background:var(--surface-2);color:var(--ink)}
+  header{padding:44px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(28px,5.5vw,46px);line-height:1.05;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(15px,2.3vw,17.5px);color:var(--muted);max-width:62ch;margin:16px 0 0}
+  .thesis b{color:var(--ink)}
+  .stats{display:flex;gap:10px;flex-wrap:wrap;margin:22px 0 0}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-width:110px;border-top:3px solid var(--sc,var(--line))}
+  .stat .v{font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .stat .k{font-size:11.5px;color:var(--muted);margin-top:2px}
+  section{padding:30px 0 6px}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
+  .sdesc{color:var(--muted);font-size:14.5px;margin:0 0 18px;max-width:76ch}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);margin-bottom:14px;min-width:0}
+  .card h3{margin:0 0 6px;font-size:16px;font-weight:800}
+  .muted{color:var(--muted)} .small{font-size:12.5px}
+  em.lat{font-style:italic}
+
+  /* ── 뷰어 ── */
+  .viewer{padding:0;overflow:hidden}
+  .ctl{display:flex;gap:6px;flex-wrap:wrap;align-items:center;padding:12px 14px;border-bottom:1px solid var(--line)}
+  .ctl select,.ctl button{font:inherit;font-size:12.5px;padding:6px 10px;border:1px solid var(--line-strong);border-radius:9px;background:var(--surface);color:var(--ink);cursor:pointer;font-weight:700}
+  .ctl button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+  .ctl .sp{flex:1}
+  .ctl .lbl{font-size:11.5px;color:var(--faint);font-weight:700;margin-left:6px}
+  .stage{display:grid;grid-template-columns:1fr 360px;min-height:520px}
+  @media (max-width:880px){.stage{grid-template-columns:1fr}}
+  .cv{position:relative;background:radial-gradient(ellipse at 50% 45%,var(--stage-2),var(--stage) 75%)}
+  .cv canvas{display:block;width:100%;height:100%;touch-action:none;cursor:grab}
+  .cv canvas.drag{cursor:grabbing}
+  .cv .tag{position:absolute;left:12px;top:10px;font-size:11.5px;color:var(--faint);background:color-mix(in srgb,var(--surface) 75%,transparent);padding:4px 8px;border-radius:7px}
+  .cv .cls{position:absolute;left:12px;bottom:10px;font-size:12px;font-weight:700;color:var(--muted);background:color-mix(in srgb,var(--surface) 85%,transparent);border:1px solid var(--line);padding:5px 9px;border-radius:8px}
+  .panel{border-left:1px solid var(--line);padding:18px 20px;background:var(--surface);overflow:auto;max-height:640px}
+  @media (max-width:880px){.panel{border-left:0;border-top:1px solid var(--line);max-height:none}}
+  .panel .gb{display:inline-block;font-size:11px;font-weight:800;padding:1px 7px;border-radius:6px;color:#fff;margin-right:6px;vertical-align:middle}
+  .g1{background:var(--warn)} .g2{background:var(--s2)} .g3{background:var(--s4)} .g4{background:var(--s1)}
+  .panel h3{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em;display:inline;vertical-align:middle}
+  .panel .path{margin:8px 0 2px;font-size:15px;font-weight:700}
+  .panel .tax{color:var(--muted);font-size:12.5px;margin:0 0 12px}
+  .panel h4{margin:14px 0 6px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);font-weight:800}
+  .panel p{margin:4px 0;font-size:13.5px}
+  .panel .links{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+  .panel .links a{font-size:12px;font-weight:700;border:1px solid var(--line-strong);border-radius:8px;padding:4px 9px}
+  .scale{width:100%;height:72px;display:block;margin-top:6px}
+  .same{font-size:12.5px;color:var(--muted);background:var(--surface-2);border-radius:9px;padding:8px 10px;margin-top:10px}
+
+  /* ── 갤러리 ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}
+  .tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow);border-top:3px solid var(--sc)}
+  .tile canvas{display:block;width:100%;aspect-ratio:1.35;background:radial-gradient(ellipse at 50% 45%,var(--stage-2),var(--stage) 75%);cursor:pointer}
+  .tile .tb{padding:10px 12px 12px}
+  .tile .tl{font-weight:800;font-size:13.5px}
+  .tile .tg{font-size:11px;color:var(--faint);font-weight:700;letter-spacing:.06em}
+  .tile .td{font-size:12px;color:var(--muted);margin:4px 0 8px;line-height:1.5}
+  .chips{display:flex;flex-wrap:wrap;gap:4px}
+  .chip{font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:999px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line);cursor:pointer;font-family:inherit}
+  .chip:hover,.chip.on{border-color:var(--accent);color:var(--accent-ink)}
+
+  ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px}
+  ul.tight li{margin:3px 0}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .grid2>*{min-width:0}
+  @media (max-width:760px){.grid2{grid-template-columns:1fr}}
+  footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
+  footer a{color:var(--muted)}
+  @media print{nav,.ctl{display:none!important}.stage{grid-template-columns:1fr}.panel{max-height:none}.card{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
+  <a href="../">🏠 허브</a><a href="../dogam/">📖 도감</a><a href="../field/">🚑 현장카드</a><a href="../inflow/">🌐 유입지도</a><a href="../cross/">🧪 교차검증</a>
+</div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">⑤ 도감 · 병원체 형태</p>
+  <h1>91종을 모양으로 다시 세면<br>19가지가 남는다</h1>
+  <p class="thesis">법정감염병 91종의 병원체를 <b>전자현미경에 보이는 형태</b>로 분류하고, 분류마다 3D 도식을 세웠다.
+  사진이 아니라 도식이다 — 그래서 무엇이 같고 무엇이 다른지가 사진보다 또렷하다. <b>두창과 엠폭스는 같은 그림</b>이고, <b>VRSA와 MRSA도 같은 그림</b>이다. 내성은 모양에 없다.</p>
+  <div class="stats" id="stats"></div>
+</header>
+
+<section id="view">
+  <h2>3D 뷰어</h2>
+  <p class="sdesc">끌어서 돌린다. 질병을 고르면 형태·크기·분류가 함께 바뀐다. 크기 눈금은 로그 — 폴리오(30 nm)에서 회충(30 cm)까지 천만 배다.</p>
+  <div class="card viewer">
+    <div class="ctl">
+      <button id="prev" title="이전">‹</button>
+      <select id="pick"></select>
+      <button id="next" title="다음">›</button>
+      <span class="lbl">분류</span><select id="cls"><option value="">전체 19가지</option></select>
+      <span class="sp"></span>
+      <button id="spin" class="on">회전</button>
+      <button id="reset">정면</button>
+    </div>
+    <div class="stage">
+      <div class="cv" id="cv"><canvas id="c"></canvas><div class="tag">도식 · 색은 실제가 아님</div><div class="cls" id="clsTag"></div></div>
+      <aside class="panel" id="panel"></aside>
+    </div>
+  </div>
+</section>
+
+<section id="gallery">
+  <h2>형태 19가지</h2>
+  <p class="sdesc">타일을 누르면 위 뷰어가 그 분류의 첫 질병으로 간다. 질병 이름을 누르면 그 질병으로 간다. 타일에 마우스를 올리면 돈다.</p>
+  <div class="grid" id="grid"></div>
+</section>
+
+<section id="honest">
+  <h2>이 그림을 믿어도 되나</h2>
+  <div class="grid2">
+    <div class="card">
+      <h3>도식이 말하는 것</h3>
+      <ul class="tight">
+        <li><b>형태 분류는 사실이다.</b> 코로나바이러스에 곤봉 스파이크가 있고 에볼라가 실 모양이고 매독균이 나선인 것은 전자현미경으로 확인된 교과서 사실이다.</li>
+        <li><b>크기는 대표값이다.</b> 균주·배양 조건·고정 방법에 따라 달라진다. 범위로 적었다.</li>
+        <li><b>배열·부속 구조(편모·아포·협막·양극염색)</b>는 그 세균의 감별점을 그대로 옮겼다.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>도식이 말하지 않는 것</h3>
+      <ul class="tight">
+        <li><b>색.</b> 전자현미경 상은 무색이다. 여기 색은 바이러스·세균·진균·기생충을 구분하는 표지일 뿐이다.</li>
+        <li><b>내성·독소·혈청형.</b> VRSA와 MRSA, 장티푸스와 파라티푸스, O157과 보통 대장균은 모양이 같다. 다른 것은 유전자다.</li>
+        <li><b>정확한 비례.</b> 스파이크 수, 편모 길이, 나선 감김 수는 도식상 대표치다. 세는 용도가 아니다.</li>
+        <li><b>표본감시 묶음 범주</b>(급성호흡기·장관·해외유입기생충)는 스무 가지가 한 이름이라 대표 몇 개만 놓았다.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card">
+    <h3>형태로는 구별되지 않는 것들</h3>
+    <p class="small muted">분류와 도식 매개변수가 완전히 같은 질병끼리 묶었다. 현미경 형태만으로 이 병들을 가를 수 없다는 뜻이다.</p>
+    <div id="twins"></div>
+  </div>
+</section>
+
+<footer>
+  <div>분류·크기 — 일반 미생물학 교과서, CDC, ViralZone(SIB) 수준의 대표값. 도식은 이 저장소의 <code>scripts/build_pathogen.py</code>가 라이브러리 없이 캔버스에 그린다. 원자료 <code>05_감염병_질병정보/병원체_형태분류.json</code>.</div>
+  <div style="margin-top:6px">Built by <a href="https://jieumworks.com" target="_blank" rel="noopener">지음웍스 jieumworks.com</a> · 2026년 9월</div>
+</footer>
+</div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+'use strict';
+const D = JSON.parse(document.getElementById('data').textContent);
+const CLASSES = Object.fromEntries(D.classes.map(c=>[c.id,c]));
+const DZ = D.diseases;
+const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const GROUP_COLOR = {'바이러스':'--accent','세균':'--s2','진균':'--c5','기생충':'--s4','프리온':'--faint','복수':'--s1','미확인':'--faint'};
+
+/* ══════════ 결정적 난수 ══════════ */
+function rng(seed){ let s = seed>>>0 || 1; return ()=>{ s = (s*1664525 + 1013904223)>>>0; return s/4294967296; }; }
+
+/* ══════════ 색 ══════════ */
+function hex2rgb(h){ h=h.replace('#',''); if(h.length===3) h=h.replace(/./g,c=>c+c); const n=parseInt(h,16); return [n>>16&255,n>>8&255,n&255]; }
+function mix(a,b,t){ return a.map((x,i)=>Math.round(x+(b[i]-x)*t)); }
+function palette(group){
+  const base = hex2rgb(css(GROUP_COLOR[group]||'--accent'));
+  const dark = matchMedia('(prefers-color-scheme: dark)').matches && document.documentElement.dataset.theme!=='light' || document.documentElement.dataset.theme==='dark';
+  const W=[255,255,255], K=[10,16,14];
+  return {
+    body: base, light: mix(base,W,0.35), dark: mix(base,K,0.35), pale: mix(base,W,0.62),
+    halo: mix(base,W,0.55), cell: mix(hex2rgb(css('--muted')),W,dark?0.1:0.55), nucleus: hex2rgb(css('--muted')),
+    red: hex2rgb(css('--warn')), ink: hex2rgb(css('--ink')), grey: hex2rgb(css('--faint')),
+  };
+}
+
+/* ══════════ 기하 ══════════ */
+/* mesh = {v:[[x,y,z]], f:[[i,j,k,(l)], mat], mats:[{c:[r,g,b], a:1, two:false}]} */
+function M(){ return {v:[], f:[], mats:[]}; }
+function mat(mesh, c, a=1, two=false){ mesh.mats.push({c,a,two}); return mesh.mats.length-1; }
+function merge(into, m){
+  const off = into.v.length, moff = into.mats.length;
+  into.v.push(...m.v); into.mats.push(...m.mats);
+  for(const f of m.f) into.f.push([f[0].map(i=>i+off), f[1]+moff]);
+}
+function xf(m, {t=[0,0,0], r=[0,0,0], s=1}={}){
+  const sx = Array.isArray(s)?s[0]:s, sy=Array.isArray(s)?s[1]:s, sz=Array.isArray(s)?s[2]:s;
+  const [ax,ay,az]=r, cx=Math.cos(ax),sxn=Math.sin(ax),cy=Math.cos(ay),syn=Math.sin(ay),cz=Math.cos(az),szn=Math.sin(az);
+  m.v = m.v.map(([x,y,z])=>{
+    x*=sx; y*=sy; z*=sz;
+    let y1 = y*cx - z*sxn, z1 = y*sxn + z*cx; y=y1; z=z1;              // X축
+    let x1 = x*cy + z*syn; z1 = -x*syn + z*cy; x=x1; z=z1;              // Y축
+    x1 = x*cz - y*szn; y1 = x*szn + y*cz; x=x1; y=y1;                   // Z축
+    return [x+t[0], y+t[1], z+t[2]];
+  });
+  return m;
+}
+/* 회전축 정렬: +z 를 dir 로 보내는 회전 */
+function alignZ(m, dir){
+  const [dx,dy,dz]=norm(dir);
+  const ry = Math.atan2(dx, dz), rx = -Math.asin(Math.max(-1,Math.min(1,dy)));
+  // 먼저 X로 기울이고 Y로 돌린다
+  return xf(m,{r:[rx,0,0]}) && xf(m,{r:[0,ry,0]});
+}
+function norm(v){ const l=Math.hypot(...v)||1; return v.map(x=>x/l); }
+function fib(n, r=1){ // 피보나치 구 분포
+  const out=[], g=Math.PI*(3-Math.sqrt(5));
+  for(let i=0;i<n;i++){ const y=1-(i/(n-1||1))*2, rad=Math.sqrt(1-y*y), th=g*i; out.push([Math.cos(th)*rad*r, y*r, Math.sin(th)*rad*r]); }
+  return out;
+}
+/* 회전체: profile [[radius, z], ...] 아래→위 */
+function lathe(profile, seg, c, a=1){
+  const m=M(), mi=mat(m,c,a);
+  for(const [r,z] of profile) for(let i=0;i<seg;i++){ const t=i/seg*Math.PI*2; m.v.push([Math.cos(t)*r, Math.sin(t)*r, z]); }
+  for(let j=0;j<profile.length-1;j++) for(let i=0;i<seg;i++){
+    const a0=j*seg+i, a1=j*seg+(i+1)%seg, b0=(j+1)*seg+i, b1=(j+1)*seg+(i+1)%seg;
+    m.f.push([[a0,a1,b1,b0],mi]);
+  }
+  return m;
+}
+function sphere(r, c, a=1, seg=22, rings=14, noise=null, rnd=null){
+  const prof=[]; for(let j=0;j<=rings;j++){ const t=j/rings*Math.PI; prof.push([Math.sin(t)*r, -Math.cos(t)*r]); }
+  const m = lathe(prof, seg, c, a);
+  if(noise){ m.v = m.v.map(p=>{ const n=norm(p), k=1+noise*(rnd()-0.5)*2; return p.map((x,i)=>n[i]*r*k); }); }
+  return m;
+}
+function ellipsoid(sx,sy,sz,c,a=1,seg=22,rings=14){ return xf(sphere(1,c,a,seg,rings),{s:[sx,sy,sz]}); }
+function capsule(r, len, c, a=1, seg=16, cap=6){ // z축, 중심 원점
+  const prof=[]; const h=len/2-r;
+  for(let j=0;j<=cap;j++){ const t=j/cap*Math.PI/2; prof.push([Math.sin(t)*r, -h-Math.cos(t)*r]); }
+  for(let j=0;j<=cap;j++){ const t=j/cap*Math.PI/2; prof.push([Math.cos(t)*r, h+Math.sin(t)*r]); }
+  return lathe(prof, seg, c, a);
+}
+function tube(path, r, c, a=1, seg=8, rFn=null){ // 평행이동 프레임
+  const m=M(), mi=mat(m,c,a); const n=path.length;
+  let T=norm(sub(path[1],path[0])), N=Math.abs(T[1])<0.9?norm(cross(T,[0,1,0])):norm(cross(T,[1,0,0])), B=cross(T,N);
+  for(let i=0;i<n;i++){
+    if(i>0){ const T2=norm(sub(path[Math.min(n-1,i+1)],path[i-1])); const ax=cross(T,T2), s=Math.hypot(...ax);
+      if(s>1e-6){ const ang=Math.asin(Math.min(1,s)); N=rot(N,norm(ax),ang); } T=T2; B=cross(T,N); }
+    const rr = rFn ? rFn(i/(n-1))*r : r;
+    for(let k=0;k<seg;k++){ const t=k/seg*Math.PI*2, cs=Math.cos(t)*rr, sn=Math.sin(t)*rr; m.v.push([path[i][0]+N[0]*cs+B[0]*sn, path[i][1]+N[1]*cs+B[1]*sn, path[i][2]+N[2]*cs+B[2]*sn]); }
+  }
+  for(let i=0;i<n-1;i++) for(let k=0;k<seg;k++){ const a0=i*seg+k,a1=i*seg+(k+1)%seg,b0=(i+1)*seg+k,b1=(i+1)*seg+(k+1)%seg; m.f.push([[a0,b0,b1,a1],mi]); }
+  // 끝 막기 — 어느 쪽에서 봐도 막혀 보이도록 양면
+  const c0=m.v.length; m.v.push(path[0]); for(let k=0;k<seg;k++){ m.f.push([[c0,(k+1)%seg,k],mi]); m.f.push([[c0,k,(k+1)%seg],mi]); }
+  const c1=m.v.length; m.v.push(path[n-1]); for(let k=0;k<seg;k++){ m.f.push([[c1,(n-1)*seg+k,(n-1)*seg+(k+1)%seg],mi]); m.f.push([[c1,(n-1)*seg+(k+1)%seg,(n-1)*seg+k],mi]); }
+  return m;
+}
+function sub(a,b){ return [a[0]-b[0],a[1]-b[1],a[2]-b[2]]; }
+function cross(a,b){ return [a[1]*b[2]-a[2]*b[1], a[2]*b[0]-a[0]*b[2], a[0]*b[1]-a[1]*b[0]]; }
+function rot(v,ax,ang){ const c=Math.cos(ang),s=Math.sin(ang),d=v[0]*ax[0]+v[1]*ax[1]+v[2]*ax[2], cr=cross(ax,v);
+  return [v[0]*c+cr[0]*s+ax[0]*d*(1-c), v[1]*c+cr[1]*s+ax[1]*d*(1-c), v[2]*c+cr[2]*s+ax[2]*d*(1-c)]; }
+function icosa(detail, c, a=1, r=1){
+  const t=(1+Math.sqrt(5))/2; let v=[[-1,t,0],[1,t,0],[-1,-t,0],[1,-t,0],[0,-1,t],[0,1,t],[0,-1,-t],[0,1,-t],[t,0,-1],[t,0,1],[-t,0,-1],[-t,0,1]].map(norm);
+  let f=[[0,11,5],[0,5,1],[0,1,7],[0,7,10],[0,10,11],[1,5,9],[5,11,4],[11,10,2],[10,7,6],[7,1,8],[3,9,4],[3,4,2],[3,2,6],[3,6,8],[3,8,9],[4,9,5],[2,4,11],[6,2,10],[8,6,7],[9,8,1]];
+  for(let d=0;d<detail;d++){ const nf=[], cache={}; const mid=(i,j)=>{ const k=i<j?i+'_'+j:j+'_'+i; if(cache[k]!=null) return cache[k]; v.push(norm([(v[i][0]+v[j][0])/2,(v[i][1]+v[j][1])/2,(v[i][2]+v[j][2])/2])); return cache[k]=v.length-1; };
+    for(const [i,j,k] of f){ const a1=mid(i,j),b1=mid(j,k),c1=mid(k,i); nf.push([i,a1,c1],[j,b1,a1],[k,c1,b1],[a1,b1,c1]); } f=nf; }
+  const m=M(), mi=mat(m,c,a); m.v=v.map(p=>p.map(x=>x*r)); m.f=f.map(t=>[t,mi]); return m;
+}
+function superellipsoid(a,b,c,e,col,al=1,seg=20,rings=12){
+  const m=M(), mi=mat(m,col,al); const sp=(x,p)=>Math.sign(x)*Math.pow(Math.abs(x),p);
+  for(let j=0;j<=rings;j++){ const v=-Math.PI/2+j/rings*Math.PI; for(let i=0;i<seg;i++){ const u=i/seg*Math.PI*2;
+    m.v.push([a*sp(Math.cos(v),e)*sp(Math.cos(u),e), b*sp(Math.cos(v),e)*sp(Math.sin(u),e), c*sp(Math.sin(v),e)]); } }
+  for(let j=0;j<rings;j++) for(let i=0;i<seg;i++){ const a0=j*seg+i,a1=j*seg+(i+1)%seg,b0=(j+1)*seg+i,b1=(j+1)*seg+(i+1)%seg; m.f.push([[a0,a1,b1,b0],mi]); }
+  return m;
+}
+function ribbon(path, w, twist, c, a=1){ // 두 면 띠
+  const m=M(), mi=mat(m,c,a,true); const n=path.length;
+  for(let i=0;i<n;i++){ const t=i/(n-1)*twist; const T=norm(sub(path[Math.min(n-1,i+1)],path[Math.max(0,i-1)]));
+    let N=norm(cross(T,[0,0,1])); if(!isFinite(N[0])||Math.hypot(...N)<1e-6) N=[1,0,0]; const B=cross(T,N);
+    const d=[N[0]*Math.cos(t)+B[0]*Math.sin(t),N[1]*Math.cos(t)+B[1]*Math.sin(t),N[2]*Math.cos(t)+B[2]*Math.sin(t)];
+    m.v.push([path[i][0]+d[0]*w,path[i][1]+d[1]*w,path[i][2]+d[2]*w],[path[i][0]-d[0]*w,path[i][1]-d[1]*w,path[i][2]-d[2]*w]); }
+  for(let i=0;i<n-1;i++) m.f.push([[2*i,2*i+1,2*i+3,2*i+2],mi]);
+  return m;
+}
+function wavy(len, amp, waves, n, rnd, dir=[0,0,1]){ // z축 물결 경로
+  const p=[]; for(let i=0;i<=n;i++){ const t=i/n; p.push([Math.sin(t*Math.PI*2*waves)*amp*(0.6+0.4*(rnd?rnd():1)), Math.cos(t*Math.PI*2*waves*0.7)*amp*0.5, (t-0.5)*len]); } return p;
+}
+function flagellum(from, dir, len, col, rnd){ // 물결치는 가는 관
+  const p=[]; const d=norm(dir); const N=norm(cross(d,Math.abs(d[1])<0.9?[0,1,0]:[1,0,0])); const B=cross(d,N); const ph=rnd()*6.28;
+  for(let i=0;i<=22;i++){ const t=i/22, a=Math.sin(t*Math.PI*4+ph)*0.16*t, b=Math.cos(t*Math.PI*4+ph)*0.16*t;
+    p.push([from[0]+d[0]*t*len+N[0]*a+B[0]*b, from[1]+d[1]*t*len+N[1]*a+B[1]*b, from[2]+d[2]*t*len+N[2]*a+B[2]*b]); }
+  return tube(p, 0.035, col, 1, 5);
+}
+
+/* ══════════ 분류별 장면 ══════════ */
+const BUILD = {
+  env_spike_club(p, P, rnd){
+    const S=M(); merge(S, sphere(0.78, P.body, 1, 26, 16, 0.02, rnd));
+    for(const q of fib(p.spikes||64, 0.78)){ const stalk=capsule(0.035, 0.22, P.light, 1, 6, 2); const head=sphere(0.085, P.light, 1, 8, 5);
+      xf(head,{t:[0,0,0.16]}); merge(stalk, head); xf(stalk,{t:[0,0,0.12]}); alignZ(stalk, q); xf(stalk,{t:q}); merge(S, stalk); }
+    return S;
+  },
+  env_spike(p, P, rnd){
+    const S=M(); const wob=p.wobble||0.05; merge(S, sphere(0.8, P.body, p.sandy?0.72:1, 26, 16, wob, rnd));
+    const L=p.spikeLen||0.13;
+    for(const q of fib(p.spikes||80, 0.8)){ const sp=capsule(0.028, L+0.06, P.light, 1, 5, 2); xf(sp,{t:[0,0,L/2]}); alignZ(sp,q); xf(sp,{t:q.map(x=>x*(1+wob*(rnd()-0.5)))}); merge(S,sp); }
+    if(p.sandy) for(let i=0;i<9;i++){ const g=sphere(0.07, P.dark, 1, 8, 5); xf(g,{t:[(rnd()-0.5)*0.9,(rnd()-0.5)*0.9,(rnd()-0.5)*0.9]}); merge(S,g); }
+    return S;
+  },
+  env_icosa(p, P, rnd){
+    const S=M(); const cs=p.coreScale||0.65;
+    if(p.core==='cone'){ const cone=lathe([[0.001,-0.55],[0.12,-0.52],[0.22,-0.4],[0.36,0.3],[0.3,0.5],[0.1,0.56],[0.001,0.57]], 14, P.dark); xf(cone,{r:[0.5,0,0.4]}); merge(S,cone); }
+    else merge(S, icosa(1, P.dark, 1, cs));
+    if(p.smooth){ merge(S, icosa(2, P.body, 0.58, 0.82)); }
+    else { merge(S, sphere(0.82, P.body, 0.5, 24, 14, 0.01, rnd));
+      const pts = p.knobsRegular ? icosa(1,P.light,1,0.82).v : fib(p.knobs||0, 0.82);
+      for(const q of pts){ const k=sphere(p.knobsRegular?0.06:0.05, P.light, 1, 7, 4); xf(k,{t:q.map(x=>x*1.02)}); merge(S,k); } }
+    return S;
+  },
+  icosa_naked(p, P, rnd){
+    const S=M(); merge(S, icosa(p.detail||1, P.body, 1, 0.85));
+    if(p.capsomer){ for(const q of icosa(1,P.light,1,0.85).v){ const k=sphere(0.11, P.light, 1, 8, 5); xf(k,{t:q.map(x=>x*1.02)}); merge(S,k); } }
+    return S;
+  },
+  filament(p, P, rnd){
+    const S=M(); const L=p.len||10; const path=[]; const n=70;
+    for(let i=0;i<=n;i++){ const t=i/n; let x=Math.sin(t*5.2)*0.35*L/12, y=Math.cos(t*3.1)*0.2*L/12, z=(t-0.5)*L*0.78;
+      if(p.hook && t>0.82){ const u=(t-0.82)/0.18*Math.PI*1.4; x+= (1-Math.cos(u))*0.75; z = (0.82-0.5)*L*0.78 + Math.sin(u)*0.75; }
+      path.push([x,y,z]); }
+    merge(S, tube(path, 0.19, P.body, 1, 10)); return S;
+  },
+  bullet(p, P, rnd){
+    const S=M(); const prof=[[0,-0.9],[0.42,-0.9],[0.44,-0.7],[0.45,0.3],[0.42,0.55],[0.3,0.78],[0.12,0.9],[0,0.92]];
+    merge(S, lathe(prof, 20, P.body));
+    for(const q of fib(90, 1)){ if(q[2]<-0.85) continue; const s=Math.hypot(q[0],q[1]); const r=0.45; const pos=[q[0]/s*r*(s>0?1:0), q[1]/s*r*(s>0?1:0), q[2]*0.9]; if(Math.abs(q[2])>0.6){ const k=Math.sqrt(Math.max(0,1-((Math.abs(q[2])-0.6)/0.35)**2)); pos[0]*=k; pos[1]*=k; }
+      const k=sphere(0.045, P.light, 1, 6, 4); xf(k,{t:pos}); merge(S,k); }
+    xf(S,{r:[0.9,0,0.3]}); return S;
+  },
+  brick(p, P, rnd){
+    const S=M(); const A=1.05,B=0.8,C=0.55,E=0.45; merge(S, superellipsoid(A, B, C, E, P.body, 1, 26, 14));
+    // 방향 q를 초타원체 표면까지 늘이는 배율: 동차식이라 1/F(q)
+    const onSurf=q=>{ const F=Math.pow(Math.pow(Math.abs(q[0]/A),2/E)+Math.pow(Math.abs(q[1]/B),2/E)+Math.pow(Math.abs(q[2]/C),2/E), E/2); return q.map(x=>x/F*1.02); };
+    // 표면의 관 구조는 구슬 줄로 그린다 — 몸통에 붙은 얇은 관은 깊이 정렬이 깨져 조각나 보인다
+    for(let i=0;i<44;i++){ const d=norm([rnd()-0.5,rnd()-0.5,rnd()-0.5]); const T=norm(cross(d,[rnd()-0.5,rnd()-0.5,rnd()-0.5]));
+      for(let k=0;k<=5;k++){ const t=(k/5-0.5)*0.5; const q=onSurf(norm([d[0]+T[0]*t,d[1]+T[1]*t,d[2]+T[2]*t])); merge(S, xf(sphere(0.055,P.light,1,7,4),{t:q.map(x=>x*1.02)})); } }
+    xf(S,{r:[0.5,0.3,0]}); return S;
+  },
+  rod(p, P, rnd){
+    const S=M(); const L=p.len||2, R=p.r||0.5;
+    const one=(len,r,off,rot,spore=p.spore)=>{ let m;
+      if(p.club){ const prof=[]; for(let j=0;j<=12;j++){ const t=j/12; const rr = r*(0.75+0.55*Math.pow(t,3)); const z=(t-0.5)*len; prof.push([rr*(j===0||j===12?0.01:1), z]); } m=lathe(prof,14,P.body); }
+      else if(p.square){ const k=r*0.25; m=lathe([[0.01,-len/2],[r-k,-len/2],[r,-len/2+k],[r,len/2-k],[r-k,len/2],[0.01,len/2]],14,P.body); }
+      else m=capsule(r,len,P.body,1,16,6);
+      if(p.bipolar){ const c1=capsule(r*1.02,r*1.1,P.dark,1,14,4), c2=capsule(r*1.02,r*1.1,P.dark,1,14,4); xf(c1,{t:[0,0,-len/2+r*0.45]}); xf(c2,{t:[0,0,len/2-r*0.45]}); merge(m,c1); merge(m,c2); }
+      if(spore){ const e=p.sporeEnd==null?0.5:p.sporeEnd; const z=(e-0.5)*len; const sp=sphere(r*(p.sporeEnd!=null?1.4:1.22),P.pale,1,16,10); xf(sp,{s:[1,1,1.3],t:[0,0,Math.max(-len/2+r*0.6,Math.min(len/2-r*0.6,z))]}); merge(m,sp); }
+      if(p.flagella){ const n=p.flagella; for(let i=0;i<n;i++){ let from,dir; if(p.polar){ from=[0,0,len/2-0.05]; dir=norm([(rnd()-0.5)*0.9,(rnd()-0.5)*0.9,1]); } else { const t=rnd()*Math.PI*2, z=(rnd()-0.5)*len*0.9; from=[Math.cos(t)*r*0.95,Math.sin(t)*r*0.95,z]; dir=norm([Math.cos(t)*1.4+(rnd()-0.5),Math.sin(t)*1.4+(rnd()-0.5),(rnd()-0.5)*1.5]); }
+        merge(m, flagellum(from,dir,len*0.9,P.light,rnd)); } }
+      if(p.capsule){ merge(m, capsule(r*1.7,len+r*1.4,P.halo,0.28,16,6)); }
+      xf(m,{r:rot||[0,0,0],t:off||[0,0,0]}); return m; };
+    if(p.chain){ const mid=Math.floor(p.chain/2); for(let i=0;i<p.chain;i++) merge(S, one(L/p.chain*0.94, R, [0,0,(i-(p.chain-1)/2)*L/p.chain], [0,0,0], p.spore && i===mid)); }
+    else if(p.tiny){ const n=p.count||6; for(let i=0;i<n;i++){ const ang=rnd()*Math.PI*2, rad=0.35+rnd()*1.1; merge(S, one(L, R, [Math.cos(ang)*rad, Math.sin(ang)*rad, (rnd()-0.5)*1.4], [rnd()*3.1,rnd()*3.1,0])); } }
+    else if(p.cord){ const n=p.cord; for(let i=0;i<n;i++){ const t=(i-(n-1)/2)*R*2.6; const m=one(L,R,[t*0.55,(rnd()-0.5)*0.5,(rnd()-0.5)*0.8],[(rnd()-0.5)*0.35,(rnd()-0.5)*0.35,0]); merge(S,m); } }
+    else if(p.palisade){ for(let i=0;i<5;i++) merge(S, one(L,R,[(i-2)*R*2.8,(rnd()-0.5)*0.3,(rnd()-0.5)*0.6],[(rnd()-0.5)*0.5,0,0])); }
+    else if(p.school){ for(let i=0;i<p.count;i++) merge(S, one(L,R,[(i%4-1.5)*R*2.6,Math.floor(i/4)*R*2.6-R*1.3,(rnd()-0.5)*0.3],[0,0,0])); }
+    else merge(S, one(L,R,[0,0,0],[0,0,0]));
+    xf(S,{r:[0.35,0.5,0.15]}); return S;
+  },
+  curved_rod(p, P, rnd){
+    const S=M(); const L=p.len||2.2, R=p.r||0.4; const path=[]; for(let i=0;i<=14;i++){ const t=i/14-0.5; path.push([Math.cos(t*Math.PI*0.75)*L*0.6-L*0.6*Math.cos(0), 0, Math.sin(t*Math.PI*0.75)*L*0.6]); }
+    const body=tube(path, R, P.body, 1, 14, t=>Math.min(1,Math.sqrt(Math.min(t,1-t)*6+0.02)*0.9+0.1));
+    // 양끝 둥글게
+    merge(body, xf(sphere(R*0.98,P.body,1,12,8),{t:path[0]})); merge(body, xf(sphere(R*0.98,P.body,1,12,8),{t:path[14]}));
+    const end=path[14], d=norm(sub(path[14],path[12])); for(let i=0;i<(p.flagella||1);i++) merge(body, flagellum(end,d,L*1.2,P.light,rnd));
+    merge(S,body); xf(S,{r:[0.4,0.3,0.6]}); return S;
+  },
+  cocci(p, P, rnd){
+    const S=M(); const r=p.r||0.55;
+    const ball=()=>{ if(p.kidney) return xf(sphere(r,P.body,1,16,10),{s:[1,0.78,0.72]}); if(p.lancet){ const prof=[]; for(let j=0;j<=12;j++){ const t=j/12*Math.PI; prof.push([Math.pow(Math.sin(t),0.7)*r*0.75, -Math.cos(t)*r*1.15]); } return lathe(prof,16,P.body); } if(p.oval) return xf(sphere(r,P.body,1,16,10),{s:[0.8,0.8,1.15]}); return sphere(r,P.body,1,16,10); };
+    if(p.arrange==='diplo'){ const a=ball(), b=ball(); const gap=p.kidney?r*0.72:p.lancet?r*1.15:r*0.95; xf(a,{t:[0,0,-gap]}); xf(b,{r:[0,Math.PI,0],t:[0,0,gap]}); merge(S,a); merge(S,b);
+      if(p.capsule) merge(S, xf(sphere(1,P.halo,0.25,20,12),{s:[r*2.4,r*2.4,gap+r*2.3]})); }
+    else if(p.arrange==='chain'){ const n=p.n||8; for(let i=0;i<n;i++){ const b=ball(); xf(b,{t:[Math.sin(i*1.1)*r*0.35,(i-(n-1)/2)*r*1.85,Math.cos(i*0.9)*r*0.35]}); merge(S,b); } }
+    else { const n=p.n||12; const pts=[[0,0,0]]; while(pts.length<n){ const c=[(rnd()-0.5)*3.2,(rnd()-0.5)*3.2,(rnd()-0.5)*3.2]; if(pts.every(q=>Math.hypot(...sub(q,c))>r*1.75) && pts.some(q=>Math.hypot(...sub(q,c))<r*2.4)) pts.push(c); }
+      for(const c of pts){ const b=ball(); xf(b,{t:c}); merge(S,b); } }
+    xf(S,{r:[0.4,0.3,0.2]}); return S;
+  },
+  spiral(p, P, rnd){
+    const S=M(); const L=p.len||14, turns=p.turns||10, amp=p.amp||0.35; const n=turns*14; const path=[];
+    for(let i=0;i<=n;i++){ const t=i/n; let a=amp, ph=t*Math.PI*2*turns; if(p.loose){ a*=0.7+0.6*Math.sin(t*7.3); ph+=Math.sin(t*5)*0.9; }
+      let x=Math.cos(ph)*a, y=Math.sin(ph)*a, z=(t-0.5)*L*0.62;
+      if(p.hooks){ if(t<0.08){ const u=(0.08-t)/0.08; x+=u*u*1.0; } if(t>0.92){ const u=(t-0.92)/0.08; y+=u*u*1.0; } }
+      path.push([x,y,z]); }
+    merge(S, tube(path, p.r||0.1, P.body, 1, 7)); xf(S,{r:[0,1.25,0.35]}); return S;
+  },
+  intracell(p, P, rnd){
+    const S=M(); const n=p.n||12, len=p.len||1.2, r=p.r||0.35;
+    const cell=sphere(1.55,P.cell,0.32,28,18); xf(cell,{s:[1.15,0.95,1]}); const nuc=sphere(0.55,P.nucleus,0.45,18,12); xf(nuc,{t:[-0.55,0.3,-0.2]});
+    const inner=M();
+    if(p.inclusion||p.vacuole){ merge(inner, xf(sphere(0.78,P.halo,0.3,20,12),{t:[0.5,-0.25,0.15]})); }
+    for(let i=0;i<n;i++){ let c; do{ c=[(rnd()-0.5)*2.4,(rnd()-0.5)*2.0,(rnd()-0.5)*2.0]; }while(Math.hypot(c[0]+0.55,c[1]-0.3,c[2]+0.2)<0.8 || Math.hypot(c[0]/1.15,c[1]/0.95,c[2])>1.25 || ((p.inclusion||p.vacuole) && Math.hypot(c[0]-0.5,c[1]+0.25,c[2]-0.15)>0.62));
+      const b = len>r*2.2 ? capsule(r,len,P.body,1,10,4) : sphere(r,P.body,1,10,6); xf(b,{r:[rnd()*3,rnd()*3,0],t:c}); merge(inner,b); }
+    merge(S,inner); merge(S,nuc); merge(S,cell); xf(S,{r:[0.3,0.2,0]}); return S;
+  },
+  yeast(p, P, rnd){
+    const S=M(); merge(S, xf(sphere(0.62,P.body,1,22,14),{s:[1,1,1.3]}));
+    merge(S, xf(sphere(0.4,P.body,1,18,12),{s:[1,1,1.25],t:[0.35,0.2,0.98]}));
+    merge(S, xf(sphere(0.2,P.light,1,12,8),{t:[0.62,0.35,1.42]}));
+    merge(S, xf(sphere(0.62,P.body,1,22,14),{s:[1,1,1.3],t:[-1.3,-0.5,-0.4],r:[0.6,0.4,0]}));
+    xf(S,{r:[0.4,0.5,0]}); return S;
+  },
+  plasmodium(p, P, rnd){
+    // 양오목 원반: 한 회전체로 위→테두리→아래를 잇는다(두 조각이면 테두리에서 겹쳐 깨진다)
+    const S=M(); const R=1.25, n=14, Ri=R*0.9; const zTop=r=>0.16+0.18*Math.pow(Math.sin(Math.PI*Math.min(r,Ri)/Ri),1.5);
+    const prof=[[0.001, zTop(0)]];
+    for(let j=1;j<=n;j++){ const r=Ri*j/n; prof.push([r, zTop(r)]); }
+    for(let j=1;j<=9;j++){ const t=j/10*Math.PI; prof.push([Ri+Math.sin(t)*R*0.1, Math.cos(t)*0.16]); }
+    for(let j=n;j>=1;j--){ const r=Ri*j/n; prof.push([r, -zTop(r)]); }
+    prof.push([0.001, -zTop(0)]);
+    merge(S, lathe(prof.reverse(),30,P.red,0.92));
+    // 고리형 영양형(도장 반지) + 염색질 점 — 표면 높이에 얹는다
+    const ring=[]; for(let i=0;i<=28;i++){ const t=i/28*Math.PI*2; const x=0.35+Math.cos(t)*0.28, y=0.3+Math.sin(t)*0.28; ring.push([x, y, zTop(Math.hypot(x,y))+0.05]); }
+    merge(S, tube(ring,0.055,P.body,1,7)); merge(S, xf(sphere(0.11,P.dark,1,10,6),{t:[0.63,0.3,zTop(0.7)+0.08]}));
+    for(let i=0;i<24;i++){ const a=rnd()*6.28, rr=0.2+rnd()*0.85; merge(S, xf(sphere(0.03,P.dark,1,5,3),{t:[Math.cos(a)*rr,Math.sin(a)*rr,zTop(rr)+0.02]})); }
+    xf(S,{r:[-1.0,0.25,0]}); return S;
+  },
+  nematode(p, P, rnd){
+    const S=M(); const L=p.len||14, r=p.r||0.6; const path=[]; const n=60;
+    for(let i=0;i<=n;i++){ const t=i/n; path.push([Math.sin(t*Math.PI*1.6)*L*0.09, Math.cos(t*Math.PI*1.1)*L*0.05, (t-0.5)*L*0.6]); }
+    let rf = t=>Math.pow(Math.sin(Math.PI*Math.min(1,Math.max(0,t))),0.35);
+    if(p.whip) rf = t=> t<0.6 ? 0.3 : Math.pow(Math.sin(Math.PI*(t-0.6)/0.4*0.9+0.1),0.5)*1.4;
+    if(p.pin) rf = t=> t<0.75 ? Math.pow(Math.sin(Math.PI*t/0.75*0.5+0.15),0.4) : Math.max(0.03,(1-(t-0.75)/0.25)*0.6);
+    merge(S, tube(path, r, P.body, 1, 12, rf)); xf(S,{r:[0.3,0.9,0.2]}); return S;
+  },
+  fluke(p, P, rnd){
+    const S=M(); const L=p.len||2.5, W=p.w||0.9; const body=sphere(1,P.body,1,28,18);
+    body.v=body.v.map(([x,y,z])=>{ const zn=(z+1)/2; const taper=p.leaf? (0.35+0.65*Math.sin(Math.PI*Math.pow(zn,0.75))) : (0.75+0.25*Math.sin(Math.PI*zn)); return [x*W*taper, y*0.16*(0.6+0.4*Math.sin(Math.PI*zn)), z*L]; });
+    merge(S,body);
+    const suck=(z,rr)=>{ const ring=[]; for(let i=0;i<=20;i++){ const t=i/20*Math.PI*2; ring.push([Math.cos(t)*rr, -0.19-0.02, z+Math.sin(t)*rr]); } merge(S, tube(ring,0.05,P.dark,1,6)); };
+    suck(L*0.93, 0.14); suck(L*0.45, 0.16);
+    xf(S,{r:[1.15,0.35,0.6]}); return S;
+  },
+  prion(p, P, rnd){
+    // 아밀로이드 섬유: 원섬유 두 가닥이 서로 감긴다. 옆에 아직 안 붙은 짧은 조각들.
+    const S=M();
+    for(let k=0;k<2;k++){ const path=[]; for(let i=0;i<=90;i++){ const t=i/90; const ph=t*Math.PI*5+k*Math.PI; path.push([Math.cos(ph)*0.26, Math.sin(ph)*0.26, (t-0.5)*4.2]); } merge(S, tube(path, 0.17, k?P.light:P.body, 1, 9)); }
+    for(let i=0;i<5;i++){ const path=[]; const z0=(rnd()-0.5)*3.4, y0=-1.1+(i%3)*0.5, x0=1.0+(rnd()-0.5)*0.4; for(let j=0;j<=16;j++){ const t=j/16; path.push([x0+Math.sin(t*Math.PI*2)*0.08, y0+Math.cos(t*Math.PI*2)*0.08, z0+(t-0.5)*1.1]); } merge(S, tube(path,0.11,P.pale,1,7)); }
+    xf(S,{r:[0.3,0.6,0.4]}); return S;
+  },
+  multi(p, P, rnd){
+    const S=M(); const mem=(p.members||['rod','icosa_naked']).slice(0,4);
+    const DEF={rod:{len:2.2,r:0.5,flagella:4,peritrichous:true},curved_rod:{len:2.2,r:0.4,flagella:1},icosa_naked:{detail:1},env_spike:{spikes:70,spikeLen:0.13,wobble:0.15},env_spike_club:{spikes:56},cocci:{arrange:'cluster',n:10,r:0.5},plasmodium:{},nematode:{len:12,r:0.6},fluke:{len:2.4,w:0.9,leaf:true},yeast:{}};
+    const grid=[[-1,1],[1,1],[-1,-1],[1,-1]];
+    const SZ={icosa_naked:0.55, cocci:0.7, yeast:0.7, plasmodium:0.9};
+    mem.forEach((id,i)=>{ const m=BUILD[id](DEF[id]||{}, P, rng(77+i)); fit(m, SZ[id]||0.9); xf(m,{t:[grid[i][0]*0.95, grid[i][1]*0.85, 0]}); merge(S,m); });
+    fit(S, 1.45); return S;
+  },
+  unknown(p, P, rnd){
+    const S=M(); for(const q of fib(120,1.05)){ merge(S, xf(sphere(0.045,P.grey,1,5,3),{t:q})); } return S;
+  },
+};
+function fit(m, R){ let mx=0; for(const v of m.v){ const d=Math.hypot(...v); if(d>mx) mx=d; } const k=R/(mx||1); m.v=m.v.map(v=>v.map(x=>x*k)); return m; }
+function buildScene(dz, P){ const m = BUILD[dz.class](dz.params||{}, P, rng(hash(dz.name))); if(dz.class!=='multi') fit(m, 1.5); return m; }
+function hash(s){ let h=2166136261; for(const ch of s){ h^=ch.codePointAt(0); h=Math.imul(h,16777619); } return h>>>0; }
+
+/* ══════════ 렌더러 ══════════ */
+function Renderer(canvas){
+  const ctx=canvas.getContext('2d'); let W=0,H=0,DPR=1;
+  let rot=[[1,0,0],[0,1,0],[0,0,1]]; let mesh=null; let lastDraw=0;
+  const L=norm([-0.45,0.6,0.85]);
+  function resize(){ DPR=Math.min(2,devicePixelRatio||1); W=canvas.clientWidth||300; H=canvas.clientHeight||300; canvas.width=W*DPR; canvas.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0); }
+  function rotBy(ax,ay){ // Y then X 회전을 앞에 곱한다
+    const cy=Math.cos(ay),sy=Math.sin(ay),cx=Math.cos(ax),sx=Math.sin(ax);
+    const Ry=[[cy,0,sy],[0,1,0],[-sy,0,cy]], Rx=[[1,0,0],[0,cx,-sx],[0,sx,cx]];
+    rot = mul(Rx, mul(Ry, rot));
+  }
+  function mul(A,B){ const C=[[0,0,0],[0,0,0],[0,0,0]]; for(let i=0;i<3;i++)for(let j=0;j<3;j++)for(let k=0;k<3;k++)C[i][j]+=A[i][k]*B[k][j]; return C; }
+  function draw(){
+    if(!mesh){ ctx.clearRect(0,0,W,H); return; }
+    ctx.clearRect(0,0,W,H);
+    const scale=Math.min(W,H)*0.3, cx=W/2, cy=H/2, F=7.5;
+    const tv=mesh.v.map(([x,y,z])=>{ const X=rot[0][0]*x+rot[0][1]*y+rot[0][2]*z, Y=rot[1][0]*x+rot[1][1]*y+rot[1][2]*z, Z=rot[2][0]*x+rot[2][1]*y+rot[2][2]*z; const k=F/(F-Z); return [cx+X*scale*k, cy-Y*scale*k, Z, X, Y]; });
+    const faces=[];
+    for(const [idx,mi] of mesh.f){ let z=0; for(const i of idx) z+=tv[i][2]; faces.push([z/idx.length, idx, mi]); }
+    faces.sort((a,b)=>a[0]-b[0]);
+    for(const [,idx,mi] of faces){
+      const a=tv[idx[0]], b=tv[idx[1]], c=tv[idx[2]];
+      // 뷰 공간 법선 (X,Y,Z)
+      const u=[b[3]-a[3],b[4]-a[4],b[2]-a[2]], v=[c[3]-a[3],c[4]-a[4],c[2]-a[2]]; let n=cross(u,v); const nl=Math.hypot(...n)||1; n=n.map(x=>x/nl);
+      const m=mesh.mats[mi];
+      if(!m.two && n[2]<0) continue; // 뒷면 제거
+      let d=n[0]*L[0]+n[1]*L[1]+n[2]*L[2]; if(m.two) d=Math.abs(d); d=Math.max(0,d);
+      const spec=Math.pow(Math.max(0,d),18)*0.35; const sh=0.32+0.68*d;
+      const col=m.c.map(x=>Math.min(255,Math.round(x*sh+255*spec)));
+      ctx.fillStyle=`rgba(${col[0]},${col[1]},${col[2]},${m.a})`;
+      ctx.beginPath(); ctx.moveTo(a[0],a[1]); for(let i=1;i<idx.length;i++) ctx.lineTo(tv[idx[i]][0],tv[idx[i]][1]); ctx.closePath(); ctx.fill();
+      if(m.a>=1){ ctx.strokeStyle=ctx.fillStyle; ctx.lineWidth=0.6; ctx.stroke(); } // 틈 메우기
+    }
+  }
+  return {resize, draw, rotBy, set(m){ mesh=m; }, reset(){ rot=[[1,0,0],[0,1,0],[0,0,1]]; rotBy(-0.25,0.35); }, get W(){return W;}};
+}
+
+/* ══════════ 뷰어 ══════════ */
+const canvas=document.getElementById('c'), R=Renderer(canvas);
+const S={i:0, spin:!reduce, filter:''};
+function cur(){ return DZ[S.i]; }
+function resize(){ const box=document.getElementById('cv'); const w=box.clientWidth; const h=Math.max(380,Math.min(560,Math.round(w*0.8))); box.style.height=h+'px'; R.resize(); R.draw(); }
+function show(i, push=true){
+  S.i=(i+DZ.length)%DZ.length; const dz=cur();
+  R.set(buildScene(dz, palette(CLASSES[dz.class].group))); R.reset(); R.draw();
+  document.getElementById('pick').value=S.i;
+  document.getElementById('clsTag').textContent=CLASSES[dz.class].label;
+  renderPanel(dz);
+  document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('on', c.dataset.i==String(S.i)));
+  if(push) history.replaceState(null,'','#'+encodeURIComponent(dz.name));
+}
+function sig(d){ return d.class+'|'+JSON.stringify(d.params||{}); }
+const TW = {}; DZ.forEach(d=>{ (TW[sig(d)] ||= []).push(d.name); });
+function scaleSVG(dz){
+  const w=320,h=72, x0=8, x1=w-8; const lo=0, hi=9; // log10 nm: 1nm ~ 1m
+  const X=v=>x0+(Math.log10(v)-lo)/(hi-lo)*(x1-x0);
+  const ticks=[[1,'1 nm'],[10,'10'],[100,'100'],[1e3,'1 µm'],[1e4,'10'],[1e5,'100'],[1e6,'1 mm'],[1e7,'1 cm'],[1e8,'10'],[1e9,'1 m']];
+  const refs=[[200,'광학현미경 한계'],[7000,'적혈구'],[70000,'머리카락']];
+  let s=`<svg class="scale" viewBox="0 0 ${w} ${h}" aria-label="크기 눈금">`;
+  s+=`<line x1="${x0}" y1="40" x2="${x1}" y2="40" stroke="${css('--line-strong')}" stroke-width="1.2"/>`;
+  for(const [v,l] of ticks){ const x=X(v); s+=`<line x1="${x}" y1="36" x2="${x}" y2="44" stroke="${css('--line-strong')}"/><text x="${x}" y="58" font-size="9" text-anchor="middle" fill="${css('--faint')}">${l}</text>`; }
+  for(const [v,l] of refs){ const x=X(v); s+=`<line x1="${x}" y1="20" x2="${x}" y2="40" stroke="${css('--faint')}" stroke-dasharray="2 2"/><text x="${x}" y="16" font-size="8.5" text-anchor="middle" fill="${css('--muted')}">${l}</text>`; }
+  if(dz.size_nm){ const a=X(Math.max(1,dz.size_nm[0])), b=X(Math.max(1,dz.size_nm[1])); const col=css(GROUP_COLOR[CLASSES[dz.class].group]);
+    s+=`<rect x="${Math.min(a,b)-3}" y="33" width="${Math.max(6,Math.abs(b-a)+6)}" height="14" rx="4" fill="${col}" opacity=".85"/>`; }
+  return s+'</svg>';
+}
+function renderPanel(dz){
+  const c=CLASSES[dz.class]; const twins=TW[sig(dz)].filter(n=>n!==dz.name);
+  const enc=encodeURIComponent(dz.name);
+  document.getElementById('panel').innerHTML = `
+    <span class="gb g${dz.grade}">${dz.grade}급</span><h3>${dz.name}</h3>
+    <p class="path"><em class="lat">${dz.pathogen}</em></p>
+    <p class="tax">${dz.taxon}</p>
+    <h4>형태 · ${c.group}</h4>
+    <p><b>${c.label}.</b> ${c.desc}</p>
+    ${dz.note?`<p>${dz.note}</p>`:''}
+    <h4>크기 · ${dz.size}</h4>
+    ${scaleSVG(dz)}
+    ${twins.length?`<div class="same">형태만으로는 <b>${twins.join(' · ')}</b>와 같은 그림이다.</div>`:''}
+    <div class="links"><a href="../dogam/#${enc}">📖 도감</a><a href="../field/#${enc}">🚑 현장카드</a>${dz.class!=='unknown'?`<a href="#" data-cls="${dz.class}" class="gocls">같은 형태 ${DZ.filter(x=>x.class===dz.class).length}종</a>`:''}</div>`;
+  document.querySelector('.gocls')?.addEventListener('click',e=>{ e.preventDefault(); document.getElementById('cls').value=dz.class; applyFilter(); document.getElementById('gallery').scrollIntoView({behavior:reduce?'auto':'smooth'}); });
+}
+/* 선택·필터 */
+const pick=document.getElementById('pick'), clsSel=document.getElementById('cls');
+function fillPick(){ pick.innerHTML=''; DZ.forEach((d,i)=>{ if(S.filter && d.class!==S.filter) return; const o=document.createElement('option'); o.value=i; o.textContent=`${d.grade}급 · ${d.name}`; pick.appendChild(o); }); }
+D.classes.forEach(c=>{ const n=DZ.filter(d=>d.class===c.id).length; if(!n) return; const o=document.createElement('option'); o.value=c.id; o.textContent=`${c.label} (${n})`; clsSel.appendChild(o); });
+function applyFilter(){ S.filter=clsSel.value; fillPick(); if(S.filter && cur().class!==S.filter) show(DZ.findIndex(d=>d.class===S.filter)); document.querySelectorAll('.tile').forEach(t=>t.style.opacity = (!S.filter||t.dataset.cls===S.filter)?1:0.45); }
+clsSel.onchange=applyFilter; pick.onchange=()=>show(+pick.value);
+const step=d=>{ let i=S.i; do{ i=(i+d+DZ.length)%DZ.length; }while(S.filter && DZ[i].class!==S.filter && i!==S.i); show(i); };
+document.getElementById('prev').onclick=()=>step(-1); document.getElementById('next').onclick=()=>step(1);
+document.getElementById('spin').onclick=e=>{ S.spin=!S.spin; e.target.classList.toggle('on',S.spin); };
+document.getElementById('reset').onclick=()=>{ R.reset(); R.draw(); };
+/* 드래그 */
+let drag=false,lx=0,ly=0;
+canvas.addEventListener('pointerdown',e=>{ drag=true; lx=e.clientX; ly=e.clientY; canvas.classList.add('drag'); canvas.setPointerCapture(e.pointerId); });
+canvas.addEventListener('pointermove',e=>{ if(!drag) return; const dx=e.clientX-lx, dy=e.clientY-ly; lx=e.clientX; ly=e.clientY; R.rotBy(dy*0.008, dx*0.008); R.draw(); });
+canvas.addEventListener('pointerup',()=>{ drag=false; canvas.classList.remove('drag'); });
+canvas.addEventListener('pointercancel',()=>{ drag=false; canvas.classList.remove('drag'); });
+addEventListener('keydown',e=>{ if(e.target.tagName==='SELECT'||e.target.tagName==='INPUT') return; if(e.key==='ArrowLeft') step(-1); if(e.key==='ArrowRight') step(1); });
+/* 자동 회전 */
+(function loop(){ if(S.spin && !drag && !document.hidden){ R.rotBy(0,0.006); R.draw(); } requestAnimationFrame(loop); })();
+
+/* ══════════ 머리 통계 · 갤러리 ══════════ */
+const groups=['바이러스','세균','진균','기생충','프리온','복수','미확인'];
+document.getElementById('stats').innerHTML = groups.map(g=>{ const n=DZ.filter(d=>CLASSES[d.class].group===g).length; const k=D.classes.filter(c=>c.group===g && DZ.some(d=>d.class===c.id)).length; return `<div class="stat" style="--sc:var(${GROUP_COLOR[g]})"><div class="v num">${n}</div><div class="k">${g} · 형태 ${k}</div></div>`; }).join('');
+const grid=document.getElementById('grid'); const tileR=[];
+D.classes.forEach(c=>{ const ds=DZ.map((d,i)=>[d,i]).filter(([d])=>d.class===c.id); if(!ds.length) return;
+  const t=document.createElement('div'); t.className='tile'; t.dataset.cls=c.id; t.style.setProperty('--sc',`var(${GROUP_COLOR[c.group]})`);
+  t.innerHTML=`<canvas></canvas><div class="tb"><div class="tg">${c.group} · ${ds.length}종</div><div class="tl">${c.label}</div><div class="td">${c.desc}</div><div class="chips">${ds.map(([d,i])=>`<button class="chip" data-i="${i}">${d.name.length>14?d.name.slice(0,13)+'…':d.name}</button>`).join('')}</div></div>`;
+  grid.appendChild(t);
+  const cv=t.querySelector('canvas'); const r=Renderer(cv); const rep=ds[0][0];
+  const entry={r, cv, rep, built:false, hover:false, cls:c.id};
+  tileR.push(entry);
+  cv.addEventListener('click',()=>{ show(ds[0][1]); document.getElementById('view').scrollIntoView({behavior:reduce?'auto':'smooth'}); });
+  cv.addEventListener('pointerenter',()=>{ entry.hover=true; }); cv.addEventListener('pointerleave',()=>{ entry.hover=false; });
+  t.querySelectorAll('.chip').forEach(ch=>ch.onclick=()=>{ show(+ch.dataset.i); document.getElementById('view').scrollIntoView({behavior:reduce?'auto':'smooth'}); });
+});
+function buildTile(e){ e.r.resize(); e.r.set(buildScene(e.rep, palette(CLASSES[e.cls].group))); e.r.reset(); e.r.draw(); e.built=true; }
+/* 보이는 타일 먼저, 나머지는 한가할 때 하나씩 */
+const io=new IntersectionObserver(es=>{ for(const x of es){ if(!x.isIntersecting) continue; const e=tileR.find(t=>t.cv===x.target); if(e && !e.built) buildTile(e); } },{rootMargin:'120px'});
+tileR.forEach(e=>io.observe(e.cv));
+(function lazyAll(){ const e=tileR.find(t=>!t.built); if(!e) return; buildTile(e); setTimeout(lazyAll, 40); })();
+(function tileLoop(){ if(!reduce) for(const e of tileR){ if(e.hover && e.built){ e.r.rotBy(0,0.02); e.r.draw(); } } requestAnimationFrame(tileLoop); })();
+
+/* 형태 쌍둥이 */
+document.getElementById('twins').innerHTML = '<ul class="tight">'+Object.entries(TW).filter(([,v])=>v.length>1).sort((a,b)=>b[1].length-a[1].length).map(([k,v])=>{ const c=CLASSES[k.split('|')[0]]; return `<li><b>${v.join(' · ')}</b> <span class="muted small">— ${c.label}</span></li>`; }).join('')+'</ul>';
+
+/* 시동 */
+fillPick();
+const h=decodeURIComponent(location.hash.slice(1)); const hi=DZ.findIndex(d=>d.name===h);
+resize(); show(hi>=0?hi:0, false);
+addEventListener('resize',()=>{ resize(); tileR.forEach(e=>{ if(e.built){ e.r.resize(); e.r.draw(); } }); });
+addEventListener('hashchange',()=>{ const h=decodeURIComponent(location.hash.slice(1)); const i=DZ.findIndex(d=>d.name===h); if(i>=0 && i!==S.i) show(i,false); });
+const rethem=()=>{ show(S.i,false); tileR.forEach(e=>{ if(e.built) buildTile(e); }); };
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', rethem);
+new MutationObserver(rethem).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+})();
+</script>
+</body>
+</html>

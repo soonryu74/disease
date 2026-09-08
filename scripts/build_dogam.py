@@ -9,6 +9,7 @@ import html as H
 import json
 import os
 import re
+from urllib.parse import quote
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, '05_감염병_질병정보')
@@ -141,9 +142,11 @@ def build():
         notes = ''.join(f'<p class="nt">{md_inline(n)}</p>' for n in d['notes'])
         alias_html = (f'<div class="als">옛 이름·별칭: {H.escape(" · ".join(d["aliases"]))}</div>'
                       if d['aliases'] else '')
+        alias_html += (f'<div class="als"><a href="../pathogen/#{quote(d["name"])}">'
+                       f'🧫 병원체 3D 형태 보기 →</a></div>')
         eng = f'<span class="eng">{H.escape(d["eng"])}</span>' if d['eng'] else ''
         cards.append(
-            f'<details class="dz" data-g="{g}" data-s="{H.escape(hay)}">'
+            f'<details class="dz" id="{H.escape(d["name"])}" data-g="{g}" data-s="{H.escape(hay)}">'
             f'<summary><span class="gb g{g}">{g}급</span>'
             f'<span class="nm">{H.escape(d["name"])}</span>{eng}'
             f'<span class="pv">{H.escape(patho_txt)}</span></summary>'
@@ -329,6 +332,16 @@ __CARDS__
     chips.forEach(function(x){x.classList.toggle('on',x===ch);});
     apply();
   });});
+  /* #질병명 으로 들어오면 필터를 풀고 그 카드를 펴서 보여 준다 */
+  function goHash(){
+    var h=decodeURIComponent(location.hash.slice(1)); if(!h) return;
+    var el=document.getElementById(h); if(!el||!el.classList.contains('dz')) return;
+    grade='all'; q.value='';
+    chips.forEach(function(x){x.classList.toggle('on',x.dataset.g==='all');});
+    apply(); el.open=true;
+    el.scrollIntoView({block:'start'});
+  }
+  goHash(); window.addEventListener('hashchange',goHash);
 })();
 </script>
 </body>

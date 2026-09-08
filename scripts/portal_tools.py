@@ -96,6 +96,69 @@ PRINT_JS = """
 """
 
 
+# ── 공통 상단 메뉴 ─────────────────────────────────────────────────────
+# 페이지마다 제각각이던 내비를 조립 단계에서 하나로 통일한다. 페이지 자체 <nav>는 감춘다.
+NAV_ITEMS = [
+    ('', '🏠', '허브'), ('dogam/', '📖', '도감'), ('pathogen/', '🧫', '병원체'),
+    ('chronicle/', '📜', '연대기'), ('checker/', '🩺', '검사기'), ('field/', '🚑', '현장카드'),
+    ('inflow/', '🌐', '유입지도'), ('cross/', '🧪', '교차검증'), ('lab/', '🔬', '진단검사'),
+    ('quarantine/', '🛂', '검역'), ('daily/', '📡', '상황판'), ('flu/', '🦠', '인플루엔자'),
+    ('law/', '⚖', '법령'), ('data/', '⬇', '자료실'),
+]
+NAV_CSS = """
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:2px;
+  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+.gnav .gin::-webkit-scrollbar{display:none}
+.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
+  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
+.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
+@media (min-width:1000px){.gnav .gin{flex-wrap:wrap;overflow:visible}}
+"""
+
+
+def nav_html(up, current):
+    items = []
+    for href, icon, label in NAV_ITEMS:
+        on = ' on' if href.rstrip('/') == current else ''
+        items.append(f'<a class="gi{on}" href="{up}{href or "./"}">{icon} {label}</a>')
+    return (f'<nav class="gnav"><div class="gin">'
+            f'<a class="gbrand" href="{up}./">🦠 감염병 자료 아카이브<i>.</i></a>'
+            + ''.join(items) + '</div></nav>'
+            # 좁은 화면에서 현재 쪽 항목이 보이도록 가로로 굴린다
+            '<script>(function(){var a=document.querySelector(".gnav a.on");'
+            'if(a){var p=a.parentNode;p.scrollLeft=a.offsetLeft-p.clientWidth/2+a.offsetWidth/2;}})();</script>')
+
+
+def inject_nav(path, depth, current):
+    s = open(path, encoding='utf-8').read()
+    # 이미 있으면 걷어내고 다시 넣는다 — 메뉴 항목이 바뀌면 모든 쪽이 같이 바뀌어야 한다
+    s = re.sub(r'\n?<nav class="gnav">.*?</nav>(?:<script>.*?</script>)?', '', s, flags=re.S)
+    s = s.replace(NAV_CSS + '\n', '')
+    if '</style>' in s:
+        s = s.replace('</style>', NAV_CSS + '\n</style>', 1)
+    else:
+        s = s.replace('</head>', f'<style>{NAV_CSS}</style>\n</head>', 1)
+    html = nav_html('../' * depth, current)
+    # 인쇄 머리글 뒤(= 본문 맨 앞)에 둔다. 머리글이 없으면 <body> 뒤.
+    idx = s.find('</div>', s.find('id="printhead"')) if 'id="printhead"' in s else -1
+    if idx >= 0:
+        cut = idx + len('</div>')
+        s = s[:cut] + '\n' + html + s[cut:]
+    else:
+        body = re.search(r'<body[^>]*>', s)
+        s = (s[:body.end()] + '\n' + html + s[body.end():]) if body else html + s
+    open(path, 'w', encoding='utf-8').write(s)
+    return True
+
+
 def tools_html(data_href='data/', home='./'):
     return (f'<div class="pagetools">'
             f'<button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button>'
@@ -164,7 +227,10 @@ def inject_all(portal_dir):
                 continue
             p = os.path.join(dirpath, f)
             depth = 0 if os.path.dirname(p) == portal_dir else 1
-            if inject(p, depth):
+            current = '' if depth == 0 else os.path.basename(dirpath)
+            did = inject(p, depth)
+            did = inject_nav(p, depth, current) or did
+            if did:
                 n += 1
-                print('  도구 주입', os.path.relpath(p, os.path.dirname(portal_dir)))
+                print('  도구·메뉴 주입', os.path.relpath(p, os.path.dirname(portal_dir)))
     return n
