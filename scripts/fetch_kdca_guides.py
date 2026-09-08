@@ -22,9 +22,21 @@ D02 = os.path.join(ROOT, '02_지침_정리', 'data')
 PORTAL = os.path.join(D02, '지침_전체목록_감염병포털.csv')
 OUT_KDCA = os.path.join(D02, '지침_전체목록_KDCA게시판.csv')
 OUT_ALL = os.path.join(D02, '지침_통합목록.csv')
-LIST = 'https://www.kdca.go.kr/bbs/kdca/55/artclList.do?page={page}'
-VIEW = 'https://www.kdca.go.kr/bbs/kdca/55/{id}/artclView.do'
+LIST = 'https://www.kdca.go.kr/bbs/kdca/{board}/artclList.do?page={page}'
+VIEW = 'https://www.kdca.go.kr/bbs/kdca/{board}/{id}/artclView.do'
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'
+
+# 질병관리청 누리집에서 지침·서식·교육자료가 흩어져 있는 게시판.
+# 지침 게시판(55) 하나만 보면 코로나19 치료제 안내서·역학조사 서식·검역 개정 공고를 놓친다.
+BOARDS = [
+    ('55', '지침', 'https://www.kdca.go.kr/kdca/2861/subview.do'),
+    ('245', '코로나19지침', 'https://www.kdca.go.kr/kdca/2862/subview.do'),
+    ('57', '서식', 'https://www.kdca.go.kr/kdca/2863/subview.do'),
+    ('49', '교육자료', 'https://www.kdca.go.kr/kdca/2857/subview.do'),
+    ('50', '공지사항', 'https://www.kdca.go.kr/kdca/2769/subview.do'),
+]
+# 공지사항은 채용·회의록이 대부분이라 지침·감염병 관련만 걸러 담는다.
+NOTICE_KEEP = re.compile(r'지침|안내서|매뉴얼|가이드|검역관리지역|감염병|예방접종|역학조사|신고기준|관리기준|표준')
 
 
 def get(url, tries=6):
@@ -36,37 +48,39 @@ def get(url, tries=6):
     return ''
 
 
-def parse(h):
+def parse(h, board):
     out = []
     for block in re.split(r'<tr', h):
-        m = re.search(r"jf_viewArtcl\('kdca',\s*'55',\s*'(\d+)'\)[^>]*>(.*?)</a>", block, re.S)
+        m = re.search(r"jf_viewArtcl\('kdca',\s*'%s',\s*'(\d+)'\)[^>]*>(.*?)</a>" % board, block, re.S)
         if not m:
             continue
         d = re.search(r'\d{4}\.\d{2}\.\d{2}', block)
         t = html.unescape(re.sub(r'<[^>]+>|\s+', ' ', m.group(2))).strip()
+        t = re.sub(r'\s*새글\s*$', '', t)
         out.append({'artclId': m.group(1), '제목': t, '등록일': d.group(0) if d else ''})
     return out
 
 
-def crawl():
-    """쪽을 여섯씩 동시에 받는다. 망이 느려 한 쪽씩 받으면 30분을 넘긴다."""
+def crawl(board, label, max_pages=400):
+    """쪽을 여섯씩 동시에 받는다. 망이 느려 한 쪽씩 받으면 게시판 하나에 30분을 넘긴다."""
     from concurrent.futures import ThreadPoolExecutor
     seen, rows = set(), []
     start, batch = 1, 24
-    while start < 400:
+    while start < max_pages:
         pages = list(range(start, start + batch))
         with ThreadPoolExecutor(max_workers=6) as ex:
-            results = list(ex.map(lambda p: (p, parse(get(LIST.format(page=p)))), pages))
+            results = list(ex.map(lambda p: (p, parse(get(LIST.format(board=board, page=p)), board)), pages))
         got_new = False
         for page, rs in sorted(results):
             new = [r for r in rs if r['artclId'] not in seen]
             for r in new:
                 seen.add(r['artclId'])
-                r['URL'] = VIEW.format(id=r['artclId'])
+                r['URL'] = VIEW.format(board=board, id=r['artclId'])
+                r['게시판'] = label
                 rows.append(r)
             if new:
                 got_new = True
-            print(f'  page {page}: {len(rs)}건 · 새로 {len(new)} (누계 {len(rows)})', flush=True)
+        print(f'  {label}(#{board}) {start}~{start + batch - 1}쪽 → 누계 {len(rows)}', flush=True)
         if not got_new:
             break
         start += batch
@@ -86,16 +100,26 @@ def year_of(title, date):
 
 
 def main():
-    print('누리집 지침 게시판 수집')
-    kd = crawl()
-    if len(kd) < 100:
+    print('누리집 게시판 수집 —', ', '.join(f'{l}(#{b})' for b, l, _ in BOARDS))
+    kd = []
+    for board, label, _ in BOARDS:
+        rows_ = crawl(board, label)
+        if label == '공지사항':
+            before = len(rows_)
+            rows_ = [r for r in rows_ if NOTICE_KEEP.search(r['제목'])]
+            print(f'    공지사항 {before} → 지침·감염병 관련 {len(rows_)}건만 보관', flush=True)
+        kd += rows_
+    if len(kd) < 500:
         sys.exit(f'수집이 너무 적다({len(kd)}건). 게시판 구조가 바뀌었거나 망이 막혔다. 기존 파일을 지우지 않는다.')
     kd.sort(key=lambda r: r['등록일'], reverse=True)
     with open(OUT_KDCA, 'w', encoding='utf-8', newline='') as f:
-        w = csv.DictWriter(f, ['artclId', '제목', '등록일', 'URL'])
+        w = csv.DictWriter(f, ['게시판', 'artclId', '제목', '등록일', 'URL'])
         w.writeheader()
         w.writerows(kd)
-    print(f'  → {os.path.relpath(OUT_KDCA, ROOT)} {len(kd)}건')
+    by = {}
+    for r in kd:
+        by[r['게시판']] = by.get(r['게시판'], 0) + 1
+    print(f'  → {os.path.relpath(OUT_KDCA, ROOT)} {len(kd)}건  ' + ' · '.join(f'{k} {v}' for k, v in by.items()))
 
     portal = list(csv.DictReader(open(PORTAL, encoding='utf-8-sig')))
     merged = {}
@@ -107,7 +131,7 @@ def main():
                 merged[k].setdefault('URL2', r['URL'])
                 continue
             merged[k] = {'제목': r['제목'], '등록일': r['등록일'], 'URL': r['URL'], '출처': src,
-                         '계열키': k[0], '연도': k[1]}
+                         '게시판': r.get('게시판', ''), '계열키': k[0], '연도': k[1]}
     allrows = sorted(merged.values(), key=lambda r: (r['연도'], r['등록일']), reverse=True)
     # 계열별 판 수·최신 여부
     by_series = {}
@@ -119,7 +143,7 @@ def main():
             r['최신판'] = 'Y' if i == 0 else ''
             r['판수'] = len(rs)
     with open(OUT_ALL, 'w', encoding='utf-8', newline='') as f:
-        w = csv.DictWriter(f, ['제목', '등록일', '연도', '출처', '최신판', '판수', 'URL', 'URL2', '계열키'])
+        w = csv.DictWriter(f, ['제목', '등록일', '연도', '출처', '게시판', '최신판', '판수', 'URL', 'URL2', '계열키'])
         w.writeheader()
         w.writerows(allrows)
     only_kd = sum(1 for r in allrows if r['출처'] == 'KDCA게시판')
