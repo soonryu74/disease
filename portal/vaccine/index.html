@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>예방접종</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A; --warn-soft:#F6E3E3; --grid:#E4EAE7;
+    --a1:#0E6E63; --a2:#2F7D8C; --a3:#6A4C93; --a4:#C7712B; --a5:#B8942A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020; --grid:#22302C;
+    --a1:#54B7AA; --a2:#6FBECB; --a3:#B49BDC; --a4:#E0A268; --a5:#D8BE6A;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020; --grid:#22302C;
+    --a1:#54B7AA; --a2:#6FBECB; --a3:#B49BDC; --a4:#E0A268; --a5:#D8BE6A;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;overflow-x:hidden;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  header{padding:38px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(27px,5.5vw,42px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:9px;margin:20px 0 0}
+  .kpi>*{min-width:0}
+  .kb{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .kb b{display:block;font-size:23px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+  .kb span{font-size:12.5px;color:var(--muted)}
+  .kb.bad b{color:var(--warn)}
+
+  section{padding:30px 0 0}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.025em}
+  .lede{color:var(--muted);font-size:14.5px;margin:0 0 16px;max-width:70ch}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:15px 18px;font-size:13.5px;margin:16px 0}
+  .note.red{background:var(--warn-soft);color:var(--warn)}
+  .note ul{margin:8px 0 0;padding-left:18px}
+  .note li{margin:4px 0}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow)}
+  .panel>*{min-width:0}
+  .ptit{font-size:15.5px;font-weight:800;margin:0 0 3px}
+  .psub{font-size:13px;color:var(--muted);margin:0 0 12px}
+  .cw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  svg{display:block;max-width:100%}
+  .lg{display:flex;gap:13px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+  .lg i{display:inline-block;width:16px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--muted);font-size:12px;font-weight:700;border-bottom:1px solid var(--line-strong);white-space:nowrap}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tw table{min-width:480px}
+
+  /* 문턱 막대 */
+  .th{border-bottom:1px solid var(--line);padding:13px 0}
+  .th:last-child{border-bottom:0}
+  .thead{display:flex;gap:9px;align-items:baseline;flex-wrap:wrap}
+  .thead b{font-size:15px;font-weight:800}
+  .thead .vx{font-size:12px;color:var(--faint)}
+  .vd{font-size:11px;font-weight:800;border-radius:5px;padding:2px 7px;margin-left:auto;white-space:nowrap}
+  .v-impossible{background:var(--warn);color:#fff}
+  .v-under{background:var(--warn-soft);color:var(--warn)}
+  .v-edge{background:#F3E7C9;color:#7A5B12}
+  .v-over{background:var(--accent-soft);color:var(--accent-ink)}
+  .v-none{background:var(--surface-2);color:var(--muted)}
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .v-edge{background:#3A3115;color:#E5CF87}}
+  :root[data-theme="dark"] .v-edge{background:#3A3115;color:#E5CF87}
+  .tnote{font-size:12.5px;color:var(--muted);margin-top:6px}
+  .tnote code{font-size:12px}
+
+  .ins .i{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:10px;padding:12px 15px;font-size:13.5px;color:var(--muted);margin-bottom:9px}
+  .ins .i b{color:var(--ink)}
+  .foot-links{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 0}
+  .foot-links a{font-size:13px;font-weight:700;border:1px solid var(--line-strong);padding:8px 13px;border-radius:9px}
+  .foot-links a:hover{background:var(--surface-2)}
+  footer{padding:26px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:30px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  .sel{display:flex;gap:5px;flex-wrap:wrap;margin:0 0 12px}
+  .sel button{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border-radius:999px;padding:5px 11px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--muted)}
+  .sel button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  @media (max-width:760px){ .wrap{padding:0 14px} }
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
+   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
+.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
+  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
+.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
+  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
+.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
+@media (max-width:760px){
+  /* 줄바꿈한 메뉴는 좁은 화면에서 네 줄이 된다. 그대로 고정하면 화면의 1/5을 먹으므로
+     따라다니지 않게 하고 위로 올려 보내 준다. 항목은 하나도 가리지 않는다. */
+  .gnav{position:static}
+  .gnav .gbrand{font-size:12.5px;margin-right:6px}
+  .gnav a.gi{font-size:12px;padding:4px 6px}
+}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>예방접종</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../guides/">📕 지침서가</a><a class="gi" href="../whitepaper/">📗 백서</a><a class="gi on" href="../vaccine/">💉 예방접종</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi" href="../data/">⬇ 자료실</a></div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">⑱ 예방접종</p>
+  <h1>접종률과 문턱</h1>
+  <p class="thesis">질병관리청이 해마다 7월에 내는 「전국 어린이 예방접종률 현황」을 원장으로 옮기고,
+  <b>집단면역 문턱과 나란히 놓았다</b>. 접종률이 높다는 말만으로는 유행을 설명하지 못한다 —
+  2024년 백일해는 접종률이 떨어져서 164.5배가 된 것이 아니다.</p>
+  <div class="kpi" id="kpi"></div>
+</header>
+
+<section>
+  <h2>연령별 완전접종률</h2>
+  <p class="lede">‘완전접종’은 그 나이까지 맞아야 할 백신을 <b>하나도 빠짐없이</b> 마친 아이의 비율이다.
+  백신 하나만 놓쳐도 완전접종이 아니므로, 나이가 올라가 맞을 것이 늘수록 값은 내려간다.</p>
+  <div class="panel">
+    <p class="ptit">완전접종률 추이</p>
+    <p class="psub" id="csub"></p>
+    <div class="cw"><svg id="cc" viewBox="0 0 720 280" width="720" height="280" role="img"
+      aria-label="연령별 완전접종률 추이"></svg></div>
+    <div class="lg" id="clg"></div>
+  </div>
+</section>
+
+<section>
+  <h2>‘완전’의 뜻이 해마다 바뀐다</h2>
+  <p class="lede">이 수치를 연도별로 그냥 이으면 안 된다. 국가예방접종에 백신이 더해질 때마다
+  <b>완전접종의 조건 자체가 무거워지기</b> 때문이다. 아래는 해마다 몇 종을 세었는지다 —
+  자료에서 곧바로 뽑은 것이다.</p>
+  <div class="panel">
+    <div class="tw"><table>
+      <thead><tr><th>공표 연도</th><th>세는 백신</th><th>그 해 새로 들어온 것</th><th>조사 연령</th></tr></thead>
+      <tbody id="defs"></tbody>
+    </table></div>
+  </div>
+  <div class="note red" id="defnote"></div>
+</section>
+
+<section>
+  <h2>집단면역 문턱과 견주기</h2>
+  <p class="lede">유행을 멈추려면 인구의 얼마가 면역을 가져야 하는가 —
+  <code>Vc = (1 − 1/R₀) ÷ 백신 효과</code>. R₀는 <a href="../sim/">⑰ 유행 시뮬레이터</a>가 쓰는 값을 그대로 가져왔다.
+  <b>필요한 값이 100%를 넘으면 접종만으로는 문턱을 넘을 수 없다</b>는 뜻이다 — 계산이 틀린 게 아니다.</p>
+  <div class="panel" id="thr"></div>
+  <div class="note">
+    <b>이 계산의 한계</b>
+    <ul>
+      <li><b>R₀도 백신 효과도 범위를 가진 값이다.</b> 인구 밀도·접촉 구조·유행 균주·접종 후 경과 기간에 따라 달라진다. 여기 값은 계산의 입력이지 사실의 진술이 아니다.</li>
+      <li><b>백신 효과는 시간이 지나면 떨어진다.</b> 백일해가 대표적이다 — 5회를 다 맞은 직후에는 98% 가까이 되지만 5년쯤 지나면 71%까지 내려간다. 문턱 계산은 이 값에 매우 민감하다.</li>
+      <li><b>어릴 때 접종률이 지금 어른의 면역을 말해 주지 않는다.</b> 이 표의 ‘실제’는 그 백신을 다 맞는 나이의 최근 접종률이다. 성인 코호트의 면역은 다른 자료가 필요하다.</li>
+      <li><b>파상풍은 사람 사이에 옮지 않는다.</b> 집단면역 개념이 적용되지 않아 표에서 뺐다.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>접종률은 그대로인데 유행은 왔다</h2>
+  <p class="lede">접종률(선)과 신고수(막대)를 같은 그림에 놓는다. 접종률이 무너져서 유행한 것인지,
+  아니면 처음부터 접종만으로 막을 수 없는 감염병이었는지를 가르는 것이 이 그림의 쓸모다.</p>
+  <div class="sel" id="dsel"></div>
+  <div class="panel">
+    <p class="ptit" id="dtit"></p>
+    <p class="psub" id="dsub"></p>
+    <div class="cw"><svg id="cd" viewBox="0 0 720 260" width="720" height="260" role="img"></svg></div>
+    <div class="lg"><span><i style="background:var(--a1)"></i>접종률 — 선, 왼쪽 눈금</span>
+      <span><i style="background:var(--line-strong)"></i>신고수 — 막대, 오른쪽 위에 적힌 값이 가장 높은 막대</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>수집하면서 걸린 것</h2>
+  <div class="note red" id="anom"></div>
+  <div class="note" id="skip"></div>
+  <div class="foot-links">
+    <a href="../sim/">📈 이 R₀로 유행 돌려보기</a>
+    <a href="../dogam/">📖 질병 도감</a>
+    <a href="../whitepaper/">📗 백서 서가</a>
+    <a href="../data/">⬇ 자료 내려받기</a>
+  </div>
+</section>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div id="fsrc"></div>
+</footer>
+</div>
+
+<script>
+const D = {"as_of":"2026-09-08","source":"https://nip.kdca.go.kr/irhp/infm/goVcntInfo.do?menuLv=1&menuCd=165","years":[2017,2018,2019,2020,2021,2022,2023,2024,2025],"ages":["1세","2세","3세","6세","13세"],"complete":{"1세":[null,96.8,96.5,97.1,97.2,96.1,96.4,93.3,93.2],"2세":[null,94.7,94.2,94.2,94.2,93.5,92.9,93.6,91.5],"3세":[null,90.8,91.5,91.0,90.0,89.7,89.2,88.7,90.0],"6세":[null,88.3,84.8,83.5,86.15,88.6,89.8,89.4,90.5],"13세":[null,null,null,null,null,null,null,null,84.1]},"byvacc":{"1세":{"BCG":[98.2,98.2,97.9,98.5,98.5,97.6,97.6,97.4,97.0],"DTaP":[97.7,97.7,97.4,97.9,98.1,97.3,97.2,97.1,96.7],"HepB":[97.8,97.7,97.3,97.8,97.9,97.0,97.1,96.8,96.5],"Hib":[97.7,97.8,97.4,98.0,98.1,97.3,97.2,97.1,96.7],"IPV":[97.6,97.6,97.3,97.9,98.0,97.3,97.2,97.0,96.7],"PCV":[97.4,97.5,97.2,97.8,98.1,97.1,97.1,96.9,96.6],"RV":[null,null,null,null,null,null,null,94.2,94.1]},"2세":{"BCG":[98.1,98.1,97.9,97.8,98.2,97.6,97.4,97.3,97.2],"DTaP":[96.2,96.5,95.8,95.6,95.7,95.1,94.8,95.1,95.4],"HepB":[97.8,97.8,97.4,97.2,97.6,97.2,96.9,97.0,96.8],"Hib":[95.9,96.5,96.1,95.9,96.2,95.8,95.3,95.4,95.5],"IPV":[97.7,97.8,97.5,97.4,97.8,97.4,97.3,97.1,97.0],"MMR":[97.6,97.9,97.5,97.1,97.8,97.3,97.1,96.9,96.7],"PCV":[96.9,97.2,96.7,96.6,97.0,96.3,96.1,96.3,96.1],"RV":[null,null,null,null,null,null,null,null,94.0],"VAR":[97.5,97.7,97.3,97.2,97.7,97.3,97.0,96.9,96.7]},"3세":{"BCG":[98.0,98.1,97.9,97.9,97.8,97.7,97.4,97.2,97.2],"DTaP":[96.6,96.6,96.5,95.8,95.9,95.8,95.6,95.4,95.9],"HepA":[null,95.3,95.6,95.8,95.6,95.4,94.9,95.0,95.2],"HepB":[97.6,97.8,97.6,97.4,97.2,97.2,97.1,96.8,96.9],"Hib":[95.7,96.0,96.4,96.1,96.1,96.0,95.9,95.5,95.5],"IPV":[97.7,97.8,97.6,97.5,97.4,97.4,97.3,97.2,97.1],"JE":[92.9,93.6,93.8,93.1,92.3,91.9,91.3,91.0,91.7],"MMR":[97.7,97.9,97.8,97.5,97.3,97.5,97.3,97.1,96.9],"PCV":[96.8,97.2,97.2,96.7,96.8,96.8,96.5,96.4,96.5],"VAR":[97.6,97.7,97.6,97.4,97.3,97.4,97.2,97.1,96.9]},"6세":{"BCG":[null,96.9,97.6,97.8,97.9,97.8,97.7,97.5,97.4],"DTaP":[null,94.0,92.6,93.4,93.7,94.1,93.9,93.6,94.7],"HepA":[null,null,null,null,96.9,97.0,97.0,96.8,96.8],"HepB":[null,96.5,97.3,97.5,97.7,97.6,97.4,97.1,97.1],"Hib":[null,null,95.0,95.6,95.9,96.4,96.3,96.0,95.9],"IPV":[null,95.7,94.0,94.3,94.8,95.3,95.3,95.2,95.2],"JE":[null,93.5,91.3,88.2,90.6,92.5,93.8,93.8,93.7],"MMR":[null,96.3,94.7,94.6,95.0,95.6,95.6,95.2,95.6],"PCV":[null,null,null,96.8,97.1,97.3,97.0,96.8,96.8],"VAR":[null,97.6,97.7,97.7,97.8,97.8,97.6,97.4,97.5]},"13세":{"BCG":[null,null,null,null,null,null,null,null,97.0],"HepB":[null,null,null,null,null,null,null,null,96.6],"IPV":[null,null,null,null,null,null,null,null,96.3],"JE":[null,null,null,null,null,null,null,null,88.5],"MMR":[null,null,null,null,null,null,null,null,97.1],"Tdap":[null,null,null,null,null,null,null,null,89.7],"VAR":[null,null,null,null,null,null,null,null,98.1]}},"defs":[{"year":2017,"n":9,"vaccines":["BCG","DTaP","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세"],"added":[]},{"year":2018,"n":10,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세","6세"],"added":["HepA"]},{"year":2019,"n":10,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세","6세"],"added":[]},{"year":2020,"n":10,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세","6세"],"added":[]},{"year":2021,"n":10,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세","6세"],"added":[]},{"year":2022,"n":10,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세","6세"],"added":[]},{"year":2023,"n":10,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","VAR"],"ages":["1세","2세","3세","6세"],"added":[]},{"year":2024,"n":11,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","RV","VAR"],"ages":["1세","2세","3세","6세"],"added":["RV"]},{"year":2025,"n":12,"vaccines":["BCG","DTaP","HepA","HepB","Hib","IPV","JE","MMR","PCV","RV","Tdap","VAR"],"ages":["1세","2세","3세","6세","13세"],"added":["Tdap"]}],"threshold":[{"disease":"백일해","label":"백일해(청소년 추가접종)","vaccine":"Tdap","vname":"파상풍·디프테리아·백일해(청소년용)","r0":[12,17],"ve":0.71,"ve_note":"청소년 추가접종. 접종 후 1년 내 ~73%, 4년 뒤 ~34%로 빠르게 떨어진다","src":"CDC Pink Book · Koepke 2014 J Infect Dis","vc":[129.1,132.6],"actual":89.7,"actual_age":"13세","actual_year":2025,"verdict":"impossible"},{"disease":"백일해","label":"백일해","vaccine":"DTaP","vname":"디프테리아·파상풍·백일해","r0":[12,17],"ve":0.85,"ve_note":"5회 완료 직후 백일해 예방 ~98%, 5년 뒤 ~71%로 떨어진다. 여기서는 그 사이의 대표값을 쓴다 — 문턱 계산은 이 값에 매우 민감하다","src":"CDC Pink Book(백일해) · Klein 2012 NEJM(효과 감소)","vc":[107.8,110.7],"actual":94.7,"actual_age":"6세","actual_year":2025,"verdict":"impossible"},{"disease":"수두","label":"수두","vaccine":"VAR","vname":"수두","r0":[8,10],"ve":0.82,"ve_note":"1회 접종 기준 모든 수두 예방 ~82%. 중증 수두 예방은 98% 이상. 국내는 1회 접종이 표준이다","src":"CDC Pink Book(Varicella)","vc":[106.7,109.8],"actual":97.5,"actual_age":"6세","actual_year":2025,"verdict":"impossible"},{"disease":"홍역","label":"홍역","vaccine":"MMR","vname":"홍역·유행성이하선염·풍진","r0":[12,18],"ve":0.97,"ve_note":"홍역 2회 97%. 같은 백신이라도 유행성이하선염은 2회 88%로 낮다 — 병마다 다르다","src":"CDC Pink Book(MMR)","vc":[94.5,97.4],"actual":95.6,"actual_age":"6세","actual_year":2025,"verdict":"edge"},{"disease":"유행성이하선염","label":"유행성이하선염","vaccine":"MMR","vname":"홍역·유행성이하선염·풍진","r0":[4,7],"ve":0.88,"ve_note":"MMR 2회 접종의 유행성이하선염 예방 효과. 홍역(97%)보다 낮다","src":"CDC Pink Book(Mumps)","vc":[85.2,97.4],"actual":95.6,"actual_age":"6세","actual_year":2025,"verdict":"edge"},{"disease":"디프테리아","label":"디프테리아","vaccine":"DTaP","vname":"디프테리아·파상풍·백일해","r0":[6,7],"ve":0.97,"ve_note":"디프테리아 톡소이드는 백일해 성분보다 효과가 높고 오래간다","src":"WHO diphtheria position paper 2017","vc":[85.9,88.4],"actual":94.7,"actual_age":"6세","actual_year":2025,"verdict":"over"},{"disease":"디프테리아","label":"디프테리아(청소년 추가접종)","vaccine":"Tdap","vname":"파상풍·디프테리아·백일해(청소년용)","r0":[6,7],"ve":0.97,"ve_note":"디프테리아 톡소이드는 백일해 성분보다 효과가 높고 오래간다","src":"WHO diphtheria position paper 2017","vc":[85.9,88.4],"actual":89.7,"actual_age":"13세","actual_year":2025,"verdict":"over"},{"disease":"풍진","label":"풍진","vaccine":"MMR","vname":"홍역·유행성이하선염·풍진","r0":[6,7],"ve":0.97,"ve_note":"MMR 1회로도 97%","src":"CDC Pink Book(Rubella)","vc":[85.9,88.4],"actual":95.6,"actual_age":"6세","actual_year":2025,"verdict":"over"},{"disease":"폴리오","label":"폴리오","vaccine":"IPV","vname":"폴리오","r0":[5,7],"ve":0.99,"ve_note":"3회 접종 후 마비성 폴리오 예방 99% 이상","src":"WHO polio position paper 2022","vc":[80.8,86.6],"actual":95.2,"actual_age":"6세","actual_year":2025,"verdict":"over"}],"threshold_note":"집단면역 문턱 Vc = (1 − 1/R₀) / VE. R₀는 ⑰ 유행 시뮬레이터의 값을 그대로 쓴다. VE가 낮거나 R₀가 크면 Vc가 100%를 넘는데, 그것은 '접종만으로는 유행을 못 막는다'는 뜻이지 계산 오류가 아니다.","cases":{"years":[2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"series":{"디프테리아":[0,0,0,0,0,0,0,0,0,0],"수두":[54060,80092,96467,82868,31430,20929,18547,26964,31892,30248],"홍역":[18,7,15,194,6,0,0,8,49,78],"백일해":[129,318,980,496,123,21,31,292,48048,5491],"유행성이하선염":[17057,16924,19237,15967,9922,9708,6358,7737,6425,6720],"풍진":[11,7,0,8,2,0,0,0,0,0],"폴리오":[0,0,0,0,0,0,0,0,0,0]}},"anomalies":[{"연도":2024,"연령":"6세","출생연도":"2018","백신":"IPV","항목":"접종자","값":3161823.0,"이상":"접종자 수가 한 해 출생아보다 크다"}],"skipped":[{"title":"인플루엔자 어린이 지원사업 1차, 1회 접종률 현황(시군구)","why":"연도별 정기 공표가 아니다"},{"title":"2016년 전국 예방접종률 현황","year":2016,"why":"'연령 × 백신' 표가 없다 — 이 판이 세는 것이 다르다","tables":["백신별 완전 접종률을 나타내는 표입니다.","예방접종 연령시기별 예방접종률을 나타내는 표입니다."]},{"title":"2015년 전국 예방접종률 현황","year":2015,"why":"'연령 × 백신' 표가 없다 — 이 판이 세는 것이 다르다","tables":["백신별 완전 접종률을 나타내는 표입니다.","예방접종 시리즈별 완전접종률을 나타내는 표입니다."]},{"title":"2013년 전국 예방접종률 현황","year":2013,"why":"'연령 × 백신' 표가 없다 — 이 판이 세는 것이 다르다","tables":["국가 예방 접종 백신별 예방접종률을 나타내는 표입니다."]}]};
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nf = n => n.toLocaleString('ko-KR');
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const AC = ['--a1', '--a2', '--a3', '--a4', '--a5'];
+
+const last = D.years[D.years.length - 1];
+const cur = D.ages.map(a => [a, D.complete[a][D.years.length - 1]]).filter(x => x[1] != null);
+const lowest = cur.reduce((m, x) => x[1] < m[1] ? x : m, cur[0]);
+const imp = [...new Set(D.threshold.filter(r => r.verdict === 'impossible').map(r => r.disease))];
+document.getElementById('kpi').innerHTML = [
+  [`${D.years[0]}–${last}`, '공표 연도(현재 형식)', ''],
+  [D.ages.length + '개', '조사 연령 ' + D.ages.join('·'), ''],
+  [lowest[1].toFixed(1) + '%', `${last}년 최저 — ${lowest[0]} 완전접종률`, ''],
+  [imp.length + '종', '접종만으로는 문턱을 못 넘는 감염병', 'bad'],
+].map(([a, b, c]) => `<div class="kb ${c}"><b class="num">${esc(a)}</b><span>${esc(b)}</span></div>`).join('');
+document.getElementById('fsrc').innerHTML =
+  `자료: <a href="${esc(D.source)}" target="_blank" rel="noopener">질병관리청 예방접종도우미 「전국 어린이 예방접종률 현황」</a>(${esc(D.as_of)} 수집) · ` +
+  `신고수는 「감염병 신고 현황 연보」 · R₀는 ⑰ 시뮬레이터 · 백신 효과는 WHO position paper·CDC Pink Book`;
+
+/* ── 꺾은선 ────────────────────────────────────────────── */
+function line(el, years, sets, h, opt){
+  opt = opt || {};
+  const W = 720, H = h, L = 52, R = opt.r2 ? 52 : 12, T = 14, B = 26;
+  const vals = sets.flatMap(s => s.v.filter(v => v != null));
+  const max = opt.max != null ? opt.max : Math.max(...vals);
+  const min = opt.min != null ? opt.min : Math.min(...vals);
+  const x = i => L + (W - L - R) * i / Math.max(years.length - 1, 1);
+  const y = v => H - B - (H - T - B) * ((v - min) / ((max - min) || 1));
+  let s = '';
+  for (let i = 0; i <= 4; i++){
+    const v = min + (max - min) * i / 4, yy = y(v);
+    s += `<line x1="${L}" y1="${yy}" x2="${W - R}" y2="${yy}" stroke="${css('--grid')}" stroke-width="1"/>` +
+         `<text x="${L - 7}" y="${yy + 4}" text-anchor="end" font-size="11" fill="${css('--faint')}">${opt.fmt ? opt.fmt(v) : v.toFixed(0)}</text>`;
+  }
+  years.forEach((yr, i) => {
+    if (years.length > 8 && i % 2 && i !== years.length - 1) return;
+    s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="${css('--faint')}">${String(yr).slice(2)}</text>`;
+  });
+  (opt.bars || []).forEach(b => {
+    const bw = Math.min(26, (W - L - R) / years.length * .55);
+    const bmax = Math.max(...b.v.filter(v => v != null)) || 1;
+    b.v.forEach((v, i) => {
+      if (v == null) return;
+      const hh = (H - T - B) * (v / bmax);
+      s += `<rect x="${(x(i) - bw / 2).toFixed(1)}" y="${(H - B - hh).toFixed(1)}" width="${bw.toFixed(1)}" height="${hh.toFixed(1)}"
+        fill="${css('--line-strong')}" opacity=".55"><title>${years[i]}년 ${nf(v)}건</title></rect>`;
+    });
+    // 오른쪽 눈금 — 막대의 최댓값만 적는다
+    s += `<text x="${W - R + 6}" y="${T + 10}" font-size="11" fill="${css('--faint')}">${nf(bmax)}</text>`;
+  });
+  sets.forEach(st => {
+    let d = '', pen = false;
+    st.v.forEach((v, i) => {
+      if (v == null) { pen = false; return; }
+      d += `${pen ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)} `;
+      pen = true;
+    });
+    s += `<path d="${d}" fill="none" stroke="${css(st.c)}" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>`;
+    st.v.forEach((v, i) => {
+      if (v == null) return;
+      s += `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.8" fill="${css(st.c)}"><title>${years[i]}년 ${st.n || ''} ${v}${st.unit || ''}</title></circle>`;
+    });
+  });
+  el.innerHTML = s;
+}
+
+function drawComplete(){
+  const sets = D.ages.map((a, i) => ({v: D.complete[a], c: AC[i % AC.length], n: a, unit: '%'}));
+  line(document.getElementById('cc'), D.years, sets, 280, {fmt: v => v.toFixed(0) + '%'});
+  document.getElementById('clg').innerHTML = D.ages.map((a, i) =>
+    `<span><i style="background:var(${AC[i % AC.length]})"></i>${esc(a)}</span>`).join('');
+  const f = D.ages.map(a => {
+    const s = D.complete[a].filter(v => v != null);
+    return `${a} ${s[s.length - 1].toFixed(1)}%`;
+  }).join(' · ');
+  document.getElementById('csub').textContent = `${last}년 — ${f}`;
+}
+drawComplete();
+
+/* ── 정의 변화 ─────────────────────────────────────────── */
+document.getElementById('defs').innerHTML = D.defs.map(d => `
+  <tr><td class="num">${d.year}</td><td class="num">${d.n}종</td>
+    <td>${d.added.length ? esc(d.added.join(', ')) : '—'}</td>
+    <td>${esc(d.ages.join('·'))}</td></tr>`).join('');
+const first = D.defs[0], lastd = D.defs[D.defs.length - 1];
+document.getElementById('defnote').innerHTML =
+  `<b>단절점</b> — ${first.year}년에는 ${first.n}종을 세어 완전접종률을 냈고, ${lastd.year}년에는 ${lastd.n}종을 센다. ` +
+  `그 사이 ${esc(D.defs.flatMap(d => d.added).join('·'))}가 더해졌다. ` +
+  `<b>수치가 내려갔다고 접종을 덜 맞은 것이 아니고, 올라갔다고 더 맞은 것도 아니다.</b> ` +
+  `연도를 이으려면 어느 백신을 세었는지부터 맞춰야 한다 — <a href="../checker/">단절점 검사기</a>가 하는 일이 이것이다.`;
+
+/* ── 문턱 ──────────────────────────────────────────────── */
+const VL = {impossible: '접종만으로는 못 넘는다', under: '못 넘는다', edge: '아슬아슬', over: '넘는다', none: '실제값 없음'};
+/* 가로축은 자료에 맞춘다. 백일해 청소년 추가접종은 필요 접종률이 130%를 넘어
+   고정 축(…118%)에서는 띠가 화면 밖으로 잘려 나갔다. */
+const TV = D.threshold.flatMap(r => r.vc.concat(r.actual != null ? [r.actual] : []));
+const X0 = Math.floor(Math.min(...TV, 85) / 5) * 5 - 5;
+const X1 = Math.ceil(Math.max(...TV, 102) / 5) * 5 + 3;
+const px = v => (v - X0) / (X1 - X0) * 720;
+const ticks = [];
+for (let t = Math.ceil(X0 / 10) * 10; t <= X1; t += 10) ticks.push(t);
+
+function axis(h, labels){
+  return ticks.map(t =>
+    `<line x1="${px(t).toFixed(1)}" y1="0" x2="${px(t).toFixed(1)}" y2="${h}" stroke="${css(t === 100 ? '--line-strong' : '--grid')}"
+       stroke-width="1"${t === 100 ? ' stroke-dasharray="3 3"' : ''}/>` +
+    (labels ? `<text x="${px(t).toFixed(1)}" y="${h + 11}" text-anchor="middle" font-size="11"
+       fill="${css(t === 100 ? '--ink' : '--faint')}"${t === 100 ? ' font-weight="700"' : ''}>${t}%</text>` : '')).join('');
+}
+
+document.getElementById('thr').innerHTML =
+  `<div class="tnote" style="margin:0 0 10px">붉은 띠가 <b>필요한 접종률</b>의 범위(R₀ 범위에서 나온다), 초록 점이 <b>실제 접종률</b>이다.
+    점선이 100% — 띠가 그 오른쪽에 있으면 접종만으로는 문턱을 넘을 수 없다.</div>
+   <svg viewBox="0 0 720 16" width="720" height="16" style="width:100%;height:16px;margin-bottom:2px">${axis(4, true)}</svg>` +
+  D.threshold.map(r => {
+    const a = px(r.vc[0]), b = px(r.vc[1]);
+    const act = r.actual != null ? px(r.actual) : null;
+    return `<div class="th">
+    <div class="thead"><b>${esc(r.label || r.disease)}</b>
+      <span class="vx">${esc(r.vaccine)} · R₀ ${r.r0[0]}~${r.r0[1]} · 백신 효과 ${(r.ve * 100).toFixed(0)}%</span>
+      <span class="vd v-${r.verdict}">${VL[r.verdict]}</span></div>
+    <svg viewBox="0 0 720 36" width="720" height="36" style="width:100%;height:36px;margin-top:6px">
+      <rect x="0" y="13" width="720" height="8" rx="4" fill="${css('--surface-2')}"/>
+      ${axis(30, false)}
+      <rect x="${a.toFixed(1)}" y="13" width="${Math.max(b - a, 3).toFixed(1)}" height="8" rx="4" fill="${css('--warn')}" opacity=".5"/>
+      ${act != null ? `<circle cx="${act.toFixed(1)}" cy="17" r="7" fill="${css('--accent')}"/>
+        <text x="${act.toFixed(1)}" y="11" text-anchor="middle" font-size="11" font-weight="700" fill="${css('--ink')}">${r.actual.toFixed(1)}%</text>` : ''}
+      <text x="${Math.min((a + b) / 2, 660).toFixed(1)}" y="34" text-anchor="middle" font-size="11" fill="${css('--warn')}">필요 ${r.vc[0].toFixed(1)}~${r.vc[1].toFixed(1)}%</text>
+    </svg>
+    <div class="tnote">${r.actual != null
+      ? `실제 = ${esc(r.actual_age)} ${esc(r.vaccine)} 접종률 ${r.actual.toFixed(1)}%(${r.actual_year}년). `
+      : '이 백신의 접종률이 자료에 없다. '}${esc(r.ve_note)} <span style="color:var(--faint)">— ${esc(r.src)}</span></div>
+  </div>`;
+  }).join('') + `<div class="tnote" style="padding-top:10px;border-top:1px solid var(--line)">${esc(D.threshold_note)}</div>`;
+
+/* ── 접종률 vs 발생 ─────────────────────────────────────── */
+/* 한 감염병에 백신이 둘일 때(백일해 = DTaP + Tdap)는 접종률 시계열이 긴 쪽을 고른다.
+   Tdap은 2025년 한 해뿐이라 그것만 그리면 '자료 없음'만 남는다. */
+function span(r){
+  const s = (D.byvacc[r.actual_age] || {})[r.vaccine];
+  return s ? s.filter(v => v != null).length : 0;
+}
+const PAIRS = Object.values(
+  D.threshold.filter(r => D.cases.series[r.disease] && r.actual != null)
+    .reduce((m, r) => {
+      if (!m[r.disease] || span(r) > span(m[r.disease])) m[r.disease] = r;
+      return m;
+    }, {}));
+let pick = PAIRS.findIndex(r => r.disease === '백일해');
+if (pick < 0) pick = 0;
+document.getElementById('dsel').innerHTML = PAIRS.map((r, i) =>
+  `<button data-i="${i}">${esc(r.disease)}</button>`).join('');
+document.getElementById('dsel').onclick = e => {
+  const b = e.target.closest('button'); if (!b) return;
+  pick = +b.dataset.i; drawPair();
+};
+function drawPair(){
+  const r = PAIRS[pick];
+  [...document.querySelectorAll('#dsel button')].forEach((b, i) => b.classList.toggle('on', i === pick));
+  const cy = D.cases.years, cv = D.cases.series[r.disease];
+  // 접종률을 신고수의 해에 맞춰 늘어놓는다(없는 해는 빈칸)
+  const rate = cy.map(y => {
+    const i = D.years.indexOf(y);
+    return i < 0 ? null : (D.byvacc[r.actual_age] && D.byvacc[r.actual_age][r.vaccine] ? D.byvacc[r.actual_age][r.vaccine][i] : null);
+  });
+  const got = rate.filter(v => v != null);
+  line(document.getElementById('cd'), cy, [{v: rate, c: '--a1', n: r.vaccine, unit: '%'}], 260,
+       {bars: [{v: cv}], r2: 1, min: Math.min(...got) - 3, max: 100, fmt: v => v.toFixed(0) + '%'});
+  document.getElementById('dtit').textContent = `${r.disease} — 신고수와 ${r.actual_age} ${r.vaccine} 접종률`;
+  const mx = Math.max(...cv.filter(v => v != null));
+  const mi = cy[cv.indexOf(mx)];
+  document.getElementById('dsub').innerHTML =
+    `신고수는 ${mi}년 ${nf(mx)}건이 가장 많다. 그 해 접종률은 ` +
+    (rate[cy.indexOf(mi)] != null ? `<b>${rate[cy.indexOf(mi)]}%</b>였다.` : '자료에 없다.') +
+    ` 필요한 접종률은 ${r.vc[0].toFixed(1)}~${r.vc[1].toFixed(1)}%다.`;
+}
+drawPair();
+
+/* ── 걸린 것 ───────────────────────────────────────────── */
+document.getElementById('anom').innerHTML = D.anomalies.length
+  ? `<b>원문 이상값 ${D.anomalies.length}건</b> — 지우지 않고 표시만 한다. 위 그림·표에서는 제외했다.<ul>` +
+    D.anomalies.map(a => `<li>${a.연도}년 ${esc(a.연령)} ${esc(a.백신)} ${esc(a.항목)} <b class="num">${nf(a.값)}</b> — ${esc(a.이상)}</li>`).join('') +
+    '</ul>'
+  : '<b>원문 이상값 없음</b> — 이번 수집에서는 값의 앞뒤가 맞지 않는 칸이 없었다.';
+document.getElementById('skip').innerHTML =
+  `<b>담지 않은 판 ${D.skipped.length}건</b> — 게시판에는 더 있지만 세는 것이 달라 잇지 않았다.<ul>` +
+  D.skipped.map(s => `<li>${esc(s.title)} — ${esc(s.why)}${s.tables && s.tables.length ? ` <span style="color:var(--faint)">(${esc(s.tables.join(' / '))})</span>` : ''}</li>`).join('') +
+  '</ul>';
+
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => { drawComplete(); drawPair(); });
+</script>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body>
+</html>
