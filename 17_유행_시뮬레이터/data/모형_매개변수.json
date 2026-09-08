@@ -159,7 +159,7 @@
       "d_inf": 21,
       "presym": 1,
       "note": "2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.",
-      "src": "Kwok 2022 · WHO"
+      "src": "WHO mpox 2022"
     },
     {
       "name": "니파바이러스감염증",
@@ -185,5 +185,83 @@
     "N": 100000,
     "I0": 10,
     "days": 365
-  }
+  },
+  "references": {
+    "Anderson & May 1991": {
+      "cite": "Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.",
+      "what": "R₀ 고전 추정표(백신 도입 전 인구)",
+      "confidence": "표준 교과서"
+    },
+    "CDC Pink Book": {
+      "cite": "CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.",
+      "what": "전염 기간·잠복기·증상 전 전염",
+      "confidence": "표준"
+    },
+    "Heymann CCDM": {
+      "cite": "Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.",
+      "what": "전염 기간·증상 전 전염 일수의 일반 출처",
+      "confidence": "표준"
+    },
+    "Biggerstaff 2014": {
+      "cite": "Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.",
+      "what": "인플루엔자 R₀ 계통고찰",
+      "confidence": "표준"
+    },
+    "Fraser 2009": {
+      "cite": "Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.",
+      "what": "2009 신종인플루엔자 R₀",
+      "confidence": "표준"
+    },
+    "Liu 2020": {
+      "cite": "Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.",
+      "what": "코로나19 원형주 R₀ 계통고찰",
+      "confidence": "표준"
+    },
+    "Lipsitch 2003": {
+      "cite": "Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.",
+      "what": "SARS R₀·격리 효과",
+      "confidence": "표준"
+    },
+    "Breban 2013": {
+      "cite": "Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.",
+      "what": "MERS R₀ < 1",
+      "confidence": "표준"
+    },
+    "Cauchemez 2014": {
+      "cite": "Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.",
+      "what": "MERS R₀",
+      "confidence": "표준"
+    },
+    "WHO Ebola Response Team 2014": {
+      "cite": "WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.",
+      "what": "에볼라 R₀·잠복기",
+      "confidence": "표준"
+    },
+    "Althaus 2014": {
+      "cite": "Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.",
+      "what": "에볼라 R₀",
+      "confidence": "표준"
+    },
+    "WHO mpox 2022": {
+      "cite": "WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.",
+      "what": "엠폭스(clade IIb) R₀ 1.1–2.4",
+      "confidence": "확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"
+    },
+    "Luby 2009": {
+      "cite": "Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.",
+      "what": "니파 사람 간 전파",
+      "confidence": "표준"
+    },
+    "Nikolay 2019": {
+      "cite": "Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.",
+      "what": "니파 R₀ 0.33",
+      "confidence": "표준"
+    },
+    "Keeling & Rohani 2008": {
+      "cite": "Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.",
+      "what": "SEIR 모형 자체",
+      "confidence": "표준"
+    }
+  },
+  "scenario_provenance": "시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다."
 }

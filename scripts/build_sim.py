@@ -58,7 +58,25 @@ def build():
             raise SystemExit(f"{d['name']}: 도감 잠복기를 숫자로 읽지 못함 — {dg.get('잠복기')!r}")
         out.append(dict(d, incubation=inc, route=dg.get('감염경로'), grade=ph.get('status'), iso=ph.get('iso'),
                         report=ph.get('report')))
-    data = {'diseases': out, 'defaults': P['intervention_defaults'], 'about': P['_about']}
+    # 실제 기록: ③ 연보 기반 전수감시 신고수 2016~2025 — 모형이 실제와 얼마나 다른지 눈으로 보게
+    annual = {}
+    import csv
+    yb = os.path.join(ROOT, '03_백서_정리', 'data', '전수감시_신고수_2016_2025.csv')
+    for r in csv.DictReader(open(yb, encoding='utf-8-sig')):
+        nm = norm(re.sub(r'\([A-Za-z0-9\-]+\)', '', r['감염병명']))
+        years = {y: r[y] for y in map(str, range(2016, 2026)) if r.get(y) not in (None, '', '-')}
+        if not years:
+            continue
+        cur = annual.setdefault(nm, {'years': {}, 'note': r.get('비고', '')})
+        for y, v in years.items():
+            cur['years'][y] = int(v.replace(',', ''))
+        if r.get('비고'):
+            cur['note'] = r['비고']
+    for d in out:
+        k = norm(d['name'])
+        d['annual'] = annual.get(k) or next((v for kk, v in annual.items() if kk.startswith(k[:6])), None)
+    data = {'diseases': out, 'defaults': P['intervention_defaults'], 'about': P['_about'],
+            'references': P.get('references', {}), 'scenario_provenance': P.get('scenario_provenance', '')}
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'sim.template.html'), encoding='utf-8').read()
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     os.makedirs(os.path.dirname(OUT), exist_ok=True)

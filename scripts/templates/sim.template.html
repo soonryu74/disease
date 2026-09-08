@@ -92,6 +92,14 @@
   @media (max-width:760px){.grid2{grid-template-columns:1fr}}
   ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px} ul.tight li{margin:3px 0}
   code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+  .refs{width:100%;border-collapse:collapse;font-size:12.5px}
+  .refs th,.refs td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  .refs th{font-size:11.5px;color:var(--muted);font-weight:700;white-space:nowrap}
+  .refs .need{color:var(--warn);font-weight:700}
+  .yrs{width:100%;border-collapse:collapse;font-size:12.5px}
+  .yrs th,.yrs td{padding:4px 6px;border-bottom:1px solid var(--line);text-align:right}
+  .yrs th{font-size:11px;color:var(--muted)}
+  .yrs td:first-child,.yrs th:first-child{text-align:left}
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
   @media print{.quick,.shared .tg{display:none!important}.card{break-inside:avoid;box-shadow:none}}
@@ -144,6 +152,32 @@
     <h3>하루 새 감염자</h3>
     <svg class="chart" id="chart" viewBox="0 0 1000 380" role="img" aria-label="두 시나리오의 일별 새 감염자 곡선"></svg>
     <div class="legend"><span><i style="border-color:var(--s1)"></i>시나리오 A</span><span><i style="border-color:var(--s2)"></i>시나리오 B</span><span class="muted">· 점은 정점</span></div>
+  </div>
+</section>
+
+<section id="real">
+  <h2>실제 기록과 나란히 — 모형은 얼마나 틀리나</h2>
+  <p class="sdesc">모형 기본값은 <b>면역이 전혀 없는 인구 10만 명</b>에 첫 감염자 10명이다. 실제 한국은 접종률이 높고 유입은 산발적이다. 그래서 모형의 누적 감염과 실제 연간 신고수는 자릿수가 다르다 — 그 차이가 접종의 크기다.</p>
+  <div class="grid2">
+    <div class="card"><h3>실제 전수감시 신고수 2016–2025 <span class="small muted">③ 연보</span></h3><div id="annual"></div></div>
+    <div class="card"><h3>역학조사 결과보고서로 검증할 수 있나</h3>
+      <p style="font-size:13.5px">할 수 있고, 해야 한다. 개별 유행의 역학조사 보고(주간 건강과 질병에 실리는 집단발생 조사, 백서의 유행 기술)는 <b>규모·기간·발단환자→2차감염 수(실측 R)</b>를 준다. 그 값에 슬라이더를 맞추면 모형이 그 유행을 재현하는지 검산할 수 있다.</p>
+      <p style="font-size:13.5px"><b>아직 하지 않았다.</b> 이 저장소에 있는 것은 연간 신고수(왼쪽)뿐이고, 유행 단위의 보고서는 수집하지 않았다. 다음 단계는 ⑫ 주간 건강과 질병에서 집단발생·역학조사 보고를 뽑아 <em>유행 규모·기간·추정 R</em> 표를 만드는 것이다. 그 표가 생기면 이 페이지에 "이 유행 재현" 버튼이 붙는다.</p>
+      <p class="small muted">단, 균질 혼합 SEIR은 병원 안 슈퍼전파(2015 MERS 186명)나 학교·군부대 집단발생을 구조적으로 재현하지 못한다. 재현되지 않는 것도 결과다.</p>
+    </div>
+  </div>
+</section>
+
+<section id="sources">
+  <h2>출처</h2>
+  <div class="card">
+    <h3>시나리오 기본값의 출처</h3>
+    <p style="font-size:13.5px;color:var(--warn)"><b>없다.</b> <span id="prov"></span></p>
+  </div>
+  <div class="card">
+    <h3>병 매개변수의 출처</h3>
+    <p class="small muted">R₀·전염 기간·증상 전 전염 일수. 잠복기·전파경로는 ⑤ 도감(질병관리청 자료)에서 온다. '확인 필요'로 적힌 것은 개별 논문을 특정하지 못한 것이다.</p>
+    <table class="refs" id="refs"></table>
   </div>
 </section>
 
@@ -290,8 +324,24 @@ function why(ra){
   document.getElementById('why').innerHTML=t;
 }
 
+/* ── 실제 기록·출처 ── */
+function renderReal(ra){
+  const d=dz(); const el=document.getElementById('annual');
+  if(!d.annual){ el.innerHTML=`<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`; return; }
+  const ys=Object.keys(d.annual.years).sort(); const mx=Math.max(1,...ys.map(y=>d.annual.years[y]));
+  el.innerHTML=`<table class="yrs"><tr><th>연도</th>${ys.map(y=>`<th>${y}</th>`).join('')}</tr><tr><td>신고</td>${ys.map(y=>`<td class="num">${fmt(d.annual.years[y])}</td>`).join('')}</tr></table>
+    ${d.annual.note?`<p class="small muted" style="margin:6px 0 0">${d.annual.note}</p>`:''}
+    <p style="font-size:13px;margin:10px 0 0">모형 A 누적 감염 <b class="num">${fmt(ra.cum)}</b>명(10만 명 중) vs 실제 최고 연간 신고 <b class="num">${fmt(mx)}</b>명(전국 5천만). 접종률 슬라이더를 실제 접종률로 올리면 어디까지 가까워지는지 보라 — 남는 차이가 유입의 산발성·접촉자 관리·행동 변화다.</p>`;
+}
+(function refs(){
+  const R=D.references||{}; document.getElementById('prov').textContent=D.scenario_provenance||'';
+  const used=new Set(); DZ.forEach(d=>d.src.split(/·|\(/)[0].split(' · ').forEach(s=>used.add(s.trim())));
+  const rows=Object.entries(R).map(([k,v])=>`<tr><th>${k}</th><td>${v.cite}<br><span class="muted">${v.what}</span>${/확인/.test(v.confidence)?`<br><span class="need">확인 필요 — ${v.confidence.replace('확인 필요 — ','')}</span>`:''}</td><td class="muted small">${DZ.filter(d=>d.src.includes(k)).map(d=>d.name).join(', ')||'—'}</td></tr>`);
+  document.getElementById('refs').innerHTML=`<tr><th>약칭</th><th>서지</th><th>쓰인 병</th></tr>`+rows.join('');
+})();
+
 /* ── 조립 ── */
-function renderOut(){ const ra=run(S.A), rb=run(S.B); tiles('A',ra); tiles('B',rb); chart(ra,rb); why(ra); }
+function renderOut(){ const ra=run(S.A), rb=run(S.B); tiles('A',ra); tiles('B',rb); chart(ra,rb); why(ra); renderReal(ra); }
 function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); }
 document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{
   const q=b.dataset.q; S.B={...S.A};

@@ -19,7 +19,9 @@ import re
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, '02_지침_정리', 'data', '지침_전체목록_감염병포털.csv')
+SRC = os.path.join(ROOT, '02_지침_정리', 'data', '지침_통합목록.csv')   # 누리집 게시판 + 감염병포털
+SRC_FALLBACK = os.path.join(ROOT, '02_지침_정리', 'data', '지침_전체목록_감염병포털.csv')
+THIS_YEAR = 2026
 CHRON = os.path.join(ROOT, '09_감염병연대기', 'data', '연대기.json')
 ALIAS = os.path.join(ROOT, '05_감염병_질병정보', '별칭사전.json')
 OUT = os.path.join(ROOT, '14_역학조사_실무', 'data')
@@ -29,6 +31,8 @@ OUT = os.path.join(ROOT, '14_역학조사_실무', 'data')
 GROUP_PATTERNS = [
     ('호흡기', r'호흡기감염병'),
     ('수인성', r'수인성|식품매개'),
+    # 2023년부터 A·B·C·E형간염이 수인성 지침에서 떨어져 나와 통합 간염 지침이 됐다
+    ('간염', r'바이러스\s*간염|간염\s*관리지침|간염\s*\(A형'),
     ('예방접종', r'예방접종대상|예방접종'),
     ('성매개', r'성매개감염병|성병'),
     ('의료관련', r'의료관련감염|항생제내성|내성균'),
@@ -49,6 +53,7 @@ GROUP_MEMBERS = {
     '수인성': ['콜레라', '장티푸스', '파라티푸스', '세균성이질', '장출혈성대장균감염증',
              'A형간염', 'E형간염', '장관감염증', '노로바이러스 감염증', '살모넬라균 감염증',
              '캄필로박터균 감염증', '비브리오패혈증'],
+    '간염': ['A형간염', 'B형간염', 'C형간염', 'E형간염'],
     '예방접종': ['홍역', '풍진', '유행성이하선염', '수두', '백일해', '디프테리아', '파상풍',
               '폴리오', 'b형헤모필루스인플루엔자', '폐렴구균 감염증', 'B형간염', 'A형간염',
               '일본뇌염', '인플루엔자', '결핵', '사람유두종바이러스(HPV) 감염증'],
@@ -120,9 +125,33 @@ def year_of(row):
     return int(row['등록일'][:4]) if row.get('등록일', '')[:4].isdigit() else 0
 
 
+def series_key(title):
+    """같은 지침의 판을 묶는 열쇠 — fetch_kdca_guides.key 와 같은 규칙"""
+    t = re.sub(r'\(.*?\)|「|」|\[.*?\]', ' ', title)
+    t = re.sub(r'(19|20)\d{2}\s*년도?|제\s*\d+\s*판|\d+차\s*개정판?|개정판?|재안내|안내|배포용|_?전자용|제정', ' ', t)
+    return re.sub(r'[\s·‧,.\-_및]', '', t)
+
+
+def latest_per_series(rows_, limit):
+    """계열(제목에서 연도·판을 뺀 것)마다 최신판 하나만. 판 수와 묵은 정도를 붙인다."""
+    by = defaultdict(list)
+    for r in rows_:
+        by[series_key(r['제목'])].append(r)
+    out = []
+    for k, rs in by.items():
+        rs.sort(key=year_of, reverse=True)
+        top = dict(rs[0])
+        top['editions'] = len(rs)
+        top['stale'] = year_of(rs[0]) < THIS_YEAR - 1   # 재작년 이전 판이 최신이면 신판 확인 필요
+        out.append(top)
+    out.sort(key=year_of, reverse=True)
+    return out[:limit]
+
+
 def build():
     os.makedirs(OUT, exist_ok=True)
-    rows = list(csv.DictReader(open(SRC, encoding='utf-8-sig')))
+    src = SRC if os.path.exists(SRC) else SRC_FALLBACK
+    rows = list(csv.DictReader(open(src, encoding='utf-8-sig')))
     diseases = load_diseases()
     aliases = load_aliases()
 
@@ -133,7 +162,7 @@ def build():
             if re.search(pat, r['제목']):
                 grouped[g].append(r)
 
-    index, stats = [], {'direct': 0, 'group': 0, 'none': 0}
+    index, stats = [], {'direct': 0, 'group': 0, 'none': 0, 'stale': 0}
     for dz in diseases:
         ks = keys_for(dz, aliases)
         direct = []
@@ -141,28 +170,31 @@ def build():
             t = norm(r['제목'])
             if any(norm(k) in t for k in ks):
                 direct.append(r)
-        direct.sort(key=year_of, reverse=True)
+        direct_latest = latest_per_series(direct, 6)   # 계열마다 최신판만
 
         gnames = [g for g, members in GROUP_MEMBERS.items() if dz['name'] in members]
         gcand = []
         for g in gnames:
-            best = sorted(grouped.get(g, []), key=year_of, reverse=True)[:2]
-            for r in best:
+            for r in latest_per_series(grouped.get(g, []), 2):
                 gcand.append({'group': g, **r})
         # 전 질병 공통(진단검사·신고기준)
-        for r in sorted(grouped.get('진단검사', []), key=year_of, reverse=True)[:1]:
+        for r in latest_per_series(grouped.get('진단검사', []), 1):
             gcand.append({'group': '진단검사', **r})
 
         def slim(r, kind, group=None):
             return {'title': r['제목'], 'date': r['등록일'], 'url': r['URL'],
-                    'year': year_of(r), 'kind': kind, 'group': group}
+                    'year': year_of(r), 'kind': kind, 'group': group,
+                    'editions': r.get('editions', 1), 'stale': bool(r.get('stale')),
+                    'src': r.get('출처', '')}
 
         entry = {
             'disease': dz['name'], 'grade': dz['grade'], 'icon': dz['icon'],
-            'direct': [slim(r, 'direct') for r in direct[:6]],
+            'direct': [slim(r, 'direct') for r in direct_latest],
             'direct_total': len(direct),
             'group': [slim(r, 'group', r['group']) for r in gcand],
         }
+        if any(x['stale'] for x in entry['direct'] + entry['group']):
+            stats['stale'] += 1
         index.append(entry)
         if direct:
             stats['direct'] += 1
@@ -176,12 +208,16 @@ def build():
 
     meta = {
         'as_of': '2026-09',
-        'source': '질병관리청 감염병포털 감염병지침 게시판 전량 크롤링(358건, 2002~2026)',
+        'source': ('질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, '
+                   f'제목·연도로 통합 {len(rows)}건' if src == SRC else
+                   '질병관리청 감염병포털 감염병지침 게시판 전량 크롤링(358건, 2002~2026)'),
         'levels': {
             'direct': '지침 제목에 그 질병명·옛 이름·약어가 들어 있다 — 사실',
             'group': '그 질병이 속한 계열의 묶음 지침 — 찾아볼 후보. '
                      '묶음 지침이 실제로 어느 질병을 다루는지는 원문 목차 확인이 필요하다',
         },
+        'editions': '지침은 대개 매년 다시 낸다. 같은 계열은 최신판 하나만 보이고 판 수를 적는다. '
+                    f'최신판이 {THIS_YEAR - 2}년 이전이면 stale — 신판이 있는지 게시판을 확인할 것.',
         'caution': "제목에 '(4종)'처럼 대상 수가 적힌 묶음 지침이 있다. 대상 목록은 원문에서 확인할 것.",
         'stats': dict(stats, total=len(index), guidelines=len(rows)),
     }

@@ -100,6 +100,8 @@
   .t-d{background:var(--accent);color:#fff}
   .t-g{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
   .glist .dt{color:var(--faint);font-size:11.5px;margin-left:6px}
+  .glist .ed{font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border-radius:6px;padding:1px 6px;margin-left:6px;white-space:nowrap}
+  .glist .stale{font-size:11px;font-weight:700;color:var(--warn,#B23A3A);margin-left:6px;white-space:nowrap}
   .empty{display:none;text-align:center;color:var(--faint);padding:34px 0;font-size:14px}
 
   .res{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -214,9 +216,11 @@ const VF = {narrower:['f-narrower','⚠ 우리 범위가 좁음'], gap:['f-gap',
             match:['f-none','국제 기준과 일치'], no_international_standard:['f-gap','국제 기준 없음']};
 
 function guideLi(g, kind){
+  const ed = g.editions > 1 ? `<span class="ed num" title="같은 계열 지침의 판 수 — 최신판만 표시">최신판 · 판 ${g.editions}</span>` : '';
+  const st = g.stale ? `<span class="stale" title="최신판이 재작년 이전 — 누리집 게시판에 신판이 있는지 확인">⚠ ${g.year}년판이 최신</span>` : '';
   return `<li><span class="tag ${kind==='d'?'t-d':'t-g'}">${kind==='d'?'직접':'계열'}</span>`
     + `<a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.title)}</a>`
-    + `<span class="dt num">${esc(g.date)}</span></li>`;
+    + `<span class="dt num">${esc(g.date)}</span>${ed}${st}</li>`;
 }
 
 document.getElementById('cards').innerHTML = D.cards.map(c => {
