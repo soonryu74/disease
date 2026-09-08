@@ -101,6 +101,11 @@
   .t-g{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
   .glist .dt{color:var(--faint);font-size:11.5px;margin-left:6px}
   .glist .ed{font-size:11px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);border-radius:6px;padding:1px 6px;margin-left:6px;white-space:nowrap}
+  .glist .dk{font-size:10.5px;font-weight:700;color:var(--muted);border:1px solid var(--line);border-radius:5px;padding:0 5px;margin-right:5px}
+  .primary{background:var(--accent-soft);border-radius:11px;padding:10px 13px;margin:0 0 10px}
+  .primary .pk{font-size:10.5px;font-weight:800;letter-spacing:.1em;color:var(--accent-ink);margin-bottom:3px}
+  .primary a{font-size:14.5px;font-weight:800;color:var(--accent-ink)}
+  .primary .pw{font-size:11.5px;color:var(--muted);margin-top:3px}
   .glist .stale{font-size:11px;font-weight:700;color:var(--warn,#B23A3A);margin-left:6px;white-space:nowrap}
   .empty{display:none;text-align:center;color:var(--faint);padding:34px 0;font-size:14px}
 
@@ -218,9 +223,18 @@ const VF = {narrower:['f-narrower','⚠ 우리 범위가 좁음'], gap:['f-gap',
 function guideLi(g, kind){
   const ed = g.editions > 1 ? `<span class="ed num" title="같은 계열 지침의 판 수 — 최신판만 표시">최신판 · 판 ${g.editions}</span>` : '';
   const st = g.stale ? `<span class="stale" title="최신판이 재작년 이전 — 누리집 게시판에 신판이 있는지 확인">⚠ ${g.year}년판이 최신</span>` : '';
-  return `<li><span class="tag ${kind==='d'?'t-d':'t-g'}">${kind==='d'?'직접':'계열'}</span>`
+  const dk = g.doc && g.doc !== '지침' ? `<span class="dk">${esc(g.doc)}</span>` : '';
+  return `<li><span class="tag ${kind==='d'?'t-d':'t-g'}">${kind==='d'?'직접':'계열'}</span>${dk}`
     + `<a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.title)}</a>`
     + `<span class="dt num">${esc(g.date)}</span>${ed}${st}</li>`;
+}
+function primaryHtml(c){
+  const p = c.primary;
+  if (!p) return '';
+  const why = p.kind === 'direct' ? '제목에 이 병이 있다' : `${esc(p.group)} 계열 지침 — 이 병을 다루는지 목차 확인`;
+  return `<div class="primary"><div class="pk">지금 펴야 할 지침</div>
+    <a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.title)}</a>
+    <div class="pw">${esc(p.date)} · ${why}${p.editions>1?` · 이 계열 ${p.editions}판째`:''}${p.stale?' · <b>⚠ 재작년 이전 판이 최신이다. 신판 확인 필요</b>':''}</div></div>`;
 }
 
 document.getElementById('cards').innerHTML = D.cards.map(c => {
@@ -248,11 +262,12 @@ document.getElementById('cards').innerHTML = D.cards.map(c => {
         ${c.cross.intl.map(i => `<div class="intl"><b>${esc(i.agency)}</b> ${esc(i.value)}${i.url?` · <a href="${esc(i.url)}" target="_blank" rel="noopener">원문</a>`:''}</div>`).join('')}
         <p style="margin-top:6px"><b>현장 영향</b> ${esc(c.cross.impact)}</p>
       </div>` : ''}
+      ${primaryHtml(c)}
       <ul class="glist">
         ${c.guides.map(x => guideLi(x,'d')).join('')}
         ${c.group_guides.map(x => guideLi(x,'g')).join('')}
       </ul>
-      ${c.guides_total > c.guides.length ? `<p style="font-size:12px;color:var(--faint);margin:8px 0 0">제목에 병명이 있는 지침 ${c.guides_total}건 중 최신 ${c.guides.length}건만 표시</p>` : ''}
+      ${c.guides_total > c.guides.length ? `<p style="font-size:12px;color:var(--faint);margin:8px 0 0">제목에 병명이 있는 자료 ${c.guides_total}건 중 계열별 최신 ${c.guides.length}건만 표시 · 같은 계열은 최신판 하나로 접었다</p>` : ''}
     </div>
   </details>`;
 }).join('');

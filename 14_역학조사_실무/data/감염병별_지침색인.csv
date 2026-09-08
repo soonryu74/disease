@@ -1,372 +1,567 @@
 급,감염병,연결등급,계열,지침명,등록일,URL
-제1급,남아메리카출혈열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,니파바이러스감염증,direct,,제1급감염병 니파바이러스감염증 대응 지침(제1판),2025.09.08,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250908095956243&q_clsfNo=-1
-제1급,니파바이러스감염증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제1급,니파바이러스감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,남아메리카출혈열,group,1급_출혈열,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제1급,남아메리카출혈열,group,1급_출혈열,2023년 제1급감염병 바이러스성출혈열 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421136838350&q_clsfNo=0
+제1급,남아메리카출혈열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,니파바이러스감염증,direct,,제1급감염병 니파바이러스감염증 대응 지침(제1판),2025.09.08,https://www.kdca.go.kr/bbs/kdca/55/228305/artclView.do
+제1급,니파바이러스감염증,direct,,니파바이러스감염증 중점검역관리지역 지정 안내,2026.02.11,https://www.kdca.go.kr/bbs/kdca/50/310091/artclView.do
+제1급,니파바이러스감염증,direct,,니파바이러스감염증 검역관리지역 지정 안내,2025.09.03,https://www.kdca.go.kr/bbs/kdca/50/221449/artclView.do
+제1급,니파바이러스감염증,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,니파바이러스감염증,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,니파바이러스감염증,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제1급,니파바이러스감염증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제1급,니파바이러스감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,동물인플루엔자 인체감염증,direct,,2024년 제1급감염병(동물인플루엔자 인체감염증) 대응지침(2024.10월),2024.10.29,https://www.kdca.go.kr/bbs/kdca/55/228244/artclView.do
 제1급,동물인플루엔자 인체감염증,direct,,2023년 제1급감염병 동물인플루엔자 인체감염증 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421489669316&q_clsfNo=0
 제1급,동물인플루엔자 인체감염증,direct,,동물인플루엔자 인체감염증 대응지침 입니다.,2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125784788667&q_clsfNo=0
-제1급,동물인플루엔자 인체감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제1급,동물인플루엔자 인체감염증,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제1급,동물인플루엔자 인체감염증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제1급,동물인플루엔자 인체감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,동물인플루엔자 인체감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제1급,동물인플루엔자 인체감염증,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,동물인플루엔자 인체감염증,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,동물인플루엔자 인체감염증,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제1급,동물인플루엔자 인체감염증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제1급,동물인플루엔자 인체감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,두창,direct,,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,두창,direct,,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
 제1급,두창,direct,,2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0
-제1급,두창,direct,,"두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0
-제1급,두창,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,디프테리아,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제1급,디프테리아,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제1급,디프테리아,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제1급,디프테리아,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제1급,디프테리아,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,라싸열,direct,,2016년 라싸열 대응지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716428684310&q_clsfNo=0
-제1급,라싸열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,리프트밸리열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,마버그열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,두창,direct,,원숭이두창 치료제 사용 안내서(2판) 개정,2022.09.08,https://www.kdca.go.kr/bbs/kdca/55/228059/artclView.do
+제1급,두창,direct,,원숭이두창 대응지침(지자체용) 제3판,2022.08.16,https://www.kdca.go.kr/bbs/kdca/55/228054/artclView.do
+제1급,두창,direct,,원숭이두창 검사실 진단 지침(제1판),2022.06.22,https://www.kdca.go.kr/bbs/kdca/55/228033/artclView.do
+제1급,두창,group,1급_생물테러,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,두창,group,1급_생물테러,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
+제1급,두창,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,디프테리아,direct,,[제2군] 디프테리아,2008.03.02,https://www.kdca.go.kr/bbs/kdca/49/218783/artclView.do
+제1급,디프테리아,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제1급,디프테리아,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제1급,디프테리아,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제1급,디프테리아,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,라싸열,direct,,라싸열 대응지침(제1판),2017.02.22,https://www.kdca.go.kr/bbs/kdca/55/227543/artclView.do
+제1급,라싸열,direct,,[제4군] 라싸열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218810/artclView.do
+제1급,라싸열,group,1급_출혈열,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제1급,라싸열,group,1급_출혈열,2023년 제1급감염병 바이러스성출혈열 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421136838350&q_clsfNo=0
+제1급,라싸열,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,라싸열,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,라싸열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,리프트밸리열,group,1급_출혈열,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제1급,리프트밸리열,group,1급_출혈열,2023년 제1급감염병 바이러스성출혈열 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421136838350&q_clsfNo=0
+제1급,리프트밸리열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,마버그열,direct,,[제4군] 마버그열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218808/artclView.do
+제1급,마버그열,group,1급_출혈열,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제1급,마버그열,group,1급_출혈열,2023년 제1급감염병 바이러스성출혈열 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421136838350&q_clsfNo=0
+제1급,마버그열,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,마버그열,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,마버그열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,보툴리눔독소증,direct,,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,보툴리눔독소증,direct,,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
 제1급,보툴리눔독소증,direct,,2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0
 제1급,보툴리눔독소증,direct,,"두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0
-제1급,보툴리눔독소증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,신종감염병증후군,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,신종인플루엔자,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제1급,신종인플루엔자,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제1급,신종인플루엔자,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,보툴리눔독소증,group,1급_생물테러,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,보툴리눔독소증,group,1급_생물테러,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
+제1급,보툴리눔독소증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,신종감염병증후군,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,신종인플루엔자,direct,,신종 인플루엔자 대유행 대비 진료 지침 교육 워크숍,2009.10.05,https://www.kdca.go.kr/bbs/kdca/49/218845/artclView.do
+제1급,신종인플루엔자,direct,,신종인플루엔자 사례조사서,2009.08.31,https://www.kdca.go.kr/bbs/kdca/57/228370/artclView.do
+제1급,신종인플루엔자,direct,,신종인플루엔자 예방접종대상자 확대 홍보자료,2010.02.16,https://www.kdca.go.kr/bbs/kdca/49/218859/artclView.do
+제1급,신종인플루엔자,direct,,2010 신종인플루엔자A(H1N1) 평가대회 (2010.6.29 ~ 6.30),2010.07.05,https://www.kdca.go.kr/bbs/kdca/49/218867/artclView.do
+제1급,신종인플루엔자,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제1급,신종인플루엔자,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,신종인플루엔자,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,신종인플루엔자,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,야토병,direct,,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,야토병,direct,,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
 제1급,야토병,direct,,2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0
 제1급,야토병,direct,,"두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0
-제1급,야토병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,에볼라바이러스병,direct,,2017년 (제7판)에볼라바이러스병 대응지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716460657497&q_clsfNo=0
-제1급,에볼라바이러스병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,중동호흡기증후군(MERS),direct,,2023년 제1급감염병 중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS) 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421944839744&q_clsfNo=0
+제1급,야토병,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제1급,야토병,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제1급,야토병,group,1급_생물테러,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,야토병,group,1급_생물테러,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
+제1급,야토병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,에볼라바이러스병,direct,,에볼라바이러스병 실무대응 지침(국가지정 입원치료병상 운영 의료기관용),2022.04.29,https://www.kdca.go.kr/bbs/kdca/55/228017/artclView.do
+제1급,에볼라바이러스병,direct,,에볼라바이러스병 대응지침(제7판),2017.10.20,https://www.kdca.go.kr/bbs/kdca/55/227597/artclView.do
+제1급,에볼라바이러스병,direct,,에볼라바이러스병 관련 서식(에볼라대응지침 5-1판 서식),2015.02.11,https://www.kdca.go.kr/bbs/kdca/57/228432/artclView.do
+제1급,에볼라바이러스병,direct,,에볼라바이러스병 응급의료 대응 지침,2014.09.05,https://www.kdca.go.kr/bbs/kdca/50/221011/artclView.do
+제1급,에볼라바이러스병,direct,,일반항공기에서의 에볼라바이러스병 대응지침(영문판),2014.08.28,https://www.kdca.go.kr/bbs/kdca/50/221009/artclView.do
+제1급,에볼라바이러스병,direct,,"에볼라바이러스병 환자의 검사실 검체채취, 안전 및 감염관리 지침(국가지정입원치료격리병상용)",2014.08.21,https://www.kdca.go.kr/bbs/kdca/50/221002/artclView.do
+제1급,에볼라바이러스병,group,1급_출혈열,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제1급,에볼라바이러스병,group,1급_출혈열,2023년 제1급감염병 바이러스성출혈열 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421136838350&q_clsfNo=0
+제1급,에볼라바이러스병,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,에볼라바이러스병,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,에볼라바이러스병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,중동호흡기증후군(MERS),direct,,2026년 제1급감염병(중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS)) 대응지침,2026.01.22,https://www.kdca.go.kr/bbs/kdca/55/309847/artclView.do
+제1급,중동호흡기증후군(MERS),direct,,2025년 제1급감염병(중동호흡기증후군(MERS)·중동급성호흡기증후군(SARS)) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228264/artclView.do
+제1급,중동호흡기증후군(MERS),direct,,2024년 제1급감염병 중동호흡기증후군(MERS)중증급성호흡기증후군(SARS) 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228173/artclView.do
+제1급,중동호흡기증후군(MERS),direct,,2023년제1급중동호흡기증후군[MERS]중증급성호흡기증후군[SARS]대응지침(2023.4.),2023.04.21,https://www.kdca.go.kr/bbs/kdca/55/228122/artclView.do
+제1급,중동호흡기증후군(MERS),direct,,제1급감염병 중동호흡기증후군(MERS) 대응 지침(22년판),2022.01.25,https://www.kdca.go.kr/bbs/kdca/55/227945/artclView.do
 제1급,중동호흡기증후군(MERS),direct,,중동호흡기증후군(MERS) 대응지침입니다.,2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125213542588&q_clsfNo=0
-제1급,중동호흡기증후군(MERS),direct,,2018년 메르스(MERS) 대응 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716730763772&q_clsfNo=0
-제1급,중동호흡기증후군(MERS),direct,,2017년 메르스(MERS) 대응지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716115098166&q_clsfNo=0
-제1급,중동호흡기증후군(MERS),direct,,2016년 메르스(MERS) 대응 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716315640614&q_clsfNo=0
-제1급,중동호흡기증후군(MERS),group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제1급,중동호흡기증후군(MERS),group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제1급,중동호흡기증후군(MERS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,중증급성호흡기증후군(SARS),direct,,2023년 제1급감염병 중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS) 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421944839744&q_clsfNo=0
+제1급,중동호흡기증후군(MERS),group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제1급,중동호흡기증후군(MERS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,중증급성호흡기증후군(SARS),direct,,2026년 제1급감염병(중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS)) 대응지침,2026.01.22,https://www.kdca.go.kr/bbs/kdca/55/309847/artclView.do
+제1급,중증급성호흡기증후군(SARS),direct,,2025년 제1급감염병(중동호흡기증후군(MERS)·중동급성호흡기증후군(SARS)) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228264/artclView.do
+제1급,중증급성호흡기증후군(SARS),direct,,2024년 제1급감염병 중동호흡기증후군(MERS)중증급성호흡기증후군(SARS) 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228173/artclView.do
+제1급,중증급성호흡기증후군(SARS),direct,,2023년제1급중동호흡기증후군[MERS]중증급성호흡기증후군[SARS]대응지침(2023.4.),2023.04.21,https://www.kdca.go.kr/bbs/kdca/55/228122/artclView.do
+제1급,중증급성호흡기증후군(SARS),direct,,제1급감염병 중증급성호흡기증후군(SARS) 대응 지침(22년판),2022.01.25,https://www.kdca.go.kr/bbs/kdca/55/227946/artclView.do
 제1급,중증급성호흡기증후군(SARS),direct,,중증급성호흡기증후군(SARS) 대응지침입니다.,2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125546375205&q_clsfNo=0
-제1급,중증급성호흡기증후군(SARS),group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제1급,중증급성호흡기증후군(SARS),group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제1급,중증급성호흡기증후군(SARS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제1급,크리미안콩고출혈열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,중증급성호흡기증후군(SARS),group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제1급,중증급성호흡기증후군(SARS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,크리미안콩고출혈열,group,1급_출혈열,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제1급,크리미안콩고출혈열,group,1급_출혈열,2023년 제1급감염병 바이러스성출혈열 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421136838350&q_clsfNo=0
+제1급,크리미안콩고출혈열,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,크리미안콩고출혈열,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,크리미안콩고출혈열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,탄저,direct,,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,탄저,direct,,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
 제1급,탄저,direct,,2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0
 제1급,탄저,direct,,"두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0
-제1급,탄저,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제1급,탄저,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,탄저,direct,,[제3군] 탄저,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218802/artclView.do
+제1급,탄저,group,1급_생물테러,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,탄저,group,1급_생물테러,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
+제1급,탄저,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제1급,탄저,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제1급,탄저,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제1급,페스트,direct,,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,페스트,direct,,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
 제1급,페스트,direct,,2023년 제1급감염병 두창·페스트·탄저·보툴리눔독소증·야토병 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421731941239&q_clsfNo=0
 제1급,페스트,direct,,"두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0
-제1급,페스트,direct,,2018년 페스트 대응지침(제1판),2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716745388800&q_clsfNo=0
-제1급,페스트,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,A형간염,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,A형간염,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,A형간염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,A형간염,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,A형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,E형간염,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,E형간염,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,E형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,b형헤모필루스인플루엔자,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,b형헤모필루스인플루엔자,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,b형헤모필루스인플루엔자,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,b형헤모필루스인플루엔자,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,b형헤모필루스인플루엔자,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,결핵,direct,,2026 국가결핵관리지침,2026.01.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260105170034695&q_clsfNo=-1
-제2급,결핵,direct,,결핵환자 맞춤형 통합관리 지침 안내,2024.05.31,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240531090527953&q_clsfNo=-1
-제2급,결핵,direct,,‘국립결핵병원 치료·간병 통합지원 시범사업’ 시행 안내(2024.5.1.시행),2024.04.26,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240426093937340&q_clsfNo=-1
-제2급,결핵,direct,,「잠복결핵감염 관리 안내」,2024.04.11,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240411081008313&q_clsfNo=-1
-제2급,결핵,direct,,「다제내성결핵 치료 신약 사전심사제」 일부개정 및 안내서 배포 알림,2024.03.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240329132858733&q_clsfNo=-1
-제2급,결핵,direct,,「교정시설 결핵관리지침」(2024),2024.03.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240325083936144&q_clsfNo=-1
-제2급,결핵,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,결핵,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,결핵,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,결핵,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,결핵,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,"2018년 의료관련감염병(VRSA,CRE) 관리지침",2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716542576822&q_clsfNo=0
-제2급,반코마이신내성황색포도알균(VRSA) 감염증,group,의료관련,2024년도 의료관련감염병 관리지침,2023.12.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1
-제2급,반코마이신내성황색포도알균(VRSA) 감염증,group,의료관련,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제2급,반코마이신내성황색포도알균(VRSA) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,백일해,direct,,2015년 백일해통합관리지침,2018.08.22,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180822324267988&q_clsfNo=0
-제2급,백일해,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,백일해,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,백일해,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,백일해,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,백일해,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제1급,페스트,direct,,"페스트 대응지침(2018.3, 제1판 각 분권)",2018.04.09,https://www.kdca.go.kr/bbs/kdca/55/227632/artclView.do
+제1급,페스트,direct,,[제1군] 페스트,2008.03.02,https://www.kdca.go.kr/bbs/kdca/49/218778/artclView.do
+제1급,페스트,group,1급_생물테러,2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do
+제1급,페스트,group,1급_생물테러,2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228172/artclView.do
+제1급,페스트,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제1급,페스트,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제1급,페스트,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,A형간염,direct,,2011년 A형간염 역학조사서,2011.10.31,https://www.kdca.go.kr/bbs/kdca/57/228389/artclView.do
+제2급,A형간염,direct,,A형간염 사례조사서,2009.03.19,https://www.kdca.go.kr/bbs/kdca/57/228359/artclView.do
+제2급,A형간염,direct,,A형 간염 예방 수칙(2011년),2011.06.24,https://www.kdca.go.kr/bbs/kdca/49/218892/artclView.do
+제2급,A형간염,direct,,A 형 간염 ! 이렇게 예방할 수 있습니다.,2010.03.10,https://www.kdca.go.kr/bbs/kdca/49/218862/artclView.do
+제2급,A형간염,direct,,A형 간염의 예방과 대처,2009.07.14,https://www.kdca.go.kr/bbs/kdca/49/218841/artclView.do
+제2급,A형간염,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,A형간염,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,A형간염,group,간염,2026년도 바이러스 간염 관리지침(A형·B형·C형·E형),2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309601/artclView.do
+제2급,A형간염,group,간염,일차 의료기관용 바이러스 간염(B형·C형) 진료 지침,2025.07.11,https://www.kdca.go.kr/bbs/kdca/55/228301/artclView.do
+제2급,A형간염,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,A형간염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,A형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,E형간염,direct,,2023년도 바이러스 간염 관리지침(A형·B형·C형·E형간염) 제정 안내,2023.05.09,https://www.kdca.go.kr/bbs/kdca/55/228130/artclView.do
+제2급,E형간염,direct,,2020년 E형간염 관리지침,2020.07.14,https://www.kdca.go.kr/bbs/kdca/55/227790/artclView.do
+제2급,E형간염,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,E형간염,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,E형간염,group,간염,2026년도 바이러스 간염 관리지침(A형·B형·C형·E형),2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309601/artclView.do
+제2급,E형간염,group,간염,일차 의료기관용 바이러스 간염(B형·C형) 진료 지침,2025.07.11,https://www.kdca.go.kr/bbs/kdca/55/228301/artclView.do
+제2급,E형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,b형헤모필루스인플루엔자,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,b형헤모필루스인플루엔자,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,b형헤모필루스인플루엔자,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,b형헤모필루스인플루엔자,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,결핵,direct,,다제내성결핵 치료 부작용 매뉴얼,2026.04.02,https://www.kdca.go.kr/bbs/kdca/49/310643/artclView.do
+제2급,결핵,direct,,2026 국가결핵관리지침,2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309608/artclView.do
+제2급,결핵,direct,,2025 국가결핵관리지침(시스템 이용 설명서 2종),2024.12.31,https://www.kdca.go.kr/bbs/kdca/55/228259/artclView.do
+제2급,결핵,direct,,결핵환자 맞춤형 통합관리 지침 안내,2024.05.31,https://www.kdca.go.kr/bbs/kdca/55/228220/artclView.do
+제2급,결핵,direct,,「다제내성결핵 치료 신약 사전심사제」 일부개정 및 안내서 배포 알림,2024.03.29,https://www.kdca.go.kr/bbs/kdca/55/228202/artclView.do
+제2급,결핵,direct,,「교정시설 결핵관리지침」(2024),2024.03.25,https://www.kdca.go.kr/bbs/kdca/55/228199/artclView.do
+제2급,결핵,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,결핵,group,결핵,2026 국가결핵관리지침,2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309608/artclView.do
+제2급,결핵,group,결핵,2025 국가결핵관리지침(시스템 이용 설명서 2종),2024.12.31,https://www.kdca.go.kr/bbs/kdca/55/228259/artclView.do
+제2급,결핵,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,결핵,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,결핵,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,2019년도 의료관련감염병(VRSA.CRE) 관리지침,2019.09.16,https://www.kdca.go.kr/bbs/kdca/55/227723/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,2009년 VRSA/VISA 역학조사 지침,2009.04.14,https://www.kdca.go.kr/bbs/kdca/55/227282/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,반코마이신내성/중등도내성황색포도알균(VRSA/VISA) 감염증 사례조사서,2023.09.04,https://www.kdca.go.kr/bbs/kdca/57/228495/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,VRSA 포본감시결과보고 및 사례조사서 양식,2009.03.18,https://www.kdca.go.kr/bbs/kdca/57/228354/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,VRSA 표본감시 신고 서식,2008.02.29,https://www.kdca.go.kr/bbs/kdca/57/228344/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,direct,,"전수감시 의료관련감염병(VRSA,CRE)_자주묻는질문",2017.10.31,https://www.kdca.go.kr/bbs/kdca/55/227599/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,group,의료관련,2026년 의료관련감염병 지역 의료기관 네트워크 운영 사업 지침,2026.03.13,https://www.kdca.go.kr/bbs/kdca/55/310439/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,group,의료관련,2026년도 의료관련감염병 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309968/artclView.do
+제2급,반코마이신내성황색포도알균(VRSA) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,백일해,direct,,백일해 통합관리지침,2016.01.06,https://www.kdca.go.kr/bbs/kdca/55/227464/artclView.do
+제2급,백일해,direct,,[제2군] 백일해,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218784/artclView.do
+제2급,백일해,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,백일해,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,백일해,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,백일해,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,성홍열,direct,,"2023년도 호흡기감염병 관리지침 (수막구균감염증, 성홍열, 급성호흡기감염증)",2023.04.06,https://www.kdca.go.kr/bbs/kdca/55/228114/artclView.do
 제2급,성홍열,direct,,2018년 성홍열 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716554798814&q_clsfNo=0
 제2급,성홍열,direct,,2017년 성홍열 집단발생보고 결과보고 양식,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716519199302&q_clsfNo=0
-제2급,성홍열,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,성홍열,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,성홍열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,세균성이질,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,세균성이질,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,세균성이질,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,수두,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,수두,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,수두,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,수두,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,수두,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,수막구균 감염증,direct,,2020년도 수막구균 감염증 관리지침,2020.02.13,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200213816378464&q_clsfNo=0
-제2급,수막구균 감염증,direct,,2017년 수막구균성수막염 관리지침,2018.08.22,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180822752686043&q_clsfNo=0
+제2급,성홍열,direct,,[제3군] 성홍열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218794/artclView.do
+제2급,성홍열,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,성홍열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,세균성이질,direct,,세균성이질 관리지침,2001.12.10,https://www.kdca.go.kr/bbs/kdca/50/219472/artclView.do
+제2급,세균성이질,direct,,[제1군] 세균성이질,2008.03.02,https://www.kdca.go.kr/bbs/kdca/49/218781/artclView.do
+제2급,세균성이질,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,세균성이질,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,세균성이질,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,수두,direct,,2006 수두관리지침,2006.09.21,https://www.kdca.go.kr/bbs/kdca/55/227197/artclView.do
+제2급,수두,direct,,"수두, 유행성이하선염의 예방 및 관리",2009.07.15,https://www.kdca.go.kr/bbs/kdca/49/218842/artclView.do
+제2급,수두,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,수두,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,수두,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,수두,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,수막구균 감염증,direct,,"2023년도 호흡기감염병 관리지침 (수막구균감염증, 성홍열, 급성호흡기감염증)",2023.04.06,https://www.kdca.go.kr/bbs/kdca/55/228114/artclView.do
+제2급,수막구균 감염증,direct,,2022년도 수막구균 감염증 관리 지침,2022.03.07,https://www.kdca.go.kr/bbs/kdca/55/227981/artclView.do
+제2급,수막구균 감염증,direct,,2018년도 수막구균성수막염 관리지침,2018.09.12,https://www.kdca.go.kr/bbs/kdca/55/227665/artclView.do
+제2급,수막구균 감염증,direct,,수막구균성 수막염 관리지침 신규 제정,2003.01.21,https://www.kdca.go.kr/bbs/kdca/50/219649/artclView.do
 제2급,수막구균 감염증,direct,,2002년 수막구균성수막염 지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710566397522&q_clsfNo=0
-제2급,수막구균 감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,수막구균 감염증,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,수막구균 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,유행성이하선염,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,유행성이하선염,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,유행성이하선염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,유행성이하선염,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,유행성이하선염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,장출혈성대장균감염증,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,장출혈성대장균감염증,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,장출혈성대장균감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,장티푸스,direct,,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,장티푸스,direct,,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제2급,장티푸스,direct,,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,장티푸스,direct,,2026년도 제1급감염병 대응지침(4종),2026.01.26,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260126111805686&q_clsfNo=-1
-제2급,장티푸스,direct,,법정감염병 진단검사 통합지침(제4-2판),2025.12.08,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20251208110516818&q_clsfNo=-1
-제2급,장티푸스,direct,,제1급감염병 니파바이러스감염증 대응 지침(제1판),2025.09.08,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250908095956243&q_clsfNo=-1
-제2급,장티푸스,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,장티푸스,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,장티푸스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,카바페넴내성장내세균목(CRE) 감염증,direct,,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제2급,카바페넴내성장내세균목(CRE) 감염증,direct,,"2018년 의료관련감염병(VRSA,CRE) 관리지침",2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716542576822&q_clsfNo=0
-제2급,카바페넴내성장내세균목(CRE) 감염증,group,의료관련,2024년도 의료관련감염병 관리지침,2023.12.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1
-제2급,카바페넴내성장내세균목(CRE) 감염증,group,의료관련,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제2급,카바페넴내성장내세균목(CRE) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제2급,수막구균 감염증,direct,,[제3군] 수막구균성수막염,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218795/artclView.do
+제2급,수막구균 감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,수막구균 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,유행성이하선염,direct,,"수두, 유행성이하선염의 예방 및 관리",2009.07.15,https://www.kdca.go.kr/bbs/kdca/49/218842/artclView.do
+제2급,유행성이하선염,direct,,[제2군] 유행성이하선염,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218787/artclView.do
+제2급,유행성이하선염,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,유행성이하선염,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,유행성이하선염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,유행성이하선염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,장출혈성대장균감염증,direct,,[제1군] 장출혈성대장균감염증,2008.03.02,https://www.kdca.go.kr/bbs/kdca/49/218782/artclView.do
+제2급,장출혈성대장균감염증,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,장출혈성대장균감염증,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,장출혈성대장균감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,장티푸스,direct,,2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월),2026.08.28,https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do
+제2급,장티푸스,direct,,감염병 위기 사회대응 매뉴얼(2026),2026.08.18,https://www.kdca.go.kr/bbs/kdca/55/312241/artclView.do
+제2급,장티푸스,direct,,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,장티푸스,direct,,2026 검역감염병 대응지침,2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311900/artclView.do
+제2급,장티푸스,direct,,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,장티푸스,direct,,2026년 감염병 관리 사업 안내 지침,2026.05.28,https://www.kdca.go.kr/bbs/kdca/55/311242/artclView.do
+제2급,장티푸스,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,장티푸스,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,장티푸스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,direct,,2026년 CRE 감염증 감소전략 운영 사업 지침,2026.05.20,https://www.kdca.go.kr/bbs/kdca/55/311153/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,direct,,2019년도 의료관련감염병(VRSA.CRE) 관리지침,2019.09.16,https://www.kdca.go.kr/bbs/kdca/55/227723/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,direct,,카바페넴내성장내세균속균종(CRE) 감염증 사례조사서,2023.09.04,https://www.kdca.go.kr/bbs/kdca/57/228493/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,direct,,"전수감시 의료관련감염병(VRSA,CRE)_자주묻는질문",2017.10.31,https://www.kdca.go.kr/bbs/kdca/55/227599/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,group,의료관련,2026년 의료관련감염병 지역 의료기관 네트워크 운영 사업 지침,2026.03.13,https://www.kdca.go.kr/bbs/kdca/55/310439/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,group,의료관련,2026년도 의료관련감염병 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309968/artclView.do
+제2급,카바페넴내성장내세균목(CRE) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
 제2급,콜레라,direct,,2002년 콜레라방역관리 지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710779201400&q_clsfNo=0
-제2급,콜레라,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,콜레라,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,콜레라,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,파라티푸스,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제2급,파라티푸스,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제2급,파라티푸스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,폐렴구균 감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,폐렴구균 감염증,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,폐렴구균 감염증,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,폐렴구균 감염증,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,폐렴구균 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,폴리오,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,폴리오,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,폴리오,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,풍진,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,풍진,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,풍진,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,풍진,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,풍진,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,한센병,direct,,2026년도 한센병사업 관리지침,2026.02.24,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260224093345460&q_clsfNo=-1
-제2급,한센병,direct,,2025년도 한센병사업 관리지침,2025.03.27,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250327084011146&q_clsfNo=-1
-제2급,한센병,direct,,2024년도 한센병사업 관리지침,2024.05.31,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240531085924434&q_clsfNo=-1
-제2급,한센병,direct,,2000년 한센병관리사업지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710438977204&q_clsfNo=0
-제2급,한센병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제2급,홍역,direct,,2006년 홍역감시관리지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710771704408&q_clsfNo=0
-제2급,홍역,direct,,2003년 홍역예방․관리 지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710258588430&q_clsfNo=0
-제2급,홍역,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제2급,홍역,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제2급,홍역,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제2급,홍역,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제2급,홍역,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,B형간염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제3급,B형간염,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제3급,B형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제2급,콜레라,direct,,2002콜레라관리지침,2002.08.28,https://www.kdca.go.kr/bbs/kdca/55/227142/artclView.do
+제2급,콜레라,direct,,'02년 콜레라관리 지침,2002.07.31,https://www.kdca.go.kr/bbs/kdca/50/219580/artclView.do
+제2급,콜레라,direct,,2026년 1분기 콜레라 검역관리지역 추가 안내,2025.12.29,https://www.kdca.go.kr/bbs/kdca/50/309481/artclView.do
+제2급,콜레라,direct,,[제1군] 콜레라,2008.03.02,https://www.kdca.go.kr/bbs/kdca/49/218777/artclView.do
+제2급,콜레라,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,콜레라,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,콜레라,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제2급,콜레라,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제2급,콜레라,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,파라티푸스,direct,,[제1군] 파라티푸스,2008.03.02,https://www.kdca.go.kr/bbs/kdca/49/218780/artclView.do
+제2급,파라티푸스,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제2급,파라티푸스,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제2급,파라티푸스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,폐렴구균 감염증,direct,,2016년 노인 폐렴구균 예방접종사업 관리 지침,2016.06.08,https://www.kdca.go.kr/bbs/kdca/55/227487/artclView.do
+제2급,폐렴구균 감염증,direct,,2015 노인 폐렴구균 예방접종사업 관리지침,2015.02.03,https://www.kdca.go.kr/bbs/kdca/55/227435/artclView.do
+제2급,폐렴구균 감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,폐렴구균 감염증,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,폐렴구균 감염증,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,폐렴구균 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,폴리오,direct,,폴리오 대응 지침(2024년 개정),2024.04.24,https://www.kdca.go.kr/bbs/kdca/55/228209/artclView.do
+제2급,폴리오,direct,,2020년도 폴리오 발생대비 및 대응 지침,2020.11.18,https://www.kdca.go.kr/bbs/kdca/55/227800/artclView.do
+제2급,폴리오,direct,,소아마비(폴리오) 환자 역학조사서,2002.02.01,https://www.kdca.go.kr/bbs/kdca/50/219497/artclView.do
+제2급,폴리오,direct,,[제2군] 폴리오,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218789/artclView.do
+제2급,폴리오,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제2급,폴리오,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제2급,폴리오,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,폴리오,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,폴리오,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,풍진,direct,,[제2군] 풍진,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218788/artclView.do
+제2급,풍진,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,풍진,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,풍진,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,풍진,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,한센병,direct,,2026년도 한센병사업관리지침,2026.02.24,https://www.kdca.go.kr/bbs/kdca/55/310222/artclView.do
+제2급,한센병,direct,,한센병 관리지침,2002.04.23,https://www.kdca.go.kr/bbs/kdca/55/227137/artclView.do
+제2급,한센병,direct,,한센병관리사업지침-교육일정총괄 및 대상자-,2001.03.23,https://www.kdca.go.kr/bbs/kdca/50/219303/artclView.do
+제2급,한센병,direct,,한센병관리사업지침-보고체계-,2001.03.23,https://www.kdca.go.kr/bbs/kdca/50/219302/artclView.do
+제2급,한센병,direct,,한센병관리사업지침-서식-,2001.03.16,https://www.kdca.go.kr/bbs/kdca/50/219298/artclView.do
+제2급,한센병,direct,,한센병관리사업지침-지침서-,2001.03.16,https://www.kdca.go.kr/bbs/kdca/50/219297/artclView.do
+제2급,한센병,group,결핵,2026 국가결핵관리지침,2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309608/artclView.do
+제2급,한센병,group,결핵,2025 국가결핵관리지침(시스템 이용 설명서 2종),2024.12.31,https://www.kdca.go.kr/bbs/kdca/55/228259/artclView.do
+제2급,한센병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제2급,홍역,direct,,홍역 대응 지침(2026.5.),2026.05.11,https://www.kdca.go.kr/bbs/kdca/55/311031/artclView.do
+제2급,홍역,direct,,2019 홍역 대응 지침(최종),2019.07.04,https://www.kdca.go.kr/bbs/kdca/55/227711/artclView.do
+제2급,홍역,direct,,홍역관리지침,2014.06.03,https://www.kdca.go.kr/bbs/kdca/55/227416/artclView.do
+제2급,홍역,direct,,"학교, 의료기관, 보건소용 홍역 관리지침(2014년 5월 개정판)",2014.06.03,https://www.kdca.go.kr/bbs/kdca/55/227414/artclView.do
+제2급,홍역,direct,,홍역 면역도 조사 지침 및 보건소 면역도 조사관리 카드 양식,2007.03.09,https://www.kdca.go.kr/bbs/kdca/57/228334/artclView.do
+제2급,홍역,direct,,2006년 홍역감시관리지침,2006.03.23,https://www.kdca.go.kr/bbs/kdca/55/227184/artclView.do
+제2급,홍역,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제2급,홍역,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제2급,홍역,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제2급,홍역,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제2급,홍역,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제2급,홍역,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,B형간염,direct,,"2016년도 B형간염 주산기감염 예방사업 안내(보건소용, 의료기관용)",2016.01.05,https://www.kdca.go.kr/bbs/kdca/55/227463/artclView.do
+제3급,B형간염,direct,,B형간염수직감염 예방사업-보건소용지침,2002.07.02,https://www.kdca.go.kr/bbs/kdca/50/219566/artclView.do
+제3급,B형간염,direct,,B형간염수직감염 예방사업-의료기관용지침,2002.07.02,https://www.kdca.go.kr/bbs/kdca/50/219565/artclView.do
+제3급,B형간염,direct,,산모 B형 간염 표본감시 신고서식,2010.03.03,https://www.kdca.go.kr/bbs/kdca/57/228374/artclView.do
+제3급,B형간염,direct,,[제2군] B형 간염,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218790/artclView.do
+제3급,B형간염,group,간염,2026년도 바이러스 간염 관리지침(A형·B형·C형·E형),2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309601/artclView.do
+제3급,B형간염,group,간염,일차 의료기관용 바이러스 간염(B형·C형) 진료 지침,2025.07.11,https://www.kdca.go.kr/bbs/kdca/55/228301/artclView.do
+제3급,B형간염,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제3급,B형간염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제3급,B형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,C형간염,direct,,2022년도 C형간염 관리지침,2022.04.13,https://www.kdca.go.kr/bbs/kdca/55/228008/artclView.do
 제3급,C형간염,direct,,2020년도 C형간염 지침,2020.03.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200310245616631&q_clsfNo=0
-제3급,C형간염,direct,,2017년 C형간염 관리지침_전자용,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716944710754&q_clsfNo=0
-제3급,C형간염,direct,,2016년 C형간염관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716097735733&q_clsfNo=0
-제3급,C형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,공수병,direct,,2018년 공수병 관리지침,2018.09.27,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180927756905352&q_clsfNo=0
-제3급,공수병,direct,,2017년 공수병 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716250193298&q_clsfNo=0
-제3급,공수병,direct,,2016년 공수병 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716018016313&q_clsfNo=0
+제3급,C형간염,direct,,2011 C형간염 표본감시 안내지침,2011.01.27,https://www.kdca.go.kr/bbs/kdca/55/227310/artclView.do
+제3급,C형간염,direct,,C형 간염예방 포스터,2011.10.28,https://www.kdca.go.kr/bbs/kdca/49/218897/artclView.do
+제3급,C형간염,group,간염,2026년도 바이러스 간염 관리지침(A형·B형·C형·E형),2026.01.05,https://www.kdca.go.kr/bbs/kdca/55/309601/artclView.do
+제3급,C형간염,group,간염,일차 의료기관용 바이러스 간염(B형·C형) 진료 지침,2025.07.11,https://www.kdca.go.kr/bbs/kdca/55/228301/artclView.do
+제3급,C형간염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,공수병,direct,,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,공수병,direct,,2018년도 공수병 관리지침,2018.09.21,https://www.kdca.go.kr/bbs/kdca/55/227668/artclView.do
 제3급,공수병,direct,,2015년 공수병 예방관리 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716238815426&q_clsfNo=0
-제3급,공수병,direct,,2007년 공수병지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710901975087&q_clsfNo=0
-제3급,공수병,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제3급,공수병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,뎅기열,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,뎅기열,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,뎅기열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,라임병,direct,,2012년 라임병 관리 지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710511145542&q_clsfNo=0
-제3급,라임병,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,라임병,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,라임병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,레지오넬라증,direct,,2025년도 레지오넬라증 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131851611&q_clsfNo=-1
-제3급,레지오넬라증,direct,,2024년 레지오넬라증 관리지침,2024.04.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240430171900726&q_clsfNo=-1
-제3급,레지오넬라증,direct,,2019년 레지오넬라증관리지침,2019.07.12,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190712961070144&q_clsfNo=0
-제3급,레지오넬라증,direct,,2016년 레지오넬라증관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716338319585&q_clsfNo=0
-제3급,레지오넬라증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제3급,레지오넬라증,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제3급,레지오넬라증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,렙토스피라증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제3급,렙토스피라증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,말라리아,direct,,2023년 말라리아 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720097551027&q_clsfNo=0
-제3급,말라리아,direct,,2019년도 말라리아 관리지침,2019.05.07,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190507539472061&q_clsfNo=0
-제3급,말라리아,direct,,2018년 말라리아 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716642266187&q_clsfNo=0
-제3급,말라리아,direct,,2017년 말라리아관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716237996855&q_clsfNo=0
-제3급,말라리아,direct,,2016년 말라리아 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716730170282&q_clsfNo=0
+제3급,공수병,direct,,2007년도 공수병지침,2007.05.01,https://www.kdca.go.kr/bbs/kdca/55/227210/artclView.do
+제3급,공수병,direct,,공수병예방관리 지침 발간안내,2002.09.18,https://www.kdca.go.kr/bbs/kdca/50/219604/artclView.do
+제3급,공수병,direct,,공수병 역학과 관리,2015.03.27,https://www.kdca.go.kr/bbs/kdca/55/227438/artclView.do
+제3급,공수병,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,공수병,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제3급,공수병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,뎅기열,direct,,[제4군] 뎅기열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218807/artclView.do
+제3급,뎅기열,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,뎅기열,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,뎅기열,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제3급,뎅기열,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제3급,뎅기열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,라임병,direct,,라임병 관리 지침,2012.10.10,https://www.kdca.go.kr/bbs/kdca/55/227357/artclView.do
+제3급,라임병,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,라임병,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,라임병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,레지오넬라증,direct,,2026년도 레지오넬라증 관리지침,2026.01.30,https://www.kdca.go.kr/bbs/kdca/55/309941/artclView.do
+제3급,레지오넬라증,direct,,시설별 설비별 레지오넬라증 관리 가이드라인,2024.05.20,https://www.kdca.go.kr/bbs/kdca/55/228217/artclView.do
+제3급,레지오넬라증,direct,,"2022년도 호흡기감염병(성홍열, 레지오넬라증, 급성호흡기감염증) 관리 지침",2022.03.07,https://www.kdca.go.kr/bbs/kdca/55/227983/artclView.do
+제3급,레지오넬라증,direct,,레지오넬라증 지침,2014.06.03,https://www.kdca.go.kr/bbs/kdca/55/227415/artclView.do
+제3급,레지오넬라증,direct,,[제3군] 레지오넬라증,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218796/artclView.do
+제3급,레지오넬라증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제3급,레지오넬라증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,렙토스피라증,direct,,[제3군] 렙토스피라증,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218800/artclView.do
+제3급,렙토스피라증,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,렙토스피라증,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,렙토스피라증,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,렙토스피라증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제3급,렙토스피라증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,말라리아,direct,,말라리아 진료가이드(제3판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310605/artclView.do
+제3급,말라리아,direct,,2026년도 말라리아 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310433/artclView.do
+제3급,말라리아,direct,,의료인을 위한 말라리아 예방 및 관리 안내서(소책자),2024.07.18,https://www.kdca.go.kr/bbs/kdca/55/228230/artclView.do
+제3급,말라리아,direct,,2024년도 말라리아 관리지침 및 복약수첩,2024.03.19,https://www.kdca.go.kr/bbs/kdca/55/228196/artclView.do
 제3급,말라리아,direct,,2015년 해외여행을 위한 말라리아 예방지침 개정(안),2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716244644092&q_clsfNo=0
-제3급,말라리아,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,말라리아,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,말라리아,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,매독,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제3급,매독,group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제3급,매독,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,발진열,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,발진열,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,발진열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,발진티푸스,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,발진티푸스,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,발진티푸스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,브루셀라증,direct,,2018년 브루셀라증 관리지침,2018.09.27,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180927509624482&q_clsfNo=0
-제3급,브루셀라증,direct,,2017년 브루셀라증 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716007826007&q_clsfNo=0
-제3급,브루셀라증,direct,,2016년 브루셀라증 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716447833417&q_clsfNo=0
+제3급,말라리아,direct,,2015년도 국내 말라리아 관리지침,2015.05.26,https://www.kdca.go.kr/bbs/kdca/55/227442/artclView.do
+제3급,말라리아,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,말라리아,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,말라리아,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,매독,direct,,2025년 매독 신고 안내서,2025.03.31,https://www.kdca.go.kr/bbs/kdca/55/228289/artclView.do
+제3급,매독,direct,,선천성매독 신고서,2010.04.28,https://www.kdca.go.kr/bbs/kdca/57/228378/artclView.do
+제3급,매독,direct,,"[매독 역학조사 관련] 매독 역학조사와 관련하여 민감정보 수집, 이용 및 제3자 제공 동의에 대한 안내문입니다.",2025.03.18,https://www.kdca.go.kr/bbs/kdca/57/228500/artclView.do
+제3급,매독,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제3급,매독,group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제3급,매독,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,발진열,direct,,[제3군] 발진열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218798/artclView.do
+제3급,발진열,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,발진열,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,발진열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,발진티푸스,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,발진티푸스,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,발진티푸스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,브루셀라증,direct,,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,브루셀라증,direct,,인수공통감염병 공동 역학조사 매뉴얼(2.브루셀라증(병)),2022.11.10,https://www.kdca.go.kr/bbs/kdca/55/228070/artclView.do
+제3급,브루셀라증,direct,,2018년도 브루셀라증 관리지침,2018.09.21,https://www.kdca.go.kr/bbs/kdca/55/227669/artclView.do
 제3급,브루셀라증,direct,,2012년 브루셀라증 예방관리지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710551560225&q_clsfNo=0
+제3급,브루셀라증,direct,,2012 브루셀라증 예방관리 지침,2012.10.25,https://www.kdca.go.kr/bbs/kdca/55/227359/artclView.do
 제3급,브루셀라증,direct,,2006년 브루셀라증 실태조사 사업수행 지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710178140041&q_clsfNo=0
-제3급,브루셀라증,direct,,2003 브루셀라증관리지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710404930672&q_clsfNo=0
-제3급,브루셀라증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제3급,브루셀라증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,비브리오패혈증,direct,,2005년 비브리오패혈증 관리 지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710932165251&q_clsfNo=0
-제3급,비브리오패혈증,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제3급,비브리오패혈증,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제3급,비브리오패혈증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,신증후군출혈열,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제3급,신증후군출혈열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,엠폭스,direct,,엠폭스 관리지침(제3-1판),2026.06.01,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260601083147987&q_clsfNo=-1
-제3급,엠폭스,direct,,엠폭스 관리지침(제3판),2025.12.18,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20251218131542258&q_clsfNo=-1
-제3급,엠폭스,direct,,엠폭스 관리지침(2024.10) 개정판,2024.10.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20241029104413425&q_clsfNo=-1
-제3급,엠폭스,direct,,엠폭스 관리지침,2024.06.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240625152525766&q_clsfNo=-1
-제3급,엠폭스,direct,,엠폭스 대응지침(지자체용) 제5-2판,2023.08.18,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230818784829459&q_clsfNo=0
-제3급,엠폭스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,웨스트나일열,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,웨스트나일열,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,웨스트나일열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,유비저,direct,,2017년 유비저 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716258335893&q_clsfNo=0
+제3급,브루셀라증,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,브루셀라증,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제3급,브루셀라증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,비브리오패혈증,direct,,2005년 비브리오패혈증 관리지침,2005.09.22,https://www.kdca.go.kr/bbs/kdca/55/227178/artclView.do
+제3급,비브리오패혈증,direct,,[제3군] 비브리오패혈증,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218797/artclView.do
+제3급,비브리오패혈증,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제3급,비브리오패혈증,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제3급,비브리오패혈증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,신증후군출혈열,direct,,신증후군출혈열 사례조사서,2009.11.06,https://www.kdca.go.kr/bbs/kdca/57/228372/artclView.do
+제3급,신증후군출혈열,direct,,[제3군] 신증후군출혈열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218804/artclView.do
+제3급,신증후군출혈열,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,신증후군출혈열,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,신증후군출혈열,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,신증후군출혈열,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제3급,신증후군출혈열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,엠폭스,direct,,엠폭스 관리지침(제3-1판),2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311278/artclView.do
+제3급,엠폭스,direct,,엠폭스(Mpox) 치료지침 제3판,2024.12.04,https://www.kdca.go.kr/bbs/kdca/55/228252/artclView.do
+제3급,엠폭스,direct,,엠폭스 치료제 사용 안내서 제3판,2024.04.30,https://www.kdca.go.kr/bbs/kdca/55/228213/artclView.do
+제3급,엠폭스,direct,,2024년 엠폭스 대응지침 6판 안내,2024.04.05,https://www.kdca.go.kr/bbs/kdca/55/228204/artclView.do
+제3급,엠폭스,direct,,엠폭스 대응지침(지자체용) 제5-2판,2023.08.10,https://www.kdca.go.kr/bbs/kdca/55/228148/artclView.do
+제3급,엠폭스,direct,,엠폭스 대응지침(제5-1판) 안내,2023.05.19,https://www.kdca.go.kr/bbs/kdca/55/228132/artclView.do
+제3급,엠폭스,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,웨스트나일열,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,웨스트나일열,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,웨스트나일열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,유비저,direct,,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,유비저,direct,,2017년도 유비저 관리지침,2017.06.12,https://www.kdca.go.kr/bbs/kdca/55/227574/artclView.do
 제3급,유비저,direct,,2016년 유비저관리지침_최종,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716393798622&q_clsfNo=0
-제3급,유비저,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,일본뇌염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제3급,일본뇌염,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제3급,일본뇌염,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,일본뇌염,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,일본뇌염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,중증열성혈소판감소증후군(SFTS),direct,,2013년 중증열성혈소판감소증후군 진단신고기준,2018.07.11,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180711951619773&q_clsfNo=0
-제3급,중증열성혈소판감소증후군(SFTS),group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제3급,중증열성혈소판감소증후군(SFTS),group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,중증열성혈소판감소증후군(SFTS),group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,중증열성혈소판감소증후군(SFTS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,지카바이러스감염증,direct,,2017년 지카바이러스 감염증 진단검사지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716927594891&q_clsfNo=0
-제3급,지카바이러스감염증,direct,,2017년 가임기 여성 및 임산부 지카바이러스,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716004346906&q_clsfNo=0
-제3급,지카바이러스감염증,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,지카바이러스감염증,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,지카바이러스감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,진드기매개뇌염,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,진드기매개뇌염,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,진드기매개뇌염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,쯔쯔가무시증,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,쯔쯔가무시증,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,쯔쯔가무시증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,치쿤구니야열,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,치쿤구니야열,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,치쿤구니야열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,큐열,direct,,2017년 큐열 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716532417122&q_clsfNo=0
-제3급,큐열,direct,,2016년 큐열 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716055972107&q_clsfNo=0
-제3급,큐열,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230621890950466&q_clsfNo=0
-제3급,큐열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2018년 크로이츠펠트-야콥병(CJD) 안내서,2018.09.27,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180927741448002&q_clsfNo=0
-제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2016년 크로이츠펠트-야콥병(CJD) 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716957625656&q_clsfNo=0
+제3급,유비저,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,일본뇌염,direct,,[제2군] 일본 뇌염,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218791/artclView.do
+제3급,일본뇌염,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,일본뇌염,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,일본뇌염,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제3급,일본뇌염,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제3급,일본뇌염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),direct,,의료인을 위한 중증열성혈소판감소증후군(SFTS) 안내서,2026.01.20,https://www.kdca.go.kr/bbs/kdca/49/309795/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),direct,,중증열성혈소판감소증후군(SFTS) 공동 역학조사 매뉴얼,2025.12.31,https://www.kdca.go.kr/bbs/kdca/55/309533/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),direct,,2023년 중증열성혈소판감소증후군(SFTS) 진료지침(의료인용)(2판) 안내,2023.10.20,https://www.kdca.go.kr/bbs/kdca/55/228156/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),direct,,2016 중증열성혈소판감소증후군(SFTS) 의료진용 진료지침 권고안,2016.07.20,https://www.kdca.go.kr/bbs/kdca/55/227512/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),direct,,중증열성혈소판감소증후군(SFTS) 진단신고기준 개정(7.1시행),2013.07.09,https://www.kdca.go.kr/bbs/kdca/55/227385/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),direct,,의료기관 종사자 중증열성혈소판감소증후군(SFTS) 2차 감염 예방 수칙 포스터 및 소책자,2022.03.18,https://www.kdca.go.kr/bbs/kdca/49/219054/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제3급,중증열성혈소판감소증후군(SFTS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,지카바이러스감염증,direct,,지카바이러스 감염증 진단검사지침(제3-1판),2017.12.20,https://www.kdca.go.kr/bbs/kdca/55/227609/artclView.do
+제3급,지카바이러스감염증,direct,,가임기 여성 및 임신부 지카바이러스 감염 진료 가이드라인 2-1판,2017.03.10,https://www.kdca.go.kr/bbs/kdca/55/227547/artclView.do
+제3급,지카바이러스감염증,direct,,지카바이러스 감염증 관리지침 2-1판,2016.10.19,https://www.kdca.go.kr/bbs/kdca/55/227520/artclView.do
+제3급,지카바이러스감염증,direct,,지카바이러스 감염증 관리지침 (2-1판),2016.10.19,https://www.kdca.go.kr/bbs/kdca/55/227519/artclView.do
+제3급,지카바이러스감염증,direct,,민간의료기관용 메르스 및 지카바이러스감염증 유전자 검사 지침,2016.08.31,https://www.kdca.go.kr/bbs/kdca/50/221083/artclView.do
+제3급,지카바이러스감염증,direct,,지카바이러스감염증 진단검사지침 제1-2판,2016.05.11,https://www.kdca.go.kr/bbs/kdca/55/227484/artclView.do
+제3급,지카바이러스감염증,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,지카바이러스감염증,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,지카바이러스감염증,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제3급,지카바이러스감염증,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제3급,지카바이러스감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,진드기매개뇌염,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,진드기매개뇌염,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,진드기매개뇌염,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,쯔쯔가무시증,direct,,쯔쯔가무시증 예방홍보 포스터 및 리플렛,2010.04.14,https://www.kdca.go.kr/bbs/kdca/49/218863/artclView.do
+제3급,쯔쯔가무시증,direct,,쯔쯔가무시증 교육자료,2009.09.16,https://www.kdca.go.kr/bbs/kdca/49/218844/artclView.do
+제3급,쯔쯔가무시증,direct,,[제3군] 쯔쯔가무시증,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218799/artclView.do
+제3급,쯔쯔가무시증,group,진드기설치류,2026년도 진드기·설치류매개감염병 관리지침,2026.03.06,https://www.kdca.go.kr/bbs/kdca/55/310390/artclView.do
+제3급,쯔쯔가무시증,group,진드기설치류,2024년 진드기·설치류 매개 감염병 관리지침 일부 개정 안내,2024.09.09,https://www.kdca.go.kr/bbs/kdca/55/228236/artclView.do
+제3급,쯔쯔가무시증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,치쿤구니야열,direct,,치쿤구니야열 검역관리지역 추가 지정 안내,2025.07.31,https://www.kdca.go.kr/bbs/kdca/50/221441/artclView.do
+제3급,치쿤구니야열,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,치쿤구니야열,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,치쿤구니야열,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제3급,치쿤구니야열,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제3급,치쿤구니야열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,큐열,direct,,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,큐열,direct,,2018년도 큐열 관리지침,2018.09.21,https://www.kdca.go.kr/bbs/kdca/55/227671/artclView.do
+제3급,큐열,direct,,23년 큐열 공동 역학조사 메뉴얼,2023.06.05,https://www.kdca.go.kr/bbs/kdca/55/228137/artclView.do
+제3급,큐열,group,인수공통,"2026년도 인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침",2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310521/artclView.do
+제3급,큐열,group,인수공통,인수공통감염병 공동 역학조사 매뉴얼(3.인수공통결핵),2023.06.21,https://www.kdca.go.kr/bbs/kdca/55/228139/artclView.do
+제3급,큐열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,유전형 CJD 가족 검사 안내서,2023.02.15,https://www.kdca.go.kr/bbs/kdca/57/228489/artclView.do
+제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,크로이츠펠트-야콥병(CJD) 안내서,2023.02.08,https://www.kdca.go.kr/bbs/kdca/55/228094/artclView.do
+제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2016년 크로이츠펠트-야콥병(CJD) 관리지침,2016.08.22,https://www.kdca.go.kr/bbs/kdca/55/227515/artclView.do
 제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2012년 CJD 관리지침,2018.07.11,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180711917281039&q_clsfNo=0
-제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2009년 CJD 및 vCJD 관리지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710257781682&q_clsfNo=0
+제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2012년 CJD(크로이츠펠트) 및 vCJD(변종크로이츠펠트) 관리지침,2012.09.18,https://www.kdca.go.kr/bbs/kdca/55/227352/artclView.do
 제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2008년 CJD표본감시관리지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710793292402&q_clsfNo=0
-제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),direct,,2006년 CJD관리지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710818751299&q_clsfNo=0
-제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,파상풍,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제3급,파상풍,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제3급,파상풍,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,황열,group,매개체,2023년 바이러스성모기매개감염병 관리지침,2023.07.20,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230720420380375&q_clsfNo=0
-제3급,황열,group,매개체,2019년도 진드기 매개감염병 관리지침,2019.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190523831518875&q_clsfNo=0
-제3급,황열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),direct,,2026년 HIV/AIDS 관리지침,2026.02.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260202102903689&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),direct,,2025년 HIV/AIDS 관리지침 개정판,2025.07.15,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250715090240017&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),direct,,2025년 HIV/AIDS 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155252342&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),direct,,2024년 HIV/AIDS 관리지침,2024.03.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240325155029768&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),direct,,2023년 HIV/AIDS 관리지침,2023.04.11,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230411326387664&q_clsfNo=0
-제3급,후천성면역결핍증(AIDS),direct,,HIV/AIDS 관리지침[2022년],2022.03.11,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220311456878346&q_clsfNo=0
-제3급,후천성면역결핍증(AIDS),group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제3급,후천성면역결핍증(AIDS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,간흡충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,급성호흡기감염증,direct,,2023년 제1급감염병 중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS) 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421944839744&q_clsfNo=0
-제4급,급성호흡기감염증,direct,,중증급성호흡기증후군(SARS) 대응지침입니다.,2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125546375205&q_clsfNo=0
-제4급,급성호흡기감염증,direct,,2019년도 급성호흡기감염증 관리지침,2019.08.13,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190813189365736&q_clsfNo=0
-제4급,급성호흡기감염증,direct,,2018년 급성호흡기감염증 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716345021186&q_clsfNo=0
-제4급,급성호흡기감염증,direct,,2014년 급성호흡기감염증 표본감시 안내 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716327304255&q_clsfNo=0
-제4급,급성호흡기감염증,direct,,2003 급성호흡기관리지침(의료인용),2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710940014547&q_clsfNo=0
-제4급,급성호흡기감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제4급,급성호흡기감염증,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제4급,급성호흡기감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,다제내성녹농균(MRPA) 감염증,group,의료관련,2024년도 의료관련감염병 관리지침,2023.12.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1
-제4급,다제내성녹농균(MRPA) 감염증,group,의료관련,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제4급,다제내성녹농균(MRPA) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,다제내성아시네토박터바우마니균(MRAB) 감염증,group,의료관련,2024년도 의료관련감염병 관리지침,2023.12.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1
-제4급,다제내성아시네토박터바우마니균(MRAB) 감염증,group,의료관련,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제4급,다제내성아시네토박터바우마니균(MRAB) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,메티실린내성황색포도알균(MRSA) 감염증,group,의료관련,2024년도 의료관련감염병 관리지침,2023.12.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1
-제4급,메티실린내성황색포도알균(MRSA) 감염증,group,의료관련,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제4급,메티실린내성황색포도알균(MRSA) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,반코마이신내성장알균(VRE) 감염증,group,의료관련,2024년도 의료관련감염병 관리지침,2023.12.29,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231229171954294&q_clsfNo=-1
-제4급,반코마이신내성장알균(VRE) 감염증,group,의료관련,"2019년도 의료관련감염병(VRSA, CRE) 관리지침",2019.09.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190916343926750&q_clsfNo=0
-제4급,반코마이신내성장알균(VRE) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,사람유두종바이러스 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,성기단순포진,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제4급,성기단순포진,group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제4급,성기단순포진,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제3급,크로이츠펠트-야콥병(CJD) 및 변종(vCJD),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,파상풍,direct,,[제2군] 파상풍,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218785/artclView.do
+제3급,파상풍,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제3급,파상풍,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제3급,파상풍,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,황열,direct,,"2018년 바이러스성 모기매개감염병 관리지침(황열,뎅기,웨스트,치쿤,지카)",2018.09.18,https://www.kdca.go.kr/bbs/kdca/55/227666/artclView.do
+제3급,황열,direct,,황열예방접종 일시 중단 안내문,2001.12.20,https://www.kdca.go.kr/bbs/kdca/50/219477/artclView.do
+제3급,황열,direct,,국제공인예방접종(황열) 재고 소진 기관 안내(22.12.5. 기준),2022.11.07,https://www.kdca.go.kr/bbs/kdca/50/221288/artclView.do
+제3급,황열,direct,,[제4군] 황열,2008.03.03,https://www.kdca.go.kr/bbs/kdca/49/218806/artclView.do
+제3급,황열,group,모기매개,2026년도 바이러스성 모기매개감염병 관리지침,2026.03.12,https://www.kdca.go.kr/bbs/kdca/55/310434/artclView.do
+제3급,황열,group,모기매개,2024년 주요 감염병 매개모기 방제지침(개정판),2024.03.15,https://www.kdca.go.kr/bbs/kdca/55/228191/artclView.do
+제3급,황열,group,검역,2026 검역업무지침,2026.04.02,https://www.kdca.go.kr/bbs/kdca/55/310651/artclView.do
+제3급,황열,group,검역,2025 검역업무지침,2025.05.07,https://www.kdca.go.kr/bbs/kdca/55/228293/artclView.do
+제3급,황열,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제3급,후천성면역결핍증(AIDS),direct,,2026년 HIV/AIDS 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309970/artclView.do
+제3급,후천성면역결핍증(AIDS),direct,,2025 HIV/AIDS 관리지침(개정),2025.07.14,https://www.kdca.go.kr/bbs/kdca/55/228302/artclView.do
+제3급,후천성면역결핍증(AIDS),direct,,2020년 HIV/AIDS 관리지침 별표서식 모음,2020.10.30,https://www.kdca.go.kr/bbs/kdca/57/228467/artclView.do
+제3급,후천성면역결핍증(AIDS),direct,,2020년 HIV/AIDS 및 성매개감염병 관리지침,2020.01.06,https://www.kdca.go.kr/bbs/kdca/55/227740/artclView.do
+제3급,후천성면역결핍증(AIDS),direct,,2018 HIV/AIDS 관리지침,2017.12.19,https://www.kdca.go.kr/bbs/kdca/55/227608/artclView.do
+제3급,후천성면역결핍증(AIDS),direct,,2017 HIV/AIDS 관리지침,2016.12.14,https://www.kdca.go.kr/bbs/kdca/55/227532/artclView.do
+제3급,후천성면역결핍증(AIDS),group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제3급,후천성면역결핍증(AIDS),group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제3급,후천성면역결핍증(AIDS),group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,간흡충증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,간흡충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,급성호흡기감염증,direct,,2026년 제1급감염병(중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS)) 대응지침,2026.01.22,https://www.kdca.go.kr/bbs/kdca/55/309847/artclView.do
+제4급,급성호흡기감염증,direct,,2025년 제1급감염병(중동호흡기증후군(MERS)·중동급성호흡기증후군(SARS)) 대응지침,2025.01.02,https://www.kdca.go.kr/bbs/kdca/55/228264/artclView.do
+제4급,급성호흡기감염증,direct,,2024년 제1급감염병 중동호흡기증후군(MERS)중증급성호흡기증후군(SARS) 대응지침(2024.1월),2023.12.29,https://www.kdca.go.kr/bbs/kdca/55/228173/artclView.do
+제4급,급성호흡기감염증,direct,,2023년제1급중동호흡기증후군[MERS]중증급성호흡기증후군[SARS]대응지침(2023.4.),2023.04.21,https://www.kdca.go.kr/bbs/kdca/55/228122/artclView.do
+제4급,급성호흡기감염증,direct,,"2023년도 호흡기감염병 관리지침 (수막구균감염증, 성홍열, 급성호흡기감염증)",2023.04.06,https://www.kdca.go.kr/bbs/kdca/55/228114/artclView.do
+제4급,급성호흡기감염증,direct,,제1급감염병 중증급성호흡기증후군(SARS) 대응 지침(22년판),2022.01.25,https://www.kdca.go.kr/bbs/kdca/55/227946/artclView.do
+제4급,급성호흡기감염증,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제4급,급성호흡기감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,다제내성녹농균(MRPA) 감염증,group,의료관련,2026년 의료관련감염병 지역 의료기관 네트워크 운영 사업 지침,2026.03.13,https://www.kdca.go.kr/bbs/kdca/55/310439/artclView.do
+제4급,다제내성녹농균(MRPA) 감염증,group,의료관련,2026년도 의료관련감염병 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309968/artclView.do
+제4급,다제내성녹농균(MRPA) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,다제내성아시네토박터바우마니균(MRAB) 감염증,group,의료관련,2026년 의료관련감염병 지역 의료기관 네트워크 운영 사업 지침,2026.03.13,https://www.kdca.go.kr/bbs/kdca/55/310439/artclView.do
+제4급,다제내성아시네토박터바우마니균(MRAB) 감염증,group,의료관련,2026년도 의료관련감염병 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309968/artclView.do
+제4급,다제내성아시네토박터바우마니균(MRAB) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,메티실린내성황색포도알균(MRSA) 감염증,group,의료관련,2026년 의료관련감염병 지역 의료기관 네트워크 운영 사업 지침,2026.03.13,https://www.kdca.go.kr/bbs/kdca/55/310439/artclView.do
+제4급,메티실린내성황색포도알균(MRSA) 감염증,group,의료관련,2026년도 의료관련감염병 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309968/artclView.do
+제4급,메티실린내성황색포도알균(MRSA) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,반코마이신내성장알균(VRE) 감염증,group,의료관련,2026년 의료관련감염병 지역 의료기관 네트워크 운영 사업 지침,2026.03.13,https://www.kdca.go.kr/bbs/kdca/55/310439/artclView.do
+제4급,반코마이신내성장알균(VRE) 감염증,group,의료관련,2026년도 의료관련감염병 관리지침,2026.02.02,https://www.kdca.go.kr/bbs/kdca/55/309968/artclView.do
+제4급,반코마이신내성장알균(VRE) 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,사람유두종바이러스 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,성기단순포진,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제4급,성기단순포진,group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제4급,성기단순포진,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,수족구병,direct,,2026년도 엔테로바이러스감염증·수족구병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311285/artclView.do
+제4급,수족구병,direct,,｢2024년도 엔테로바이러스 감염증‧수족구병 관리지침｣ 일부 개정,2024.09.13,https://www.kdca.go.kr/bbs/kdca/55/228237/artclView.do
 제4급,수족구병,direct,,2020년 엔테로 바이러스 수족구병 관리지침,2020.01.09,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200109480038851&q_clsfNo=0
-제4급,수족구병,direct,,2018년 엔테로 바이러스 수족구병 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716517349531&q_clsfNo=0
-제4급,수족구병,direct,,2017년 엔테로바이러스 수족구병 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716932705536&q_clsfNo=0
 제4급,수족구병,direct,,2016년 수족구병지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716963872432&q_clsfNo=0
+제4급,수족구병,direct,,2016년도 수족구병 관리지침,2016.06.10,https://www.kdca.go.kr/bbs/kdca/55/227488/artclView.do
 제4급,수족구병,direct,,2014년 인플루엔자 및 수족구병 표본감시 안내 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716222728036&q_clsfNo=0
-제4급,수족구병,direct,,2011년 수족구병,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710875181666&q_clsfNo=0
-제4급,수족구병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제4급,수족구병,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,엔테로바이러스감염증,direct,,2026년도 엔테로바이러스감염증·수족구병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311285/artclView.do
+제4급,엔테로바이러스감염증,direct,,｢2024년도 엔테로바이러스 감염증‧수족구병 관리지침｣ 일부 개정,2024.09.13,https://www.kdca.go.kr/bbs/kdca/55/228237/artclView.do
 제4급,엔테로바이러스감염증,direct,,2022년도 엔테로바이러스 관리지침,2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302615066215&q_clsfNo=0
+제4급,엔테로바이러스감염증,direct,,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
 제4급,엔테로바이러스감염증,direct,,2020년 엔테로 바이러스 수족구병 관리지침,2020.01.09,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200109480038851&q_clsfNo=0
-제4급,엔테로바이러스감염증,direct,,2018년 엔테로 바이러스 수족구병 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716517349531&q_clsfNo=0
-제4급,엔테로바이러스감염증,direct,,2017년 엔테로바이러스 수족구병 관리지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716932705536&q_clsfNo=0
-제4급,엔테로바이러스감염증,direct,,2014년 엔테로바이러스감염증 표본감시 안내 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716538520293&q_clsfNo=0
-제4급,엔테로바이러스감염증,direct,,2011년 엔테로바이러스감염증 표본감시 안내지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710326930654&q_clsfNo=0
-제4급,엔테로바이러스감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,연성하감,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제4급,연성하감,group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제4급,연성하감,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,요충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,인플루엔자,direct,,2023-2024절기 인플루엔자 관리지침,2024.01.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240110132703995&q_clsfNo=-1
-제4급,인플루엔자,direct,,시설별 인플루엔자 관리 지침(사업장용),2023.11.17,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231117751078306&q_clsfNo=0
-제4급,인플루엔자,direct,,"시설별 인플루엔자 관리 지침(어린이집, 유치원, 학교용)",2023.11.17,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231117600440448&q_clsfNo=0
-제4급,인플루엔자,direct,,시설별 인플루엔자 관리 지침(노인복지시설용),2023.11.17,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20231117328771556&q_clsfNo=0
-제4급,인플루엔자,direct,,2023년 제1급감염병 동물인플루엔자 인체감염증 대응지침,2023.04.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20230421489669316&q_clsfNo=0
-제4급,인플루엔자,direct,,동물인플루엔자 인체감염증 대응지침 입니다.,2022.01.25,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125784788667&q_clsfNo=0
-제4급,인플루엔자,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제4급,인플루엔자,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제4급,인플루엔자,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250523095735415&q_clsfNo=-1
-제4급,인플루엔자,group,예방접종,2020 예방접종 대상 감염병 관리지침,2020.01.06,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200106580946490&q_clsfNo=0
-제4급,인플루엔자,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,임질,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제4급,임질,group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제4급,임질,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,장관감염증,direct,,"2015년 법정감염병 표본감시(급성,장관,엔테로) 신고지침",2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716214619867&q_clsfNo=0
+제4급,엔테로바이러스감염증,direct,,"법정감염병 표본감시 신고지침(급성호흡기감염증, 장관감염증, 엔테로바이러스감염증)",2015.01.16,https://www.kdca.go.kr/bbs/kdca/55/227431/artclView.do
+제4급,엔테로바이러스감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,연성하감,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제4급,연성하감,group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제4급,연성하감,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,요충증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,요충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,인플루엔자,direct,,의원급 의료기관 인플루엔자 의사환자 감시 가이드라인(의료기관용),2025.12.10,https://www.kdca.go.kr/bbs/kdca/55/228322/artclView.do
+제4급,인플루엔자,direct,,2025 시설별 인플루엔자 관리지침(사업장용),2025.10.21,https://www.kdca.go.kr/bbs/kdca/55/228311/artclView.do
+제4급,인플루엔자,direct,,2025-2026 절기 인플루엔자 관리지침,2025.09.26,https://www.kdca.go.kr/bbs/kdca/55/228308/artclView.do
+제4급,인플루엔자,direct,,2024-2025절기 인플루엔자 관리 지침,2024.12.03,https://www.kdca.go.kr/bbs/kdca/55/228251/artclView.do
+제4급,인플루엔자,direct,,2024 시설별 인플루엔자 관리지침(사업장용),2024.11.18,https://www.kdca.go.kr/bbs/kdca/55/228247/artclView.do
+제4급,인플루엔자,direct,,2024년 제1급감염병(동물인플루엔자 인체감염증) 대응지침(2024.10월),2024.10.29,https://www.kdca.go.kr/bbs/kdca/55/228244/artclView.do
+제4급,인플루엔자,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제4급,인플루엔자,group,예방접종,(7.27.수정)2026년 국가예방접종 지침,2026.01.09,https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do
+제4급,인플루엔자,group,예방접종,2025년 예방접종대상감염병 관리지침,2025.05.20,https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do
+제4급,인플루엔자,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,임질,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제4급,임질,group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제4급,임질,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,장관감염증,direct,,급성 위장관계 감염 항생제 사용지침,2019.05.10,https://www.kdca.go.kr/bbs/kdca/55/227699/artclView.do
+제4급,장관감염증,direct,,"법정감염병 표본감시 신고지침(급성호흡기감염증, 장관감염증, 엔테로바이러스감염증)",2015.01.16,https://www.kdca.go.kr/bbs/kdca/55/227431/artclView.do
 제4급,장관감염증,direct,,2014년 장관감염증_표본감시_안내 지침,2018.07.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716313338013&q_clsfNo=0
-제4급,장관감염증,direct,,2011년 장관감염증 표본감시지침,2018.07.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710275194671&q_clsfNo=0
-제4급,장관감염증,group,수인성,"2022년 수인성, 식품매개감염병관리지침",2022.03.02,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220302047843853&q_clsfNo=0
-제4급,장관감염증,group,수인성,2020년도 수인성 및 식품매개감염병 관리지침,2020.01.21,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20200121324417825&q_clsfNo=0
-제4급,장관감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,장흡충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,첨규콘딜롬,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제4급,첨규콘딜롬,group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제4급,첨규콘딜롬,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,칸디다 오리스 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제4급,장관감염증,direct,,2011 장관감염증 표본감시 안내지침,2011.01.27,https://www.kdca.go.kr/bbs/kdca/55/227315/artclView.do
+제4급,장관감염증,direct,,"장관감염증, 엔테로바이러스 감염증 신고서식",2014.01.03,https://www.kdca.go.kr/bbs/kdca/57/228411/artclView.do
+제4급,장관감염증,direct,,장관감염증 표본감시 안내,2014.01.02,https://www.kdca.go.kr/bbs/kdca/55/227392/artclView.do
+제4급,장관감염증,group,수인성,2026년 수인성·식품매개감염병 관리지침 재안내,2026.06.01,https://www.kdca.go.kr/bbs/kdca/55/311284/artclView.do
+제4급,장관감염증,group,수인성,2021년도 수인성‧식품매개감염병 관리 지침 및 엔테로바이러스 수족구 관리 지침,2021.03.12,https://www.kdca.go.kr/bbs/kdca/55/227856/artclView.do
+제4급,장관감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,장흡충증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,장흡충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,첨규콘딜롬,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제4급,첨규콘딜롬,group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제4급,첨규콘딜롬,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,칸디다 오리스 감염증,direct,,칸디다 오리스 치료 권고안,2026.04.20,https://www.kdca.go.kr/bbs/kdca/49/310813/artclView.do
+제4급,칸디다 오리스 감염증,direct,,2026년도 칸디다 오리스 관리지침,2026.03.19,https://www.kdca.go.kr/bbs/kdca/55/310488/artclView.do
+제4급,칸디다 오리스 감염증,direct,,칸디다 오리스(C. auris) 의료기관 감염관리 권고안,2026.02.03,https://www.kdca.go.kr/bbs/kdca/49/309982/artclView.do
+제4급,칸디다 오리스 감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,코로나바이러스감염증-19,direct,,2026년 코로나바이러스감염증-19 관리지침,2026.08.27,https://www.kdca.go.kr/bbs/kdca/55/312381/artclView.do
+제4급,코로나바이러스감염증-19,direct,,코로나19예방접종 피해보상 특별법 업무지침(2판),2026.06.02,https://www.kdca.go.kr/bbs/kdca/55/311300/artclView.do
+제4급,코로나바이러스감염증-19,direct,,코로나19예방접종 피해보상 특별법 업무지침(2판) 서식,2026.06.02,https://www.kdca.go.kr/bbs/kdca/57/311301/artclView.do
 제4급,코로나바이러스감염증-19,direct,,만성 코로나19증후군 임상진료지침 권고안(2025),2026.02.10,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260210094545190&q_clsfNo=-1
-제4급,코로나바이러스감염증-19,direct,,2025년도 코로나바이러스감염증-19 관리지침,2025.09.01,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250901094907451&q_clsfNo=-1
-제4급,코로나바이러스감염증-19,direct,,2024년도 코로나바이러스감염증-19 관리지침 개정본(2024.8.16.),2024.08.16,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240816210535386&q_clsfNo=-1
-제4급,코로나바이러스감염증-19,direct,,2024년도 코로나바이러스감염증-19 관리 지침(수정),2024.06.19,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20240619174638769&q_clsfNo=-1
-제4급,코로나바이러스감염증-19,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.01.30,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260130085033851&q_clsfNo=-1
-제4급,코로나바이러스감염증-19,group,호흡기,2025년도 호흡기감염병 관리지침,2025.04.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250423131734260&q_clsfNo=-1
-제4급,코로나바이러스감염증-19,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,클라미디아감염증,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260303173721749&q_clsfNo=-1
-제4급,클라미디아감염증,group,성매개,2025년 성매개감염병 관리지침,2025.02.05,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20250205155317271&q_clsfNo=-1
-제4급,클라미디아감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,편충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,폐흡충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,해외유입기생충감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
-제4급,회충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20260723171016500&q_clsfNo=-1
+제4급,코로나바이러스감염증-19,direct,,「코로나바이러스감염증-19 재택치료 안내서」,2025.12.03,https://www.kdca.go.kr/bbs/kdca/55/228320/artclView.do
+제4급,코로나바이러스감염증-19,direct,,코로나바이러스감염증-19 치료제 사용 안내서(제13-2판) 개정 안내,2025.10.28,https://www.kdca.go.kr/bbs/kdca/55/228313/artclView.do
+제4급,코로나바이러스감염증-19,group,호흡기,2026년도 호흡기감염병 관리지침(일부개정판),2026.03.30,https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do
+제4급,코로나바이러스감염증-19,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,클라미디아감염증,group,성매개,2026년 성매개감염병 관리지침,2026.03.03,https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do
+제4급,클라미디아감염증,group,성매개,2022년 성매개감염병 관리지침 서식모음,2022.02.14,https://www.kdca.go.kr/bbs/kdca/57/228485/artclView.do
+제4급,클라미디아감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,편충증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,편충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,폐흡충증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,폐흡충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,해외유입기생충감염증,direct,,2011 해외유입기생충감염증 표본감시 안내지침,2011.01.27,https://www.kdca.go.kr/bbs/kdca/55/227314/artclView.do
+제4급,해외유입기생충감염증,direct,,해외유입기생충감염증 표본감시 신고 서식,2008.02.29,https://www.kdca.go.kr/bbs/kdca/57/228346/artclView.do
+제4급,해외유입기생충감염증,direct,,해외유입기생충감염증 정보집,2023.03.22,https://www.kdca.go.kr/bbs/kdca/49/219075/artclView.do
+제4급,해외유입기생충감염증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,해외유입기생충감염증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do
+제4급,회충증,group,기생충,2026년도 기생충감염병 관리지침,2026.03.23,https://www.kdca.go.kr/bbs/kdca/55/310522/artclView.do
+제4급,회충증,group,진단검사,법정감염병 진단검사 통합지침(제5판),2026.07.23,https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do

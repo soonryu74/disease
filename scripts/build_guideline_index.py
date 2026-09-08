@@ -144,6 +144,26 @@ def year_of(row):
     return int(row['등록일'][:4]) if row.get('등록일', '')[:4].isdigit() else 0
 
 
+# 게시판에는 지침만 있지 않다. 포스터·공모전·채용까지 섞여 있어 종류를 갈라 순위를 매긴다.
+DOC_DROP = re.compile(r'공모전|채용|모집\s*공고|입찰|계약|낙찰|회의록|위원\s*위촉|설문|만족도|'
+                      r'견적|용역\s*공고|사전규격|재공고|당첨|이벤트|기념일|캠페인\s*안내')
+DOC_KINDS = [
+    ('지침', re.compile(r'지침|매뉴얼|안내서|가이드(?!맵)|권고안|진료\s*가이드|표준\s*운영|'
+                        r'진단[·・\s]*신고\s*기준|관리\s*기준|사업\s*안내')),
+    ('서식', re.compile(r'서식|신고서|조사서|결과\s*보고서|양식|동의서|기록지|보고\s*서식')),
+    ('교육홍보', re.compile(r'포스터|리플렛|리플릿|카드뉴스|웹툰|영상|홍보|교육자료|수칙|소책자|'
+                         r'안내문|팩트시트|브로슈어|배너')),
+]
+KIND_RANK = {'지침': 0, '서식': 1, '교육홍보': 2, '기타': 3}
+
+
+def doc_kind(title):
+    for k, pat in DOC_KINDS:
+        if pat.search(title):
+            return k
+    return '기타'
+
+
 def series_key(title):
     """같은 지침의 판을 묶는 열쇠 — fetch_kdca_guides.key 와 같은 규칙"""
     t = re.sub(r'\(.*?\)|「|」|\[.*?\]', ' ', title)
@@ -152,9 +172,12 @@ def series_key(title):
 
 
 def latest_per_series(rows_, limit):
-    """계열(제목에서 연도·판을 뺀 것)마다 최신판 하나만. 판 수와 묵은 정도를 붙인다."""
+    """계열(제목에서 연도·판을 뺀 것)마다 최신판 하나만.
+    지침 → 서식 → 교육홍보 순으로 놓고, 같은 종류 안에서는 최신 연도 순."""
     by = defaultdict(list)
     for r in rows_:
+        if DOC_DROP.search(r['제목']):
+            continue
         by[series_key(r['제목'])].append(r)
     out = []
     for k, rs in by.items():
@@ -162,8 +185,9 @@ def latest_per_series(rows_, limit):
         top = dict(rs[0])
         top['editions'] = len(rs)
         top['stale'] = year_of(rs[0]) < THIS_YEAR - 1   # 재작년 이전 판이 최신이면 신판 확인 필요
+        top['kind'] = doc_kind(top['제목'])
         out.append(top)
-    out.sort(key=year_of, reverse=True)
+    out.sort(key=lambda r: (KIND_RANK[r['kind']], -year_of(r)))
     return out[:limit]
 
 
@@ -227,8 +251,9 @@ def build():
         def slim(r, kind, group=None):
             return {'title': r['제목'], 'date': r['등록일'], 'url': r['URL'],
                     'year': year_of(r), 'kind': kind, 'group': group,
+                    'doc': r.get('kind', doc_kind(r['제목'])),
                     'editions': r.get('editions', 1), 'stale': bool(r.get('stale')),
-                    'src': r.get('출처', '')}
+                    'src': r.get('출처', ''), 'board': r.get('게시판', '')}
 
         entry = {
             'disease': dz['name'], 'grade': dz['grade'], 'icon': dz['icon'],
@@ -236,6 +261,27 @@ def build():
             'direct_total': len(direct),
             'group': [slim(r, 'group', r['group']) for r in gcand],
         }
+        # 지금 펴야 할 지침 — direct/group을 가리지 않고 '지침' 종류 중 가장 최신.
+        # 콜레라의 직접 지침은 2002년판뿐이라 2026년 수인성 지침이 정답이다.
+        # 순서: (1) 현행판(재작년 이후)을 먼저 (2) 제목에 병명이 있는 것 (3) 관리·대응지침을
+        # 사업지침·진료가이드보다 (4) 대상이 좁은 계열을 넓은 계열보다 (5) 최신 연도.
+        # 두창은 2026년 진단검사 통합지침보다 2025년 제1급 대응지침이 정답이고,
+        # A형간염은 수인성(12종)보다 간염(4종), 콜레라는 2002년 직접 지침보다 2026년 수인성이 정답이다.
+        SPAN = {g: len(m) for g, m in GROUP_MEMBERS.items()}
+        SPAN['진단검사'] = 999   # 전 질병 공통이라 가장 넓다
+
+        def title_tier(t):
+            if re.search(r'관리\s*지침|대응\s*지침|방역\s*지침|관리지침|대응지침', t):
+                return 0
+            if re.search(r'사업\s*지침|운영\s*지침|실시\s*기준|네트워크', t):
+                return 2
+            return 1
+
+        def rank(x):
+            return (1 if x['stale'] else 0, 0 if x['kind'] == 'direct' else 1,
+                    title_tier(x['title']), SPAN.get(x.get('group'), 50), -x['year'])
+        cands = sorted([x for x in entry['direct'] + entry['group'] if x['doc'] == '지침'], key=rank)
+        entry['primary'] = cands[0] if cands else None
         if any(x['stale'] for x in entry['direct'] + entry['group']):
             stats['stale'] += 1
         index.append(entry)

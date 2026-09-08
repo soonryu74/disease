@@ -98,7 +98,7 @@ def build():
             'incub': dg.get('잠복기'), 'route': dg.get('감염경로'),
             'tx': dg.get('치료'), 'prev': dg.get('예방'),
             'guides': e['direct'][:4], 'guides_total': e['direct_total'],
-            'group_guides': e['group'][:3],
+            'group_guides': e['group'][:3], 'primary': e.get('primary'),
             'cross': ({'verdict': xc['verdict'], 'why': xc['why'],
                        'impact': xc['field_impact'],
                        'intl': xc['international']} if xc else None),
