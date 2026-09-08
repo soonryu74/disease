@@ -1,0 +1,184 @@
+{
+ "as_of": "2026-09-08",
+ "source": "https://www.kdca.go.kr/kdca/2873/subview.do",
+ "items": [
+  {
+   "label": "2024년 질병관리청 백서[영문]",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2024(eng).png",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서[영문](최종).pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2024(eng).png"
+  },
+  {
+   "label": "2024년 질병관리청 백서[텍스트]",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/질병관리백서_센스리더.jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서[텍스트].txt",
+   "hidden": false,
+   "cover_file": "질병관리백서_센스리더.jpg"
+  },
+  {
+   "label": "2024년 질병관리청 백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2024(kor).png",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서_합본(최종)_펼침.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2024(kor).png"
+  },
+  {
+   "label": "2023년 질병관리청 백서[영문]",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2023(eng).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서[영문].pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2023(eng).jpg"
+  },
+  {
+   "label": "2023년 질병관리청 백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2023(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서_펼침.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2023(kor).jpg"
+  },
+  {
+   "label": "2022년 질병관리청 백서[영문]",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2022(eng).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서[영문].pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2022(eng).jpg"
+  },
+  {
+   "label": "2022년 질병관리청 백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2022(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2022+질병관리청+백서_합본(최종)_펼침.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2022(kor).jpg"
+  },
+  {
+   "label": "2020~2021년 질병관리청 백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2020~2021(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2020-2021질병관리백서(최종).pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2020~2021(kor).jpg"
+  },
+  {
+   "label": "2019년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2019(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2019+질병관리백서(최종).pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2019(kor).jpg"
+  },
+  {
+   "label": "2018년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2018(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2018+질병관리백서_최종.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2018(kor).jpg"
+  },
+  {
+   "label": "2017년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2017(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2017+질병관리백서.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2017(kor).jpg"
+  },
+  {
+   "label": "2016년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2016(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2016+질병관리백서.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2016(kor).jpg"
+  },
+  {
+   "label": "2014~2015년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2014~2015(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2014~2015(kor).jpg"
+  },
+  {
+   "label": "2013년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2013(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2013+질병관리백서.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2013(kor).jpg"
+  },
+  {
+   "label": "2012년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2012(kor).jpg",
+   "file": "https://www.kdca.go.kr/sites/kdca/download/2012+질병관리백서.pdf",
+   "hidden": false,
+   "cover_file": "whitepaper2012(kor).jpg"
+  },
+  {
+   "label": "2011년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2011(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2011(kor).jpg"
+  },
+  {
+   "label": "2010년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2010(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2010(kor).jpg"
+  },
+  {
+   "label": "2009년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2009(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2009(kor).jpg"
+  },
+  {
+   "label": "2008년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2008(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2008(kor).jpg"
+  },
+  {
+   "label": "2007년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2007(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2007(kor).jpg"
+  },
+  {
+   "label": "2006년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2006(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2006(kor).jpg"
+  },
+  {
+   "label": "2005년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2005(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 206,
+   "cover_file": "whitepaper2005(kor).jpg"
+  },
+  {
+   "label": "2004년 질병관리백서",
+   "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2004(kor).jpg",
+   "file": "",
+   "hidden": true,
+   "cover_status": 0,
+   "cover_file": "whitepaper2004(kor).jpg"
+  }
+ ],
+ "hidden": 9,
+ "downloadable": 14,
+ "mislinked": {
+  "https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서[영문].pdf": [
+   "2023년 질병관리청 백서[영문]",
+   "2022년 질병관리청 백서[영문]"
+  ]
+ }
+}

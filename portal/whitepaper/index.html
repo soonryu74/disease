@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>백서 서가</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A; --warn-soft:#F6E3E3; --grid:#E4EAE7;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020; --grid:#22302C;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020; --grid:#22302C;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;overflow-x:hidden;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  header{padding:38px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(27px,5.5vw,42px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin:20px 0 0}
+  .kpi>*{min-width:0}
+  .kb{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .kb b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+  .kb span{font-size:12.5px;color:var(--muted)}
+  .kb.bad b{color:var(--warn)}
+
+  section{padding:30px 0 0}
+  h2{font-size:clamp(19px,3vw,25px);margin:0 0 4px;font-weight:800;letter-spacing:-.025em}
+  .lede{color:var(--muted);font-size:14.5px;margin:0 0 16px;max-width:70ch}
+
+  /* 서가 */
+  .shelf{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:14px}
+  .shelf>*{min-width:0}
+  .bk{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+    display:flex;flex-direction:column;box-shadow:var(--shadow)}
+  .bk .cv{aspect-ratio:3/4;background:var(--surface-2);display:block;width:100%;object-fit:cover;
+    border-bottom:1px solid var(--line)}
+  .bk.lost .cv{filter:grayscale(1) contrast(.75);opacity:.62}
+  .bk .in{padding:9px 11px 11px;flex:1;display:flex;flex-direction:column;gap:5px}
+  .bk .y{font-size:15px;font-weight:800;letter-spacing:-.02em;line-height:1.1}
+  .bk .org{font-size:11px;color:var(--faint)}
+  .bk .st{font-size:11px;font-weight:800;border-radius:5px;padding:2px 6px;align-self:flex-start}
+  .st.ok{background:var(--accent-soft);color:var(--accent-ink)}
+  .st.lost{background:var(--warn-soft);color:var(--warn)}
+  .bk .nt{font-size:12px;color:var(--muted);line-height:1.45}
+  .bk .dl{display:flex;gap:5px;flex-wrap:wrap;margin-top:auto;padding-top:4px}
+  .bk .dl a{font-size:11.5px;font-weight:700;border:1px solid var(--line-strong);border-radius:7px;padding:3px 8px}
+  .bk .dl a:hover{background:var(--surface-2)}
+  .bk .dl a.bad{border-color:var(--warn);color:var(--warn)}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:15px 18px;font-size:13.5px;margin:18px 0}
+  .note.red{background:var(--warn-soft);color:var(--warn)}
+  .note ul{margin:8px 0 0;padding-left:18px}
+  .note li{margin:4px 0}
+  .note b{color:inherit}
+
+  .panel{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:14px 0;box-shadow:var(--shadow)}
+  .panel>*{min-width:0}
+  .ptit{font-size:15.5px;font-weight:800;margin:0 0 3px}
+  .psub{font-size:13px;color:var(--muted);margin:0 0 12px}
+  .cw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  svg{display:block;max-width:100%}
+  .lg{display:flex;gap:14px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:8px}
+  .lg i{display:inline-block;width:16px;height:3px;border-radius:2px;vertical-align:middle;margin-right:5px}
+
+  table{border-collapse:collapse;width:100%;font-size:13px}
+  th,td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:right}
+  th:first-child,td:first-child{text-align:left}
+  thead th{color:var(--muted);font-size:12px;font-weight:700;border-bottom:1px solid var(--line-strong)}
+  td.hi{color:var(--warn);font-weight:700}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tw table{min-width:420px}
+
+  .ins{display:grid;gap:9px}
+  .ins .i{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+    border-radius:10px;padding:12px 15px;font-size:13.5px;color:var(--muted)}
+  .ins .i b{color:var(--ink)}
+  .foot-links{display:flex;gap:9px;flex-wrap:wrap;margin:16px 0 0}
+  .foot-links a{font-size:13px;font-weight:700;border:1px solid var(--line-strong);padding:8px 13px;border-radius:9px}
+  .foot-links a:hover{background:var(--surface-2)}
+  footer{padding:26px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:30px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  @media (max-width:760px){ .wrap{padding:0 14px} }
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
+   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
+.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
+  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
+.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
+  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
+.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
+@media (max-width:760px){
+  /* 줄바꿈한 메뉴는 좁은 화면에서 네 줄이 된다. 그대로 고정하면 화면의 1/5을 먹으므로
+     따라다니지 않게 하고 위로 올려 보내 준다. 항목은 하나도 가리지 않는다. */
+  .gnav{position:static}
+  .gnav .gbrand{font-size:12.5px;margin-right:6px}
+  .gnav a.gi{font-size:12px;padding:4px 6px}
+}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>백서 서가</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../guides/">📕 지침서가</a><a class="gi on" href="../whitepaper/">📗 백서</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi" href="../data/">⬇ 자료실</a></div></nav>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">③ 질병관리청 백서</p>
+  <h1>백서 서가</h1>
+  <p class="thesis">2004년 질병관리본부 설립부터 2024년까지, <b>21개년 19판</b>. 표지를 눌러 원문으로 간다.
+  이 쪽이 말하는 것은 목록이 아니라 두 가지다 — <b>9판은 원문이 사라졌고</b>,
+  <b>2024년판 숫자는 그대로 읽으면 틀린다</b>.</p>
+  <div class="kpi" id="kpi"></div>
+</header>
+
+<section>
+  <h2>발간 이력</h2>
+  <p class="lede">회색 표지는 <b>내려받을 수 없는 판</b>이다. 게시판 소스에 항목이 주석으로 감싸여 화면에 안 보이고,
+  내려받기 주소도 비어 있다. 표지 이미지만 서버에 남아 있어 <b>발간됐다는 사실은 확인된다</b>.
+  발간기관은 2020년 9월 12일 승격을 기점으로 질병관리본부 → 질병관리청으로 바뀐다.</p>
+  <div class="shelf" id="shelf"></div>
+</section>
+
+<section>
+  <h2>사라진 9판이 덮는 구간</h2>
+  <p class="lede">유실 구간은 한국 감염병사의 기준점 셋을 통째로 덮는다. 2016년판이 메르스를 회고하지만,
+  당해 연도 기록과 사후 회고는 사료로서 값이 다르다.</p>
+  <div class="note red">
+    <b>2004~2011 · 2014~2015 — 본문 PDF 없음</b>
+    <ul>
+      <li><b>2009·2010</b> — 신종인플루엔자 A(H1N1pdm09) 대유행. 국내 발생률 10만 명당 1,502.6명. 2020년 이전 최대 감염병 사건이다.</li>
+      <li><b>2011</b> — 결핵 신고 최고치 50,491명(10만 명당 100.8명). 이후 13년 연속 감소를 재는 기준점.</li>
+      <li><b>2014~2015</b> — 메르스 유행(확진 186·사망 38) 당해를 수록하는 합본.</li>
+      <li>표지 이미지 9종은 모두 서버에 살아 있다(HTTP 200). 파일명 규칙 문제가 아니라 <b>파일 자체가 없다</b>.</li>
+    </ul>
+  </div>
+  <div class="note">
+    <b>같이 확인된 것</b>
+    <ul>
+      <li id="mis"></li>
+      <li><b>PDF에서 글자를 못 뽑는다</b> — 2020-2021·2022·2023·2024년판은 본문 글꼴이 ToUnicode 매핑 없이 서브셋 임베드돼 있어
+        기계가 읽으면 글리프 번호(<code>/g1171</code>)만 나온다. 검색·인용·스크린리더 모두 막힌다.</li>
+      <li><b>2024년판부터 텍스트 대체자료(txt)를 준다</b> — 개선이다. 다만 제3권 부록(국가승인통계 14종)은 텍스트판에 없다.
+        본문 서술은 읽히지만 <b>통계 원표는 여전히 PDF에 갇혀 있다</b>.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <h2>2024년판을 그대로 읽으면 틀리는 이유</h2>
+  <p class="lede">2024년 감염병 통계의 최대 변수는 유행이 아니라 <b>분류 변경</b>이었다.
+  코로나19가 2023년 8월 31일 제4급으로 내려갔고, 매독이 2024년 제3급으로 올라왔다.
+  아래 그림에서 실선(그대로)과 점선(변경분 제외)이 갈라지는 곳이 <b>단절점</b>이다.</p>
+
+  <div class="panel">
+    <p class="ptit">제2급 감염병 신고수 — 코로나19를 넣은 것과 뺀 것</p>
+    <p class="psub">560만 → 15만은 방역 성과가 아니라 코로나19의 4급 전환이다. 빼고 보면 오히려 늘었다.</p>
+    <div class="cw"><svg id="c2" viewBox="0 0 720 260" width="720" height="260" role="img"
+      aria-label="제2급 감염병 신고수 추이 — 코로나19 포함·제외"></svg></div>
+    <div class="lg"><span><i style="background:var(--warn)"></i>그대로(코로나 포함)</span>
+      <span><i style="background:var(--accent)"></i>코로나19 제외</span>
+      <span style="color:var(--faint)">세로 눈금은 로그 — 한 칸이 10배다</span></div>
+  </div>
+
+  <div class="panel">
+    <p class="ptit">제3급 감염병 신고수 — 매독을 넣은 것과 뺀 것</p>
+    <p class="psub">매독은 2024년 표본감시에서 전수감시로 돌아왔다. 그 해 늘어난 몫의 상당 부분이 이 전환분이다.</p>
+    <div class="cw"><svg id="c3" viewBox="0 0 720 220" width="720" height="220" role="img"
+      aria-label="제3급 감염병 신고수 추이 — 매독 포함·제외"></svg></div>
+    <div class="lg"><span><i style="background:var(--warn)"></i>그대로(매독 포함)</span>
+      <span><i style="background:var(--accent)"></i>매독 제외</span></div>
+  </div>
+
+  <div class="panel">
+    <p class="ptit">2024년판 본문에서 뽑은 숫자</p>
+    <p class="psub">질병관리청이 배포한 텍스트 대체자료 전문을 대조해 옮겼다.
+    ⚠️ 위 그림은 「감염병 신고 현황 연보」를 다시 집계한 값이라 <b>백서 본문 수치와 1% 안팎 어긋난다</b>
+    (2023년 제2급 백서 5,610,190 · 연보 재집계 <span id="d23"></span>). 확정치 갱신과 집계 범위 차이다 —
+    어느 쪽이든 <b>착시의 방향과 크기는 같다</b>.</p>
+    <div class="tw"><table>
+      <thead><tr><th>항목</th><th>2023</th><th>2024</th><th>비고</th></tr></thead>
+      <tbody>
+        <tr><td>제1급</td><td class="num">1명</td><td class="num">0건</td><td>보툴리눔독소증 1명 → 0</td></tr>
+        <tr><td>제2급</td><td class="num">5,610,190</td><td class="num">152,586</td><td>코로나19 4급 전환 효과</td></tr>
+        <tr><td>제2급(코로나19 제외)</td><td class="num">92,650</td><td class="num hi">+64.7%</td><td>⚠️ 빼면 늘었다</td></tr>
+        <tr><td>제3급</td><td class="num">16,436</td><td class="num">18,790</td><td>+10.0%</td></tr>
+        <tr><td>제3급(매독 2,790 제외)</td><td>—</td><td class="num hi">−2.7%</td><td>⚠️ 빼면 줄었다</td></tr>
+        <tr><td>해외유입</td><td class="num">7,122</td><td class="num">606</td><td>−91.5%</td></tr>
+        <tr><td>백일해</td><td class="num">292</td><td class="num hi">48,048</td><td>164.5배 — 유럽 동시 유행과 연동</td></tr>
+        <tr><td>결핵</td><td class="num">19,540</td><td class="num">17,944</td><td>13년 연속 감소(2011년 50,491 정점)</td></tr>
+      </tbody>
+    </table></div>
+  </div>
+</section>
+
+<section>
+  <h2>신고수를 잇기 전에 — 분모가 바뀐 해</h2>
+  <p class="lede">표본감시는 지정 의료기관에서만 신고를 받는다. 그 기관 수가 <b>분모</b>다.
+  아래는 최대·최소가 두 배 넘게 벌어진 감시군이다. 이 해를 모르고 신고수를 이으면 유행을 잘못 읽는다.</p>
+  <div id="sent"></div>
+</section>
+
+<section>
+  <h2>이 백서에서 뽑은 것</h2>
+  <div class="ins">
+    <div class="i"><b>분류 변경이 통계를 지배한다.</b> 백서 본문도 두 번 다 “○○ 제외 시”라는 보정치를 나란히 적었다 —
+      원저자들도 이 착시를 알고 있었다는 뜻이다. 시계열을 이으려면 급수 변동 원장을 먼저 봐야 한다.</div>
+    <div class="i"><b>‘격리 축소’가 조용히 진행 중이다.</b> 2024년 12월 제1급 대응지침 4종 개정으로
+      탄저·보툴리눔독소증·야토병·리프트밸리열은 격리가 필요 없게 됐다. 명시 사유는 “기본권 침해 최소화”.
+      같은 해 고시에서도 입원치료 대상 목록이 줄었다.</div>
+    <div class="i"><b>백서의 ‘향후 추진계획’은 예고다.</b> 니파바이러스감염증 제1급 지정은 2024년판에 계획으로 적힌 뒤
+      1년 만에 고시(2025.9.8)로 실현됐다. 이 절만 따로 추적하면 다음 급수 변동을 미리 안다.</div>
+    <div class="i"><b>다음 팬데믹은 인플루엔자로 특정됐다.</b> 2024년 9월 전면 개정된 대비·대응계획이 목표를 수치로 박았다 —
+      표본감시 1,000개소, 6개월분 비축, 24시간 내 투여, 100·200일 내 백신. 여기에 국내 고양이 H5N1의
+      포유류 간 전파 가능성 실측이 겹친다.</div>
+    <div class="i"><b>백일해 164.5배가 2024년의 진짜 사건이다.</b> 코로나19 숫자에 묻혀 거의 보도되지 않았다.
+      접종률이 오르는 중에도 발생이 폭증했다는 점에서 단순 접종률 문제로 환원되지 않는다.</div>
+  </div>
+  <div class="foot-links">
+    <a href="../chronicle/">📜 연대기에서 그 해 보기</a>
+    <a href="../checker/">🩺 단절점 검사기</a>
+    <a href="../guides/">📕 지침 서가</a>
+    <a href="../data/">⬇ 자료 내려받기</a>
+  </div>
+</section>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div id="fsrc"></div>
+</footer>
+</div>
+
+<script>
+const D = {"as_of":"2026-09-08","source":"https://www.kdca.go.kr/kdca/2873/subview.do","editions":[{"y":"2024","hidden":false,"cover":"covers/whitepaper2024(kor).png","files":[{"k":"영문","u":"https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서[영문](최종).pdf","bad":false},{"k":"텍스트","u":"https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서[텍스트].txt","bad":false},{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서_합본(최종)_펼침.pdf","bad":false}],"org":"질병관리청","cover_ok":true,"note":"코로나19 마무리와 신종인플루엔자 대비. 제2차 말라리아 재퇴치 실행계획. 텍스트 대체자료(txt)를 제공한 첫 판이라 본문 전량을 읽을 수 있다.","star":"⭐","name":"질병관리청 백서"},{"y":"2023","hidden":false,"cover":"covers/whitepaper2023(kor).jpg","files":[{"k":"영문","u":"https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서[영문].pdf","bad":false},{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서_펼침.pdf","bad":false}],"org":"질병관리청","cover_ok":true,"note":"엔데믹 전환(위기단계 하향), 상시 관리체계 복귀. 2023.8.31 코로나19 제4급 전환.","star":"","name":"질병관리청 백서"},{"y":"2022","hidden":false,"cover":"covers/whitepaper2022(kor).jpg","files":[{"k":"영문","u":"https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서[영문].pdf","bad":true},{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2022+질병관리청+백서_합본(최종)_펼침.pdf","bad":false}],"org":"질병관리청","cover_ok":true,"note":"오미크론 대유행, 단계적 일상회복, 백신·치료제.","star":"","name":"질병관리청 백서"},{"y":"2020~2021","hidden":false,"cover":"covers/whitepaper2020~2021(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2020-2021질병관리백서(최종).pdf","bad":false}],"org":"질병관리청","cover_ok":true,"note":"코로나19 초기·확산 대응과 2020.9.12 질병관리청 승격, 중앙방역대책본부 구축.","star":"⭐","name":"질병관리청 백서(합본)"},{"y":"2019","hidden":false,"cover":"covers/whitepaper2019(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2019+질병관리백서(최종).pdf","bad":false}],"org":"질병관리본부","cover_ok":true,"note":"상시 대응·예방접종·만성질환. 코로나19 직전 연도의 평시 기록.","star":"","name":"질병관리백서"},{"y":"2018","hidden":false,"cover":"covers/whitepaper2018(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2018+질병관리백서_최종.pdf","bad":false}],"org":"질병관리본부","cover_ok":true,"note":"메르스 해외유입 1건(쿠웨이트) 조기 차단, 감시·검역 강화.","star":"","name":"질병관리백서"},{"y":"2017","hidden":false,"cover":"covers/whitepaper2017(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2017+질병관리백서.pdf","bad":false}],"org":"질병관리본부","cover_ok":true,"note":"메르스 이후 긴급상황실 상시체계, 지카 대응.","star":"","name":"질병관리백서"},{"y":"2016","hidden":false,"cover":"covers/whitepaper2016(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2016+질병관리백서.pdf","bad":false}],"org":"질병관리본부","cover_ok":true,"note":"2015 메르스 대응과 국가방역체계 개편.","star":"","name":"질병관리백서"},{"y":"2014~2015","hidden":true,"cover":"covers/whitepaper2014~2015(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"메르스 유행(확진 186·사망 38) 당해를 수록하는 합본. 2016년판이 회고하지만 당해 기록과 사후 회고는 사료로서 값이 다르다.","star":"⭐","name":"질병관리백서(합본)"},{"y":"2013","hidden":false,"cover":"covers/whitepaper2013(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2013+질병관리백서.pdf","bad":false}],"org":"질병관리본부","cover_ok":true,"note":"감염병 감시·검역, 국가예방접종 확대, 만성질환·건강조사.","star":"","name":"질병관리백서"},{"y":"2012","hidden":false,"cover":"covers/whitepaper2012(kor).jpg","files":[{"k":"국문","u":"https://www.kdca.go.kr/sites/kdca/download/2012+질병관리백서.pdf","bad":false}],"org":"질병관리본부","cover_ok":true,"note":"2009 신종플루 이후 위기대응 체계 정비, 국가예방접종·만성질환 감시.","star":"","name":"질병관리백서"},{"y":"2011","hidden":true,"cover":"covers/whitepaper2011(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"결핵 신고 최고치 50,491명(10만 명당 100.8명). 이후 13년 연속 감소의 기준점.","star":"⭐","name":"질병관리백서"},{"y":"2010","hidden":true,"cover":"covers/whitepaper2010(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"신종플루 유행 종료와 사후 정비.","star":"","name":"질병관리백서"},{"y":"2009","hidden":true,"cover":"covers/whitepaper2009(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"신종인플루엔자 A(H1N1pdm09) 대유행. 국내 발생률 10만 명당 1,502.6명 — 2020년 이전 최대 감염병 사건의 1차 사료다.","star":"⭐","name":"질병관리백서"},{"y":"2008","hidden":true,"cover":"covers/whitepaper2008(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"","star":"","name":"질병관리백서"},{"y":"2007","hidden":true,"cover":"covers/whitepaper2007(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"","star":"","name":"질병관리백서"},{"y":"2006","hidden":true,"cover":"covers/whitepaper2006(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"KONIS(전국의료관련감염감시체계) 운영 시작 연도.","star":"","name":"질병관리백서"},{"y":"2005","hidden":true,"cover":"covers/whitepaper2005(kor).jpg","files":[],"org":"질병관리본부","cover_ok":true,"note":"설립 초기 감시·검역 체계 정비.","star":"","name":"질병관리백서"},{"y":"2004","hidden":true,"cover":"covers/whitepaper2004(kor).jpg","files":[],"org":"질병관리본부","cover_ok":false,"note":"질병관리본부 설립 첫해(2004.1.1). 사스(2003) 직후 방역체계를 세우던 시기.","star":"","name":"질병관리백서"}],"hidden":9,"downloadable":10,"mislinked":{"https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서[영문].pdf":["2023년 질병관리청 백서[영문]","2022년 질병관리청 백서[영문]"]},"noti":{"years":[2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"all":[127959,167367,181929,171362,92193,85180,28503795,5614090,156117,124939],"no_covid":[127959,167367,181929,171362,92193,85180,79446,96550,156117,124939],"g3":[16374,22556,23353,19443,19222,18793,17499,16437,18791,14429],"g3_no_syph":[14805,20408,21073,17690,19222,18793,17499,16437,16001,12218]},"sent":{"years":[2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022,2023,2024,2025],"groups":[{"n":"인플루엔자(ILI)","v":[70,541,578,624,679,678,701,681,677,814,810,849,854,200,200,200,200,200,200,200,200,200,197,196,299,295],"note":"2013년 854→200 대개편, 2024년 299로 확대(신종인플루엔자 대비계획의 1,000개소 목표와 연동)"},{"n":"기생충감염병","v":[null,null,null,null,null,null,null,null,null,null,null,278,285,284,286,287,288,290,280,280,279,26,26,27,26,26],"note":"2018 정비로 보건환경연구원 제외 / ⚠️ 2021년 279→26으로 분모 90% 축소 — 이 해 전후 신고수 직접 비교 불가"},{"n":"합병증을 동반한 수족구병","v":[null,null,null,null,null,null,null,null,null,39,43,44,44,44,43,99,101,196,197,190,210,208,208,205,204,191],"note":"2015·2017.7.30 지정기준 변경(확대)"},{"n":"의료관련감염병","v":[null,null,null,null,null,null,null,null,null,null,null,97,100,100,100,100,115,189,230,268,289,296,300,326,356,362],"note":"지정기준 변경 2011(300병상↑)·2017(200병상↑)·2019(150병상↑)·2022(100병상↑) / 2012.10부터 지표가 신고수→분리율(%)로 변경"},{"n":"장관감염증","v":[null,null,null,null,null,null,null,null,null,null,null,89,101,105,110,100,102,196,195,204,207,208,208,207,210,210],"note":"2015·2017.7.30 지정기준 변경(기관 약 2배)"},{"n":"급성호흡기감염증","v":[null,null,null,null,null,null,null,null,null,null,null,87,95,101,99,103,102,206,204,213,217,219,219,220,220,221],"note":"2017.7.30 지정기준 변경(기관 약 2배)"},{"n":"엔테로바이러스 감염증","v":[null,null,null,null,null,null,null,null,null,null,null,92,103,106,109,99,102,197,197,207,210,211,212,208,212,212],"note":"2015·2017.7.30 지정기준 변경(기관 약 2배)"}]}};
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const nf = n => n.toLocaleString('ko-KR');
+
+document.getElementById('kpi').innerHTML = [
+  ['19판', '2004~2024년 · 21개년', ''],
+  [D.downloadable + '판', '원문 내려받기 가능', ''],
+  [D.hidden + '판', '원문 유실 — 표지만 남음', 'bad'],
+  ['1판', '본문 전량 요약(2024년판)', ''],
+].map(([a, b, c]) => `<div class="kb ${c}"><b class="num">${esc(a)}</b><span>${esc(b)}</span></div>`).join('');
+
+document.getElementById('fsrc').innerHTML =
+  `자료: <a href="${esc(D.source)}" target="_blank" rel="noopener">질병관리청백서 게시판</a> 소스 실측(${esc(D.as_of)}) · ` +
+  `신고수는 「감염병 신고 현황 연보」 · 표지·원문 파일은 질병관리청 서버로 직접 연결된다`;
+
+/* ── 서가 ─────────────────────────────────────────────── */
+const KL = {'국문': '국문 PDF', '영문': '영문 PDF', '텍스트': '텍스트(txt)'};
+document.getElementById('shelf').innerHTML = D.editions.map(e => {
+  const main = e.files.find(f => f.k === '국문');
+  const cover = `<img class="cv" src="${esc(e.cover)}" alt="${esc(e.y)}년 백서 표지" loading="lazy"
+     onerror="this.style.visibility='hidden'">`;
+  return `<div class="bk${e.hidden ? ' lost' : ''}">
+    ${main ? `<a href="${esc(main.u)}" target="_blank" rel="noopener">${cover}</a>` : cover}
+    <div class="in">
+      <div class="y num">${esc(e.y)}${e.star ? ' <span title="그 해의 사건">' + e.star + '</span>' : ''}</div>
+      <div class="org">${esc(e.org)} · ${esc(e.name)}</div>
+      <span class="st ${e.hidden ? 'lost' : 'ok'}">${e.hidden ? '원문 유실' : '내려받기 가능'}</span>
+      ${e.note ? `<div class="nt">${esc(e.note)}</div>` : ''}
+      <div class="dl">${e.files.map(f =>
+        `<a href="${esc(f.u)}" target="_blank" rel="noopener"${f.bad ? ' class="bad" title="이 링크는 2023년 파일을 가리킨다"' : ''}>${esc(KL[f.k] || f.k)}${f.bad ? ' ⚠️' : ''}</a>`).join('')}</div>
+    </div>
+  </div>`;
+}).join('');
+
+const mis = Object.entries(D.mislinked)[0];
+document.getElementById('mis').innerHTML = mis
+  ? `<b>2022년 영문판 링크가 2023년 파일을 가리킨다</b> — 게시판에서 「${esc(mis[1].join('」과 「'))}」가
+     같은 파일(<code>${esc(decodeURIComponent(mis[0].split('/').pop()))}</code>)로 연결된다. 2022 영문판을 받으면 2023 영문판이 온다.`
+  : '<b>링크 중복 없음</b> — 이번 점검에서는 서로 다른 판이 같은 파일을 가리키는 경우가 없었다.';
+
+document.getElementById('d23').textContent = nf(D.noti.all[D.noti.years.indexOf(2023)]);
+
+/* ── 꺾은선 ────────────────────────────────────────────── */
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const short = v => v >= 1e8 ? Math.round(v / 1e8) + '억'
+                 : v >= 1e4 ? (v / 1e4 >= 100 ? Math.round(v / 1e4) : (v / 1e4).toFixed(1).replace(/\.0$/, '')) + '만'
+                 : v >= 1000 ? (v / 1000).toFixed(v >= 1e4 ? 0 : 1).replace(/\.0$/, '') + '천'
+                 : Math.round(v);
+function line(el, years, sets, h, log){
+  const W = 720, H = h, L = 62, R = 12, T = 14, B = 26;
+  const max = Math.max(...sets.flatMap(s => s.v));
+  const min = Math.min(...sets.flatMap(s => s.v).filter(v => v > 0));
+  const x = i => L + (W - L - R) * i / (years.length - 1);
+  /* 코로나19가 낀 해는 나머지보다 300배 크다. 곧게 그리면 나머지가 바닥에 눌려
+     '빼면 늘었다'는 이 그림의 요점이 안 보인다. 그런 판에만 로그 눈금을 쓴다. */
+  const lo = Math.log10(Math.max(min, 1)), hi = Math.log10(Math.max(max, 10));
+  const y = log
+    ? v => H - B - (H - T - B) * ((Math.log10(Math.max(v, 1)) - lo) / ((hi - lo) || 1))
+    : v => H - B - (H - T - B) * (v / (max || 1));
+  let s = '';
+  const ticks = [];
+  if (log){
+    for (let e = Math.floor(lo); e <= Math.ceil(hi); e++) ticks.push(Math.pow(10, e));
+  } else {
+    for (let i = 0; i <= 4; i++) ticks.push(max * i / 4);
+  }
+  ticks.forEach(v => {
+    const yy = y(v);
+    if (yy < T - 2 || yy > H - B + 2) return;
+    s += `<line x1="${L}" y1="${yy}" x2="${W - R}" y2="${yy}" stroke="${css('--grid')}" stroke-width="1"/>` +
+         `<text x="${L - 7}" y="${yy + 4}" text-anchor="end" font-size="11" fill="${css('--faint')}">${short(v)}</text>`;
+  });
+  years.forEach((yr, i) => {
+    if (i % 2 && i !== years.length - 1) return;
+    s += `<text x="${x(i)}" y="${H - 8}" text-anchor="middle" font-size="11" fill="${css('--faint')}">${String(yr).slice(2)}</text>`;
+  });
+  sets.forEach(st => {
+    const d = st.v.map((v, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+    s += `<path d="${d}" fill="none" stroke="${css(st.c)}" stroke-width="2.4"
+      stroke-linejoin="round" stroke-linecap="round"${st.dash ? ' stroke-dasharray="5 4"' : ''}/>`;
+    st.v.forEach((v, i) => { s += `<circle cx="${x(i).toFixed(1)}" cy="${y(v).toFixed(1)}" r="2.6" fill="${css(st.c)}"><title>${years[i]}년 ${nf(v)}건</title></circle>`; });
+  });
+  el.innerHTML = s;
+}
+function draw(){
+  const N = D.noti;
+  line(document.getElementById('c2'), N.years, [
+    {v: N.all, c: '--warn'}, {v: N.no_covid, c: '--accent', dash: 1},
+  ], 260, true);
+  line(document.getElementById('c3'), N.years, [
+    {v: N.g3, c: '--warn'}, {v: N.g3_no_syph, c: '--accent', dash: 1},
+  ], 220);
+}
+draw();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', draw);
+
+/* ── 표본감시 분모 ─────────────────────────────────────── */
+document.getElementById('sent').innerHTML = D.sent.groups.map(g => {
+  const got = g.v.map((v, i) => [D.sent.years[i], v]).filter(p => p[1]);
+  const mx = Math.max(...got.map(p => p[1])), mn = Math.min(...got.map(p => p[1]));
+  return `<div class="panel">
+    <p class="ptit">${esc(g.n)}</p>
+    <p class="psub num">최대 ${nf(mx)}개소 → 최소 ${nf(mn)}개소 · ${got[0][0]}~${got[got.length - 1][0]}</p>
+    <div class="cw"><svg viewBox="0 0 720 150" width="720" height="150" data-v="${got.map(p => p.join(':')).join(',')}"></svg></div>
+    ${g.note ? `<p class="psub" style="margin:8px 0 0">${esc(g.note)}</p>` : ''}
+  </div>`;
+}).join('');
+function drawSent(){
+  document.querySelectorAll('#sent svg').forEach(sv => {
+    const pts = sv.dataset.v.split(',').map(s => s.split(':').map(Number));
+    line(sv, pts.map(p => p[0]), [{v: pts.map(p => p[1]), c: '--accent'}], 150);
+  });
+}
+drawSent();
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', drawSent);
+</script>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>지침 서가</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A; --warn-soft:#F6E3E3;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;overflow-x:hidden;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:940px;margin:0 auto;padding:0 20px}
+  header{padding:38px 0 6px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 12px}
+  h1{font-size:clamp(27px,5.5vw,42px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:64ch;margin:14px 0 0}
+
+  .kpi{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:9px;margin:20px 0 0}
+  .kpi>*{min-width:0}
+  .kb{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .kb b{display:block;font-size:24px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+  .kb span{font-size:12.5px;color:var(--muted)}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:15px 18px;font-size:13.5px;margin:20px 0}
+  .note ul{margin:8px 0 0;padding-left:18px}
+  .note li{margin:4px 0}
+
+  .tools{position:sticky;top:0;z-index:15;background:color-mix(in srgb,var(--ground) 92%,transparent);
+    backdrop-filter:blur(10px);padding:12px 0 10px;margin:18px 0 0;border-bottom:1px solid var(--line)}
+  .search{display:flex;gap:8px;align-items:center}
+  .search input{flex:1;min-width:0;font:inherit;font-size:15px;padding:11px 14px;border-radius:11px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink)}
+  .search input:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .search button{font:inherit;font-size:13px;font-weight:700;cursor:pointer;flex:none;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--muted);border-radius:11px;padding:11px 13px}
+  .rows{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+  .chips{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+  .chips .lb{font-size:11.5px;color:var(--faint);font-weight:700;margin-right:2px;flex:none}
+  .chip{font:inherit;font-size:12.5px;font-weight:600;cursor:pointer;border-radius:999px;padding:5px 11px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--muted)}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .cnt{font-size:12.5px;color:var(--muted);margin:10px 0 0}
+
+  .s{border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:7px;overflow:hidden}
+  .s>summary{list-style:none;cursor:pointer;padding:12px 15px;display:flex;gap:11px;align-items:flex-start}
+  .s>summary::-webkit-details-marker{display:none}
+  .s>summary:hover{background:var(--surface-2)}
+  .s .yr{font-size:13px;font-weight:800;color:var(--accent-ink);background:var(--accent-soft);
+    border-radius:7px;padding:3px 8px;flex:none;margin-top:1px}
+  .s.old .yr{color:var(--muted);background:var(--surface-2)}
+  .s .bd{flex:1;min-width:0}
+  .s .nm{font-weight:700;font-size:14.5px;overflow-wrap:anywhere}
+  .s .sub{font-size:12.5px;color:var(--faint);margin-top:3px;display:flex;gap:8px;flex-wrap:wrap}
+  .s .sub .ed{color:var(--accent-ink);font-weight:700}
+  .tag{font-size:10.5px;font-weight:800;border-radius:5px;padding:1px 6px;border:1px solid var(--line-strong);color:var(--muted)}
+  .t-지침{background:var(--accent);border-color:var(--accent);color:#fff}
+  .t-그밖{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
+  .s .ar{color:var(--faint);font-size:12px;flex:none;margin-top:3px}
+  .s[open] .ar{transform:rotate(90deg)}
+  .eds{border-top:1px solid var(--line);background:var(--surface-2);padding:6px 0}
+  .ed1{display:flex;gap:10px;padding:7px 15px;align-items:flex-start;font-size:13px}
+  .ed1:hover{background:var(--surface)}
+  .ed1 .y{color:var(--faint);font-weight:700;flex:none;width:44px}
+  .ed1 .t{flex:1;min-width:0;overflow-wrap:anywhere}
+  .ed1 .d{color:var(--faint);font-size:11.5px;flex:none}
+  .more{display:block;width:100%;font:inherit;font-size:14px;font-weight:700;cursor:pointer;margin:14px 0 0;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--accent-ink);border-radius:11px;padding:13px}
+  .more:hover{background:var(--surface-2)}
+  .empty{padding:34px 4px;color:var(--faint);font-size:14px;text-align:center}
+
+  footer{padding:26px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  footer a{color:var(--accent-ink)}
+  @media (max-width:760px){
+    .tools{position:static}
+    .wrap{padding:0 14px}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">② 감염병 관리지침</p>
+  <h1>지침 서가</h1>
+  <p class="thesis">질병관리청이 낸 지침·서식·교육자료를 <b>계열로 접어</b> 둔다.
+  지침은 대개 해마다 다시 내므로 목록의 단위는 문서가 아니라 계열이다 —
+  「말라리아 관리지침」은 한 줄이고, 그 줄을 펴면 1998년부터 올해까지 24판이 나온다.
+  <b>어느 감염병이면 어느 지침을 펴야 하는지</b>는 <a href="../field/">현장카드</a>에서 병 이름으로 찾는 편이 빠르다.</p>
+  <div class="kpi" id="kpi"></div>
+</header>
+
+<div class="note">
+  <b>읽기 전에</b>
+  <ul>
+    <li><b>계열은 제목으로 묶었다.</b> 연도·판 표시를 뗀 제목이 같으면 한 계열로 본다. 제목이 크게 바뀐 해에는 계열이 갈라져 보일 수 있다.</li>
+    <li><b>정본은 게시판 원문이다.</b> 제목을 누르면 질병관리청 원문으로 간다. 여기 목록은 그 게시판을 훑어 만든 색인이다.</li>
+    <li><b>최신판이 재작년 이전이면</b> 회색으로 표시한다. 폐지됐거나, 다른 지침에 통합됐거나, 아직 안 나온 것이다 — 셋을 목록만으로는 못 가른다.</li>
+    <li>지침 게시판에는 <b>만성질환·건강증진 사업 지침</b>도 섞여 올라온다. 갈래에서 ‘그 밖’으로 갈라 두었다.</li>
+  </ul>
+</div>
+
+<div class="tools">
+  <div class="search">
+    <input id="q" type="search" placeholder="지침 이름·감염병 이름으로 찾기 — 말라리아, 검역, 예방접종…" autocomplete="off">
+    <button id="reset">비우기</button>
+  </div>
+  <div class="rows">
+    <div class="chips" id="fk"></div>
+    <div class="chips" id="ff"></div>
+    <div class="chips" id="fs"></div>
+  </div>
+</div>
+<p class="cnt num" id="cnt"></p>
+
+<div id="list"></div>
+<button class="more" id="more" hidden>더 보기</button>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div id="fsrc"></div>
+</footer>
+</div>
+
+<script>
+const D = __DATA__;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const M = D.meta;
+
+/* 주소는 부호로 접어 실었다 — k55:1234 = 누리집 지침 게시판, p:2019... = 감염병포털 */
+function unpack(u){
+  let m = /^k(\d+):(\d+)$/.exec(u);
+  if (m) return `https://www.kdca.go.kr/bbs/kdca/${m[1]}/${m[2]}/artclView.do`;
+  m = /^p:(\w+)$/.exec(u);
+  if (m) return `https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=${m[1]}&q_clsfNo=0`;
+  return u;
+}
+const nf = n => n.toLocaleString('ko-KR');
+
+document.getElementById('kpi').innerHTML = [
+  [nf(M.series), '계열'],
+  [nf(M.docs), '문서(판을 모두 센 수)'],
+  [nf(M.current), `현행 계열(${M.y1 - 1}~${M.y1}년판)`],
+  [`${M.y0}–${M.y1}`, '수집 범위'],
+].map(([a, b]) => `<div class="kb"><b class="num">${a}</b><span>${esc(b)}</span></div>`).join('');
+document.getElementById('fsrc').innerHTML =
+  `자료: 질병관리청 누리집 게시판(지침·코로나19지침·서식·교육자료·공지사항) + 감염병포털 · ${esc(M.as_of)} 기준 · ` +
+  `<a href="../data/">CSV 내려받기</a>`;
+
+/* ── 거르개 ─────────────────────────────────────────────── */
+const KIND = ['지침', '서식', '교육홍보', '기타', '공고'].filter(k => M.kinds[k]);
+let fk = new Set(), ff = new Set(), fs = '';
+
+function chips(el, items, get, set){
+  el.innerHTML = items.map(([v, label]) =>
+    `<button class="chip" data-v="${esc(v)}">${esc(label)}</button>`).join('');
+  el.onclick = e => {
+    const b = e.target.closest('.chip');
+    if (!b) return;
+    set(b.dataset.v);
+    [...el.children].forEach(c => c.classList.toggle('on', get(c.dataset.v)));
+    render(true);
+  };
+}
+function toggle(s, v){ s.has(v) ? s.delete(v) : s.add(v); }
+
+chips(document.getElementById('fk'),
+  [['', '갈래 전체'], ...KIND.map(k => [k, `${k} ${nf(M.kinds[k])}`])],
+  v => v ? fk.has(v) : fk.size === 0,
+  v => v ? toggle(fk, v) : fk.clear());
+chips(document.getElementById('ff'),
+  [['', '분야 전체'], ['감염병', '감염병'], ['그 밖', '그 밖(만성질환·건강증진)']],
+  v => v ? ff.has(v) : ff.size === 0,
+  v => v ? toggle(ff, v) : ff.clear());
+chips(document.getElementById('fs'),
+  [['', '상태 전체'], ['cur', `현행(${M.y1 - 1}년 이후 판)`], ['old', '오래된 판이 최신']],
+  v => v === fs,
+  v => { fs = (fs === v ? '' : v); });
+document.querySelectorAll('.chips').forEach(el => {
+  const first = el.querySelector('.chip'); if (first) first.classList.add('on');
+});
+
+const q = document.getElementById('q');
+document.getElementById('reset').onclick = () => { q.value = ''; render(true); q.focus(); };
+let timer = null;
+q.oninput = () => { clearTimeout(timer); timer = setTimeout(() => render(true), 140); };
+
+/* 검색은 모든 판의 제목을 훑는다 — 옛 이름으로 찾는 사람이 있다 */
+D.series.forEach(s => { s._h = (s.n + ' ' + s.e.map(e => e[0]).join(' ')).toLowerCase(); });
+
+const PAGE = 60;
+let shown = PAGE, cur = [];
+
+function match(s){
+  if (fk.size && !fk.has(s.k)) return false;
+  if (ff.size && !ff.has(s.f)) return false;
+  if (fs === 'cur' && s.y < M.y1 - 1) return false;
+  if (fs === 'old' && s.y >= M.y1 - 1) return false;
+  const t = q.value.trim().toLowerCase();
+  if (t && !t.split(/\s+/).every(w => s._h.includes(w))) return false;
+  return true;
+}
+
+function card(s){
+  const old = s.y < M.y1 - 1;
+  const span = s.y0 === s.y ? '' : `${s.y0}–${s.y}`;
+  const sub = [
+    s.c > 1 ? `<span class="ed">${s.c}판</span>` : '단일 문서',
+    span,
+    s.b === s.k ? '' : esc(s.b),   // 갈래 딱지와 게시판 이름이 겹치면 한 번만 적는다
+  ].filter(Boolean);
+  const tags = `<span class="tag t-${esc(s.k)}">${esc(s.k)}</span>` +
+    (s.f === '그 밖' ? '<span class="tag t-그밖">그 밖</span>' : '');
+  return `<details class="s${old ? ' old' : ''}">
+    <summary>
+      <span class="yr num">${s.y}</span>
+      <span class="bd">
+        <span class="nm">${esc(s.n)}</span>
+        <span class="sub num">${tags}${sub.join('<span>·</span>')}</span>
+      </span>
+      <span class="ar">▸</span>
+    </summary>
+    <div class="eds">${s.e.map(e => `
+      <div class="ed1">
+        <span class="y num">${e[2]}</span>
+        <a class="t" href="${esc(unpack(e[3]))}" target="_blank" rel="noopener">${esc(e[0])}</a>
+        <span class="d num">${e[1] ? e[1].slice(0, 4) + '.' + e[1].slice(4, 6) + '.' + e[1].slice(6) : ''}</span>
+      </div>`).join('')}</div>
+  </details>`;
+}
+
+function render(resetPage){
+  if (resetPage) shown = PAGE;
+  cur = D.series.filter(match);
+  const list = document.getElementById('list');
+  list.innerHTML = cur.length
+    ? cur.slice(0, shown).map(card).join('')
+    : '<p class="empty">해당하는 지침이 없다. 검색어나 거르개를 바꿔 볼 것.</p>';
+  const docs = cur.reduce((a, s) => a + s.c, 0);
+  document.getElementById('cnt').textContent =
+    `계열 ${nf(cur.length)}개 · 문서 ${nf(docs)}건` +
+    (cur.length > shown ? ` — ${nf(shown)}개 보이는 중` : '');
+  const more = document.getElementById('more');
+  more.hidden = cur.length <= shown;
+  more.textContent = `더 보기 (남은 ${nf(cur.length - shown)}개)`;
+}
+document.getElementById('more').onclick = () => { shown += PAGE * 4; render(false); };
+render(true);
+</script>
+</body>
+</html>
