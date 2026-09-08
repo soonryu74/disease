@@ -43,7 +43,10 @@
   .thesis b{color:var(--ink)}
   .run{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 0;font-size:12.5px;color:var(--muted)}
   .src{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface);font-weight:600}
-  .src i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--accent)} .src.bad i{background:var(--warn)}
+  .src i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--accent)}
+  .src.bad i{background:var(--warn)} .src.quiet i{background:var(--s4)}
+  .src em{font-style:normal;font-weight:600;color:var(--faint);margin-left:2px}
+  .src.bad em{color:var(--warn)} .src.quiet em{color:var(--s4)}
   section{padding:26px 0 6px}
   h2{font-size:clamp(19px,3vw,24px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
   .sdesc{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:76ch}
@@ -94,8 +97,8 @@
 <header>
   <p class="eyebrow">📡 감염병 상황판 · 매일 06:00 갱신</p>
   <h1>오늘 세계에서 새로<br>보고된 것, 우리와의 거리</h1>
-  <p class="thesis">WHO 질병 발생 뉴스 · CDC 여행 건강 알림 · KDCA 지침 게시판을 매일 아침 모은다. 모으는 것은 남도 한다.
-  여기서는 항목마다 <b>그 병이 우리 도감 어디에 있는지</b>, <b>그 나라가 검역관리지역으로 지정돼 있는지</b>, <b>직항으로 몇 명이 들어오는지</b>를 한 줄로 붙인다.</p>
+  <p class="thesis">WHO 질병 발생 뉴스 · CDC 여행 건강 알림 · CDC 발생조사 · KDCA 지침 게시판을 매일 아침 모은다. 모으는 것은 남도 한다.
+  여기서는 항목마다 <b>그 감염병이 우리 도감 어디에 있는지</b>, <b>그 나라가 검역관리지역으로 지정돼 있는지</b>, <b>직항으로 몇 명이 들어오는지</b>를 한 줄로 붙인다.</p>
   <div class="run" id="run"></div>
 </header>
 
@@ -125,7 +128,10 @@
   <h2>이 판이 말하지 않는 것</h2>
   <div class="card">
     <ul class="tight">
-      <li><b>출처가 죽는 날이 있다.</b> 출처마다 성공·실패와 마지막 성공 시각을 맨 위에 적는다. 실패한 출처의 항목은 마지막 성공분이 남는다.</li>
+      <li><b>조용한 것과 고장난 것은 다르다.</b> WHO 질병 발생 뉴스는 매일 나오지 않는다 — 한 달에 두세 건이고 열흘 넘게 조용한 때가 흔하다.
+      그래서 맨 위 출처 딱지에 <b>수집 성공 여부(●)</b>와 <b>가장 최근 발행이 며칠 전인지</b>를 함께 적는다. 평소 간격의 두 배를 넘게 조용하면 ⚠를 붙인다.
+      <b>새 항목이 없다고 파이프라인이 죽은 것이 아니다.</b> 실패한 출처의 항목은 마지막 성공분이 남는다.</li>
+      <li><b>WHO 일반 뉴스는 뺐다.</b> 25건 중 감염병 관련이 2건뿐이었다(나머지는 사무총장 방문·기관 성명). 대신 CDC 발생조사 알림을 넣었다 — 살아 있고 병원체가 분명하다.</li>
       <li><b>질병·나라 태그는 제목·요약에서 낱말로 맞춘 것이다.</b> "Guinea"와 "Papua New Guinea"처럼 헷갈리는 이름은 긴 것부터 맞추지만, 틀릴 수 있다. 태그는 연결 통로이지 판정이 아니다.</li>
       <li><b>"미지정"은 잘못이 아니다.</b> 검역관리지역은 세계 발생 상황과 풍토성으로 정한다. WHO가 보고했다고 곧바로 지정 대상이 되는 것이 아니다. 다만 <em>보고된 그 나라에서 직항으로 몇 명이 오는지</em>는 지정과 무관하게 알아둘 값이다.</li>
       <li><b>KDCA 보도자료는 아직 없다.</b> 새 누리집의 게시판 주소를 확인하지 못했다. 지침·매뉴얼 게시판만 본다.</li>
@@ -155,11 +161,26 @@ document.getElementById('run').innerHTML =
   `<span><b>${esc(run.run_at||'')}</b> 실행 · ${D.first_run
      ? `<b>첫 수집</b>이라 보관한 ${run.total||0}건이 전부 처음 잡혔다. 발행일은 항목마다 다르다`
      : `오늘 처음 수집한 항목 <b class="num">${run.new||0}</b>건 · 보관 ${run.total||0}건`}</span>` +
-  Object.entries(st).filter(([k])=>k!=='_run').map(([k,v])=>`<span class="src ${v.ok?'':'bad'}" title="${esc(v.ok?('마지막 성공 '+v.last_ok):('실패: '+v.error+' · 마지막 성공 '+(v.last_ok||'없음')))}"><i></i>${esc(v.label)}${v.ok?'':' ✗'}</span>`).join('');
+  Object.entries(st).filter(([k])=>k!=='_run').map(([k,v])=>{
+    /* 수집 성공/실패와 '발행이 얼마나 오래 없었나'는 다른 문제다. 둘 다 보여야
+       조용한 출처를 고장으로 오해하지 않는다. */
+    const age = v.age_days;
+    const cls = !v.ok ? 'bad' : (v.quiet ? 'quiet' : '');
+    const tip = !v.ok ? `수집 실패: ${v.error} · 마지막 성공 ${v.last_ok||'없음'}`
+      : `수집 성공 ${v.last_ok} · 이 출처의 가장 최근 발행 ${v.latest||'없음'}`
+        + (age!=null?` (${age}일 전)`:'') + ` · 평소 발행 간격 ${v.cadence}일 안팎`;
+    const tail = !v.ok ? ' ✗ 수집 실패'
+      : age==null ? ' · 발행일 없음'
+      : age===0 ? ' · 오늘 발행'
+      : ` · ${age}일 전 발행${v.quiet?' ⚠':''}`;
+    return `<span class="src ${cls}" title="${esc(tip)}"><i></i>${esc(v.label)}<em>${esc(tail)}</em></span>`;
+  }).join('');
 
 /* 필터 */
 let f='all', limit=40;
-const CH=[['all','전체'],['new','오늘 처음 수집'],['WHO DON','WHO 발생뉴스'],['CDC 여행알림','CDC 여행알림'],['KDCA 지침','KDCA 지침'],['WHO 뉴스','WHO 뉴스'],['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
+/* 출처 딱지는 실제로 보관된 항목에서 뽑는다 — 손으로 적어 두면 출처를 바꿀 때 죽은 딱지가 남는다 */
+const SRCS=[...new Set(D.items.map(x=>x.source))];
+const CH=[['all','전체'],['new','오늘 처음 수집'],...SRCS.map(s=>[s,s]),['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
 document.getElementById('chips').innerHTML = CH.map(([k,l])=>`<button data-f="${k}" class="${k===f?'on':''}">${l}</button>`).join('');
 document.getElementById('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; f=b.dataset.f; limit=40; document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x===b)); render(); };
 

@@ -6,7 +6,7 @@ GitHub Actions(.github/workflows/daily.yml)가 매일 06:00 KST에 실행한다.
 출처 (모두 공개, 키 없음)
  - WHO 질병 발생 뉴스(DON)      who.int OData API
  - CDC 여행 건강 알림            wwwnc.cdc.gov RSS
- - WHO 뉴스                     who.int RSS — 감염병 낱말이 든 것만
+ - CDC 발생조사 알림             tools.cdc.gov RSS — 병원체가 분명한 발생 조사
  - KDCA 지침·매뉴얼 게시판        kdca.go.kr/bbs/kdca/55 — 새 지침이 오르면 ② 갱신 신호
 
 이 페이지가 남과 다른 점은 수집이 아니라 결합이다. 항목마다 질병명·나라를 알아내어
@@ -14,7 +14,9 @@ GitHub Actions(.github/workflows/daily.yml)가 매일 06:00 KST에 실행한다.
  - 나라 → 유입지도 (검역관리지역 지정 여부 · 직항 도착 여객)
 를 한 줄로 붙인다. "WHO가 오늘 보고한 그 나라, 우리는 지정돼 있나, 직항은 있나."
 
-출처가 죽어도 페이지는 죽지 않는다. 출처별로 성공/실패와 마지막 성공 시각을 적는다.
+출처가 죽어도 페이지는 죽지 않는다. 출처별로 성공/실패와 마지막 성공 시각을 적고,
+'가장 최근 발행이 며칠 전인지'도 함께 적는다 — 조용한 출처를 고장으로 오해하지 않도록.
+(WHO 질병 발생 뉴스는 한 달에 두세 건이라 열흘 넘게 조용한 것이 정상이다.)
 """
 import html
 import json
@@ -167,16 +169,17 @@ def src_cdc_travel():
     return out
 
 
-def src_who_news():
-    raw = curl('https://www.who.int/rss-feeds/news-english.xml')
+def src_cdc_outbreaks():
+    """CDC 발생 조사 알림. WHO 일반 뉴스를 대신한다 —
+    그 피드는 기관 소식(사무총장 방문 등)이 대부분이라 25건 중 감염병은 2건뿐이었다."""
+    raw = curl('https://tools.cdc.gov/api/v2/resources/media/285676.rss')
     if not raw:
         raise RuntimeError('접속 실패')
     out = []
     for it in parse_rss(raw):
-        low = (it['title'] + ' ' + it['summary']).lower()
-        if not any(k in low for k, _ in DISEASE_KW) and 'outbreak' not in low:
-            continue  # 감염병 낱말이 없는 뉴스는 버린다
-        out.append({'id': 'whonews:' + it['link'].rstrip('/').split('/')[-1], 'source': 'WHO 뉴스',
+        if not it['title']:
+            continue
+        out.append({'id': 'cdcout:' + it['link'].rstrip('/').split('/')[-1], 'source': 'CDC 발생조사',
                     'title': it['title'], 'link': it['link'], 'date': it['date'], 'summary': it['summary']})
     return out
 
@@ -198,8 +201,14 @@ def src_kdca_guides():
     return out
 
 
-SOURCES = [('who_don', 'WHO 질병 발생 뉴스', src_who_don), ('cdc_travel', 'CDC 여행 건강 알림', src_cdc_travel),
-           ('who_news', 'WHO 뉴스(감염병)', src_who_news), ('kdca_guides', 'KDCA 지침·매뉴얼 게시판', src_kdca_guides)]
+# (id, 이름, 수집함수, 대략적 발행 간격(일) — 이보다 훨씬 오래 조용하면 '확인 필요'로 표시)
+SRC_PREFIX = {'who_don': 'who:', 'cdc_travel': 'cdc:', 'cdc_outbreak': 'cdcout:', 'kdca_guides': 'kdca55:'}
+SOURCES = [
+    ('who_don', 'WHO 질병 발생 뉴스', src_who_don, 20),
+    ('cdc_travel', 'CDC 여행 건강 알림', src_cdc_travel, 20),
+    ('cdc_outbreak', 'CDC 발생조사', src_cdc_outbreaks, 45),
+    ('kdca_guides', 'KDCA 지침·매뉴얼 게시판', src_kdca_guides, 30),
+]
 
 
 # ── 결합 ─────────────────────────────────────────────────────────────
@@ -303,16 +312,19 @@ def main():
     load_ko_names()
     name_list, rows, quar, ko = load_join()
 
-    fetched = []
-    for sid, label, fn in SOURCES:
+    fetched, by_source = [], {}
+    for sid, label, fn, cadence in SOURCES:
         st = status.get(sid, {})
         try:
             items = fn()
-            st.update({'label': label, 'ok': True, 'last_ok': run_at, 'count': len(items), 'error': ''})
+            st.update({'label': label, 'ok': True, 'last_ok': run_at, 'count': len(items), 'error': '',
+                       'cadence': cadence})
             fetched += items
+            by_source[sid] = items
             print(f'  ✓ {label}: {len(items)}건')
         except Exception as e:  # noqa: BLE001
-            st.update({'label': label, 'ok': False, 'error': str(e)[:120], 'last_try': run_at})
+            st.update({'label': label, 'ok': False, 'error': str(e)[:120], 'last_try': run_at,
+                       'cadence': cadence})
             st.setdefault('last_ok', '')
             print(f'  ✗ {label}: {e}')
         status[sid] = st
@@ -330,7 +342,25 @@ def main():
     # 발행일 내림차순이 먼저다. 화면도 발행일로 묶으므로 순서가 어긋나면 안 된다.
     items.sort(key=lambda x: (x.get('date') or '', x.get('first_seen', '')), reverse=True)
     items = items[:KEEP]
-    json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
+    # 출처마다 '가장 최근 발행일'과 그 뒤로 며칠이 지났는지 — 조용한 것과 고장난 것을 가른다.
+    # 수집이 성공해도 발행이 오래 없으면 화면에 그렇게 적어야 사용자가 의심하지 않는다.
+    td = datetime.strptime(today, '%Y-%m-%d').date()
+    for sid, label, _fn, cadence in SOURCES:
+        pref = SRC_PREFIX[sid]
+        ds = sorted({x['date'] for x in items if x['id'].startswith(pref) and x.get('date')}, reverse=True)
+        st = status[sid]
+        if ds:
+            age = (td - datetime.strptime(ds[0], '%Y-%m-%d').date()).days
+            st['latest'] = ds[0]
+            st['age_days'] = age
+            st['quiet'] = age > cadence * 2   # 평소 간격의 두 배를 넘게 조용하면 확인 필요
+        else:
+            st['latest'] = ''
+            st['age_days'] = None
+            st['quiet'] = True
+    # 더 이상 쓰지 않는 출처는 원장에서 지운다. 남겨 두면 화면에 죽은 딱지가 붙는다.
+    for k in [k for k in status if k != '_run' and k not in SRC_PREFIX]:
+        del status[k]
     status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'total': len(items)}
     json.dump(status, open(STATUS, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     open(os.path.join(DATA_DIR, 'new_count.txt'), 'w').write(str(new_count))
