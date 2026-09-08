@@ -334,8 +334,8 @@ function chart(ra, rb){
   const y = v => S.log ? T + h - (Math.log10(Math.max(v,0.5)+0.5)/Math.log10(maxv+0.5))*h : T + h - v/maxv*h;
   const x = i => L + i/(n-1)*w;
   const path = inc => inc.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
-  const ticks=[]; const step = maxv>5000?Math.pow(10,Math.floor(Math.log10(maxv)))/2: maxv>500?100: maxv>50?10:5;
-  if(!S.log){ for(let v=0; v<=maxv; v+=step){ ticks.push(v); if(ticks.length>8) break; } }
+  const ticks=[]; const raw=Math.max(1,maxv/6), mag=Math.pow(10,Math.floor(Math.log10(raw))), r=raw/mag; const step=mag*(r<1.5?1:r<3.5?2:r<7.5?5:10);
+  if(!S.log){ for(let v=0; v<=maxv; v+=step) ticks.push(v); }
   else { for(let e=0; Math.pow(10,e)<=maxv; e++) ticks.push(Math.pow(10,e)); ticks.unshift(0); }
   const xt=[]; for(let d=0; d<=n; d+=n>400?90:n>180?60:30) xt.push(d);
   const grid=css('--grid'), faint=css('--faint'), ink=css('--ink');
