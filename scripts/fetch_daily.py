@@ -327,7 +327,8 @@ def main():
     items = list(by_id.values())
     for it in items:
         tag(it, name_list, rows, quar, ko)
-    items.sort(key=lambda x: (x.get('first_seen', ''), x.get('date', '')), reverse=True)
+    # 발행일 내림차순이 먼저다. 화면도 발행일로 묶으므로 순서가 어긋나면 안 된다.
+    items.sort(key=lambda x: (x.get('date') or '', x.get('first_seen', '')), reverse=True)
     items = items[:KEEP]
     json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
     status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'total': len(items)}
@@ -342,8 +343,10 @@ def main():
 
 def render(items, status, today, run_at):
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'daily.template.html'), encoding='utf-8').read()
+    # 첫 수집인가 — 보관분이 전부 오늘 처음 잡혔으면 '새 항목'이라는 말이 뜻을 잃는다.
+    first_run = bool(items) and all(x.get('first_seen') == today for x in items)
     data = {'items': items, 'status': status, 'today': today, 'run_at': run_at, 'site': SITE,
-            'subscribe_form': SUBSCRIBE_FORM_URL}
+            'first_run': first_run, 'subscribe_form': SUBSCRIBE_FORM_URL}
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     out = os.path.join(OUT_DIR, 'index.html')
     open(out, 'w', encoding='utf-8').write(tmpl.replace('__DATA__', js))

@@ -151,18 +151,21 @@ const SB = {'WHO DON':'who','CDC 여행알림':'cdc','KDCA 지침':'kdca','WHO �
 
 /* 실행 상태 */
 const st = D.status, run = st._run || {};
-document.getElementById('run').innerHTML = `<span><b>${esc(run.run_at||'')}</b> 실행 · 오늘 새 항목 <b class="num">${run.new||0}</b>건 · 보관 ${run.total||0}건</span>` +
+document.getElementById('run').innerHTML =
+  `<span><b>${esc(run.run_at||'')}</b> 실행 · ${D.first_run
+     ? `<b>첫 수집</b>이라 보관한 ${run.total||0}건이 전부 처음 잡혔다. 발행일은 항목마다 다르다`
+     : `오늘 처음 수집한 항목 <b class="num">${run.new||0}</b>건 · 보관 ${run.total||0}건`}</span>` +
   Object.entries(st).filter(([k])=>k!=='_run').map(([k,v])=>`<span class="src ${v.ok?'':'bad'}" title="${esc(v.ok?('마지막 성공 '+v.last_ok):('실패: '+v.error+' · 마지막 성공 '+(v.last_ok||'없음')))}"><i></i>${esc(v.label)}${v.ok?'':' ✗'}</span>`).join('');
 
 /* 필터 */
 let f='all', limit=40;
-const CH=[['all','전체'],['new','오늘 새로'],['WHO DON','WHO 발생뉴스'],['CDC 여행알림','CDC 여행알림'],['KDCA 지침','KDCA 지침'],['WHO 뉴스','WHO 뉴스'],['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
+const CH=[['all','전체'],['new','오늘 처음 수집'],['WHO DON','WHO 발생뉴스'],['CDC 여행알림','CDC 여행알림'],['KDCA 지침','KDCA 지침'],['WHO 뉴스','WHO 뉴스'],['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
 document.getElementById('chips').innerHTML = CH.map(([k,l])=>`<button data-f="${k}" class="${k===f?'on':''}">${l}</button>`).join('');
 document.getElementById('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; f=b.dataset.f; limit=40; document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x===b)); render(); };
 
 function pass(it){
   if(f==='all') return true;
-  if(f==='new') return it.first_seen===D.today;
+  if(f==='new') return it.first_seen===D.today && !D.first_run;
   if(f==='desig') return (it.joins||[]).some(j=>j.designated===true);
   if(f==='undesig') return (it.joins||[]).some(j=>j.designated===false);
   return it.source===f;
@@ -179,11 +182,12 @@ function joinHtml(it){
   return `<div class="join">${parts.join('')}</div>`;
 }
 function itemHtml(it){
-  const isNew=it.first_seen===D.today;
+  /* 발행일과 '우리가 처음 수집한 날'은 다르다. 배지는 수집 기준이므로 그렇게 적는다. */
+  const isNew=it.first_seen===D.today && !D.first_run;
   const tags=(it.diseases||[]).map(d=>`<a class="tag dz" href="../dogam/#${enc(d)}" title="도감">${esc(d)}</a>`).join('')+
              (it.diseases||[]).slice(0,1).map(d=>`<a class="tag" href="../field/#${enc(d)}" title="현장 대응 카드">🚑 현장</a><a class="tag" href="../pathogen/#${enc(d)}" title="병원체 형태">🧫 형태</a>`).join('');
   return `<article class="it ${isNew?'new':''}">
-    <div class="top"><span class="sb ${SB[it.source]||''}">${esc(it.source)}</span>${it.level?`<span class="lv">Level ${it.level}</span>`:''}<span class="num">${esc(it.date||it.first_seen)}</span>${isNew?'<span class="nw">NEW · 오늘</span>':''}</div>
+    <div class="top"><span class="sb ${SB[it.source]||''}">${esc(it.source)}</span>${it.level?`<span class="lv">Level ${it.level}</span>`:''}<span class="num" title="발행일">${esc(it.date||'날짜 없음')}</span>${isNew?'<span class="nw" title="우리가 오늘 처음 수집한 항목이다. 발행일과 다르다">오늘 처음 수집</span>':''}</div>
     <h4><a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.title)}</a></h4>
     ${it.summary?`<p>${esc(it.summary)}</p>`:''}
     ${tags?`<div class="tags">${tags}</div>`:''}
@@ -194,8 +198,13 @@ function render(){
   const items=D.items.filter(pass);
   const el=document.getElementById('list');
   if(!items.length){ el.innerHTML='<div class="empty">해당 항목이 없다.</div>'; return; }
+  /* 발행일로 묶는다. 예전에는 '우리가 처음 본 날'로 묶어서, 첫 수집 날에는 발행일이
+     제각각인 항목이 전부 '오늘'로 묶이는 잘못이 있었다. */
   let html='', day=null, n=0;
-  for(const it of items){ if(n>=limit) break; const d=it.first_seen===D.today?'오늘 새로 올라옴':'처음 본 날 '+it.first_seen; if(d!==day){ day=d; html+=`<div class="day">${esc(d)}</div>`; } html+=itemHtml(it); n++; }
+  for(const it of items){ if(n>=limit) break;
+    const d=it.date ? (it.date===D.today ? `${it.date} · 오늘 발행` : it.date) : '발행일 없음';
+    if(d!==day){ day=d; html+=`<div class="day">${esc(d)}</div>`; }
+    html+=itemHtml(it); n++; }
   if(items.length>limit) html+=`<button class="more" id="more">더 보기 (${items.length-limit}건 남음)</button>`;
   el.innerHTML=html;
   const m=document.getElementById('more'); if(m) m.onclick=()=>{ limit+=40; render(); };

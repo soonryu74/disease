@@ -117,20 +117,20 @@
 <header>
   <p class="eyebrow">⑰ 유행 시뮬레이터 · 감염병Lab</p>
   <h1>격리를 하루 늦추면<br>얼마나 달라지나</h1>
-  <p class="thesis">병마다 <b>도감의 잠복기</b>, <b>문헌의 기초재생산수(R₀)</b>, <b>증상 전 전염 일수</b>를 넣고 SEIR 모형을 돌린다.
+  <p class="thesis">감염병마다 <b>도감의 잠복기</b>, <b>문헌의 기초재생산수(R₀)</b>, <b>증상 전 전염 일수</b>를 넣고 SEIR 모형을 돌린다.
   격리 시점·격리 효과·접촉자 추적·접종률을 두 시나리오로 나란히 놓고 곡선이 어떻게 갈라지는지 본다.
-  답은 숫자가 아니라 <b>어느 손잡이가 이 병에 듣고 어느 손잡이가 안 듣는지</b>다.</p>
+  답은 숫자가 아니라 <b>어느 손잡이가 이 감염병에 듣고 어느 손잡이가 안 듣는지</b>다.</p>
 </header>
 
 <section id="lab">
   <div class="top">
     <div class="card dz">
-      <h3>병</h3>
+      <h3>감염병</h3>
       <select id="dz"></select>
       <dl class="kv" id="dzinfo"></dl>
     </div>
     <div class="card">
-      <h3>이 병에서 격리가 듣는 이유·안 듣는 이유</h3>
+      <h3>이 감염병에서 격리가 듣는 이유·안 듣는 이유</h3>
       <div id="why" class="why"></div>
       <p class="small muted" style="margin:10px 0 0">전염 기간 <span id="dinf"></span>일 중 <b>증상이 나기 전</b>이 <span id="presym"></span>일이다. 격리는 증상 뒤에야 시작되므로 그 앞은 어떤 격리도 못 건드린다. 그 몫이 클수록 접촉자 추적·접종이 격리보다 낫다.</p>
     </div>
@@ -164,7 +164,7 @@
 
 <section id="real">
   <h2>실제와 맞춰 보기 — 한 해를 맞추면 다른 해가 틀어진다</h2>
-  <p class="sdesc">모형을 실제에 대 보는 가장 직접적인 방법: <b>전국 인구에 이 병을 풀어놓고, 실제 그 해 신고수가 나오려면 접종률을 몇 %로 놓아야 하는지</b> 거꾸로 푼다.
+  <p class="sdesc">모형을 실제에 대 보는 가장 직접적인 방법: <b>전국 인구에 이 감염병을 풀어놓고, 실제 그 해 신고수가 나오려면 접종률을 몇 %로 놓아야 하는지</b> 거꾸로 푼다.
   한 해만 맞추는 것은 쉽다 — 손잡이가 있으니까. 진짜 물음은 <b>같은 접종률로 여러 해가 함께 맞는가</b>이다. 안 맞으면 모형에 없는 기전이 있다는 뜻이다.</p>
   <div class="card">
     <div class="shared" style="margin:0 0 10px">
@@ -212,7 +212,7 @@
     <div class="card">
       <ul class="tight">
         <li><b>사람은 행동을 바꾼다.</b> 유행이 커지면 접촉을 줄인다. 모형은 안 줄인다. 그래서 정점은 실제보다 높고 이르게 나온다.</li>
-        <li><b>무증상 감염</b>은 따로 없다. 폴리오처럼 대다수가 무증상인 병은 '증상 후 격리'가 거의 안 듣는데, 모형은 증상 전 전염 일수로만 그 사정을 흉내 낸다.</li>
+        <li><b>무증상 감염</b>은 따로 없다. 폴리오처럼 대다수가 무증상인 감염병은 '증상 후 격리'가 거의 안 듣는데, 모형은 증상 전 전염 일수로만 그 사정을 흉내 낸다.</li>
         <li><b>이 페이지는 정책 근거가 아니다.</b> 손잡이 사이의 관계를 눈으로 익히는 도구다. 실제 판단은 ⑭ 현장 대응 카드의 지침과 국제 기준으로.</li>
       </ul>
     </div>
@@ -343,7 +343,7 @@ function why(ra){
 }
 
 /* ── 실제와 맞춰 보기 ── */
-/* 전국 인구에 이 병을 풀어놓고, 그 해 실제 신고수가 나오려면 접종률이 몇 %여야 하는지 역산한다.
+/* 전국 인구에 이 감염병을 풀어놓고, 그 해 실제 신고수가 나오려면 접종률이 몇 %여야 하는지 역산한다.
    접종률이 오르면 유행 규모는 단조 감소하므로 이분법으로 푼다. */
 function attackAt(vacc, pop){
   const p = {...S.A, vacc}; const save = {N: S.N};
@@ -364,7 +364,7 @@ function renderReal(ra){
   document.getElementById('popnote').textContent = D.population_note;
   if (!d.annual) {
     el.innerHTML = `<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`;
-    fit.innerHTML = `<p class="small muted">이 병은 연보 전수감시 표에 없어 맞춰 볼 실제 값이 없다.</p>`;
+    fit.innerHTML = `<p class="small muted">이 감염병은 연보 전수감시 표에 없어 맞춰 볼 실제 값이 없다.</p>`;
     return;
   }
   const ys = Object.keys(d.annual.years).sort();
@@ -376,7 +376,7 @@ function renderReal(ra){
 
   const nz = ys.filter(y => d.annual.years[y] > 0);
   if (!nz.length) {
-    fit.innerHTML = `<p style="font-size:13.5px"><b>${d.name}은 2016~2025년 신고가 전부 0이다.</b> 맞출 대상이 없다 — 이 병에 대해 모형은 "만약 들어온다면"만 말한다. 그것이 이 병의 현실이다.</p>`;
+    fit.innerHTML = `<p style="font-size:13.5px"><b>${d.name}은 2016~2025년 신고가 전부 0이다.</b> 맞출 대상이 없다 — 이 감염병에 대해 모형은 "만약 들어온다면"만 말한다. 그것이 이 감염병의 현실이다.</p>`;
     return;
   }
   const pop = S.POP;
@@ -386,14 +386,14 @@ function renderReal(ra){
   const spread = ok.length > 1 ? Math.max(...ok.map(r=>r.vacc)) - Math.min(...ok.map(r=>r.vacc)) : null;
   let verdict;
   if (over.length >= rows.length / 2) {
-    verdict = `<b style="color:var(--warn)">이 병에는 모형 자체가 맞지 않는다.</b> ${rows.length}개 해 중 ${over.length}개에서 "접종 100%로도 모형이 실제보다 크다"가 나왔다.`
+    verdict = `<b style="color:var(--warn)">이 감염병에는 모형 자체가 맞지 않는다.</b> ${rows.length}개 해 중 ${over.length}개에서 "접종 100%로도 모형이 실제보다 크다"가 나왔다.`
       + ` 모형은 <em>한번 들어오면 인구 안에서 스스로 퍼져 나가는 병</em>을 그린다. 실제 ${d.name}은 국내에서 지속 전파되지 않고 <b>유입에서 시작해 몇 명에서 그친다.</b>`
-      + ` 접종률을 아무리 올려도 모형은 "유행이 나거나 안 나거나"만 말하지, 실제처럼 <b>해마다 한 자리~두 자리 수</b>를 내지 못한다. 이 병의 규모를 정하는 것은 국내 전파력이 아니라 <b>유입 횟수</b>다 — 모형에 없는 축이다.`;
+      + ` 접종률을 아무리 올려도 모형은 "유행이 나거나 안 나거나"만 말하지, 실제처럼 <b>해마다 한 자리~두 자리 수</b>를 내지 못한다. 이 감염병의 규모를 정하는 것은 국내 전파력이 아니라 <b>유입 횟수</b>다 — 모형에 없는 축이다.`;
   } else if (spread == null) {
     verdict = `맞춰 볼 수 있는 해가 ${ok.length}개뿐이라 여러 해를 견줄 수 없다.`;
   } else if (spread < 5) {
     verdict = `필요 접종률이 ${ok.length}개 해에 걸쳐 <b style="color:var(--accent-ink)">${spread.toFixed(1)}%포인트</b> 안에 모인다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
-      + ` <b>한 값으로 10년이 함께 맞는다.</b> 이 병의 해마다 규모가 <em>인구의 면역 수준 하나</em>로 대체로 설명된다는 뜻이다 — 모형이 이 병에 대해서는 뭔가를 잡고 있다.`
+      + ` <b>한 값으로 10년이 함께 맞는다.</b> 이 감염병의 해마다 규모가 <em>인구의 면역 수준 하나</em>로 대체로 설명된다는 뜻이다 — 모형이 이 감염병에 대해서는 뭔가를 잡고 있다.`
       + ` 다만 이것은 맞춤이지 예측이 아니다. 그리고 여기서 나온 값은 실제 접종률이 아니라 <em>신고 기준으로 본 유효 면역 수준</em>이다(신고되지 않은 감염이 있으니).`;
   } else {
     verdict = `필요 접종률이 해마다 <b style="color:var(--warn)">${spread.toFixed(1)}%포인트</b> 벌어진다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`

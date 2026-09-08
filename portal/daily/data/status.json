@@ -2,35 +2,35 @@
  "who_don": {
   "label": "WHO 질병 발생 뉴스",
   "ok": true,
-  "last_ok": "2026-09-08 10:30 KST",
+  "last_ok": "2026-09-08 22:25 KST",
   "count": 30,
   "error": ""
  },
  "cdc_travel": {
   "label": "CDC 여행 건강 알림",
   "ok": true,
-  "last_ok": "2026-09-08 10:30 KST",
+  "last_ok": "2026-09-08 22:25 KST",
   "count": 23,
   "error": ""
  },
  "who_news": {
   "label": "WHO 뉴스(감염병)",
   "ok": true,
-  "last_ok": "2026-09-08 10:30 KST",
+  "last_ok": "2026-09-08 22:25 KST",
   "count": 2,
   "error": ""
  },
  "kdca_guides": {
   "label": "KDCA 지침·매뉴얼 게시판",
   "ok": true,
-  "last_ok": "2026-09-08 10:30 KST",
+  "last_ok": "2026-09-08 22:25 KST",
   "count": 10,
   "error": ""
  },
  "_run": {
-  "run_at": "2026-09-08 10:30 KST",
+  "run_at": "2026-09-08 22:25 KST",
   "today": "2026-09-08",
-  "new": 65,
+  "new": 0,
   "total": 65
  }
 }
