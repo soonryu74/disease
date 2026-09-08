@@ -23,9 +23,11 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
+      # 기본 브랜치에 쌓는다. GitHub Pages 환경이 기본 브랜치에서만 배포를 허용하므로
+      # 여기를 기본 브랜치가 아닌 이름으로 두면 매일 아침 배포가 거부된다.
       - uses: actions/checkout@v4
         with:
-          ref: main   # 상황판은 본선에 바로 쌓는다(사람 검토가 필요 없는 자동 수집)
+          ref: ${{ github.event.repository.default_branch }}
 
       - uses: actions/setup-python@v5
         with:
