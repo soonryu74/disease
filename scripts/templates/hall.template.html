@@ -79,7 +79,7 @@
   .wall{position:absolute;left:50%;top:50%;background:var(--hall-wall);
     border:1px solid var(--line);border-radius:2px;padding:0;overflow:hidden;
     box-shadow:0 30px 80px rgba(0,0,0,.22);
-    transition:transform .95s cubic-bezier(.22,.68,.24,1),opacity .8s ease,filter .8s ease;
+    transition:transform 1.25s cubic-bezier(.2,.72,.2,1),opacity 1.05s ease,filter 1.05s ease;
     display:flex;flex-direction:column}
   .whead{display:flex;align-items:baseline;gap:10px;padding:calc(var(--fs)*1.1) calc(var(--fs)*1.3) calc(var(--fs)*.55);
     border-bottom:1px solid var(--line);flex:none}
@@ -93,7 +93,7 @@
     background:var(--surface);border:1px solid var(--line-strong);border-top:3px solid var(--tc);
     border-radius:4px;padding:calc(var(--fs)*.55) calc(var(--fs)*.62);display:flex;flex-direction:column;gap:2px;
     box-shadow:0 3px 10px rgba(0,0,0,.10);backface-visibility:hidden;
-    transition:transform .42s cubic-bezier(.16,.72,.24,1),box-shadow .25s,opacity .42s ease,filter .42s ease}
+    transition:transform .6s cubic-bezier(.16,.78,.22,1),box-shadow .3s,opacity .6s ease,filter .6s ease}
   .art:hover,.art:focus-visible{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.2);outline:none}
   .art .rk{position:absolute;right:calc(var(--fs)*.42);top:calc(var(--fs)*.3);
     font-size:calc(var(--fs)*.78);font-weight:800;color:var(--faint)}
@@ -107,22 +107,23 @@
   .art.pic .cap .tt{-webkit-line-clamp:2}
   .art.off{opacity:.2;pointer-events:none;box-shadow:none}
   /* 한 점이 앞으로 나오면 나머지는 좌우로 흩어져 물러난다 */
-  .wall.scatter .art{transform:translateX(var(--sx)) scale(.93) rotateY(var(--sr));opacity:.24;
-    filter:blur(1.2px);
-    transition:transform .66s cubic-bezier(.16,.72,.24,1),opacity .5s ease,filter .5s ease}
-  .wall.scatter .art.taken{opacity:0;filter:blur(4px)}
-  .wall.here .art{animation:hang .7s cubic-bezier(.16,.72,.24,1) backwards;animation-delay:calc(var(--k)*55ms + 140ms)}
-  @keyframes hang{from{opacity:0;transform:translateY(10px) rotateY(-10deg);filter:blur(5px)}}
+  .wall.scatter{filter:blur(2.6px) brightness(.8)}
+  .wall.scatter .art{transform:translateX(var(--sx)) scale(.9) rotateY(var(--sr));opacity:.3;
+    transition:transform 1s cubic-bezier(.16,.78,.22,1),opacity .8s ease,filter .8s ease}
+  .wall.scatter .art.taken{opacity:0;filter:blur(6px)}
+  .wall.here .art{animation:hang 1.05s cubic-bezier(.16,.78,.22,1) backwards;
+    animation-delay:calc(var(--k)*80ms + 200ms)}
+  @keyframes hang{from{opacity:0;transform:translateY(12px) scale(.97) rotateY(-16deg);filter:blur(8px)}}
 
   /* ── 작품 앞으로(확대 + 미술관 라벨) ─────────────────────── */
   .zoom{position:absolute;inset:0;z-index:10;display:none}
   .zoom.on{display:flex}
   .zbd{position:absolute;inset:0;background:rgba(8,14,12,.62);backdrop-filter:blur(3px);
-    animation:fade .5s ease both;transition:opacity .42s ease}
+    animation:fade .8s ease both;transition:opacity .7s ease}
   @keyframes fade{from{opacity:0}}
   /* 물러날 때는 배경이 먼저 옅어지고 작품이 겹쳐 사라진다 */
   .zoom.closing .zbd{opacity:0}
-  .zoom.closing .zlabel{opacity:0;transform:translateX(16px)}
+  .zoom.closing .zlabel{opacity:0;transform:translateX(26px) scale(.97);filter:blur(6px)}
   .zin{position:relative;margin:auto;display:flex;gap:clamp(14px,2.4vw,26px);align-items:stretch;
     width:min(94%,900px);max-height:92%;padding:clamp(10px,2vw,18px)}
   /* 튀어나오지 않는다. 살짝 돌면서 흐림이 걷히고 겹쳐 들어온다(크로스 디졸브). */
@@ -130,9 +131,9 @@
     border:1px solid var(--line-strong);border-top:5px solid var(--tc);overflow:hidden;
     display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.45);
     transform-origin:50% 50%;backface-visibility:hidden;
-    transition:transform .72s cubic-bezier(.16,.72,.24,1),
-               opacity .52s cubic-bezier(.3,.6,.3,1),
-               filter .58s cubic-bezier(.3,.6,.3,1)}
+    transition:transform 1.15s cubic-bezier(.16,.78,.22,1),
+               opacity .85s cubic-bezier(.35,.55,.25,1),
+               filter .95s cubic-bezier(.35,.55,.25,1)}
   .zart .zpad{padding:14px 15px;display:flex;flex-direction:column;gap:4px;flex:1;min-height:0}
   .zart .ztg{font-size:11px;font-weight:800;color:var(--tc)}
   .zart .ztt{font-size:16px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
@@ -145,9 +146,9 @@
   .zlabel{flex:1;min-width:0;background:var(--surface);border-radius:6px;border:1px solid var(--line);
     padding:clamp(14px,2.2vw,22px) clamp(15px,2.4vw,26px);overflow:auto;
     box-shadow:0 24px 60px rgba(0,0,0,.35);
-    animation:lab .62s .2s cubic-bezier(.16,.72,.24,1) backwards;
-    transition:opacity .34s ease,transform .4s cubic-bezier(.3,.6,.3,1)}
-  @keyframes lab{from{opacity:0;transform:translateX(22px) rotateY(-6deg);filter:blur(4px)}}
+    animation:lab 1s .28s cubic-bezier(.16,.78,.22,1) backwards;
+    transition:opacity .55s ease,transform .6s cubic-bezier(.35,.55,.25,1),filter .6s ease}
+  @keyframes lab{from{opacity:0;transform:translateX(34px) scale(.965) rotateY(-9deg);filter:blur(7px)}}
   /* 미술관 라벨투 — 얇은 괘선과 넉넉한 여백 */
   .zlabel .lt{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--tc);text-transform:uppercase}
   .zlabel h3{font-size:clamp(17px,2.6vw,23px);margin:6px 0 2px;font-weight:800;letter-spacing:-.025em;line-height:1.28}
@@ -476,9 +477,9 @@ function openZ(i, srcEl){
     const g = geom(za, zsrc);
     if (g){
       za.style.transition = 'none';
-      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(-16deg)`;
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(-26deg)`;
       za.style.opacity = '0';
-      za.style.filter = 'blur(7px)';
+      za.style.filter = 'blur(10px)';
       za.getBoundingClientRect();          // 여기서 시작 상태를 굳힌다
       za.style.transition = '';
       za.style.transform = '';
@@ -503,9 +504,9 @@ function closeZ(){
   if (za && zsrc && !REDUCE){
     const g = geom(za, zsrc);
     if (g){
-      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(14deg)`;
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(22deg)`;
       za.style.opacity = '0';
-      za.style.filter = 'blur(6px)';
+      za.style.filter = 'blur(9px)';
     }
   } else if (za){ za.style.opacity = '0'; }
   const wall = track.querySelector('.wall.here');
@@ -517,7 +518,7 @@ function closeZ(){
     zoom.classList.remove('on', 'closing');
     zin.innerHTML = '';
     closeT = null;
-  }, REDUCE ? 0 : 560);
+  }, REDUCE ? 0 : 950);
   zi = -1; zsrc = null;
 }
 function stepZ(d){
@@ -568,17 +569,17 @@ async function tour(){
   for (let yi = cur; yi >= 0; yi--){
     if (id !== tourId) return;
     go(yi);
-    await sleep(1500, id);             // 벽이 겹쳐 넘어오는 시간
+    await sleep(2000, id);             // 벽이 겹쳐 넘어오는 시간
     if (id !== tourId) return;
     for (const e of YEARS[yi].top.filter(shown)){
       if (id !== tourId) return;
       const el = track.querySelector(`.art[data-ex="${e._i}"]`);
       if (!el) continue;
       openZ(e._i, el);
-      await sleep(3400, id);
+      await sleep(3800, id);
       if (id !== tourId) return;
       closeZ();
-      await sleep(780, id);            // 겹쳐 사라지는 동안 기다린다
+      await sleep(1150, id);           // 겹쳐 사라지는 동안 기다린다
     }
   }
   if (id === tourId) stop();
