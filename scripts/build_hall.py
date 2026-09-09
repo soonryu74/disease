@@ -24,7 +24,8 @@ def build():
         'themes': d['themes'], 'note': d['note'],
         'years': [{'y': y['y'], 'n': y['n'], 'rest': y['rest'],
                    'top': [{k: e[k] for k in ('date', 'theme', 'tag', 'title', 'body',
-                                              'link', 'art', 'rank') if e.get(k) not in (None, '')}
+                                              'link', 'art', 'rank', 'why', 'see')
+                            if e.get(k) not in (None, '', [])}
                            for e in y['top']]}
                   for y in d['years']],
     }

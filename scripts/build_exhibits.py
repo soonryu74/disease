@@ -37,6 +37,35 @@ CASES = os.path.join(ROOT, '03_백서_정리', 'data', '전수감시_신고수_2
 QUAR = os.path.join(ROOT, '11_검역관리지역', 'data', '지정이력.json')
 VACC = os.path.join(ROOT, '18_예방접종', 'data', '어린이_예방접종률.json')
 
+# 미술관 벽에 붙는 작품 설명처럼, 갈래마다 '이걸 어떻게 볼 것인가'를 적어 둔다.
+# 사건 자체(body)와 보는 법(why)을 나눈다 — 섞으면 사실과 해석이 붙어 버린다.
+CURATOR = {
+    'law': ('급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. '
+            '그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. '
+            '“이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.'),
+    'outbreak': ('배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 '
+                 '규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 '
+                 '늘어난 것이 발생인지 집계인지부터 갈라야 한다.'),
+    'guide': ('지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. '
+              '다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. '
+              '‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.'),
+    'record': ('백서는 그 해를 국가가 스스로 정리한 기록이다. 무엇을 성과로 적었는지와 함께 '
+               '무엇을 적지 않았는지가 읽힌다. 백서의 “향후 추진계획”은 다음 해 제도 변화의 예고편이기도 하다.'),
+    'vacc': ('완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, '
+             '세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.'),
+    'border': ('검역관리지역은 “어디서 오는 사람을 더 볼 것인가”의 목록이다. '
+               '국가 수만 연도별로 비교하면 제도 자체가 바뀐 해를 놓친다.'),
+}
+# 전시물마다 붙이는 '함께 볼 것'
+SEE = {
+    'law': [('단절점 검사기', '../checker/'), ('법령 연혁', '../law/'), ('연대기', '../chronicle/')],
+    'outbreak': [('교차검증', '../cross/'), ('유행 시뮬레이터', '../sim/'), ('단절점 검사기', '../checker/')],
+    'guide': [('지침 서가', '../guides/'), ('현장카드', '../field/')],
+    'record': [('백서 서가', '../whitepaper/'), ('연대기', '../chronicle/')],
+    'vacc': [('예방접종', '../vaccine/'), ('유행 시뮬레이터', '../sim/')],
+    'border': [('검역', '../quarantine/'), ('해외유입 지도', '../inflow/'), ('정책 실험실', '../policy/')],
+}
+
 THEMES = [
     ('law', '제도', '#6A4C93', '법률·고시·급수와 감시체계가 바뀐 날'),
     ('outbreak', '유행', '#B23A3A', '그 해 두드러지게 늘어난 감염병'),
@@ -70,7 +99,10 @@ def from_law(ex):
     for e in c['epochs']:
         y = int(e['y'][:4])
         add(ex, y=y, date=e['y'], theme='law', w=100, tag='시대 구분',
-            title=e['t'], body=e['d'], link=LAWDOC)
+            title=e['t'], body=e['d'], link=LAWDOC,
+            why='체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 '
+                '이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 '
+                '먼저 묻는 이유가 여기에 있다.')
 
     g = json.load(open(GRADE, encoding='utf-8'))
     W = {'new': 95, 'up': 90, 'down': 92, 'surveillance': 86, 'scope': 76}
@@ -216,7 +248,10 @@ def from_whitepaper(ex):
                 title=f'{span}년 백서 — 표지만 남았다',
                 body='게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. '
                      '표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.',
-                link='../whitepaper/', art=art)
+                link='../whitepaper/', art=art,
+                why='이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. '
+                    '유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. '
+                    '기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.')
         else:
             add(ex, y=y, date=str(y), theme='record', w=66, tag='백서 발간',
                 title=f'{span}년 {m.group(3) or "백서"}',
@@ -264,8 +299,9 @@ def from_quarantine(ex):
     for b in j.get('structural_breaks', []):
         y = int(b['date'][:4])
         add(ex, y=y, date=b['date'], theme='border', w=80, tag='검역 제도',
-            title=b['title'], body=(b.get('detail') or '') + '\n' + (b.get('impact') or ''),
-            link='../quarantine/')
+            title=b['title'], body=(b.get('detail') or ''), link='../quarantine/',
+            why=(b.get('impact') or '') + ('\n' + b['caveat'] if b.get('caveat') else '')
+                or CURATOR['border'])
     for p in j.get('periods', []):
         note = p.get('note') or ''
         g = p.get('general') or {}
@@ -295,6 +331,11 @@ def build():
             continue
         seen.add((e['y'], base))
         uniq.append(e)
+
+    # 작품 설명 — 갈래별 기본 해설에, 전시물이 스스로 가진 단서를 앞에 붙인다
+    for e in uniq:
+        e['why'] = e.get('why') or CURATOR.get(e['theme'], '')
+        e['see'] = SEE.get(e['theme'], [])
 
     by = defaultdict(list)
     for e in uniq:
