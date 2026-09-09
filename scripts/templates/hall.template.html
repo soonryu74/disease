@@ -79,7 +79,7 @@
   .wall{position:absolute;left:50%;top:50%;background:var(--hall-wall);
     border:1px solid var(--line);border-radius:2px;padding:0;overflow:hidden;
     box-shadow:0 30px 80px rgba(0,0,0,.22);
-    transition:transform .72s cubic-bezier(.33,.02,.2,1),opacity .5s,filter .5s;
+    transition:transform .95s cubic-bezier(.22,.68,.24,1),opacity .8s ease,filter .8s ease;
     display:flex;flex-direction:column}
   .whead{display:flex;align-items:baseline;gap:10px;padding:calc(var(--fs)*1.1) calc(var(--fs)*1.3) calc(var(--fs)*.55);
     border-bottom:1px solid var(--line);flex:none}
@@ -92,7 +92,8 @@
   .art{position:relative;min-width:0;cursor:pointer;font:inherit;text-align:left;overflow:hidden;
     background:var(--surface);border:1px solid var(--line-strong);border-top:3px solid var(--tc);
     border-radius:4px;padding:calc(var(--fs)*.55) calc(var(--fs)*.62);display:flex;flex-direction:column;gap:2px;
-    box-shadow:0 3px 10px rgba(0,0,0,.10);transition:transform .16s,box-shadow .16s,opacity .3s}
+    box-shadow:0 3px 10px rgba(0,0,0,.10);backface-visibility:hidden;
+    transition:transform .42s cubic-bezier(.16,.72,.24,1),box-shadow .25s,opacity .42s ease,filter .42s ease}
   .art:hover,.art:focus-visible{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.2);outline:none}
   .art .rk{position:absolute;right:calc(var(--fs)*.42);top:calc(var(--fs)*.3);
     font-size:calc(var(--fs)*.78);font-weight:800;color:var(--faint)}
@@ -106,24 +107,32 @@
   .art.pic .cap .tt{-webkit-line-clamp:2}
   .art.off{opacity:.2;pointer-events:none;box-shadow:none}
   /* 한 점이 앞으로 나오면 나머지는 좌우로 흩어져 물러난다 */
-  .wall.scatter .art{transform:translateX(var(--sx)) scale(.93);opacity:.26;
-    transition:transform .5s cubic-bezier(.2,.7,.3,1),opacity .4s}
-  .wall.scatter .art.taken{opacity:0}
-  .wall.here .art{animation:hang .45s cubic-bezier(.2,.8,.3,1) backwards;animation-delay:calc(var(--k)*45ms + 90ms)}
-  @keyframes hang{from{opacity:0;transform:translateY(14px) scale(.96)}}
+  .wall.scatter .art{transform:translateX(var(--sx)) scale(.93) rotateY(var(--sr));opacity:.24;
+    filter:blur(1.2px);
+    transition:transform .66s cubic-bezier(.16,.72,.24,1),opacity .5s ease,filter .5s ease}
+  .wall.scatter .art.taken{opacity:0;filter:blur(4px)}
+  .wall.here .art{animation:hang .7s cubic-bezier(.16,.72,.24,1) backwards;animation-delay:calc(var(--k)*55ms + 140ms)}
+  @keyframes hang{from{opacity:0;transform:translateY(10px) rotateY(-10deg);filter:blur(5px)}}
 
   /* ── 작품 앞으로(확대 + 미술관 라벨) ─────────────────────── */
   .zoom{position:absolute;inset:0;z-index:10;display:none}
   .zoom.on{display:flex}
   .zbd{position:absolute;inset:0;background:rgba(8,14,12,.62);backdrop-filter:blur(3px);
-    animation:fade .3s ease both}
+    animation:fade .5s ease both;transition:opacity .42s ease}
   @keyframes fade{from{opacity:0}}
+  /* 물러날 때는 배경이 먼저 옅어지고 작품이 겹쳐 사라진다 */
+  .zoom.closing .zbd{opacity:0}
+  .zoom.closing .zlabel{opacity:0;transform:translateX(16px)}
   .zin{position:relative;margin:auto;display:flex;gap:clamp(14px,2.4vw,26px);align-items:stretch;
     width:min(94%,900px);max-height:92%;padding:clamp(10px,2vw,18px)}
+  /* 튀어나오지 않는다. 살짝 돌면서 흐림이 걷히고 겹쳐 들어온다(크로스 디졸브). */
   .zart{flex:0 0 clamp(150px,26%,250px);background:var(--surface);border-radius:6px;
     border:1px solid var(--line-strong);border-top:5px solid var(--tc);overflow:hidden;
     display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.45);
-    transition:transform .46s cubic-bezier(.2,.75,.28,1);transform-origin:50% 50%}
+    transform-origin:50% 50%;backface-visibility:hidden;
+    transition:transform .72s cubic-bezier(.16,.72,.24,1),
+               opacity .52s cubic-bezier(.3,.6,.3,1),
+               filter .58s cubic-bezier(.3,.6,.3,1)}
   .zart .zpad{padding:14px 15px;display:flex;flex-direction:column;gap:4px;flex:1;min-height:0}
   .zart .ztg{font-size:11px;font-weight:800;color:var(--tc)}
   .zart .ztt{font-size:16px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
@@ -135,8 +144,10 @@
   .zart img{width:100%;flex:1;object-fit:cover;min-height:0;display:block}
   .zlabel{flex:1;min-width:0;background:var(--surface);border-radius:6px;border:1px solid var(--line);
     padding:clamp(14px,2.2vw,22px) clamp(15px,2.4vw,26px);overflow:auto;
-    box-shadow:0 24px 60px rgba(0,0,0,.35);animation:lab .5s .12s cubic-bezier(.2,.75,.28,1) backwards}
-  @keyframes lab{from{opacity:0;transform:translateX(18px)}}
+    box-shadow:0 24px 60px rgba(0,0,0,.35);
+    animation:lab .62s .2s cubic-bezier(.16,.72,.24,1) backwards;
+    transition:opacity .34s ease,transform .4s cubic-bezier(.3,.6,.3,1)}
+  @keyframes lab{from{opacity:0;transform:translateX(22px) rotateY(-6deg);filter:blur(4px)}}
   /* 미술관 라벨투 — 얇은 괘선과 넉넉한 여백 */
   .zlabel .lt{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--tc);text-transform:uppercase}
   .zlabel h3{font-size:clamp(17px,2.6vw,23px);margin:6px 0 2px;font-weight:800;letter-spacing:-.025em;line-height:1.28}
@@ -274,7 +285,8 @@ const TH = Object.fromEntries(D.themes.map(t => [t.k, t]));
 const YEARS = D.years;
 const maxN = Math.max(...YEARS.map(y => y.top.length));
 let cur = YEARS.length - 1, filt = new Set(), timer = null;
-let flat = [], zi = -1, zsrc = null;
+let flat = [], zi = -1, zsrc = null, closeT = null;
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const stage = document.getElementById('stage');
 const track = document.getElementById('track');
@@ -326,16 +338,18 @@ function buildShell(){
 /* ── 전시벽 ──────────────────────────────────────────────── */
 /* 격자에서 왼쪽 칸은 왼쪽으로, 오른쪽 칸은 오른쪽으로 물러난다 */
 const sx = k => Math.round(((k % COLS) - (COLS - 1) / 2) * WW * 0.115);
+/* 흩어질 때 바깥쪽 칸일수록 더 돌아앉는다 */
+const sr = k => (((k % COLS) - (COLS - 1) / 2) * 7).toFixed(1) + 'deg';
 function artHTML(e, k){
   const t = TH[e.theme];
   if (e.art) {
-    return `<button class="art pic" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px">
+    return `<button class="art pic" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px;--sr:${sr(k)}">
       <img src="${esc(e.art)}" alt="" loading="lazy" onerror="this.remove()">
       <span class="cap"><span class="tg">${esc(t.name)} · ${esc(e.tag)}</span>
         <span class="tt" style="display:block">${esc(e.title)}</span></span>
       <span class="rk num">${e.rank}</span></button>`;
   }
-  return `<button class="art" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px">
+  return `<button class="art" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px;--sr:${sr(k)}">
     <span class="rk num">${e.rank}</span>
     <span class="tg">${esc(t.name)} · ${esc(e.tag)}</span>
     <span class="tt">${esc(e.title)}</span></button>`;
@@ -367,8 +381,8 @@ function move(){
     const sgn = Math.sign(d);
     w.style.transform = `translate(-50%,-50%) translateX(${d * WW * 1.12}px)` +
       ` translateZ(${-WD + (d ? -Math.abs(d) * WD * 0.5 : 0)}px) rotateY(${-sgn * 26}deg)`;
-    w.style.opacity = d ? 0.5 : 1;
-    w.style.filter = d ? 'brightness(.72)' : '';
+    w.style.opacity = d ? (Math.abs(d) === 1 ? .42 : .16) : 1;
+    w.style.filter = d ? `brightness(.7) blur(${Math.abs(d) * 1.6}px)` : '';
     w.style.pointerEvents = d ? 'none' : '';
   });
   document.getElementById('now').innerHTML = `${YEARS[cur].y}년 <small>${YEARS[cur].n}점</small>`;
@@ -422,6 +436,8 @@ function rail(){
 const zoom = document.getElementById('zoom'), zin = document.getElementById('zin');
 function openZ(i, srcEl){
   const e = flat[i]; if (!e) return;
+  if (closeT){ clearTimeout(closeT); closeT = null; }
+  zoom.classList.remove('closing');
   zi = i; zsrc = srcEl || null;
   const t = TH[e.theme];
   const ext = /^https?:/.test(e.link || '');
@@ -453,40 +469,55 @@ function openZ(i, srcEl){
   const items = YEARS[cur].top;
   const k = items.indexOf(e);
   document.getElementById('zc').textContent = k >= 0 ? `${k + 1} / ${items.length}` : '';
-  // 걸려 있던 자리에서 날아오게 — 시작 위치를 재서 되돌린 뒤 놓아 준다
+  // 걸려 있던 자리에서 겹쳐 나오게 — 시작 상태로 되돌린 뒤 놓아 준다.
+  // 자리·크기만 바꾸면 튄다. 살짝 돌리고 흐리게 시작해 두 화면이 겹치며 넘어가게 한다.
   const za = document.getElementById('zart');
-  if (zsrc && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const a = za.getBoundingClientRect(), b = zsrc.getBoundingClientRect();
-    if (a.width > 4 && b.width > 4){
-      const s = Math.max(0.12, Math.min(1, b.width / a.width));
-      const dx = (b.left + b.width / 2) - (a.left + a.width / 2);
-      const dy = (b.top + b.height / 2) - (a.top + a.height / 2);
+  if (zsrc && !REDUCE){
+    const g = geom(za, zsrc);
+    if (g){
       za.style.transition = 'none';
-      za.style.transform = `translate(${dx}px,${dy}px) scale(${s})`;
-      za.getBoundingClientRect();
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(-16deg)`;
+      za.style.opacity = '0';
+      za.style.filter = 'blur(7px)';
+      za.getBoundingClientRect();          // 여기서 시작 상태를 굳힌다
       za.style.transition = '';
       za.style.transform = '';
+      za.style.opacity = '';
+      za.style.filter = '';
     }
   }
 }
+/* 확대된 작품과 벽에 걸린 자리 사이의 거리·배율 */
+function geom(za, src){
+  const a = za.getBoundingClientRect(), b = src.getBoundingClientRect();
+  if (!(a.width > 4 && b.width > 4)) return null;
+  return {s: Math.max(0.12, Math.min(1, b.width / a.width)),
+          dx: (b.left + b.width / 2) - (a.left + a.width / 2),
+          dy: (b.top + b.height / 2) - (a.top + a.height / 2)};
+}
 function closeZ(){
   if (!zoom.classList.contains('on')) return;
+  if (closeT){ clearTimeout(closeT); closeT = null; }
   const za = document.getElementById('zart');
-  if (za && zsrc && !matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const a = za.getBoundingClientRect(), b = zsrc.getBoundingClientRect();
-    if (a.width > 4 && b.width > 4){
-      const s = Math.max(0.12, Math.min(1, b.width / a.width));
-      za.style.transform = `translate(${(b.left + b.width / 2) - (a.left + a.width / 2)}px,
-        ${(b.top + b.height / 2) - (a.top + a.height / 2)}px) scale(${s})`;
-      za.style.opacity = '.2';
+  zoom.classList.add('closing');       // 배경과 라벨이 먼저 옅어진다
+  if (za && zsrc && !REDUCE){
+    const g = geom(za, zsrc);
+    if (g){
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(14deg)`;
+      za.style.opacity = '0';
+      za.style.filter = 'blur(6px)';
     }
-  }
+  } else if (za){ za.style.opacity = '0'; }
   const wall = track.querySelector('.wall.here');
   if (wall){
     wall.classList.remove('scatter');
     wall.querySelectorAll('.art').forEach(a => a.classList.remove('taken'));
   }
-  setTimeout(() => { zoom.classList.remove('on'); zin.innerHTML = ''; }, 240);
+  closeT = setTimeout(() => {
+    zoom.classList.remove('on', 'closing');
+    zin.innerHTML = '';
+    closeT = null;
+  }, REDUCE ? 0 : 560);
   zi = -1; zsrc = null;
 }
 function stepZ(d){
@@ -537,17 +568,17 @@ async function tour(){
   for (let yi = cur; yi >= 0; yi--){
     if (id !== tourId) return;
     go(yi);
-    await sleep(1200, id);
+    await sleep(1500, id);             // 벽이 겹쳐 넘어오는 시간
     if (id !== tourId) return;
     for (const e of YEARS[yi].top.filter(shown)){
       if (id !== tourId) return;
       const el = track.querySelector(`.art[data-ex="${e._i}"]`);
       if (!el) continue;
       openZ(e._i, el);
-      await sleep(3200, id);
+      await sleep(3400, id);
       if (id !== tourId) return;
       closeZ();
-      await sleep(500, id);
+      await sleep(780, id);            // 겹쳐 사라지는 동안 기다린다
     }
   }
   if (id === tourId) stop();
