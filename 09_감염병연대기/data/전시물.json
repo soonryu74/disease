@@ -1,0 +1,2272 @@
+{
+ "as_of": "2026-09",
+ "span": [
+  1954,
+  2026
+ ],
+ "total": 183,
+ "themes": [
+  {
+   "k": "law",
+   "name": "제도",
+   "color": "#6A4C93",
+   "desc": "법률·고시·급수와 감시체계가 바뀐 날",
+   "n": 42
+  },
+  {
+   "k": "outbreak",
+   "name": "유행",
+   "color": "#B23A3A",
+   "desc": "그 해 두드러지게 늘어난 감염병",
+   "n": 17
+  },
+  {
+   "k": "guide",
+   "name": "지침",
+   "color": "#0E6E63",
+   "desc": "그 해 처음 나온 관리·대응지침",
+   "n": 82
+  },
+  {
+   "k": "record",
+   "name": "기록",
+   "color": "#B8942A",
+   "desc": "질병관리청 백서 — 그 해를 정리한 공식 기록",
+   "n": 19
+  },
+  {
+   "k": "vacc",
+   "name": "접종",
+   "color": "#2F7D8C",
+   "desc": "국가예방접종에 무엇이 더해졌나",
+   "n": 11
+  },
+  {
+   "k": "border",
+   "name": "검역",
+   "color": "#C7712B",
+   "desc": "국경에서의 규칙이 바뀐 날",
+   "n": 12
+  }
+ ],
+ "years": [
+  {
+   "y": 1954,
+   "n": 1,
+   "top": [
+    {
+     "y": 1954,
+     "date": "1954-02",
+     "theme": "law",
+     "w": 100,
+     "tag": "시대 구분",
+     "title": "전염병예방법 제정",
+     "body": "종(種) 체계 — 제1·2·3종",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "law"
+   ]
+  },
+  {
+   "y": 1998,
+   "n": 1,
+   "top": [
+    {
+     "y": 1998,
+     "date": "2019-03-13",
+     "theme": "guide",
+     "w": 84,
+     "tag": "24판 이어짐",
+     "title": "1998년 말라리아 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 1998년부터 2026년까지 24판.",
+     "link": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190313579431368&q_clsfNo=0",
+     "art": "",
+     "rank": 1
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide"
+   ]
+  },
+  {
+   "y": 2000,
+   "n": 4,
+   "top": [
+    {
+     "y": 2000,
+     "date": "2000-01",
+     "theme": "law",
+     "w": 100,
+     "tag": "시대 구분",
+     "title": "전부개정",
+     "body": "군(群) 체계 도입",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2000,
+     "date": "2000-02-10",
+     "theme": "guide",
+     "w": 72,
+     "tag": "10판 이어짐",
+     "title": "성병관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2000년부터 2010년까지 10판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/219161/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2000,
+     "date": "2000-02-10",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "에이즈관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2000년부터 2016년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/219160/artclView.do",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2000,
+     "date": "2000",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2000년 지침·자료 39건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 4
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law"
+   ]
+  },
+  {
+   "y": 2001,
+   "n": 2,
+   "top": [
+    {
+     "y": 2001,
+     "date": "2001-04-03",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "[예방접종]예방접종후이상반응 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2001년부터 2026년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/219305/artclView.do",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2001,
+     "date": "2001",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2001년 지침·자료 41건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 2
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide"
+   ]
+  },
+  {
+   "y": 2002,
+   "n": 3,
+   "top": [
+    {
+     "y": 2002,
+     "date": "2002-03-04",
+     "theme": "guide",
+     "w": 82,
+     "tag": "15판 이어짐",
+     "title": "2002년 HIV/AIDS관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2002년부터 2026년까지 15판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/219510/artclView.do",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2002,
+     "date": "2002-03-04",
+     "theme": "guide",
+     "w": 68,
+     "tag": "8판 이어짐",
+     "title": "2002년도 결핵관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2002년부터 2023년까지 8판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/219509/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2002,
+     "date": "2002",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2002년 지침·자료 64건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide"
+   ]
+  },
+  {
+   "y": 2003,
+   "n": 2,
+   "top": [
+    {
+     "y": 2003,
+     "date": "2003-01-23",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "수막구균성수막염 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2003년부터 2018년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227143/artclView.do",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2003,
+     "date": "2003",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2003년 지침·자료 79건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 2
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide"
+   ]
+  },
+  {
+   "y": 2004,
+   "n": 4,
+   "top": [
+    {
+     "y": 2004,
+     "date": "2004",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2004년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2004(kor).jpg",
+     "rank": 1
+    },
+    {
+     "y": 2004,
+     "date": "2004-02-16",
+     "theme": "guide",
+     "w": 64,
+     "tag": "6판 이어짐",
+     "title": "조류인플루엔자인체감염예방및관리지침(PDF파일)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2004년부터 2017년까지 6판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/219909/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2004,
+     "date": "2004-09-16",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "2004년 인플루엔자 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2004년부터 2020년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227159/artclView.do",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2004,
+     "date": "2004",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2004년 지침·자료 53건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 4
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "record"
+   ]
+  },
+  {
+   "y": 2005,
+   "n": 3,
+   "top": [
+    {
+     "y": 2005,
+     "date": "2005",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2005년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2005(kor).jpg",
+     "rank": 1
+    },
+    {
+     "y": 2005,
+     "date": "2005-03-04",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "2005년 크로이츠펠트-야콥병 표본감시 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2005년부터 2008년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227160/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2005,
+     "date": "2005",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2005년 지침·자료 83건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "record"
+   ]
+  },
+  {
+   "y": 2006,
+   "n": 2,
+   "top": [
+    {
+     "y": 2006,
+     "date": "2006",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2006년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2006(kor).jpg",
+     "rank": 1
+    },
+    {
+     "y": 2006,
+     "date": "2006",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2006년 지침·자료 84건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 2
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "record"
+   ]
+  },
+  {
+   "y": 2007,
+   "n": 3,
+   "top": [
+    {
+     "y": 2007,
+     "date": "2007",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2007년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2007(kor).jpg",
+     "rank": 1
+    },
+    {
+     "y": 2007,
+     "date": "2007-09-05",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "브루셀라증 예방,관리 지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2007년부터 2012년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227215/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2007,
+     "date": "2007",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2007년 지침·자료 93건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "record"
+   ]
+  },
+  {
+   "y": 2008,
+   "n": 2,
+   "top": [
+    {
+     "y": 2008,
+     "date": "2008",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2008년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2008(kor).jpg",
+     "rank": 1
+    },
+    {
+     "y": 2008,
+     "date": "2008",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2008년 지침·자료 104건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 2
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "record"
+   ]
+  },
+  {
+   "y": 2009,
+   "n": 4,
+   "top": [
+    {
+     "y": 2009,
+     "date": "2009-12-29",
+     "theme": "law",
+     "w": 88,
+     "tag": "전부개정",
+     "title": "감염병의 예방 및 관리에 관한 법률 전부개정",
+     "body": "공포 2009.12.29 · 시행 2010.12.30 · 법률 제9847호",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2009,
+     "date": "2010-02-16",
+     "theme": "guide",
+     "w": 74,
+     "tag": "11판 이어짐",
+     "title": "2009년 크로이츠펠트-야콥병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2009년부터 2026년까지 11판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227291/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2009,
+     "date": "2009",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2009년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2009(kor).jpg",
+     "rank": 3
+    },
+    {
+     "y": 2009,
+     "date": "2009",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2009년 지침·자료 65건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 4
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law",
+    "record"
+   ]
+  },
+  {
+   "y": 2010,
+   "n": 3,
+   "top": [
+    {
+     "y": 2010,
+     "date": "2010-12",
+     "theme": "law",
+     "w": 100,
+     "tag": "시대 구분",
+     "title": "「감염병의 예방 및 관리에 관한 법률」 시행",
+     "body": "'전염병'→'감염병', 제1~5군+지정",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2010,
+     "date": "2010",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2010년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2010(kor).jpg",
+     "rank": 2
+    },
+    {
+     "y": 2010,
+     "date": "2010",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2010년 지침·자료 48건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law",
+    "record"
+   ]
+  },
+  {
+   "y": 2011,
+   "n": 5,
+   "top": [
+    {
+     "y": 2011,
+     "date": "2011-01-01",
+     "theme": "law",
+     "w": 86,
+     "tag": "감시체계 전환",
+     "title": "매독 — 감시체계 전환",
+     "body": "지정 → 제3군 · 표본감시 → 전수감시 · 3종(1기·2기·선천성)\n매독은 표본→전수→표본(2020)→전수(2024)로 왕복. '한 번 강화'가 아님",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2011,
+     "date": "2011-03-16",
+     "theme": "guide",
+     "w": 76,
+     "tag": "12판 이어짐",
+     "title": "2011년 성매개감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2011년부터 2026년까지 12판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227320/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2011,
+     "date": "2011",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2011년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2011(kor).jpg",
+     "rank": 3
+    },
+    {
+     "y": 2011,
+     "date": "2011-06-23",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "2011년 주요 감염병 매개 모기 방제 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2011년부터 2014년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227335/artclView.do",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2011,
+     "date": "2011",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2011년 지침·자료 61건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 5
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law",
+    "record"
+   ]
+  },
+  {
+   "y": 2012,
+   "n": 5,
+   "top": [
+    {
+     "y": 2012,
+     "date": "2012-10-01",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "내성균 4종(VRE·MRSA·MRPA·MRAB) — 지표 변경 — 신고수 → 분리율(%)",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2012,
+     "date": "2012-04-09",
+     "theme": "guide",
+     "w": 68,
+     "tag": "8판 이어짐",
+     "title": "2012년 레지오넬라증 관리 지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2012년부터 2026년까지 8판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227349/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2012,
+     "date": "2012",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2012년 질병관리백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2012+질병관리백서.pdf",
+     "art": "../whitepaper/covers/whitepaper2012(kor).jpg",
+     "rank": 3
+    },
+    {
+     "y": 2012,
+     "date": "2012-09-28",
+     "theme": "guide",
+     "w": 66,
+     "tag": "7판 이어짐",
+     "title": "2012년도 국가결핵관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2012년부터 2020년까지 7판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227353/artclView.do",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2012,
+     "date": "2012",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2012년 지침·자료 50건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 5
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law",
+    "record"
+   ]
+  },
+  {
+   "y": 2013,
+   "n": 3,
+   "top": [
+    {
+     "y": 2013,
+     "date": "2013-01-01",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "인플루엔자 — 표본감시기관 854→200개소 대개편",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2013,
+     "date": "2013",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2013년 질병관리백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2013+질병관리백서.pdf",
+     "art": "../whitepaper/covers/whitepaper2013(kor).jpg",
+     "rank": 2
+    },
+    {
+     "y": 2013,
+     "date": "2013",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2013년 지침·자료 55건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law",
+    "record"
+   ]
+  },
+  {
+   "y": 2014,
+   "n": 3,
+   "top": [
+    {
+     "y": 2014,
+     "date": "2014",
+     "theme": "record",
+     "w": 72,
+     "tag": "원문 유실",
+     "title": "2014~2015년 백서 — 표지만 남았다",
+     "body": "게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.",
+     "link": "../whitepaper/",
+     "art": "../whitepaper/covers/whitepaper2014~2015(kor).jpg",
+     "rank": 1
+    },
+    {
+     "y": 2014,
+     "date": "2014-08-12",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "2014년 에이즈관련 민간경상보조사업 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2014년부터 2018년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227420/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2014,
+     "date": "2014",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2014년 지침·자료 78건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "record"
+   ]
+  },
+  {
+   "y": 2015,
+   "n": 3,
+   "top": [
+    {
+     "y": 2015,
+     "date": "2015-05-19",
+     "theme": "guide",
+     "w": 66,
+     "tag": "7판 이어짐",
+     "title": "2015년도 진드기 및 설치류 매개 감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2015년부터 2026년까지 7판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227441/artclView.do",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2015,
+     "date": "2015-03-31",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "에볼라바이러스병 대응지침(국가격리병상용)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2015년부터 2017년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/50/221045/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2015,
+     "date": "2015",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2015년 지침·자료 44건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 3
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide"
+   ]
+  },
+  {
+   "y": 2016,
+   "n": 14,
+   "top": [
+    {
+     "y": 2016,
+     "date": "2016-01-07",
+     "theme": "law",
+     "w": 76,
+     "tag": "신고범위 변경",
+     "title": "B형간염 — 신고범위 변경",
+     "body": "신고범위 축소 — 급성 B형간염만 집계\n2016년 이전/이후 시계열 직접 비교 불가. 연보 각주에 명시",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2016,
+     "date": "2016-06-16",
+     "theme": "guide",
+     "w": 74,
+     "tag": "11판 이어짐",
+     "title": "2016년도 바이러스성 모기매개 감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2026년까지 11판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227492/artclView.do",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2016,
+     "date": "2018-07-16",
+     "theme": "guide",
+     "w": 72,
+     "tag": "10판 이어짐",
+     "title": "2016년 의료관련감염병관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2026년까지 10판.",
+     "link": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716556741161&q_clsfNo=0",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2016,
+     "date": "2016-06-23",
+     "theme": "guide",
+     "w": 70,
+     "tag": "9판 이어짐",
+     "title": "2016년도 인수공통감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2026년까지 9판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227496/artclView.do",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2016,
+     "date": "2016",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2016년 질병관리백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2016+질병관리백서.pdf",
+     "art": "../whitepaper/covers/whitepaper2016(kor).jpg",
+     "rank": 5
+    },
+    {
+     "y": 2016,
+     "date": "2016",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "수두 54,060명",
+     "body": "2016년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2016,
+     "date": "2016-10-20",
+     "theme": "guide",
+     "w": 62,
+     "tag": "5판 이어짐",
+     "title": "2016년 C형간염 관리지침_배포용",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2022년까지 5판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227522/artclView.do",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2016,
+     "date": "2018-07-16",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "2016년 진드기매개 감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2019년까지 4판.",
+     "link": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716554874241&q_clsfNo=0",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2016,
+     "date": "2018-07-16",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "2016년 설치류매개감염병관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2019년까지 4판.",
+     "link": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716240374578&q_clsfNo=0",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2016,
+     "date": "2018-07-16",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "2016년 메르스(MERS) 대응 지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2016년부터 2019년까지 4판.",
+     "link": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716315640614&q_clsfNo=0",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 4,
+   "themes": [
+    "guide",
+    "law",
+    "outbreak",
+    "record"
+   ]
+  },
+  {
+   "y": 2017,
+   "n": 15,
+   "top": [
+    {
+     "y": 2017,
+     "date": "2017-06-03",
+     "theme": "law",
+     "w": 86,
+     "tag": "감시체계 전환",
+     "title": "C형간염 — 감시체계 전환",
+     "body": "제3군(당시) → 제3군 · 표본감시 → 전수감시 · 표본기관 → 모든 의료기관 신고\n주사기 재사용 집단발생(2015-16) 계기",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2017,
+     "date": "2017-06-03",
+     "theme": "law",
+     "w": 86,
+     "tag": "감시체계 전환",
+     "title": "VRSA·CRE — 감시체계 전환",
+     "body": "제3군(당시) → 제3군 · 표본감시 → 전수감시 · 전수 신고 개시\n의료관련 내성균 선제 대응",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2017,
+     "date": "2017-06-03",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "반코마이신내성황색포도알균(VRSA) 감염증 — 표본감시 → 전수감시",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2017,
+     "date": "2017-06-03",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "카바페넴내성장내세균목(CRE) 감염증 — 표본감시 → 전수감시",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2017,
+     "date": "2017-07-30",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "장관감염증(계) — 표본감시기관 지정기준 변경 — 기관 수 약 2배 확대",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2017,
+     "date": "2017-07-27",
+     "theme": "guide",
+     "w": 70,
+     "tag": "9판 이어짐",
+     "title": "2017년도 수인성 및 식품매개감염병관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2017년부터 2026년까지 9판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227583/artclView.do",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2017,
+     "date": "2017-05-23",
+     "theme": "guide",
+     "w": 68,
+     "tag": "8판 이어짐",
+     "title": "2017년도 엔테로바이러스 감염증, 수족구병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2017년부터 2026년까지 8판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227569/artclView.do",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2017,
+     "date": "2017",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2017년 질병관리백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2017+질병관리백서.pdf",
+     "art": "../whitepaper/covers/whitepaper2017(kor).jpg",
+     "rank": 8
+    },
+    {
+     "y": 2017,
+     "date": "2017",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "수두 80,092명",
+     "body": "2017년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2017,
+     "date": "2017-02-14",
+     "theme": "guide",
+     "w": 62,
+     "tag": "5판 이어짐",
+     "title": "국가지정입원치료병상 운영과 관리 지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2017년부터 2026년까지 5판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227542/artclView.do",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 5,
+   "themes": [
+    "guide",
+    "law",
+    "outbreak",
+    "record"
+   ]
+  },
+  {
+   "y": 2018,
+   "n": 9,
+   "top": [
+    {
+     "y": 2018,
+     "date": "2018",
+     "theme": "vacc",
+     "w": 78,
+     "tag": "완전접종 기준 확대",
+     "title": "완전접종에 HepA 추가",
+     "body": "2018년부터 10종을 모두 마쳐야 완전접종이다. 기준이 무거워졌으므로 앞 해의 접종률과 그냥 견주면 안 된다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2018,
+     "date": "2018",
+     "theme": "outbreak",
+     "w": 73.86558746849674,
+     "tag": "급증",
+     "title": "백일해 3.1배",
+     "body": "2017년 318명 → 2018년 980명(제2급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2018,
+     "date": "2018-02-21",
+     "theme": "guide",
+     "w": 68,
+     "tag": "8판 이어짐",
+     "title": "2018년도 예방접종 대상 감염병 관리 지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2018년부터 2026년까지 8판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227625/artclView.do",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2018,
+     "date": "2018",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2018년 질병관리백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2018+질병관리백서_최종.pdf",
+     "art": "../whitepaper/covers/whitepaper2018(kor).jpg",
+     "rank": 4
+    },
+    {
+     "y": 2018,
+     "date": "2018",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "수두 96,467명",
+     "body": "2018년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2018,
+     "date": "2018-09-21",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "2018년도 크로이츠펠트-야콥병(CJD) 안내서",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2018년부터 2025년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227670/artclView.do",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2018,
+     "date": "2018-01-22",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "2018년도 국가예방접종사업 관리지침(의료기관용)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2018년부터 2025년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227617/artclView.do",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2018,
+     "date": "2018",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "6세 완전접종률 88.3%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2018,
+     "date": "2018",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2018년 지침·자료 80건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 9
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "outbreak",
+    "record",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2019,
+   "n": 11,
+   "top": [
+    {
+     "y": 2019,
+     "date": "2019",
+     "theme": "outbreak",
+     "w": 81.34052565049454,
+     "tag": "급증",
+     "title": "홍역 12.9배",
+     "body": "2018년 15명 → 2019년 194명(제2급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2019,
+     "date": "2019",
+     "theme": "outbreak",
+     "w": 78.30329341015366,
+     "tag": "급증",
+     "title": "A형간염 7.2배",
+     "body": "2018년 2,437명 → 2019년 17,598명(제2급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2019,
+     "date": "2019-04-30",
+     "theme": "law",
+     "w": 76,
+     "tag": "신고범위 변경",
+     "title": "반코마이신내성황색포도알균(VRSA) — 신고범위 변경",
+     "body": "신고범위 확대 — VISA(중등도내성) 포함\n이후 신고 전건이 사실상 VISA. VRSA 자체는 국내 보고 사례 없음",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2019,
+     "date": "2019-05-24",
+     "theme": "guide",
+     "w": 68,
+     "tag": "8판 이어짐",
+     "title": "2019년도 기생충감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2019년부터 2026년까지 8판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227702/artclView.do",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2019,
+     "date": "2019-06-28",
+     "theme": "guide",
+     "w": 68,
+     "tag": "8판 이어짐",
+     "title": "2019년 한센병사업 관리 지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2019년부터 2026년까지 8판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227708/artclView.do",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2019,
+     "date": "2019",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2019년 질병관리백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2019+질병관리백서(최종).pdf",
+     "art": "../whitepaper/covers/whitepaper2019(kor).jpg",
+     "rank": 6
+    },
+    {
+     "y": 2019,
+     "date": "2019",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "수두 82,868명",
+     "body": "2019년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2019,
+     "date": "2019-04-23",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "원인 불명 질병 집단감염 대응지침[제1판]",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2019년부터 2025년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227694/artclView.do",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2019,
+     "date": "2020-07-08",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "「풍수해(태풍·호우·대설)」 감염병 대응 매뉴얼(2019년판)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2019년부터 2023년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227788/artclView.do",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2019,
+     "date": "2019",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "6세 완전접종률 84.8%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 1,
+   "themes": [
+    "guide",
+    "law",
+    "outbreak",
+    "record",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2020,
+   "n": 19,
+   "top": [
+    {
+     "y": 2020,
+     "date": "2020-01",
+     "theme": "law",
+     "w": 100,
+     "tag": "시대 구분",
+     "title": "급(級) 체계",
+     "body": "제1~4급 — 신고시기·격리수준 기준. 80종→86종",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2020,
+     "date": "2020-09",
+     "theme": "law",
+     "w": 100,
+     "tag": "시대 구분",
+     "title": "질병관리청 승격",
+     "body": "질병관리본부 → 질병관리청",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2020,
+     "date": "2020-01-20",
+     "theme": "law",
+     "w": 95,
+     "tag": "신규 지정",
+     "title": "코로나19 — 신규 지정",
+     "body": "비법정 → 제1급 · —감시 → 전수감시 · 즉시 신고\n법률 미열거 신종 → 국회 없이 고시로 1급 편입(래칫 경로의 실례)",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2020,
+     "date": "2020-07-01",
+     "theme": "law",
+     "w": 95,
+     "tag": "신규 지정",
+     "title": "E형간염 — 신규 지정",
+     "body": "비법정 → 제2급 · —감시 → 전수감시 · 24h 신고\n법정감염병 신규 편입",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2020,
+     "date": "2020",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2020~2021년 질병관리청 백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2020-2021질병관리백서(최종).pdf",
+     "art": "../whitepaper/covers/whitepaper2020~2021(kor).jpg",
+     "rank": 5
+    },
+    {
+     "y": 2020,
+     "date": "2020-02-11",
+     "theme": "guide",
+     "w": 66,
+     "tag": "7판 이어짐",
+     "title": "2020년도 호흡기감염병 관리지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2020년부터 2026년까지 7판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227756/artclView.do",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2020,
+     "date": "2020",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "신종감염병증후군 60,722명",
+     "body": "2020년 전수감시 신고가 가장 많았던 감염병(제1급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2020,
+     "date": "2020-03-03",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "[EBOOK]제1급감염병 두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2020년부터 2023년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227767/artclView.do",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2020,
+     "date": "2020-03-03",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "[EBOOK]제1급감염병 동물인플루엔자 인체감염증 대응지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2020년부터 2023년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227766/artclView.do",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2020,
+     "date": "2020",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "6세 완전접종률 83.5%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 9,
+   "themes": [
+    "guide",
+    "law",
+    "outbreak",
+    "record",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2021,
+   "n": 6,
+   "top": [
+    {
+     "y": 2021,
+     "date": "2021",
+     "theme": "outbreak",
+     "w": 79.66982427891212,
+     "tag": "급증",
+     "title": "신종감염병증후군 9.4배",
+     "body": "2020년 60,722명 → 2021년 569,943명(제1급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2021,
+     "date": "2021",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "카바페넴내성장내세균목(CRE) 감염증 23,310명",
+     "body": "2021년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2021,
+     "date": "2021-11-09",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "코로나바이러스감염증-19 재택치료 안내서(제4판) 개정 안내",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2021년부터 2025년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227918/artclView.do",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2021,
+     "date": "2021-11-25",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "마스크 착용 방역지침 준수 명령 및 과태료 부과 업무 안내서(제4-1판)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2021년부터 2023년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/227924/artclView.do",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2021,
+     "date": "2021",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "6세 완전접종률 86.15%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2021,
+     "date": "2021",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2021년 지침·자료 127건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 6
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "outbreak",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2022,
+   "n": 11,
+   "top": [
+    {
+     "y": 2022,
+     "date": "2022-06-08",
+     "theme": "law",
+     "w": 95,
+     "tag": "신규 지정",
+     "title": "엠폭스 — 신규 지정",
+     "body": "비법정 → 제2급 · —감시 → 전수감시 · 24h 신고\n국내 유입 前 선제 지정",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2022,
+     "date": "2022-04-25",
+     "theme": "law",
+     "w": 92,
+     "tag": "급 하향",
+     "title": "코로나19 — 급 하향",
+     "body": "제1급 → 제2급 · 즉시 → 24h\n유행 안정화",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2022,
+     "date": "2022-04-05",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "신종감염병증후군 — 코로나19가 제2급으로 이관",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2022,
+     "date": "2022-04-05",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "코로나바이러스감염증-19 — 신고 항목 이동 — 신종감염병증후군 → 제2급 코로나19",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2022,
+     "date": "2022",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2022년 질병관리청 백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2022+질병관리청+백서_합본(최종)_펼침.pdf",
+     "art": "../whitepaper/covers/whitepaper2022(kor).jpg",
+     "rank": 5
+    },
+    {
+     "y": 2022,
+     "date": "2022",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "코로나바이러스감염증-19 28,424,349명",
+     "body": "2022년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2022,
+     "date": "2022-11-25",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "[중앙방역대책본부]  코로나바이러스감염증-19 치료제 사용 안내서(제10판)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2022년부터 2025년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/245/204594/artclView.do",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2022,
+     "date": "2022-12-22",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "[중앙방역대책본부]  코로나바이러스감염증-19 검역대응 지침(제14-2판)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2022년부터 2024년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/245/204596/artclView.do",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2022,
+     "date": "2022",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "6세 완전접종률 88.6%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2022,
+     "date": "2022",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2022년 지침·자료 152건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 1,
+   "themes": [
+    "guide",
+    "law",
+    "outbreak",
+    "record",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2023,
+   "n": 9,
+   "top": [
+    {
+     "y": 2023,
+     "date": "2023-08-31",
+     "theme": "law",
+     "w": 92,
+     "tag": "급 하향",
+     "title": "코로나19 — 급 하향",
+     "body": "제2급 → 제4급 · 전수감시 → 표본(양성자)감시 · 24h → 주간 표본\n보상 절벽: 8.30 격리자와 9.1 격리자 간 생활지원 단절",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2023,
+     "date": "2023",
+     "theme": "outbreak",
+     "w": 79.68825389136975,
+     "tag": "급증",
+     "title": "백일해 9.4배",
+     "body": "2022년 31명 → 2023년 292명(제2급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2023,
+     "date": "2023-01-13",
+     "theme": "law",
+     "w": 70,
+     "tag": "고시",
+     "title": "질병관리청장이 지정하는 감염병의 종류 고시 (2023-1호)",
+     "body": "질병관리청장이 지정하는 감염병의 종류 — 법률 열거 밖의 감염병은 이 고시로 정해진다.",
+     "link": "../law/",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2023,
+     "date": "2023",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2023년 질병관리청 백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서_펼침.pdf",
+     "art": "../whitepaper/covers/whitepaper2023(kor).jpg",
+     "rank": 4
+    },
+    {
+     "y": 2023,
+     "date": "2023",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "코로나바이러스감염증-19 5,517,540명",
+     "body": "2023년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2023,
+     "date": "2023-04-21",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "2023년 제1급감염병(동물인플루엔자 인체감염증) 대응지침",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2023년부터 2026년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/228124/artclView.do",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2023,
+     "date": "2023-05-09",
+     "theme": "guide",
+     "w": 60,
+     "tag": "4판 이어짐",
+     "title": "2023년도 바이러스 간염 관리지침(A형·B형·C형·E형간염) 제정 안내",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2023년부터 2026년까지 4판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/228130/artclView.do",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2023,
+     "date": "2023",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "3세 완전접종률 89.2%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2023,
+     "date": "2023",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2023년 지침·자료 127건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 9
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "guide",
+    "law",
+    "outbreak",
+    "record",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2024,
+   "n": 16,
+   "top": [
+    {
+     "y": 2024,
+     "date": "2024",
+     "theme": "outbreak",
+     "w": 94.59550956087784,
+     "tag": "급증",
+     "title": "백일해 164.5배",
+     "body": "2023년 292명 → 2024년 48,048명(제2급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2024,
+     "date": "2024-01-01",
+     "theme": "law",
+     "w": 92,
+     "tag": "급 하향",
+     "title": "엠폭스 — 급 하향",
+     "body": "제2급 → 제3급 · 격리의무 해제\n일반의료체계 전환",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2024,
+     "date": "2024-01-01",
+     "theme": "law",
+     "w": 90,
+     "tag": "급 상향",
+     "title": "매독 — 급 상향",
+     "body": "제4급 → 제3급 · 표본감시 → 전수감시 · 표본 주간 → 모든 의료기관 24h·사례정의 3종→5종\n신고주체·사례정의 동시 변경 → 2023↔2024 직접 비교 불가",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2024,
+     "date": "2024-09-01",
+     "theme": "border",
+     "w": 80,
+     "tag": "검역 제도",
+     "title": "중점검역관리지역 제도 신설",
+     "body": "이전에는 '검역관리지역' 단일 체계였다. 이 날부터 상위 등급인 중점검역관리지역(3종 21개국)이 생겼고, 검역감염병도 14종→18종으로 확대됐다(엠폭스·라싸열·크리미안콩고출혈열 신규).\n2024.9. 이전과 이후의 '검역관리지역 국가 수'는 같은 뜻이 아니다. 시계열로 이으면 안 된다.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2024,
+     "date": "2024",
+     "theme": "outbreak",
+     "w": 78.93369515026868,
+     "tag": "급증",
+     "title": "성홍열 8.1배",
+     "body": "2023년 815명 → 2024년 6,642명(제2급). 그 해 가장 크게 늘어난 감염병이다.",
+     "link": "../cross/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2024,
+     "date": "2024",
+     "theme": "vacc",
+     "w": 78,
+     "tag": "완전접종 기준 확대",
+     "title": "완전접종에 RV 추가",
+     "body": "2024년부터 11종을 모두 마쳐야 완전접종이다. 기준이 무거워졌으므로 앞 해의 접종률과 그냥 견주면 안 된다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2024,
+     "date": "2024-01-01",
+     "theme": "law",
+     "w": 74,
+     "tag": "단절점",
+     "title": "인플루엔자 — 표본감시기관 196→299개소 확대",
+     "body": "이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.",
+     "link": "../checker/",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2024,
+     "date": "2024",
+     "theme": "record",
+     "w": 66,
+     "tag": "백서 발간",
+     "title": "2024년 질병관리청 백서",
+     "body": "그 해의 활동을 질병관리청이 스스로 정리한 공식 기록이다.",
+     "link": "https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서_합본(최종)_펼침.pdf",
+     "art": "../whitepaper/covers/whitepaper2024(kor).png",
+     "rank": 8
+    },
+    {
+     "y": 2024,
+     "date": "2024",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "카바페넴내성장내세균목(CRE) 감염증 42,346명",
+     "body": "2024년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2024,
+     "date": "2024-08-16",
+     "theme": "guide",
+     "w": 58,
+     "tag": "3판 이어짐",
+     "title": "2024년도 코로나바이러스감염증-19 관리지침 개정(2024.8.16)",
+     "body": "이 계열이 게시판에 처음 나타난 해다. 2024년부터 2026년까지 3판.",
+     "link": "https://www.kdca.go.kr/bbs/kdca/55/228233/artclView.do",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 6,
+   "themes": [
+    "border",
+    "guide",
+    "law",
+    "outbreak",
+    "record",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2025,
+   "n": 11,
+   "top": [
+    {
+     "y": 2025,
+     "date": "2025-09-08",
+     "theme": "law",
+     "w": 95,
+     "tag": "신규 지정",
+     "title": "니파바이러스감염증 — 신규 지정",
+     "body": "비법정 → 제1급 · —감시 → 전수감시 · 전수·즉시 신고(음압격리)\n비법정 → 제1급. 2024 백서가 '향후 추진계획'으로 예고했던 지정이 2025.9.8 실제 발령됨. WHO 우선순위 병원체·백신/치료제 없음·BSL-4. 이 지정으로 제1급이 17종→18종이 되어 법정감염병 총수가 89종→90종(이후 칸디다오리스로 91종)",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2025,
+     "date": "2025-01-01",
+     "theme": "border",
+     "w": 80,
+     "tag": "검역 제도",
+     "title": "반기 지정 → 분기 지정 전환",
+     "body": "질병관리청 보도자료: \"올해부터는 기존 반기마다 지정하던 중점·검역관리지역을 분기마다 지정하여 해외 감염병 발생 상황을 더욱 신속하게 반영\". 첫 분기 지정 시행일이 2025.1.1.\n2024년까지는 연 2회, 2025년부터 연 4회. 갱신 주기가 바뀌었으므로 '변경 횟수'를 연도 간 비교하면 안 된다.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2025,
+     "date": "2025",
+     "theme": "vacc",
+     "w": 78,
+     "tag": "완전접종 기준 확대",
+     "title": "완전접종에 Tdap 추가",
+     "body": "2025년부터 12종을 모두 마쳐야 완전접종이다. 기준이 무거워졌으므로 앞 해의 접종률과 그냥 견주면 안 된다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2025,
+     "date": "2025-01-01",
+     "theme": "law",
+     "w": 76,
+     "tag": "신고범위 변경",
+     "title": "쯔쯔가무시증 — 신고범위 변경",
+     "body": "신고기준에 가피(eschar) 형성 여부 포함 → 판정 엄격화\n6,268(2024) → 3,405(2025), △45.7%. 연보가 감소 요인으로 직접 지목 — 유행 감소가 아니라 판정규칙 변경",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2025,
+     "date": "2025-09-08",
+     "theme": "law",
+     "w": 70,
+     "tag": "고시",
+     "title": "질병관리청장이 지정하는 감염병의 종류 고시 (2025-10호)",
+     "body": "질병관리청장이 지정하는 감염병의 종류 — 법률 열거 밖의 감염병은 이 고시로 정해진다.",
+     "link": "../law/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2025,
+     "date": "2025",
+     "theme": "outbreak",
+     "w": 62,
+     "tag": "최다 발생",
+     "title": "카바페넴내성장내세균목(CRE) 감염증 49,053명",
+     "body": "2025년 전수감시 신고가 가장 많았던 감염병(제2급).",
+     "link": "../cross/",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2025,
+     "date": "2025-01-01",
+     "theme": "border",
+     "w": 52,
+     "tag": "지정 갱신",
+     "title": "2025-Q1 검역관리지역 159개국",
+     "body": "첫 분기 단위 지정. 동물인플루엔자에서 영국 제외, 페스트 중점 5→2개국.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2025,
+     "date": "2025-02-26",
+     "theme": "border",
+     "w": 52,
+     "tag": "지정 갱신",
+     "title": "2025-Q1-rev 검역관리지역 지정",
+     "body": "에볼라바이러스병 관련 개정.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2025,
+     "date": "2025",
+     "theme": "vacc",
+     "w": 50,
+     "tag": "완전접종률",
+     "title": "13세 완전접종률 84.1%",
+     "body": "그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.",
+     "link": "../vaccine/",
+     "art": "",
+     "rank": 9
+    },
+    {
+     "y": 2025,
+     "date": "2025",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2025년 지침·자료 88건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 10
+    }
+   ],
+   "rest": 1,
+   "themes": [
+    "border",
+    "guide",
+    "law",
+    "outbreak",
+    "vacc"
+   ]
+  },
+  {
+   "y": 2026,
+   "n": 9,
+   "top": [
+    {
+     "y": 2026,
+     "date": "2026-06",
+     "theme": "law",
+     "w": 100,
+     "tag": "시대 구분",
+     "title": "현행 91종",
+     "body": "전수 67 + 표본 24 (고시 제2026-9호)",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 1
+    },
+    {
+     "y": 2026,
+     "date": "2026-03-29",
+     "theme": "law",
+     "w": 95,
+     "tag": "신규 지정",
+     "title": "칸디다오리스감염증 — 신규 지정",
+     "body": "비법정 → 제4급 · —감시 → 표본감시 · 표본 368기관·7일\n진균 최초 법정감염병·의료관련감염병 동시 지정",
+     "link": "https://www.law.go.kr/법령/감염병의예방및관리에관한법률",
+     "art": "",
+     "rank": 2
+    },
+    {
+     "y": 2026,
+     "date": "2026-01-01",
+     "theme": "border",
+     "w": 80,
+     "tag": "검역 제도",
+     "title": "엠폭스 검역감염병 해제",
+     "body": "WHO의 엠폭스 국제공중보건위기상황(PHEIC) 공식 종료를 반영. 2024.10.21. 검역관리지역에 추가됐던 엠폭스가 대상에서 빠졌다.\n검역감염병 종수 변화(15종 유지)와 국가 수 감소(184→176개국)의 상당 부분이 이 해제 때문이다.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 3
+    },
+    {
+     "y": 2026,
+     "date": "2026-05-19",
+     "theme": "border",
+     "w": 80,
+     "tag": "검역 제도",
+     "title": "에볼라 PHEIC → 분기 중 수시 개정",
+     "body": "WHO의 에볼라 PHEIC 선언에 따라 2분기 도중 에볼라 중점검역관리지역 5개국(남수단·르완다·에티오피아·우간다·콩고민주공화국)이 추가돼 21→25개국이 됐다.\n분기 시작일(4.1.) 자료만 보면 이 5개국을 놓친다.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 4
+    },
+    {
+     "y": 2026,
+     "date": "2026-03-29",
+     "theme": "law",
+     "w": 70,
+     "tag": "고시",
+     "title": "질병관리청장이 지정하는 감염병의 종류 고시 (2026-3호)",
+     "body": "질병관리청장이 지정하는 감염병의 종류 — 법률 열거 밖의 감염병은 이 고시로 정해진다.",
+     "link": "../law/",
+     "art": "",
+     "rank": 5
+    },
+    {
+     "y": 2026,
+     "date": "2026-01-01",
+     "theme": "border",
+     "w": 52,
+     "tag": "지정 갱신",
+     "title": "2026-Q1 검역관리지역 176개국",
+     "body": "에티오피아 마버그열 중점 신규. 엠폭스 검역감염병 해제.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 6
+    },
+    {
+     "y": 2026,
+     "date": "2026-02-12",
+     "theme": "border",
+     "w": 52,
+     "tag": "지정 갱신",
+     "title": "2026-Q1-rev 검역관리지역 지정",
+     "body": "니파바이러스감염증 중점 신규 지정(인도·방글라데시).",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 7
+    },
+    {
+     "y": 2026,
+     "date": "2026-09-07",
+     "theme": "border",
+     "w": 52,
+     "tag": "지정 갱신",
+     "title": "2026-Q3-rev 검역관리지역 172개국",
+     "body": "현행. 에볼라 중점 6개국 추가(부룬디·앙골라·잠비아·중앙아프리카공화국·콩고공화국·탄자니아), 검역관리지역에서 케냐 해제. 매트릭스 원문 대조는 미완료.",
+     "link": "../quarantine/",
+     "art": "",
+     "rank": 8
+    },
+    {
+     "y": 2026,
+     "date": "2026",
+     "theme": "guide",
+     "w": 48,
+     "tag": "발간량",
+     "title": "2026년 지침·자료 87건",
+     "body": "그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.",
+     "link": "../guides/",
+     "art": "",
+     "rank": 9
+    }
+   ],
+   "rest": 0,
+   "themes": [
+    "border",
+    "guide",
+    "law"
+   ]
+  }
+ ],
+ "note": "전시물은 저장소의 원장(법령 연혁·급수변동·지침 목록·백서 목록·연보 신고수·검역 지정이력·예방접종률)에서 기계로 뽑았다. 순위는 갈래별 가중치이며 중요도의 객관적 척도가 아니다 — 무엇을 큰일로 볼지는 보는 사람이 정한다."
+}

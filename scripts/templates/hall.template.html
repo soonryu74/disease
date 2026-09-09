@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>연대기 전시관</title>
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A;
+    /* 전시실 */
+    --hall-floor:#DCE2DF; --hall-wall:#EFF3F1; --hall-ceil:#F7F9F8;
+    --hall-edge:#C8D2CE; --hall-deep:#8FA09A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A;
+    --hall-floor:#1B2723; --hall-wall:#24322D; --hall-ceil:#161F1C;
+    --hall-edge:#33443E; --hall-deep:#0A100E;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A;
+    --hall-floor:#1B2723; --hall-wall:#24322D; --hall-ceil:#161F1C;
+    --hall-edge:#33443E; --hall-deep:#0A100E;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;overflow-x:hidden;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  header{padding:30px 0 4px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(26px,5vw,40px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16px);color:var(--muted);max-width:66ch;margin:12px 0 0}
+
+  /* ── 연표 스트립 — 한눈에 ─────────────────────────────────── */
+  .strip{margin:20px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px 10px;box-shadow:var(--shadow)}
+  .stw{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .st{display:flex;gap:3px;align-items:flex-end;min-width:min-content;height:74px}
+  .sy{flex:0 0 auto;width:26px;cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;gap:3px;border-radius:6px;padding:2px 0;border:none;background:none;font:inherit}
+  .sy:hover{background:var(--surface-2)}
+  .sy .bar{width:16px;border-radius:3px 3px 0 0;display:flex;flex-direction:column-reverse;overflow:hidden;
+    transition:width .2s}
+  .sy .bar i{display:block;width:100%}
+  .sy .yl{font-size:9.5px;color:var(--faint);writing-mode:vertical-rl;letter-spacing:0}
+  .sy.on .bar{width:22px;outline:2px solid var(--accent);outline-offset:1px}
+  .sy.on .yl{color:var(--accent-ink);font-weight:800}
+  .slg{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:8px}
+  .slg b{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+
+  /* ── 전시관 ────────────────────────────────────────────────── */
+  .stage{position:relative;margin:14px 0 0;height:min(64vh,520px);min-height:340px;
+    border-radius:16px;overflow:hidden;clip-path:inset(0 round 16px);background:var(--hall-deep);
+    perspective:900px;perspective-origin:50% 46%;border:1px solid var(--line)}
+  .world{position:absolute;inset:0;transform-style:preserve-3d;
+    transition:transform .85s cubic-bezier(.33,.02,.2,1);will-change:transform}
+  .room{position:absolute;left:50%;top:50%;width:0;height:0;transform-style:preserve-3d}
+  .pl{position:absolute;left:50%;top:50%;backface-visibility:hidden}
+  .fl{background:var(--hall-floor)}
+  .cl{background:var(--hall-ceil)}
+  .wl{background:var(--hall-wall)}
+  .lintel{background:var(--hall-wall);border-bottom:1px solid var(--hall-edge)}
+  .jamb{background:var(--hall-wall);border-right:1px solid var(--hall-edge)}
+  /* 방이 멀수록 어둡게 — 깊이를 만든다 */
+  .room .dim{position:absolute;inset:0;pointer-events:none;transition:background .4s}
+  .fog{position:absolute;inset:0;pointer-events:none;z-index:2;
+    background:radial-gradient(ellipse 62% 52% at 50% 46%,rgba(0,0,0,0) 38%,rgba(0,0,0,.28) 100%)}
+
+  .plaque{position:absolute;left:50%;top:50%;display:flex;align-items:center;justify-content:center;
+    gap:8px;color:var(--ink);font-weight:800;letter-spacing:-.02em;pointer-events:none;white-space:nowrap}
+  .plaque .y{font-size:calc(var(--fs) * 2.7)}
+  .plaque .c{font-size:calc(var(--fs) * .95);color:var(--faint);font-weight:700}
+
+  .art{position:absolute;cursor:pointer;border:none;padding:0;background:none;
+    display:block;text-align:left}
+  .frame{width:100%;height:100%;background:var(--surface);border:1px solid var(--line-strong);
+    border-top:4px solid var(--tc);border-radius:3px;padding:.7em .8em;overflow:hidden;font-size:var(--fs);
+    box-shadow:0 6px 20px rgba(0,0,0,.18);transition:transform .18s,box-shadow .18s}
+  .art:hover .frame,.art:focus-visible .frame{transform:translateY(-3px);box-shadow:0 10px 28px rgba(0,0,0,.28)}
+  .frame .tg{font-size:calc(var(--fs) * .72);font-weight:800;color:var(--tc);letter-spacing:.02em}
+  .frame .tt{font-size:var(--fs);font-weight:700;line-height:1.32;margin-top:3px;
+    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  .frame img{width:100%;height:100%;object-fit:cover;display:block;border-radius:2px}
+  .frame.pic{padding:5px}
+  /* 방에 들어서면 액자가 차례로 걸린다 */
+  .room.here .art{animation:hang .5s cubic-bezier(.2,.8,.3,1) backwards;
+    animation-delay:calc(var(--k) * 55ms + 120ms)}
+  @keyframes hang{from{opacity:0;transform:translateY(16px) scale(.96)}}
+  .art.off{opacity:.16;pointer-events:none}
+  .art.off .frame{box-shadow:none}
+
+  /* ── 조작 ──────────────────────────────────────────────────── */
+  .ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 0}
+  .ctl button{font:inherit;font-size:13px;font-weight:700;cursor:pointer;border-radius:10px;padding:8px 13px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink)}
+  .ctl button:hover{background:var(--surface-2)}
+  .ctl button.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ctl .now{font-size:15px;font-weight:800;min-width:118px}
+  .ctl .now small{font-size:12px;font-weight:600;color:var(--muted);margin-left:5px}
+  .ctl .sp{flex:1}
+  .chips{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 0}
+  .chip{font:inherit;font-size:12px;font-weight:700;cursor:pointer;border-radius:999px;padding:4px 10px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--muted)}
+  .chip.on{color:#fff;border-color:transparent}
+  .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0}
+
+  /* ── 이 방의 전시물(평면 목록) ─────────────────────────────── */
+  .rail{margin:16px 0 0}
+  .rail h2{font-size:17px;margin:0 0 3px;font-weight:800;letter-spacing:-.02em}
+  .rail .rs{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .lst{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:9px}
+  .lst>*{min-width:0}
+  .it{text-align:left;font:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--tc);border-radius:11px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start}
+  .it:hover{background:var(--surface-2)}
+  .it .rk{font-size:12px;font-weight:800;color:var(--tc);flex:none;margin-top:1px;width:17px}
+  .it .bd{flex:1;min-width:0}
+  .it .tg{font-size:10.5px;font-weight:800;color:var(--tc)}
+  .it .tt{font-size:13.5px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+
+  /* ── 상세 ──────────────────────────────────────────────────── */
+  .sheet{position:fixed;inset:0;z-index:80;background:rgba(10,16,14,.5);display:none;
+    align-items:flex-end;justify-content:center;backdrop-filter:blur(2px)}
+  .sheet.on{display:flex}
+  .card{background:var(--surface);border-radius:18px 18px 0 0;max-width:640px;width:100%;
+    padding:20px 22px 26px;box-shadow:0 -8px 40px rgba(0,0,0,.3);max-height:86vh;overflow:auto;
+    animation:up .26s cubic-bezier(.2,.7,.3,1)}
+  @keyframes up{from{transform:translateY(26px);opacity:.3}to{transform:none;opacity:1}}
+  @media(min-width:700px){.sheet{align-items:center}.card{border-radius:18px}}
+  .card .kh{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-bottom:6px}
+  .card .tg{font-size:11px;font-weight:800;color:#fff;background:var(--tc);border-radius:5px;padding:2px 8px}
+  .card .dt{font-size:12.5px;color:var(--faint);font-weight:700}
+  .card h3{font-size:19px;margin:2px 0 8px;font-weight:800;letter-spacing:-.02em;line-height:1.3}
+  .card p{font-size:14px;color:var(--muted);margin:0 0 12px;white-space:pre-line}
+  .card img{max-width:170px;border-radius:6px;border:1px solid var(--line);float:right;margin:0 0 10px 14px}
+  .card .go{display:inline-flex;gap:6px;align-items:center;font-size:13.5px;font-weight:700;
+    border:1px solid var(--line-strong);padding:9px 14px;border-radius:10px}
+  .card .go:hover{background:var(--surface-2)}
+  .card .cl2{float:right;font:inherit;font-size:13px;cursor:pointer;background:none;border:none;color:var(--muted)}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 17px;font-size:13.5px;margin:22px 0}
+  footer{padding:24px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:24px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  @media (max-width:760px){
+    .wrap{padding:0 14px}
+    .stage{height:min(52vh,380px);perspective:640px}
+    .ctl .now{min-width:96px;font-size:14px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .world{transition:none} .card{animation:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">⑨ 연대기 전시관</p>
+  <h1>해마다 무엇이 달라졌나</h1>
+  <p class="thesis">지침 2,347건과 백서 19판을 쌓아 두는 것이 목적이 아니었다.
+  그 안에서 <b>그 해에 무슨 일이 있었는지</b>를 끄집어내 전시물로 걸었다.
+  방마다 그 해의 <b>10대 뉴스</b>가 있고, 액자를 누르면 <b>원문으로 간다</b>.</p>
+</header>
+
+<div class="strip">
+  <div class="stw"><div class="st" id="strip"></div></div>
+  <div class="slg" id="slg"></div>
+</div>
+
+<div class="stage" id="stage" tabindex="0" aria-label="연대기 전시관 — 좌우 방향키로 연도를 옮긴다">
+  <div class="world" id="world"></div>
+  <div class="fog"></div>
+</div>
+
+<div class="ctl">
+  <button id="prev" aria-label="앞 연도">←</button>
+  <span class="now num" id="now"></span>
+  <button id="next" aria-label="뒤 연도">→</button>
+  <button id="play" class="pri">▶ 자동 순회</button>
+  <span class="sp"></span>
+  <button id="jumpBig">가장 큰 해로</button>
+</div>
+<div class="chips" id="chips"></div>
+<p class="hint">전시실 안에서 방향키 ←→ 로 연도를 옮긴다. 액자를 누르면 그 사건의 설명과 원문 링크가 열린다.</p>
+
+<div class="rail">
+  <h2 id="rtit"></h2>
+  <p class="rs" id="rsub"></p>
+  <div class="lst" id="list"></div>
+</div>
+
+<div class="note" id="method"></div>
+
+<footer>
+  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+  <div id="fsrc"></div>
+</footer>
+</div>
+
+<div class="sheet" id="sheet"><div class="card" id="card"></div></div>
+
+<script>
+const D = __DATA__;
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TH = Object.fromEntries(D.themes.map(t => [t.k, t]));
+const YEARS = D.years;
+const maxN = Math.max(...YEARS.map(y => y.top.length));
+let cur = YEARS.length - 1;          // 올해부터 — 가장 최근 방에서 시작한다
+let filt = new Set();
+let timer = null;
+
+/* ── 전시실 치수 ─────────────────────────────────────────
+   화면 폭에 맞춰 방을 줄인다. 좁은 화면에서 큰 방을 그리면 양쪽 벽이
+   시야 밖으로 밀려 액자가 하나도 안 보인다(휴대전화에서 실제로 그랬다). */
+const AHEAD = 4;                     // 앞으로 몇 방까지 그릴까
+let W, H, Z, AW, AH0, AH1, FS;
+function sizes(){
+  const st = document.getElementById('stage');
+  const sw = st.clientWidth || 900, sh = st.clientHeight || 480;
+  W = Math.max(330, Math.min(900, Math.round(sw * 0.86)));
+  // 방 높이는 무대 높이에 맞춘다. 폭으로만 정하면 좁은 화면에서 방이 화면에 떠 보인다.
+  H = Math.round(sh * 0.86);
+  Z = Math.round(W * 0.85);
+  const sm = W < 560;
+  AW = sm ? Math.round(W * 0.30) : 168;
+  AH0 = sm ? Math.round(AW * 0.86) : 132;   // 글자 액자
+  AH1 = sm ? Math.round(AW * 1.18) : 190;   // 그림 액자
+  FS = sm ? 8.5 : 12.5;
+}
+
+/* ── 연표 스트립 ────────────────────────────────────────── */
+document.getElementById('strip').innerHTML = YEARS.map((y, i) => {
+  const by = {};
+  y.top.forEach(e => by[e.theme] = (by[e.theme] || 0) + 1);
+  const h = 8 + 40 * (y.top.length / maxN);
+  const seg = Object.entries(by).map(([k, n]) =>
+    `<i style="height:${(h * n / y.top.length).toFixed(1)}px;background:${TH[k].color}"></i>`).join('');
+  return `<button class="sy" data-i="${i}" title="${y.y}년 · 전시물 ${y.n}점">
+    <span class="bar" style="height:${h.toFixed(1)}px">${seg}</span>
+    <span class="yl num">${y.y}</span></button>`;
+}).join('');
+document.getElementById('strip').onclick = e => {
+  const b = e.target.closest('.sy'); if (!b) return;
+  stop(); go(+b.dataset.i);
+};
+document.getElementById('slg').innerHTML = D.themes.map(t =>
+  `<span><b style="background:${t.color}"></b>${esc(t.name)} ${t.n}</span>`).join('') +
+  `<span style="color:var(--faint)">막대 높이 = 그 해 전시물 수</span>`;
+
+/* ── 방 짓기 ────────────────────────────────────────────── */
+function face(cls, w, h, tf, inner, style){
+  return `<div class="pl ${cls}" style="width:${w}px;height:${h}px;
+    transform:translate(-50%,-50%) ${tf}${style || ''}">${inner || ''}<div class="dim"></div></div>`;
+}
+/* 벽면의 로컬 x는 깊이다. 왼쪽 벽은 rotateY(90deg)라 x가 클수록 입구 쪽,
+   오른쪽 벽은 rotateY(-90deg)라 x가 작을수록 입구 쪽이다. 걸리는 차례를 맞추려고 한쪽을 뒤집는다. */
+function artHTML(e, i, n, flip){
+  const aw = AW, ah = e.art ? AH1 : AH0;
+  const gap = (Z - Z * 0.12) / Math.max(n, 1);
+  let x = Z * 0.06 + gap * i + (gap - aw) / 2;
+  if (flip) x = Z - x - aw;
+  const y = H / 2 - ah / 2 - H * 0.09 + (i % 2 ? H * 0.038 : -H * 0.023);
+  const inner = e.art
+    ? `<div class="frame pic"><img src="${esc(e.art)}" alt="" loading="lazy" onerror="this.remove()"></div>`
+    : `<div class="frame"><div class="tg">${esc(TH[e.theme].name)} · ${esc(e.tag)}</div>
+        <div class="tt">${esc(e.title)}</div></div>`;
+  return `<button class="art" data-ex="${e._i}" style="left:${x.toFixed(0)}px;top:${y.toFixed(0)}px;
+    width:${aw}px;height:${ah}px;--tc:${TH[e.theme].color};--k:${i};--fs:${FS}px" title="${esc(e.title)}">${inner}</button>`;
+}
+/* 입구가 올해다. 안쪽으로 걸어 들어갈수록 과거로 간다. */
+const depth = i => (YEARS.length - 1 - i);
+function roomHTML(y, i){
+  const d = depth(i);
+  const left = y.top.filter((_, k) => k % 2 === 0);
+  const right = y.top.filter((_, k) => k % 2 === 1);
+  return `<div class="room" data-d="${d}" style="transform:translateZ(${-d * Z}px)">
+    ${face('fl', W, Z, `translateY(${H / 2}px) rotateX(90deg)`)}
+    ${face('cl', W, Z, `translateY(${-H / 2}px) rotateX(-90deg)`)}
+    ${face('wl lft', Z, H, `translateX(${-W / 2}px) rotateY(90deg)`,
+      left.map((e, k) => artHTML(e, k, Math.max(left.length, 1), true)).join(''))}
+    ${face('wl rgt', Z, H, `translateX(${W / 2}px) rotateY(-90deg)`,
+      right.map((e, k) => artHTML(e, k, Math.max(right.length, 1), false)).join(''))}
+    ${face('lintel', W, H * 0.24, `translateY(${-H / 2 + H * 0.12}px) translateZ(${-Z / 2}px)`)}
+    ${face('jamb', W * 0.19, H, `translateX(${-W / 2 + W * 0.095}px) translateZ(${-Z / 2}px)`)}
+    ${face('jamb', W * 0.19, H, `translateX(${W / 2 - W * 0.095}px) translateZ(${-Z / 2}px)`)}
+    <div class="plaque" style="--fs:${FS}px;width:${W}px;height:${H * 0.24}px;
+      transform:translate(-50%,-50%) translateY(${-H / 2 + H * 0.12}px) translateZ(${-Z / 2 + 1}px)">
+      <span class="y num">${y.y}</span><span class="c">전시물 ${y.n}점</span>
+    </div>
+  </div>`;
+}
+const world = document.getElementById('world');
+let flat = [];
+function render(){
+  sizes();
+  flat = [];
+  YEARS.forEach(y => y.top.forEach(e => { e._i = flat.length; flat.push(e); }));
+  world.innerHTML = YEARS.map((y, i) => roomHTML(y, i)).join('');
+  applyFilter();
+  move();
+}
+function move(){
+  const dc = depth(cur);
+  world.style.transform = `translateZ(${dc * Z - Z * 0.22}px)`;
+  // 지금 방과 그 안쪽(과거) 네 칸만 살려 둔다. 뒤쪽 방을 그리면 그 명패가 눈앞을 가린다.
+  // 29개 방을 전부 살려 두면 브라우저가 느려진다.
+  [...world.children].forEach(r => {
+    const rel = (+r.dataset.d) - dc;      // 0 = 지금 방, 양수 = 안쪽(과거)
+    const on = rel >= 0 && rel <= AHEAD;
+    r.style.display = on ? '' : 'none';
+    r.classList.toggle('here', rel === 0);
+    if (!on) return;
+    const dim = Math.max(0, Math.min(.52, rel * 0.135));
+    r.querySelectorAll('.dim').forEach(d2 => d2.style.background = `rgba(0,0,0,${dim})`);
+    const pq = r.querySelector('.plaque');
+    if (pq) pq.style.opacity = (1 - dim * 1.25).toFixed(2);
+  });
+  document.getElementById('now').innerHTML =
+    `${YEARS[cur].y}년 <small>${YEARS[cur].n}점</small>`;
+  [...document.querySelectorAll('.sy')].forEach((b, i) => b.classList.toggle('on', i === cur));
+  const s = document.querySelector('.sy.on');
+  if (s) s.scrollIntoView({block: 'nearest', inline: 'center', behavior: 'smooth'});
+  rail();
+}
+function go(i){
+  cur = Math.max(0, Math.min(YEARS.length - 1, i));
+  move();
+}
+
+/* ── 갈래 거르개 ───────────────────────────────────────── */
+document.getElementById('chips').innerHTML =
+  `<button class="chip on" data-k="">전체 ${D.total}</button>` +
+  D.themes.map(t => `<button class="chip" data-k="${t.k}" style="--c:${t.color}">${esc(t.name)} ${t.n}</button>`).join('');
+document.getElementById('chips').onclick = e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const k = b.dataset.k;
+  if (!k) filt.clear(); else filt.has(k) ? filt.delete(k) : filt.add(k);
+  [...document.querySelectorAll('.chip')].forEach(c => {
+    const on = c.dataset.k ? filt.has(c.dataset.k) : filt.size === 0;
+    c.classList.toggle('on', on);
+    c.style.background = on && c.dataset.k ? TH[c.dataset.k].color : '';
+  });
+  applyFilter(); rail();
+};
+function shown(e){ return filt.size === 0 || filt.has(e.theme); }
+function applyFilter(){
+  document.querySelectorAll('.art').forEach(a => {
+    a.classList.toggle('off', !shown(flat[+a.dataset.ex]));
+  });
+}
+
+/* ── 이 방의 전시물 ────────────────────────────────────── */
+function rail(){
+  const y = YEARS[cur];
+  const items = y.top.filter(shown);
+  document.getElementById('rtit').textContent = `${y.y}년 — 그 해의 ${Math.min(y.top.length, 10)}대 뉴스`;
+  document.getElementById('rsub').textContent =
+    `전시물 ${y.n}점 중 ${y.top.length}점을 걸었다` +
+    (y.rest ? ` (나머지 ${y.rest}점은 걸지 않았다).` : '.') +
+    (items.length !== y.top.length ? ` 거르개로 ${items.length}점만 보인다.` : '') +
+    (y.n < 3 ? ' 이 해는 저장소에 남은 자료가 얇다 — 아무 일도 없었다는 뜻이 아니다.' : '');
+  document.getElementById('list').innerHTML = items.map(e => `
+    <button class="it" data-ex="${e._i}" style="--tc:${TH[e.theme].color}">
+      <span class="rk num">${e.rank}</span>
+      <span class="bd"><span class="tg">${esc(TH[e.theme].name)} · ${esc(e.tag)}</span>
+        <span class="tt" style="display:block">${esc(e.title)}</span></span>
+    </button>`).join('') || '<p class="rs">이 갈래의 전시물이 이 해에는 없다.</p>';
+}
+
+/* ── 상세 ──────────────────────────────────────────────── */
+const sheet = document.getElementById('sheet');
+function open(i){
+  const e = flat[i];
+  const ext = /^https?:/.test(e.link);
+  document.getElementById('card').innerHTML = `
+    <button class="cl2" id="x">닫기 ✕</button>
+    <div class="kh"><span class="tg" style="--tc:${TH[e.theme].color}">${esc(TH[e.theme].name)} · ${esc(e.tag)}</span>
+      <span class="dt num">${esc(e.date)}</span></div>
+    <h3>${esc(e.title)}</h3>
+    ${e.art ? `<img src="${esc(e.art)}" alt="" onerror="this.remove()">` : ''}
+    <p>${esc(e.body)}</p>
+    ${e.link ? `<a class="go" href="${esc(e.link)}"${ext ? ' target="_blank" rel="noopener"' : ''}>
+      ${ext ? '원문 열기 ↗' : '관련 쪽으로 →'}</a>` : ''}`;
+  sheet.classList.add('on');
+  document.getElementById('x').onclick = close;
+}
+function close(){ sheet.classList.remove('on'); }
+sheet.onclick = e => { if (e.target === sheet) close(); };
+document.addEventListener('click', e => {
+  const b = e.target.closest('.art,.it'); if (!b) return;
+  stop(); open(+b.dataset.ex);
+});
+
+/* ── 조작 ──────────────────────────────────────────────── */
+document.getElementById('prev').onclick = () => { stop(); go(cur - 1); };
+document.getElementById('next').onclick = () => { stop(); go(cur + 1); };
+document.getElementById('jumpBig').onclick = () => {
+  stop();
+  let best = 0;
+  YEARS.forEach((y, i) => { if (y.n > YEARS[best].n) best = i; });
+  go(best);
+};
+const play = document.getElementById('play');
+function stop(){ if (timer) { clearInterval(timer); timer = null; play.textContent = '▶ 자동 순회'; } }
+play.onclick = () => {
+  if (timer) return stop();
+  play.textContent = '❚❚ 멈춤';
+  timer = setInterval(() => go(cur >= YEARS.length - 1 ? 0 : cur + 1), 2100);
+};
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') return close();
+  if (e.key === 'ArrowLeft') { stop(); go(cur - 1); }
+  if (e.key === 'ArrowRight') { stop(); go(cur + 1); }
+});
+/* 무대 위에서 가로 스와이프 */
+let tx = null;
+const stage = document.getElementById('stage');
+stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive: true});
+stage.addEventListener('touchend', e => {
+  if (tx == null) return;
+  const d = e.changedTouches[0].clientX - tx;
+  if (Math.abs(d) > 44) { stop(); go(cur + (d < 0 ? 1 : -1)); }
+  tx = null;
+}, {passive: true});
+
+document.getElementById('method').innerHTML =
+  `<b>이 전시물은 어디서 왔나</b><br>${esc(D.note)}<br>
+   갈래별로 <b>${D.themes.map(t => t.name + ' ' + t.n).join(' · ')}</b> 점.
+   방마다 갈래가 한쪽으로 쏠리지 않게 골랐다 — 지침은 해마다 수십 건이라 가중치만으로 뽑으면 열 자리를 다 먹는다.`;
+document.getElementById('fsrc').innerHTML =
+  `자료: 감염병예방법 연혁·질병관리청 고시(법제처) · 급수변동 원장 · 지침 통합목록 · 백서 목록 · ` +
+  `「감염병 신고 현황 연보」 · 검역관리지역 지정이력 · 「전국 어린이 예방접종률 현황」 — ` +
+  `<a href="../data/">모두 자료실에서 받을 수 있다</a>`;
+
+render();
+/* 화면 폭이 바뀌면 방 크기를 다시 잡는다 */
+let rt = null;
+addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => {
+  const w0 = W; sizes();
+  if (Math.abs(w0 - W) > 8){ const keep = cur; render(); cur = keep; move(); }
+}, 220); });
+/* 입장 장면 — 문 밖에서 한 번 걸어 들어온다. 움직임을 줄이는 설정이면 건너뛴다 */
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const to = world.style.transform;
+  world.style.transition = 'none';
+  world.style.transform = `translateZ(${depth(cur) * Z - Z * 0.22 - Z * 2}px)`;
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    world.style.transition = '';
+    world.style.transform = to;
+  }));
+}
+</script>
+</body>
+</html>
