@@ -6,34 +6,35 @@
 <title>연대기 전시관</title>
 <style>
   :root{
-    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
-    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
-    --line:#DCE4E1; --line-strong:#C4D0CB;
-    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
-    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    /* 고요한 화이트큐브 — 색을 빼고 빛과 여백으로만 짓는다 */
+    --ground:#FAFAF8; --surface:#FFFFFF; --surface-2:#F3F2EE;
+    --ink:#1A1A1A; --muted:#6B6A66; --faint:#9C9A94;
+    --line:#E7E5DE; --line-strong:#D8D5CC;
+    --accent:#0E6E63; --accent-soft:#EDF3F1; --accent-ink:#0A4A43;
+    --shadow:none;
     --warn:#B23A3A;
-    --hall-wall:#E9EEEB; --hall-side:#DAE1DE; --hall-floor:#CBD5D0; --hall-ceil:#F2F5F3;
-    --hall-deep:#B9C4BF; --hall-ink:#16211D;
+    --hall-wall:#FFFFFF; --hall-side:#F4F2EE; --hall-floor:#EBE8E1; --hall-ceil:#FCFBF9;
+    --hall-deep:#E4E1DA; --hall-ink:#1A1A1A;
   }
   @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
-    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
-    --line:#243330; --line-strong:#32433E;
-    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --ground:#121211; --surface:#191918; --surface-2:#211F1D;
+    --ink:#ECEAE5; --muted:#A5A29B; --faint:#78756E;
+    --line:#2A2825; --line-strong:#3A3733;
+    --accent:#54B7AA; --accent-soft:#1D2422; --accent-ink:#9FE0D7;
+    --shadow:none;
     --warn:#E07A7A;
-    --hall-wall:#1E2A26; --hall-side:#182220; --hall-floor:#131B19; --hall-ceil:#22302B;
-    --hall-deep:#0B100F; --hall-ink:#E7EDEA;
+    --hall-wall:#1C1B19; --hall-side:#171614; --hall-floor:#131211; --hall-ceil:#201F1C;
+    --hall-deep:#0C0C0B; --hall-ink:#ECEAE5;
   }}
   :root[data-theme="dark"]{
-    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
-    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
-    --line:#243330; --line-strong:#32433E;
-    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
-    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --ground:#121211; --surface:#191918; --surface-2:#211F1D;
+    --ink:#ECEAE5; --muted:#A5A29B; --faint:#78756E;
+    --line:#2A2825; --line-strong:#3A3733;
+    --accent:#54B7AA; --accent-soft:#1D2422; --accent-ink:#9FE0D7;
+    --shadow:none;
     --warn:#E07A7A;
-    --hall-wall:#1E2A26; --hall-side:#182220; --hall-floor:#131B19; --hall-ceil:#22302B;
-    --hall-deep:#0B100F; --hall-ink:#E7EDEA;
+    --hall-wall:#1C1B19; --hall-side:#171614; --hall-floor:#131211; --hall-ceil:#201F1C;
+    --hall-deep:#0C0C0B; --hall-ink:#ECEAE5;
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
@@ -73,114 +74,129 @@
   .p-floor{background:linear-gradient(var(--hall-floor),var(--hall-side))}
   .p-ceil{background:linear-gradient(var(--hall-ceil),var(--hall-side))}
   .p-side{background:var(--hall-side)}
+  /* 화이트큐브에는 극적인 조명이 없다. 가장자리만 아주 옅게 눌러 준다. */
   .vig{position:absolute;inset:0;pointer-events:none;z-index:3;
-    background:radial-gradient(ellipse 74% 66% at 50% 48%,rgba(0,0,0,0) 45%,rgba(0,0,0,.30) 100%)}
+    background:radial-gradient(ellipse 82% 76% at 50% 48%,rgba(0,0,0,0) 62%,rgba(0,0,0,.07) 100%)}
 
   .wall{position:absolute;left:50%;top:50%;background:var(--hall-wall);
-    border:1px solid var(--line);border-radius:2px;padding:0;overflow:hidden;
-    box-shadow:0 30px 80px rgba(0,0,0,.22);
-    transition:transform 1.25s cubic-bezier(.2,.72,.2,1),opacity 1.05s ease,filter 1.05s ease;
+    border:1px solid var(--line);border-radius:0;padding:0;overflow:hidden;
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1),opacity 1.6s cubic-bezier(.4,0,.2,1);
     display:flex;flex-direction:column}
-  .whead{display:flex;align-items:baseline;gap:10px;padding:calc(var(--fs)*1.1) calc(var(--fs)*1.3) calc(var(--fs)*.55);
-    border-bottom:1px solid var(--line);flex:none}
-  .whead .wy{font-size:calc(var(--fs)*2.6);font-weight:800;letter-spacing:-.03em;line-height:1}
-  .whead .wc{font-size:calc(var(--fs)*.95);color:var(--faint);font-weight:700}
-  .whead .wd{margin-left:auto;font-size:calc(var(--fs)*.9);color:var(--faint);font-weight:700}
-  .wgrid{flex:1;min-height:0;display:grid;gap:calc(var(--fs)*.6);padding:calc(var(--fs)*.9) calc(var(--fs)*1.3) calc(var(--fs)*1.2);
+  .whead{display:flex;align-items:baseline;gap:calc(var(--fs)*1.2);
+    padding:calc(var(--fs)*2) calc(var(--fs)*2.2) calc(var(--fs)*1.1);flex:none}
+  .whead .wy{font-size:calc(var(--fs)*2.8);font-weight:300;letter-spacing:.06em;line-height:1;color:var(--ink)}
+  .whead .wc{font-size:calc(var(--fs)*.9);color:var(--faint);font-weight:400;letter-spacing:.12em}
+  .whead .wd{margin-left:auto;font-size:calc(var(--fs)*.85);color:var(--faint);font-weight:400;letter-spacing:.1em}
+  /* 여백을 두 배로. 작품 사이가 비어 있어야 한 점씩 보인다. */
+  .wgrid{flex:1;min-height:0;display:grid;gap:calc(var(--fs)*1.5);
+    padding:0 calc(var(--fs)*2.2) calc(var(--fs)*2.2);
     grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-auto-rows:minmax(0,1fr)}
 
   .art{position:relative;min-width:0;cursor:pointer;font:inherit;text-align:left;overflow:hidden;
-    background:var(--surface);border:1px solid var(--line-strong);border-top:3px solid var(--tc);
-    border-radius:4px;padding:calc(var(--fs)*.55) calc(var(--fs)*.62);display:flex;flex-direction:column;gap:2px;
-    box-shadow:0 3px 10px rgba(0,0,0,.10);backface-visibility:hidden;
-    transition:transform .6s cubic-bezier(.16,.78,.22,1),box-shadow .3s,opacity .6s ease,filter .6s ease}
-  .art:hover,.art:focus-visible{transform:translateY(-3px);box-shadow:0 10px 22px rgba(0,0,0,.2);outline:none}
-  .art .rk{position:absolute;right:calc(var(--fs)*.42);top:calc(var(--fs)*.3);
-    font-size:calc(var(--fs)*.78);font-weight:800;color:var(--faint)}
-  .art .tg{font-size:calc(var(--fs)*.74);font-weight:800;color:var(--tc);letter-spacing:.01em;
-    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-right:calc(var(--fs)*1.2)}
-  .art .tt{font-size:var(--fs);font-weight:700;line-height:1.3;
+    background:var(--surface);border:1px solid var(--line);border-radius:0;
+    padding:calc(var(--fs)*.9) calc(var(--fs)*.95);display:flex;flex-direction:column;
+    gap:calc(var(--fs)*.42);backface-visibility:hidden;
+    transition:opacity 1.6s cubic-bezier(.4,0,.2,1),transform 1.6s cubic-bezier(.4,0,.2,1),
+               border-color .5s ease}
+  .art:hover,.art:focus-visible{border-color:var(--ink);outline:none}
+  .art .rk{position:absolute;right:calc(var(--fs)*.85);bottom:calc(var(--fs)*.7);
+    font-size:calc(var(--fs)*.8);font-weight:300;color:var(--faint);letter-spacing:.05em}
+  /* 갈래는 색 띠가 아니라 작은 점 하나로 — 벽에서 색이 튀지 않게 */
+  .art .tg{font-size:calc(var(--fs)*.7);font-weight:500;color:var(--muted);letter-spacing:.13em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.5em}
+  .art .tg::before{content:"";flex:none;width:.42em;height:.42em;border-radius:50%;background:var(--tc)}
+  .art .tt{font-size:calc(var(--fs)*1.06);font-weight:500;line-height:1.42;letter-spacing:.005em;
     display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
   .art.pic{padding:0}
   .art.pic img{width:100%;flex:1;object-fit:cover;display:block;min-height:0}
-  .art.pic .cap{padding:calc(var(--fs)*.4) calc(var(--fs)*.55);background:var(--surface);flex:none}
+  .art.pic .cap{padding:calc(var(--fs)*.75) calc(var(--fs)*.9);background:var(--surface);flex:none;
+    border-top:1px solid var(--line)}
   .art.pic .cap .tt{-webkit-line-clamp:2}
   .art.off{opacity:.2;pointer-events:none;box-shadow:none}
   /* 한 점이 앞으로 나오면 나머지는 좌우로 흩어져 물러난다 */
-  .wall.scatter{filter:blur(2.6px) brightness(.8)}
-  .wall.scatter .art{transform:translateX(var(--sx)) scale(.9) rotateY(var(--sr));opacity:.3;
-    transition:transform 1s cubic-bezier(.16,.78,.22,1),opacity .8s ease,filter .8s ease}
-  .wall.scatter .art.taken{opacity:0;filter:blur(6px)}
-  .wall.here .art{animation:hang 1.05s cubic-bezier(.16,.78,.22,1) backwards;
-    animation-delay:calc(var(--k)*80ms + 200ms)}
-  @keyframes hang{from{opacity:0;transform:translateY(12px) scale(.97) rotateY(-16deg);filter:blur(8px)}}
+  /* 한 점이 앞으로 나오면 나머지는 좌우로 물러나며 조용히 옅어진다(회전 없음) */
+  .wall.scatter .art{transform:translateX(calc(var(--sx) * .55));opacity:.12;
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1),opacity 1.6s cubic-bezier(.4,0,.2,1)}
+  .wall.scatter .art.taken{opacity:0}
+  .wall.here .art{animation:hang 1.6s cubic-bezier(.4,0,.2,1) backwards;
+    animation-delay:calc(var(--k)*90ms + 200ms)}
+  @keyframes hang{from{opacity:0}}
 
   /* ── 작품 앞으로(확대 + 미술관 라벨) ─────────────────────── */
   .zoom{position:absolute;inset:0;z-index:10;display:none}
   .zoom.on{display:flex}
-  .zbd{position:absolute;inset:0;background:rgba(8,14,12,.62);backdrop-filter:blur(3px);
-    animation:fade .8s ease both;transition:opacity .7s ease}
+  /* 어둡게 덮지 않는다. 벽을 하얗게 지워 작품만 남긴다. */
+  .zbd{position:absolute;inset:0;background:color-mix(in srgb,var(--hall-wall) 88%,transparent);
+    animation:fade 1.6s cubic-bezier(.4,0,.2,1) both;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
   @keyframes fade{from{opacity:0}}
   /* 물러날 때는 배경이 먼저 옅어지고 작품이 겹쳐 사라진다 */
   .zoom.closing .zbd{opacity:0}
-  .zoom.closing .zlabel{opacity:0;transform:translateX(26px) scale(.97);filter:blur(6px)}
-  .zin{position:relative;margin:auto;display:flex;gap:clamp(14px,2.4vw,26px);align-items:stretch;
-    width:min(94%,900px);max-height:92%;padding:clamp(10px,2vw,18px)}
+  .zoom.closing .zlabel{opacity:0}
+  .zin{position:relative;margin:auto;display:flex;gap:clamp(18px,3.2vw,42px);align-items:stretch;
+    width:min(92%,940px);max-height:92%;padding:clamp(10px,2vw,18px) clamp(10px,2vw,18px) 58px}
   /* 튀어나오지 않는다. 살짝 돌면서 흐림이 걷히고 겹쳐 들어온다(크로스 디졸브). */
-  .zart{flex:0 0 clamp(150px,26%,250px);background:var(--surface);border-radius:6px;
-    border:1px solid var(--line-strong);border-top:5px solid var(--tc);overflow:hidden;
-    display:flex;flex-direction:column;box-shadow:0 24px 60px rgba(0,0,0,.45);
+  .zart{flex:0 0 clamp(160px,27%,260px);background:var(--surface);border-radius:0;
+    border:1px solid var(--line);overflow:hidden;
+    display:flex;flex-direction:column;
     transform-origin:50% 50%;backface-visibility:hidden;
-    transition:transform 1.15s cubic-bezier(.16,.78,.22,1),
-               opacity .85s cubic-bezier(.35,.55,.25,1),
-               filter .95s cubic-bezier(.35,.55,.25,1)}
-  .zart .zpad{padding:14px 15px;display:flex;flex-direction:column;gap:4px;flex:1;min-height:0}
-  .zart .ztg{font-size:11px;font-weight:800;color:var(--tc)}
-  .zart .ztt{font-size:16px;font-weight:800;line-height:1.3;letter-spacing:-.02em}
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1),
+               opacity 1.6s cubic-bezier(.4,0,.2,1)}
+  .zart .zpad{padding:22px 22px 18px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+  .zart .ztg{font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:.16em;
+    display:flex;align-items:center;gap:.6em}
+  .zart .ztg::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--tc)}
+  .zart .ztt{font-size:17px;font-weight:400;line-height:1.45;letter-spacing:.01em}
   /* 그림이 없는 전시물은 연도를 크게 눌러 찍어 판(plate)처럼 보이게 한다 */
-  .zart .zyr{margin-top:auto;font-size:54px;font-weight:800;letter-spacing:-.05em;line-height:.9;
-    color:var(--tc);opacity:.16;align-self:flex-end}
-  .zart .zcap{flex:none;border-top:1px solid var(--line);padding:8px 15px;
-    font-size:11.5px;font-weight:700;color:var(--faint)}
+  .zart .zyr{margin-top:auto;font-size:46px;font-weight:200;letter-spacing:.04em;line-height:.9;
+    color:var(--ink);opacity:.10;align-self:flex-end}
+  .zart .zcap{flex:none;border-top:1px solid var(--line);padding:11px 22px;
+    font-size:10.5px;font-weight:400;color:var(--faint);letter-spacing:.1em}
   .zart img{width:100%;flex:1;object-fit:cover;min-height:0;display:block}
-  .zlabel{flex:1;min-width:0;background:var(--surface);border-radius:6px;border:1px solid var(--line);
-    padding:clamp(14px,2.2vw,22px) clamp(15px,2.4vw,26px);overflow:auto;
-    box-shadow:0 24px 60px rgba(0,0,0,.35);
-    animation:lab 1s .28s cubic-bezier(.16,.78,.22,1) backwards;
-    transition:opacity .55s ease,transform .6s cubic-bezier(.35,.55,.25,1),filter .6s ease}
-  @keyframes lab{from{opacity:0;transform:translateX(34px) scale(.965) rotateY(-9deg);filter:blur(7px)}}
+  .zlabel{flex:1;min-width:0;background:var(--surface);border-radius:0;border:1px solid var(--line);
+    padding:clamp(20px,2.8vw,34px) clamp(22px,3vw,38px);overflow:auto;
+    animation:lab 1.6s .35s cubic-bezier(.4,0,.2,1) backwards;
+    transition:opacity 1.1s cubic-bezier(.4,0,.2,1)}
+  @keyframes lab{from{opacity:0}}
   /* 미술관 라벨투 — 얇은 괘선과 넉넉한 여백 */
-  .zlabel .lt{font-size:10.5px;font-weight:800;letter-spacing:.14em;color:var(--tc);text-transform:uppercase}
-  .zlabel h3{font-size:clamp(17px,2.6vw,23px);margin:6px 0 2px;font-weight:800;letter-spacing:-.025em;line-height:1.28}
-  .zlabel .lm{font-size:12.5px;color:var(--faint);font-weight:700;
-    padding-bottom:11px;border-bottom:1px solid var(--line);margin-bottom:12px}
-  .zlabel p{font-size:14px;color:var(--ink);margin:0 0 12px;white-space:pre-line;line-height:1.62}
-  .zlabel .why{background:var(--surface-2);border-left:3px solid var(--tc);border-radius:0 8px 8px 0;
-    padding:11px 14px;margin:0 0 13px}
-  .zlabel .why b{display:block;font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--muted);
-    text-transform:uppercase;margin-bottom:4px}
-  .zlabel .why p{font-size:13.5px;color:var(--muted);margin:0}
+  .zlabel .lt{font-size:10.5px;font-weight:500;letter-spacing:.2em;color:var(--muted);
+    display:flex;align-items:center;gap:.7em}
+  .zlabel .lt::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--tc)}
+  .zlabel h3{font-size:clamp(20px,3vw,29px);margin:16px 0 6px;font-weight:300;
+    letter-spacing:.012em;line-height:1.38}
+  .zlabel .lm{font-size:11.5px;color:var(--faint);font-weight:400;letter-spacing:.1em;
+    padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .zlabel p{font-size:14.5px;color:var(--ink);margin:0 0 18px;white-space:pre-line;
+    line-height:1.85;font-weight:400}
+  .zlabel .why{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:18px 0;margin:0 0 20px}
+  .zlabel .why b{display:block;font-size:10.5px;font-weight:500;letter-spacing:.2em;color:var(--faint);
+    margin-bottom:10px}
+  .zlabel .why p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.8}
   .zlabel .see{font-size:12.5px;color:var(--faint);margin:0 0 14px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-  .zlabel .see a{border:1px solid var(--line-strong);border-radius:7px;padding:4px 9px;font-weight:700;font-size:12.5px}
-  .zlabel .see a:hover{background:var(--surface-2)}
-  .zlabel .go{display:inline-flex;gap:6px;align-items:center;font-size:13.5px;font-weight:700;color:#fff;
-    background:var(--tc);border-radius:9px;padding:9px 15px}
-  .zclose{position:absolute;right:10px;top:10px;z-index:4;font:inherit;font-size:13px;font-weight:700;
+  .zlabel .see a{border:1px solid var(--line);border-radius:0;padding:6px 12px;font-weight:400;
+    font-size:12.5px;color:var(--ink);letter-spacing:.03em}
+  .zlabel .see a:hover{border-color:var(--ink)}
+  .zlabel .go{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:400;
+    color:var(--ink);background:none;border:1px solid var(--ink);border-radius:0;padding:11px 20px;
+    letter-spacing:.06em}
+  .zlabel .go:hover{background:var(--ink);color:var(--surface)}
+  .zclose{position:absolute;right:14px;top:14px;z-index:4;font:inherit;font-size:12px;font-weight:400;
     cursor:pointer;background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);
-    border-radius:999px;padding:6px 13px}
-  .zclose:hover{background:var(--surface-2)}
-  .znav{position:absolute;bottom:12px;left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:8px;align-items:center}
-  .znav button{font:inherit;font-size:13px;font-weight:700;cursor:pointer;background:var(--surface);
-    color:var(--ink);border:1px solid var(--line-strong);border-radius:999px;padding:6px 13px}
-  .znav .zc{font-size:12.5px;color:#fff;font-weight:700;background:rgba(0,0,0,.42);border-radius:999px;padding:5px 11px}
+    border-radius:0;padding:7px 14px;letter-spacing:.08em}
+  .zclose:hover{border-color:var(--ink)}
+  .znav{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:8px;align-items:center}
+  .znav button{font:inherit;font-size:12px;font-weight:400;cursor:pointer;background:var(--surface);
+    color:var(--ink);border:1px solid var(--line-strong);border-radius:0;padding:7px 14px;letter-spacing:.06em}
+  .znav button:hover{border-color:var(--ink)}
+  .znav .zc{font-size:11.5px;color:var(--muted);font-weight:400;letter-spacing:.12em;padding:6px 10px}
 
   /* ── 조작 ────────────────────────────────────────────────── */
   .ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 0}
-  .ctl button{font:inherit;font-size:13px;font-weight:700;cursor:pointer;border-radius:10px;padding:8px 13px;
-    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink)}
-  .ctl button:hover{background:var(--surface-2)}
-  .ctl button.pri{background:var(--accent);border-color:var(--accent);color:#fff}
-  .ctl .now{font-size:15px;font-weight:800;min-width:118px}
+  .ctl button{font:inherit;font-size:12.5px;font-weight:400;cursor:pointer;border-radius:0;padding:9px 15px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);letter-spacing:.06em}
+  .ctl button:hover{border-color:var(--ink)}
+  .ctl button.pri{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+  .ctl .now{font-size:16px;font-weight:300;letter-spacing:.06em;min-width:124px}
   .ctl .now small{font-size:12px;font-weight:600;color:var(--muted);margin-left:5px}
   .ctl .sp{flex:1}
   .chips{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 0}
@@ -380,8 +396,8 @@ function sizes(){
   WW = Math.round(Math.min(sw * 0.80, 860));
   WH = Math.round(Math.min(sh * 0.82, 500));
   WD = Math.round(Math.min(sw, sh) * 0.55);
-  COLS = WW >= 700 ? 5 : WW >= 520 ? 4 : 3;
-  FS = Math.max(8.5, Math.min(13, WW / COLS / 13));
+  COLS = WW >= 760 ? 5 : WW >= 540 ? 4 : 3;
+  FS = Math.max(8.5, Math.min(13, WW / COLS / 15));
 }
 
 /* ── 연표 ────────────────────────────────────────────────── */
@@ -417,18 +433,17 @@ function buildShell(){
 /* ── 전시벽 ──────────────────────────────────────────────── */
 /* 격자에서 왼쪽 칸은 왼쪽으로, 오른쪽 칸은 오른쪽으로 물러난다 */
 const sx = k => Math.round(((k % COLS) - (COLS - 1) / 2) * WW * 0.115);
-/* 흩어질 때 바깥쪽 칸일수록 더 돌아앉는다 */
-const sr = k => (((k % COLS) - (COLS - 1) / 2) * 7).toFixed(1) + 'deg';
+
 function artHTML(e, k){
   const t = TH[e.theme];
   if (e.art) {
-    return `<button class="art pic" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px;--sr:${sr(k)}">
+    return `<button class="art pic" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px">
       <img src="${esc(e.art)}" alt="" loading="lazy" onerror="this.remove()">
       <span class="cap"><span class="tg">${esc(t.name)} · ${esc(e.tag)}</span>
         <span class="tt" style="display:block">${esc(e.title)}</span></span>
       <span class="rk num">${e.rank}</span></button>`;
   }
-  return `<button class="art" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px;--sr:${sr(k)}">
+  return `<button class="art" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px">
     <span class="rk num">${e.rank}</span>
     <span class="tg">${esc(t.name)} · ${esc(e.tag)}</span>
     <span class="tt">${esc(e.title)}</span></button>`;
@@ -457,11 +472,10 @@ function move(){
     w.style.display = on ? '' : 'none';
     w.classList.toggle('here', d === 0);
     if (!on) return;
-    const sgn = Math.sign(d);
-    w.style.transform = `translate(-50%,-50%) translateX(${d * WW * 1.12}px)` +
-      ` translateZ(${-WD + (d ? -Math.abs(d) * WD * 0.5 : 0)}px) rotateY(${-sgn * 26}deg)`;
-    w.style.opacity = d ? (Math.abs(d) === 1 ? .42 : .16) : 1;
-    w.style.filter = d ? `brightness(.7) blur(${Math.abs(d) * 1.6}px)` : '';
+    // 회전 없이, 옆으로 물러나며 조용히 옅어진다
+    w.style.transform = `translate(-50%,-50%) translateX(${d * WW * 1.2}px)` +
+      ` translateZ(${-WD + (d ? -Math.abs(d) * WD * 0.55 : 0)}px)`;
+    w.style.opacity = d ? (Math.abs(d) === 1 ? .2 : .06) : 1;
     w.style.pointerEvents = d ? 'none' : '';
   });
   document.getElementById('now').innerHTML = `${YEARS[cur].y}년 <small>${YEARS[cur].n}점</small>`;
@@ -555,14 +569,12 @@ function openZ(i, srcEl){
     const g = geom(za, zsrc);
     if (g){
       za.style.transition = 'none';
-      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(-26deg)`;
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s})`;
       za.style.opacity = '0';
-      za.style.filter = 'blur(10px)';
       za.getBoundingClientRect();          // 여기서 시작 상태를 굳힌다
       za.style.transition = '';
       za.style.transform = '';
       za.style.opacity = '';
-      za.style.filter = '';
     }
   }
 }
@@ -582,9 +594,8 @@ function closeZ(){
   if (za && zsrc && !REDUCE){
     const g = geom(za, zsrc);
     if (g){
-      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s}) rotateY(22deg)`;
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s})`;
       za.style.opacity = '0';
-      za.style.filter = 'blur(9px)';
     }
   } else if (za){ za.style.opacity = '0'; }
   const wall = track.querySelector('.wall.here');
@@ -596,7 +607,7 @@ function closeZ(){
     zoom.classList.remove('on', 'closing');
     zin.innerHTML = '';
     closeT = null;
-  }, REDUCE ? 0 : 950);
+  }, REDUCE ? 0 : 1500);
   zi = -1; zsrc = null;
 }
 function stepZ(d){
@@ -647,17 +658,17 @@ async function tour(){
   for (let yi = cur; yi >= 0; yi--){
     if (id !== tourId) return;
     go(yi);
-    await sleep(2000, id);             // 벽이 겹쳐 넘어오는 시간
+    await sleep(2300, id);             // 벽이 겹쳐 넘어오는 시간
     if (id !== tourId) return;
     for (const e of YEARS[yi].top.filter(shown)){
       if (id !== tourId) return;
       const el = track.querySelector(`.art[data-ex="${e._i}"]`);
       if (!el) continue;
       openZ(e._i, el);
-      await sleep(3800, id);
+      await sleep(4200, id);
       if (id !== tourId) return;
       closeZ();
-      await sleep(1150, id);           // 겹쳐 사라지는 동안 기다린다
+      await sleep(1700, id);           // 겹쳐 사라지는 동안 기다린다
     }
   }
   if (id === tourId) stop();
