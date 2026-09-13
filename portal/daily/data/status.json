@@ -1,36 +1,36 @@
 {
  "who_don": {
   "label": "WHO 질병 발생 뉴스",
-  "ok": false,
-  "last_ok": "2026-09-12 07:55 KST",
+  "ok": true,
+  "last_ok": "2026-09-14 07:47 KST",
   "count": 30,
-  "error": "접속 실패",
+  "error": "",
   "cadence": 20,
-  "latest": "",
-  "age_days": null,
-  "quiet": true,
+  "latest": "2026-09-10",
+  "age_days": 4,
+  "quiet": false,
   "last_try": "2026-09-13 07:46 KST"
  },
  "cdc_travel": {
   "label": "CDC 여행 건강 알림",
   "ok": true,
-  "last_ok": "2026-09-13 07:46 KST",
+  "last_ok": "2026-09-14 07:47 KST",
   "count": 23,
   "error": "",
   "cadence": 20,
   "latest": "2026-09-03",
-  "age_days": 10,
+  "age_days": 11,
   "quiet": false
  },
  "cdc_outbreak": {
   "label": "CDC 발생조사",
   "ok": true,
-  "last_ok": "2026-09-13 07:46 KST",
+  "last_ok": "2026-09-14 07:47 KST",
   "count": 8,
   "error": "",
   "cadence": 45,
   "latest": "2026-09-10",
-  "age_days": 3,
+  "age_days": 4,
   "quiet": false
  },
  "kdca_guides": {
@@ -43,12 +43,12 @@
   "latest": "",
   "age_days": null,
   "quiet": true,
-  "last_try": "2026-09-13 07:46 KST"
+  "last_try": "2026-09-14 07:47 KST"
  },
  "_run": {
-  "run_at": "2026-09-13 07:46 KST",
-  "today": "2026-09-13",
-  "new": 31,
-  "total": 31
+  "run_at": "2026-09-14 07:47 KST",
+  "today": "2026-09-14",
+  "new": 61,
+  "total": 61
  }
 }
