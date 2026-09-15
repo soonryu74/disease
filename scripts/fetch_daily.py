@@ -29,6 +29,7 @@ from datetime import datetime, timedelta, timezone
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 from portal_tools import inject, inject_nav  # noqa: E402
+from daily_enrich import ENRICH_V, enrich  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, 'portal', 'daily')
 DATA_DIR = os.path.join(OUT_DIR, 'data')
@@ -57,6 +58,10 @@ DISEASE_KW = [
     ('paratyphoid', '파라티푸스'), ('rabies', '공수병'), ('west nile', '웨스트나일열'),
     ('japanese encephalitis', '일본뇌염'), ('leptospirosis', '렙토스피라증'), ('tuberculosis', '결핵'),
     ('covid', '코로나바이러스감염증-19'), ('sars-cov-2', '코로나바이러스감염증-19'),
+    ('salmonella', '살모넬라균 감염증'), ('e. coli', '장출혈성대장균감염증'), ('stec', '장출혈성대장균감염증'),
+    ('listeria', '리스테리아증'), ('norovirus', '노로바이러스 감염증'), ('campylobacter', '캄필로박터균 감염증'),
+    ('cyclospora', '장관감염증'), ('vibrio', '비브리오패혈증'), ('botulism', '보툴리눔독소증'),
+    ('shigella', '세균성이질'), ('cryptosporidium', '장관감염증'),
     ('hantavirus', '신증후군출혈열'), ('sfts', '중증열성혈소판감소증후군'), ('tick-borne encephalitis', '진드기매개뇌염'),
     ('brucell', '브루셀라증'), ('legionell', '레지오넬라증'), ('shigell', '세균성이질'),
     ('e. coli', '장출혈성대장균감염증'), ('stec', '장출혈성대장균감염증'), ('botulism', '보툴리눔독소증'),
@@ -118,7 +123,8 @@ def curl(url, tries=5, timeout=60):
 
 
 def strip(s):
-    return html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', s or ''))).strip()
+    s = html.unescape(re.sub(r'<[^>]+>', ' ', s or ''))
+    return html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', s))).strip()
 
 
 # ── 출처 ─────────────────────────────────────────────────────────────
@@ -131,7 +137,8 @@ def src_who_don():
         out.append({'id': 'who:' + v['UrlName'], 'source': 'WHO DON', 'title': strip(v.get('Title')),
                     'link': 'https://www.who.int/emergencies/disease-outbreak-news/item/' + v['UrlName'],
                     'date': (v.get('PublicationDate') or '')[:10],
-                    'summary': strip(v.get('Summary') or v.get('Overview') or '')[:320]})
+                    'summary': strip(v.get('Summary') or v.get('Overview') or '')[:320],
+                    '_raw': {k: v.get(k) for k in ('Summary', 'Overview', 'Epidemiology', 'Assessment', 'Advice', 'Response')}})
     return out
 
 
@@ -331,7 +338,7 @@ def main():
     new_count = 0
     for it in fetched:
         if it['id'] in by_id:
-            by_id[it['id']].update({k: v for k, v in it.items() if k in ('title', 'summary', 'date', 'level')})
+            by_id[it['id']].update({k: v for k, v in it.items() if k in ('title', 'summary', 'date', 'level', '_raw')})
         else:
             it['first_seen'] = today
             by_id[it['id']] = it
@@ -339,6 +346,24 @@ def main():
     items = list(by_id.values())
     for it in items:
         tag(it, name_list, rows, quar, ko)
+    # 링크만 있던 항목에 한글 요약·사실·그림·원문 핵심을 단다. 한 번 단 것은 다시 하지 않는다.
+    ko_country = {name.lower(): rows[iso]['ko'] for name, iso in name_list if iso in rows and rows[iso].get('ko')}
+    todo = [it for it in items if it.get('enrich_v', 0) < ENRICH_V]
+    fetched_pages = 0
+    for it in todo:
+        page = ''
+        if it['source'] in ('CDC 여행알림', 'KDCA 지침') and fetched_pages < 60:
+            raw = curl(it['link'], tries=2, timeout=40)
+            fetched_pages += 1
+            page = raw.decode('utf-8', 'replace') if raw else ''
+            if not page and it.get('ko'):
+                # 쪽을 못 받았는데 이미 달아 둔 요약이 있으면 빈 것으로 덮지 않고 다음 날 다시 시도한다
+                continue
+        enrich(it, {'don': it.get('_raw'), 'page': page}, ko_country)
+    if todo:
+        print(f'  살 붙임 {len(todo)}건 (쪽 받음 {fetched_pages})')
+    for it in items:
+        it.pop('_raw', None)
     # 발행일 내림차순이 먼저다. 화면도 발행일로 묶으므로 순서가 어긋나면 안 된다.
     items.sort(key=lambda x: (x.get('date') or '', x.get('first_seen', '')), reverse=True)
     items = items[:KEEP]
@@ -363,6 +388,8 @@ def main():
         del status[k]
     status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'total': len(items)}
     json.dump(status, open(STATUS, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # 항목 원장을 남긴다. 이것이 없으면 다음 날 모든 항목이 다시 '새 항목'이 된다.
+    json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     open(os.path.join(DATA_DIR, 'new_count.txt'), 'w').write(str(new_count))
     print(f'  오늘 새 항목 {new_count} · 보관 {len(items)}')
 
@@ -393,7 +420,7 @@ def write_feed(items):
         tags = ' · '.join(it.get('diseases', []) + [j['ko'] for j in it.get('joins', []) if j.get('ko')][:3])
         joins = '; '.join(f"{j['ko']} {'중점' if j['priority'] else ('검역관리지역' if j['designated'] else '미지정')}"
                           + (f"({j['disease']})" if j.get('disease') else '') for j in it.get('joins', []))
-        desc = esc(it.get('summary', '')) + (f' — 태그: {esc(tags)}' if tags else '') + (f' — 우리 검역: {esc(joins)}' if joins else '')
+        desc = esc(it.get('ko') or it.get('summary', '')) + (f' — 태그: {esc(tags)}' if tags else '') + (f' — 우리 검역: {esc(joins)}' if joins else '')
         try:
             pub = datetime.strptime(it.get('date') or it['first_seen'], '%Y-%m-%d').replace(tzinfo=KST).strftime('%a, %d %b %Y 06:00:00 +0900')
         except ValueError:
@@ -419,7 +446,7 @@ def write_mail(items, today, run_at):
         joins = ' · '.join(f"{j['ko']} {'중점' if j['priority'] else ('지정' if j['designated'] else '미지정')}"
                            + (f"({j['disease']})" if j.get('disease') else '') for j in it.get('joins', []))
         rows.append(f'<li style="margin:0 0 10px"><b>[{esc(it["source"])}]</b> <a href="{esc(it["link"])}">{esc(it["title"])}</a>'
-                    + (f'<br><span style="color:#555;font-size:13px">{esc(it.get("summary","")[:200])}</span>' if it.get('summary') else '')
+                    + (f'<br><span style="color:#555;font-size:13px">{esc((it.get("ko") or it.get("summary",""))[:260])}</span>' if (it.get('ko') or it.get('summary')) else '')
                     + (f'<br><span style="color:#0A4A43;font-size:13px">우리 검역: {esc(joins)}</span>' if joins else '') + '</li>')
     body = (f'<div style="font-family:sans-serif;max-width:640px"><h2 style="margin:0 0 4px">감염병 상황판 {today}</h2>'
             f'<p style="color:#555;margin:0 0 14px">새로 올라온 것 {len(new)}건 · {run_at}</p>'

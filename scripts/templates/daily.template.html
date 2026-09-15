@@ -89,6 +89,33 @@
   ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px} ul.tight li{margin:3px 0}
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
+  /* 한글 요약·사실·그림·원문 */
+  .ko{font-size:14.5px;line-height:1.7;margin:8px 0 6px}
+  .facts{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+  .facts span{font-size:12px;font-weight:700;border:1px solid var(--line-strong);border-radius:7px;padding:3px 8px;color:var(--muted)}
+  .facts span b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .facts span[data-lv="높음"],.facts span[data-lv="매우 높음"]{border-color:var(--warn);color:var(--warn)}
+  .facts span[data-lv="높음"] b,.facts span[data-lv="매우 높음"] b{color:var(--warn)}
+  .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:8px 0}
+  .figs>*{min-width:0}
+  .fig{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-2)}
+  .fig img{width:100%;display:block;max-height:260px;object-fit:contain;background:#fff}
+  .fig figcaption{font-size:11.5px;color:var(--muted);padding:6px 9px;line-height:1.45}
+  .tbl{overflow-x:auto;margin:8px 0}
+  .tbl table{border-collapse:collapse;font-size:12px;min-width:320px}
+  .tbl th,.tbl td{border:1px solid var(--line);padding:4px 7px;text-align:left;vertical-align:top}
+  .tbl caption{font-size:11.5px;color:var(--muted);text-align:left;padding:0 0 4px}
+  details.en{margin:6px 0 4px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--surface-2)}
+  details.en summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);list-style:none}
+  details.en summary::-webkit-details-marker{display:none}
+  details.en p{font-size:13.5px;line-height:1.75;margin:8px 0 0;color:var(--ink)}
+  details.en ul{margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7}
+  .t{font-weight:700;color:var(--accent-ink);white-space:nowrap}
+  .t i{font-style:normal;font-weight:600;color:var(--muted);font-size:.86em;margin-left:2px}
+  .terms{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 0}
+  .terms span{font-size:11.5px;border-radius:999px;padding:2px 9px;background:var(--surface);border:1px solid var(--line)}
+  .terms span i{font-style:normal;color:var(--muted);margin-left:4px}
+  .howko{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:12px 16px;font-size:13px;margin:0 0 14px}
   @media print{.chips,.more,.sub form{display:none!important}.it{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
@@ -104,7 +131,10 @@
 
 <section id="feed">
   <div class="chips" id="chips"></div>
-  <div id="list"></div>
+  <div class="howko"><b>한글 요약은 번역이 아니다.</b> 원문에서 병명·나라·숫자·기준일·위험 평가·여행 제한 권고를 뽑아 틀에 맞춰 적은 것이다.
+못 뽑은 것은 비워 둔다. 영어 핵심 문장은 그대로 두고 낱말마다 한글을 달았다(<span class="t">outbreak<i>발생(유행)</i></span>처럼).
+그림·표는 WHO 원문의 것을 그대로 가져온다. 판단이 필요한 대목은 원문을 열어 확인할 것.</div>
+<div id="list"></div>
 </section>
 
 <section id="subscribe">
@@ -202,6 +232,49 @@ function joinHtml(it){
     parts.push(s+'</span>'); }
   return `<div class="join">${parts.join('')}</div>`;
 }
+function factsHtml(it){
+  const f=it.facts||{}; const out=[];
+  if(f.level) out.push(`<span>Level <b>${f.level}</b> · ${esc(f.level_ko)}<i style="font-style:normal;color:var(--faint)"> ${esc(f.level_en)}</i></span>`);
+  if(f.as_of) out.push(`<span>기준일 <b>${esc(f.as_of)}</b></span>`);
+  if(f.cases!=null) out.push(`<span>확진 <b>${fmt(f.cases)}</b>명</span>`);
+  if(f.suspected!=null) out.push(`<span>의심 <b>${fmt(f.suspected)}</b>명</span>`);
+  if(f.hospitalized!=null) out.push(`<span>입원 <b>${fmt(f.hospitalized)}</b>명</span>`);
+  if(f.deaths!=null) out.push(`<span>사망 <b>${fmt(f.deaths)}</b>명</span>`);
+  if(f.cfr) out.push(`<span>치명률 CFR <b>${esc(f.cfr)}</b></span>`);
+  if(f.states!=null) out.push(`<span>미국 <b>${f.states}</b>개 주</span>`);
+  for(const [sc,lv] of (f.risk||[])) out.push(`<span data-lv="${esc(lv)}">위험 ${esc(sc)} <b>${esc(lv)}</b></span>`);
+  if(f.travel) out.push(`<span>${esc(f.travel)}</span>`);
+  if(f.dept) out.push(`<span>담당 <b>${esc(f.dept)}</b></span>`);
+  return out.length?`<div class="facts">${out.join('')}</div>`:'';
+}
+function figsHtml(it){
+  const fs=it.figs||[]; if(!fs.length) return '';
+  return `<div class="figs">${fs.map(f=>`<figure class="fig"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img src="${esc(f.src)}" alt="${esc(f.caption||'그림')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"></a>${f.caption?`<figcaption>${esc(f.caption)}</figcaption>`:''}</figure>`).join('')}</div>`;
+}
+function tablesHtml(it){
+  const ts=it.tables||[]; if(!ts.length) return '';
+  return ts.map(t=>`<div class="tbl"><table>${t.caption?`<caption>${esc(t.caption)}</caption>`:''}${t.rows.map((r,i)=>`<tr>${r.map(c=>i?`<td>${esc(c)}</td>`:`<th>${esc(c)}</th>`).join('')}</tr>`).join('')}</table></div>`).join('');
+}
+/* 영어 원문의 낱말에 한글을 단다 — 사전에 있는 것만, 긴 것부터 */
+function annotate(text, terms){
+  let h=esc(text);
+  const ts=[...(terms||[])].sort((a,b)=>b[0].length-a[0].length);
+  for(const [en,ko] of ts){
+    const re=new RegExp('(?<![A-Za-z])('+en.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![A-Za-z])','i');
+    h=h.replace(re, `<span class="t">$1<i>${esc(ko)}</i></span>`);
+  }
+  return h;
+}
+function enHtml(it){
+  const en=it.en; if(!en) return '';
+  /* 원문이 제목과 같으면(RSS에 설명이 없는 CDC 발생조사) 접힌 상자만 남아 헛것이 된다 — 그냥 안 그린다 */
+  if(!(it.en_list&&it.en_list.length) && en.trim().replace(/\.$/,'')===String(it.title||'').trim().replace(/\.$/,'')) return '';
+  const body = (it.en_list&&it.en_list.length)
+    ? `<ul>${it.en_list.map(p=>`<li>${annotate(p,it.terms)}</li>`).join('')}</ul>`
+    : `<p>${annotate(en,it.terms)}</p>`;
+  const terms=(it.terms||[]).length?`<div class="terms">${it.terms.map(([e,k])=>`<span>${esc(e)}<i>${esc(k)}</i></span>`).join('')}</div>`:'';
+  return `<details class="en"><summary>원문 핵심 문장 — 영어, 용어에 한글 병기 ▾</summary>${body}${terms}</details>`;
+}
 function itemHtml(it){
   /* 발행일과 '우리가 처음 수집한 날'은 다르다. 배지는 수집 기준이므로 그렇게 적는다. */
   const isNew=it.first_seen===D.today && !D.first_run;
@@ -210,7 +283,11 @@ function itemHtml(it){
   return `<article class="it ${isNew?'new':''}">
     <div class="top"><span class="sb ${SB[it.source]||''}">${esc(it.source)}</span>${it.level?`<span class="lv">Level ${it.level}</span>`:''}<span class="num" title="발행일">${esc(it.date||'날짜 없음')}</span>${isNew?'<span class="nw" title="우리가 오늘 처음 수집한 항목이다. 발행일과 다르다">오늘 처음 수집</span>':''}</div>
     <h4><a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.title)}</a></h4>
-    ${it.summary?`<p>${esc(it.summary)}</p>`:''}
+    ${it.ko?`<p class="ko">${esc(it.ko)}</p>`:(it.summary?`<p>${esc(it.summary)}</p>`:'')}
+    ${factsHtml(it)}
+    ${figsHtml(it)}
+    ${tablesHtml(it)}
+    ${enHtml(it)}
     ${tags?`<div class="tags">${tags}</div>`:''}
     ${joinHtml(it)}
   </article>`;
