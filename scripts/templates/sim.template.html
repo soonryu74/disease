@@ -109,6 +109,26 @@
   }
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
+  /* R₀ 쉬운 설명 */
+  .r0x{margin:18px 0 0}
+  .r0x summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}
+  .r0x summary::-webkit-details-marker{display:none}
+  .r0x summary .ar{color:var(--faint);font-size:13px;transition:transform .2s}
+  .r0x[open] summary .ar{transform:rotate(90deg)}
+  .r0x .bd{margin-top:12px;display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+  .r0x .bd>*{min-width:0}
+  .r0x p{font-size:14px;color:var(--ink);margin:0 0 10px;line-height:1.7}
+  .r0x p.m{color:var(--muted);font-size:13.5px}
+  .r0x .big{font-size:22px;font-weight:800;letter-spacing:-.02em;margin:0 0 6px}
+  .r0x .gen{font-size:12.5px;color:var(--muted);margin:8px 0 4px}
+  .r0x .dots{display:flex;flex-wrap:wrap;gap:3px;margin:0 0 8px}
+  .r0x .dots i{width:9px;height:9px;border-radius:50%;background:var(--s1);display:block}
+  .r0x .dots i.z{background:var(--ink)}
+  .r0x .dots i.more{width:auto;height:auto;border-radius:0;background:none;font-size:11px;color:var(--faint);font-style:normal;align-self:center}
+  .r0x .rule{font-size:13px;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:10px 0 0;color:var(--muted)}
+  .r0x .rule b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .r0x .thr{background:var(--surface-2);border-radius:10px;padding:10px 13px;font-size:13.5px;margin-top:10px}
+  @media(max-width:700px){.r0x .bd{grid-template-columns:1fr}}
   @media print{.quick,.shared .tg{display:none!important}.card{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
@@ -121,6 +141,35 @@
   격리 시점·격리 효과·접촉자 추적·접종률을 두 시나리오로 나란히 놓고 곡선이 어떻게 갈라지는지 본다.
   답은 숫자가 아니라 <b>어느 손잡이가 이 감염병에 듣고 어느 손잡이가 안 듣는지</b>다.</p>
 </header>
+
+<details class="card r0x" id="r0x" open>
+  <summary><span class="ar">▶</span>R₀가 뭔가요 — 처음 보는 사람을 위한 설명</summary>
+  <div class="bd">
+    <div>
+      <p><b>R₀(기초재생산수)</b>는 이런 질문의 답입니다 — <b>아무도 면역이 없는 동네에 감염자 한 명이 들어오면, 그 사람이 평균 몇 명에게 옮기나?</b>
+      홍역이면 열둘에서 열여덟 명, 계절 인플루엔자면 한두 명, 메르스면 한 명이 채 안 됩니다.</p>
+      <p>규칙은 하나입니다. <b>1보다 크면 늘고, 1이면 그대로, 1보다 작으면 사그라듭니다.</b>
+      2가 크게 안 보여도 2 → 4 → 8 → 16으로 열 번이면 천 명입니다. 15면 세 번 만에 삼천 명입니다.</p>
+      <p class="m">R₀는 병 하나의 상수가 아닙니다. <b>사람이 하루에 몇 명을 만나나 × 한 번 만나서 옮길 확률 × 옮길 수 있는 날수</b>, 이 셋의 곱입니다.
+      그래서 같은 병이라도 도시와 시골, 겨울과 여름, 문헌마다 값이 다르고 이 사이트는 늘 <b>범위</b>로 적습니다.</p>
+      <p class="m">뉴스에 나오는 건 대개 <b>Rt</b>(지금의 재생산수)입니다. R₀는 "처음, 아무 대책이 없을 때", Rt는 "지금, 면역과 대책이 있을 때"입니다.
+      방역의 목표는 R₀를 바꾸는 게 아니라 <b>Rt를 1 밑으로 끌어내리는 것</b>입니다 — 격리·추적·접종이 그 손잡이입니다.</p>
+      <p class="m">이 시뮬레이터에는 이미 들어가 있습니다. 하루 전파율 <code>β = R₀ ÷ 전염 기간</code>으로 바꿔 넣고, 격리와 추적이 그것을 깎습니다.
+      아래 슬라이더의 R₀를 움직여 보면 곡선이 왜 그렇게 민감한지 보입니다.</p>
+    </div>
+    <div>
+      <div class="big" id="r0x-title"></div>
+      <div class="gen">0세대 — 처음 들어온 한 명</div>
+      <div class="dots" id="r0x-g0"></div>
+      <div class="gen" id="r0x-l1"></div>
+      <div class="dots" id="r0x-g1"></div>
+      <div class="gen" id="r0x-l2"></div>
+      <div class="dots" id="r0x-g2"></div>
+      <div class="rule" id="r0x-rule"></div>
+      <div class="thr" id="r0x-thr"></div>
+    </div>
+  </div>
+</details>
 
 <section id="lab">
   <div class="top">
@@ -415,7 +464,32 @@ function renderReal(ra){
 
 /* ── 조립 ── */
 function renderOut(){ const ra=run(S.A), rb=run(S.B); tiles('A',ra); tiles('B',rb); chart(ra,rb); why(ra); renderReal(ra); }
-function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); }
+function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); r0explain(); }
+
+/* ── R₀ 쉬운 설명 — 고른 감염병으로 세대별 점을 그린다 ── */
+function r0explain(){
+  const d=dz(), R=r0mid();
+  const dots=(n,cls)=>{ const cap=200; let h=''; for(let i=0;i<Math.min(n,cap);i++) h+=`<i${cls?' class="'+cls+'"':''}></i>`;
+    if(n>cap) h+=`<i class="more">… ${Math.round(n).toLocaleString('ko-KR')}명</i>`; return h; };
+  const g1=R, g2=R*R;
+  document.getElementById('r0x-title').textContent=`${d.name} — R₀ 약 ${f1(R)}`;
+  document.getElementById('r0x-g0').innerHTML=dots(1,'z');
+  document.getElementById('r0x-l1').textContent=`1세대 — 그 한 명이 옮긴 사람: 약 ${f1(g1)}명`;
+  document.getElementById('r0x-g1').innerHTML=dots(Math.round(g1));
+  document.getElementById('r0x-l2').textContent=`2세대 — 그들이 다시 옮긴 사람: 약 ${Math.round(g2).toLocaleString('ko-KR')}명`;
+  document.getElementById('r0x-g2').innerHTML=dots(Math.round(g2));
+  const thr=R>1?Math.max(0,1-1/R):0;
+  const here=' <b>← 이 병</b>';
+  document.getElementById('r0x-rule').innerHTML=
+    `<span>R₀ &gt; 1</span><span>퍼진다 — 홍역·백일해·인플루엔자${R>1?here:''}</span>`+
+    `<span>R₀ = 1</span><span>한 명이 한 명만 옮긴다. 늘지도 줄지도 않는다${R===1?here:''}</span>`+
+    `<span>R₀ &lt; 1</span><span>사그라든다 — 메르스·니파${R<1?here:''}</span>`;
+  if(R<1) document.getElementById('r0x-l1').textContent=`1세대 — 그 한 명이 옮긴 사람: 약 ${f1(R)}명, 한 명도 못 채운다`;
+  document.getElementById('r0x-thr').innerHTML = R>1
+    ? `이 R₀로 계산하면 <b>인구의 ${Math.round(thr*100)}%</b>가 면역이 있어야 유행이 스스로 멈춥니다 (1 − 1/R₀).
+       접종 효과까지 넣은 실제 필요 접종률은 <a href="../vaccine/">⑱ 예방접종</a>에 있습니다.`
+    : `R₀가 1보다 작아 사람 사이에서는 스스로 잦아듭니다. 그래서 이 병은 접종률보다 <b>유입을 막는 검역</b>이 관건입니다.`;
+}
 document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{
   const q=b.dataset.q; S.B={...S.A};
   if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1); if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
