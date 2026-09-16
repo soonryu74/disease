@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>위험평가 도구 검토</title>
+<meta name="description" content="WHO QIRA·MS-RRA 원문 검토, 태국 사례, 한국 현행, 우리 자료로 채울 수 있는 영역 — 한 장 요약">
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A; --warn-soft:#F6E3E3;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.62;letter-spacing:-.01em;word-break:keep-all;overflow-x:hidden;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 90px}
+  header{padding:34px 0 8px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(25px,6vw,38px);line-height:1.1;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:15px;color:var(--muted);margin:12px 0 0;max-width:60ch}
+  .meta{font-size:12.5px;color:var(--faint);margin:10px 0 0}
+  section{padding:26px 0 0}
+  h2{font-size:clamp(18px,3.4vw,23px);margin:0 0 10px;font-weight:800;letter-spacing:-.02em}
+  .lede{color:var(--muted);font-size:14px;margin:-4px 0 12px}
+
+  .three{display:grid;gap:10px}
+  .c{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:15px 17px;box-shadow:var(--shadow)}
+  .c .k{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.08em;color:var(--accent);background:var(--accent-soft);border-radius:999px;padding:2px 9px;margin-bottom:7px}
+  .c b.h{display:block;font-size:17px;font-weight:800;margin:0 0 5px;letter-spacing:-.02em}
+  .c p{margin:0;font-size:14px;color:var(--muted)}
+
+  .vs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .vs .c{padding:14px 15px}
+  .vs .c h3{margin:0 0 8px;font-size:16px;font-weight:800}
+  .vs .c h3 small{display:block;font-size:11.5px;color:var(--faint);font-weight:600;letter-spacing:0;margin-top:2px}
+  .vs dl{margin:0}
+  .vs dt{font-size:11.5px;color:var(--faint);font-weight:700;margin-top:8px;letter-spacing:.04em}
+  .vs dd{margin:1px 0 0;font-size:13.5px}
+  .vs dd.bad{color:var(--warn);font-weight:700}
+  .common{font-size:13.5px;color:var(--muted);background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:11px 14px;margin-top:10px}
+
+  .tl{list-style:none;margin:0;padding:0;border-left:2px solid var(--line-strong);margin-left:6px}
+  .tl li{position:relative;padding:0 0 14px 18px}
+  .tl li::before{content:'';position:absolute;left:-7px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--surface);border:2px solid var(--accent)}
+  .tl .d{font-size:12px;color:var(--faint);font-weight:700;letter-spacing:.04em}
+  .tl .w{font-size:14.5px;margin:1px 0 0}
+  .tl .k{font-size:13.5px;color:var(--muted);margin:2px 0 0}
+  .tl .lag{display:inline-block;margin-left:6px;font-size:12px;font-weight:800;border-radius:999px;padding:1px 8px;background:var(--surface-2)}
+  .tl .lag.big{background:var(--warn-soft);color:var(--warn)}
+
+  .dom{list-style:none;margin:0;padding:0;display:grid;gap:7px}
+  .dom li{display:grid;grid-template-columns:28px 1fr;gap:10px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 13px}
+  .dom .dot{font-size:19px;line-height:1.3;text-align:center}
+  .dom .dot.full{color:var(--accent)}
+  .dom .dot.half{color:#C7712B}
+  .dom .dot.none{color:var(--warn)}
+  .dom b{display:block;font-size:14.5px}
+  .dom span{font-size:13px;color:var(--muted)}
+
+  ol.pro{margin:0;padding-left:0;list-style:none;display:grid;gap:8px;counter-reset:p}
+  ol.pro li{counter-increment:p;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px 12px 46px;position:relative;font-size:14px}
+  ol.pro li::before{content:counter(p);position:absolute;left:14px;top:11px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-weight:800;font-size:13px;display:grid;place-items:center}
+  ol.pro li b{display:block;font-size:15px}
+  .no{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+
+  details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:0 14px;margin-top:10px}
+  details summary{cursor:pointer;padding:12px 0;font-weight:700;font-size:14.5px;list-style:none}
+  details summary::-webkit-details-marker{display:none}
+  details summary::after{content:' ▾';color:var(--faint)}
+  details[open] summary::after{content:' ▴'}
+  details ul{margin:0 0 12px;padding-left:18px;font-size:13.5px;color:var(--muted)}
+  details li{margin:5px 0}
+  details li a{word-break:break-all}
+  .foot{margin-top:26px;font-size:13px;color:var(--faint);border-top:1px solid var(--line);padding-top:14px}
+  .foot a{font-weight:700}
+
+  @media (max-width:560px){
+    .vs{grid-template-columns:1fr}
+  }
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
+   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
+.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
+  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
+.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
+  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
+.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
+@media (max-width:760px){
+  /* 줄바꿈한 메뉴는 좁은 화면에서 네 줄이 된다. 그대로 고정하면 화면의 1/5을 먹으므로
+     따라다니지 않게 하고 위로 올려 보내 준다. 항목은 하나도 가리지 않는다. */
+  .gnav{position:static}
+  .gnav .gbrand{font-size:12.5px;margin-right:6px}
+  .gnav a.gi{font-size:12px;padding:4px 6px}
+}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>위험평가 도구 검토</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../hall/">🏛 전시관</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../guides/">📕 지침서가</a><a class="gi" href="../whitepaper/">📗 백서</a><a class="gi" href="../vaccine/">💉 예방접종</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi" href="../data/">⬇ 자료실</a></div></nav>
+<div class="wrap">
+<header>
+  <p class="eyebrow">검토 보고 · 한 장</p>
+  <h1>위험평가 도구 검토<br>WHO QIRA · MS-RRA</h1>
+  <p class="thesis">WHO 매뉴얼 2종을 원문으로 읽고, 태국 사례와 한국 현행을 대조해, 우리 자료로 무엇이 되는지 봤다.</p>
+  <p class="meta">2026-09-16 · 근거는 전부 공개 문서 · 상세본은 맨 아래 링크</p>
+</header>
+
+<section>
+  <h2>결론 셋</h2>
+  <div class="three">
+    <div class="c"><span class="k">반영</span><b class="h">한다. 새 축이 아니라 실습기로</b>
+      <p>이미 있는 자료가 QIRA 다섯 영역 중 넷을 채운다. "QIRA 시나리오 실습기"를 감염병Lab 셋째 갈래로 만든다.</p></div>
+    <div class="c"><span class="k">필요성</span><b class="h">있다. 방법이 아니라 투명성이 빈칸</b>
+      <p>질병관리청은 이미 분기별로 발생가능성×영향력 행렬(6단계) 위험평가를 한다. 결과는 보도자료 한 줄("종합 위험도 낮음")로만 나오고 근거와 시점이 남지 않는다. 우리 자료가 그 빈칸을 채운다.</p></div>
+    <div class="c"><span class="k">태국</span><b class="h">QIRA다. MS-RRA는 확인 안 됨</b>
+      <p>WHO 태국사무소(2026-06-09): 태국은 QIRA를 국가 보고체계 Smart DCIR에 내장했다. 도(province) 상황인식팀이 쓰고, 시범 시나리오는 홍수였다.</p></div>
+  </div>
+</section>
+
+<section>
+  <h2>두 도구, 한눈에</h2>
+  <p class="lede">둘 다 WHO가 2023년 19개국 조사 뒤 만든 <i>Risk Analysis Package</i>의 산출물. 2012년 매뉴얼의 후속이다.</p>
+  <div class="vs">
+    <div class="c"><h3>QIRA<small>Quick and Immediate Risk Assessment</small></h3>
+      <dl>
+        <dt>성격</dt><dd>예/아니오/모름 알고리즘. <b>1시간</b> 안에</dd>
+        <dt>묻는 것</dt><dd>고위협 병원체 → 추가 노출 → 중증도 → 확산·규모 → 역량</dd>
+        <dt>결과</dt><dd>위험 5단계 + 단계별 <b>미리 정한 즉시 조치</b></dd>
+        <dt>못 하는 것</dt><dd class="bad">국내 유입 가능성 추정 (매뉴얼이 명시)</dd>
+      </dl></div>
+    <div class="c"><h3>MS-RRA<small>Member State Rapid Risk Assessment</small></h3>
+      <dl>
+        <dt>성격</dt><dd>서식(Worksheet + Output). 다학제 팀, <b>며칠</b></dd>
+        <dt>묻는 것</dt><dd>가능성 3문항 + 영향 3문항. 역량이 양쪽에 들어감</dd>
+        <dt>결과</dt><dd>가능성 5 × 영향 5 행렬 → 위험 4단계(선택). 질문마다 "아는 것 / 모르는 것 / 권고"</dd>
+        <dt>언제</dt><dd>QIRA가 보통 이상, IHR 신고 대상, 원인불명, 여러 지역 동시</dd>
+      </dl></div>
+  </div>
+  <div class="common">공통: <b>신뢰도 3단계</b>를 반드시 적는다. "모르는 것"이 결과의 일부다. 정보가 심하게 부족하면 역량을 '약함'으로 놓고 시작한다.</div>
+</section>
+
+<section>
+  <h2>우리 자료로 잰 한 가지 — 에볼라 2026</h2>
+  <p class="lede">상황판이 저장한 WHO 등급 변화와 ⑪ 검역관리지역 지정 이력을 붙였다.</p>
+  <ul class="tl">
+    <li><div class="d">05-22 · WHO DON</div><div class="w">국가 <b>매우 높음</b> · 지역 <b>높음</b> (PHEIC)</div>
+        <div class="k">→ 05-26 질병관리청, 중점검역관리지역 5개국 추가 <span class="lag">4일</span></div></li>
+    <li><div class="d">06-08 · WHO DON</div><div class="w"><b>인접국 높음</b> 명시</div>
+        <div class="k">→ 09-07 인접 9개국 중점 추가, '위험도 기반 검역 대응체계' 가동 <span class="lag big">91일</span></div></li>
+    <li><div class="d">08-27 · 질병관리청</div><div class="w">"종합 위험도 <b>낮음</b>" 발표</div>
+        <div class="k">근거는 보도자료 한 줄. 어떤 행렬 값이었는지는 공개되지 않음</div></li>
+  </ul>
+  <p class="no">늦었다는 뜻이 아니다. 유입 가능성은 WHO 등급이 아니라 직항·입국자로 봐야 한다. 요점은 <b>이 표를 만들 자료가 이미 다 있다</b>는 것이다.</p>
+</section>
+
+<section>
+  <h2>QIRA 다섯 영역, 우리 자료가 채우나</h2>
+  <ul class="dom">
+    <li><span class="dot full">●</span><div><b>1 고위협 병원체 목록</b><span>제1급 17종 · 검역감염병 15종. 한국판 목록이 이미 있다</span></div></li>
+    <li><span class="dot half">◐</span><div><b>2 추가 노출</b><span>전파경로 · 접종률 대 임계치 · 직항 여객·입국자. 국내 사건의 접촉 경로는 사건별 입력</span></div></li>
+    <li><span class="dot full">●</span><div><b>3 중증도</b><span>도감 치명률 · 상황판 CFR 자동 추출 · 5년 평균 대비 배수</span></div></li>
+    <li><span class="dot full">●</span><div><b>4 확산·규모</b><span>R₀ · 잠복기 · 증상 전 전염 · 주간 신고. 매뉴얼이 든 지표 그대로</span></div></li>
+    <li><span class="dot none">○</span><div><b>5 역량·취약성</b><span>지침·검사·접종은 있으나 병상·인력·치료제 자료가 없다. 가장 빈 곳</span></div></li>
+  </ul>
+  <p class="no">그래서 MS-RRA 완전판이 아니라 QIRA다. 자료가 넷을 미리 채우고, 다섯째만 사람이 답한다. QIRA가 "못 한다"고 적은 유입 가능성은 ⑮ 해외유입 지도(직항·입국자)가 보완한다 — 우리 자료의 고유한 기여다.</p>
+</section>
+
+<section>
+  <h2>제안 셋</h2>
+  <ol class="pro">
+    <li><b>QIRA 실습기</b>사건 하나를 고르면 영역 1~4가 근거 카드로 미리 채워진다. 사람은 확인하고 5번을 답한다. 결과는 위험 단계 + 신뢰도 + "한국 제도가 켜는 스위치"(급수·검역 지정·위기경보·ALERT).</li>
+    <li><b>WHO 판단 ↔ 한국 조치 시차판</b>상황판 안 탭 하나. 위 에볼라 표를 사건마다 자동으로 만든다. 자료는 있고 코드만 필요하다.</li>
+    <li><b>도감에 한 줄</b>"급수는 법적 분류, 지금 위험은 실습기에서." 인사이트 3위("급수는 위험도가 아니다")의 실천.</li>
+  </ol>
+  <p class="no">만들지 않을 것: MS-RRA 완전판 서식. 여섯 문항 중 둘이 역량이라 자료로는 반쪽이고, 그건 회의로 채우는 것이다. 서식은 WHO가 공개한 문서를 그대로 쓴다.</p>
+</section>
+
+<section>
+  <h2>근거</h2>
+  <p class="lede">전부 로그인 없는 공개 문서다. 내부 문서·연수 자료는 쓰지 않았다. 2026-09-16 익명 접속으로 전부 재확인.</p>
+  <details>
+    <summary>출처 열기</summary>
+    <ul>
+      <li>WHO, <i>User manual for the QIRA algorithm</i> (2026-09-08, ISBN 978-92-4-011279-7, CC BY-NC-SA 3.0 IGO) — <a href="https://www.who.int/publications/i/item/97892401127971" target="_blank" rel="noopener">who.int</a></li>
+      <li>WHO, <i>User manual for the MS-RRA tool</i> (SEARO 게시 조판 전 판, 2026-02-25, CC BY-NC-SA 3.0 IGO) — <a href="https://www.who.int/southeastasia/internal-publications-detail/WHE2602262" target="_blank" rel="noopener">who.int/southeastasia</a></li>
+      <li>WHO, <i>Member State Rapid Risk Assessment tool</i> 서식 (2026-03-31) — <a href="https://www.who.int/publications/m/item/member-state-rapid-risk-assessment-tool" target="_blank" rel="noopener">who.int</a></li>
+      <li>WHO Thailand, <i>Strengthening Risk Assessment of Health Emergencies in Thailand</i> (2026-06-09) — <a href="https://www.who.int/thailand/news/feature-stories/detail/strengthening-risk-assessment-of-health-emergencies-in-thailand" target="_blank" rel="noopener">who.int/thailand</a></li>
+      <li>WHO, <i>Rapid risk assessment of acute public health events</i> (2012) — <a href="https://iris.who.int/handle/10665/70810" target="_blank" rel="noopener">iris.who.int</a></li>
+      <li>질병관리청, 감염병 위험평가 — <a href="https://www.kdca.go.kr/kdca/3310/subview.do" target="_blank" rel="noopener">kdca.go.kr</a> · 감염병 재난 위기관리 대응 체계 — <a href="https://kdca.go.kr/kdca/3260/subview.do" target="_blank" rel="noopener">kdca.go.kr</a></li>
+      <li>질병관리청 「감염병 ALERT」 도입, PHWR 2026;19(22) — <a href="https://www.phwr.org/journal/view.html?doi=10.56786/PHWR.2026.19.22.2" target="_blank" rel="noopener">phwr.org</a></li>
+      <li>에볼라 위험도 '낮음'(2026-08-27) — <a href="https://science.ytn.co.kr/program/view.php?mcd=0082&key=202608271608516714" target="_blank" rel="noopener">YTN 사이언스</a> · 위험도 기반 검역 대응체계(2026-09-07) — <a href="https://www.ksen.co.kr/news/article.html?no=221791" target="_blank" rel="noopener">한국사회적경제신문</a></li>
+      <li>우리 자료: <a href="../daily/">상황판</a>(WHO DON 위험 등급) · <a href="../quarantine/">검역관리지역 지정 이력</a> · <a href="../inflow/">해외유입 지도</a> · <a href="../sim/">유행 시뮬레이터</a></li>
+    </ul>
+  </details>
+  <p class="foot">
+    상세본(8쪽, 도구 구조·질문 원문·공개성 확인표): <a href="https://github.com/soonryu74/disease/blob/claude/infectious-disease-resources-org-kbjcfz/07_%EC%A0%84%EB%AC%B8%EA%B0%80%ED%86%A0%EB%A1%A0/%EC%9C%84%ED%97%98%ED%8F%89%EA%B0%80_QIRA_MSRRA_%EA%B2%80%ED%86%A0.md" target="_blank" rel="noopener">GitHub에서 열기 →</a><br>
+    한 장 요약 마크다운: <a href="https://github.com/soonryu74/disease/blob/claude/infectious-disease-resources-org-kbjcfz/07_%EC%A0%84%EB%AC%B8%EA%B0%80%ED%86%A0%EB%A1%A0/%EC%9C%84%ED%97%98%ED%8F%89%EA%B0%80_QIRA_MSRRA_%EC%9A%94%EC%95%BD.md" target="_blank" rel="noopener">GitHub에서 열기 →</a>
+  </p>
+</section>
+</div>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body>
+</html>
