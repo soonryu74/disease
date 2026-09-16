@@ -212,6 +212,45 @@
     "mf": "na",
     "basis": "WHO 정책(3가 회귀)"
    }
+  },
+  {
+   "season": "2024-25",
+   "match": "partial",
+   "vac": "A/Victoria/4897/2022 (H1N1) · A/Thailand/8/2022 (H3N2) · B/Austria/1359417/2021 (Vic)",
+   "circ": "H1N1 5a.2a.1 + H3N2 J.2 동시 유행 — 미국은 고강도 절기",
+   "note": "미국 잠정 VE(2024-09~2025-01, 4개 네트워크): 성인 외래 36~54%·입원 41~55%, 소아 입원 63~78%. H1N1(53~72%)이 H3N2(42~55%)보다 높았다",
+   "ax": {
+    "ag": "drift",
+    "li": "removed",
+    "mf": "ok",
+    "basis": "CDC MMWR 잠정 VE(2025-02)"
+   }
+  },
+  {
+   "season": "2025-26",
+   "match": "partial",
+   "vac": "A/Victoria/4897/2022 (H1N1) · A/Croatia/10136RV/2023 (H3N2) · B/Austria/1359417/2021 (Vic)",
+   "circ": "H3N2 subclade K(구 J.2.4.1) — 2025-09 이후 대부분 지역 우세, 이른 절기(12월 정점)",
+   "note": "백신주 항혈청이 K를 잘 못 알아봤지만 잠정 VE는 예년 범위 — 유럽 9개 연구 성인 25~45%, 영국 소아 72~75%·성인 32~39%, 캐나다 약 40%. 부정합이 곧 무효는 아니다",
+   "ax": {
+    "ag": "drift",
+    "li": "removed",
+    "mf": "ok",
+    "basis": "페릿 항혈청 저반응(WHO) + ECDC·UKHSA·캐나다 잠정 VE"
+   }
+  },
+  {
+   "season": "2026-27",
+   "match": "pending",
+   "vac": "A/Missouri/11/2025 (H1N1) · A/Darwin/1454/2025 (H3N2, 계란) · B/Tokyo/EIS13-175/2025 (Vic, 계란)",
+   "circ": "절기 전 — 판정 없음",
+   "note": "WHO 2026-02-27 권고. 세 성분 모두 교체(H3N2는 subclade K 겨냥). 정합성은 절기가 지나야 잰다",
+   "ax": {
+    "ag": "na",
+    "li": "removed",
+    "mf": "egg",
+    "basis": "WHO 권고문 — 아직 판정 아님"
+   }
   }
  ],
  "system_history": [
@@ -240,10 +279,63 @@
   "WHO GISRS(1952~)·FluNet(1996~)",
   "History of Vaccines — Influenza Pandemics",
   "Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종",
-  "질병관리청 감염병포털·KINRESS"
+  "질병관리청 감염병포털·KINRESS",
+  "WHO 백신 구성 권고문 — 북반구 2026-27(2026-02-27)·2025-26(2025-02-28)",
+  "CDC MMWR 2024-25 잠정 VE(2025-02) · ECDC·UKHSA·캐나다 SPSN 2025-26 잠정 VE(Eurosurveillance 2025-11~2026-01)"
  ],
  "meta": {
   "as_of": "2026-08-15",
   "note": "정합성·VE 수치는 북반구/미국 CDC 기준(한국 VE 아님). WHO FluNet은 소급 수정될 수 있어 as_of 필수."
+ },
+ "who_recommendation": {
+  "season": "2026-27 북반구",
+  "date": "2026-02-27",
+  "period": "2025년 9월~2026년 1월 감시 자료",
+  "url": "https://www.who.int/news/item/27-02-2026-recommendations-for-influenza-vaccine-composition-for-the-2026-2027-northern-hemisphere-season",
+  "report": "https://cdn.who.int/media/docs/default-source/vcm-northern-hemisphere-recommendation-2026-2027/a.-27-feb-2026-recommended-composition-of-influenza-virus-vaccines-for-use-in-the-2026-2027-nouthern-hemisphere-influenza-season---full-report.pdf",
+  "prev": {
+   "season": "2025-26 북반구",
+   "date": "2025-02-28"
+  },
+  "rows": [
+   {
+    "comp": "A(H1N1)pdm09",
+    "prev_egg": "A/Victoria/4897/2022",
+    "prev_cell": "A/Wisconsin/67/2022",
+    "egg": "A/Missouri/11/2025",
+    "cell": "A/Missouri/11/2025",
+    "changed": true,
+    "why": "5a.2a.1 계통이 D.3.1·D.3.1.1 아계통으로 갈라졌다. 기존 백신 접종자 혈청에서 최근 유행주에 대한 항체가가 유의하게 낮았다"
+   },
+   {
+    "comp": "A(H3N2)",
+    "prev_egg": "A/Croatia/10136RV/2023",
+    "prev_cell": "A/District of Columbia/27/2023",
+    "egg": "A/Darwin/1454/2025",
+    "cell": "A/Darwin/1415/2025",
+    "changed": true,
+    "why": "J.2 아계통 가운데 K(구 J.2.4.1)가 대부분 지역에서 우세해졌다. 기존 백신주 항혈청이 J.2.3·J.2.4·K를 잘 못 알아봤다 — 2025-26 절기 유행이 바로 이 주였다"
+   },
+   {
+    "comp": "B/Victoria",
+    "prev_egg": "B/Austria/1359417/2021",
+    "prev_cell": "B/Austria/1359417/2021",
+    "egg": "B/Tokyo/EIS13-175/2025",
+    "cell": "B/Pennsylvania/14/2025",
+    "changed": true,
+    "why": "3a.2 계통의 C.3·C.3.1 아계통(HA D197N)이 기존 백신주에 잘 안 잡혔다. 계란 분리주는 HA 197~199 당화 부위를 잃는 계란적응 변이가 생겨 세포용과 다른 주를 골랐다"
+   },
+   {
+    "comp": "B/Yamagata",
+    "prev_egg": "B/Phuket/3073/2013 (4가에 한해)",
+    "prev_cell": "—",
+    "egg": "권고 없음",
+    "cell": "권고 없음",
+    "changed": true,
+    "why": "2020년 3월 이후 확인된 검출이 없다. 3가 구성만 권고"
+   }
+  ],
+  "note": "백신주 이름은 'A/지역/번호/연도-like virus' — 그 바이러스와 항원적으로 같은 계열이면 된다는 뜻이다. 계란 배양 백신과 세포·재조합 백신에 다른 주를 권고하는 것은 계란에서 자라며 생기는 적응 변이 때문이다. 국내 접종 백신의 실제 주는 식약처 허가 사항을 따른다.",
+  "insight": "세 성분이 한꺼번에 바뀌었다. 2025-26 절기는 H3N2 subclade K가 백신주와 어긋난 채 유행했는데도 성인 백신효과 25~45%, 소아 47~78%(유럽 9개 연구·영국)로 예년 범위였다 — <b>부정합이 곧 무효는 아니다</b>. 2026-27은 K를 겨냥한 Darwin주로 바꿨고, 판정은 절기가 끝난 뒤 트래커(04)에 적는다."
  }
 }

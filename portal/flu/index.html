@@ -190,6 +190,15 @@ nav:not(.gnav){display:none !important}
   .gnav a.gi{font-size:12px;padding:4px 6px}
 }
 
+  /* 04-1 WHO 권고표 — 좁은 화면에서는 5열 표 대신 성분별 카드 */
+  .whoCards{display:none}
+  .whoCards .wc{border:1px solid var(--line);border-radius:12px;padding:11px 13px;background:var(--surface-2)}
+  .whoCards .wc b{display:block;font-size:14.5px;margin-bottom:6px}
+  .whoCards .wc .l{font-size:11.5px;color:var(--muted);font-weight:700;margin-top:6px;letter-spacing:.03em}
+  .whoCards .wc .v{font-size:13.5px}
+  .whoCards .wc .v.new{font-weight:700}
+  .whoCards .wc .why{font-size:12.5px;color:var(--muted);margin-top:8px;line-height:1.5}
+  @media (max-width:640px){#whoTbl{display:none}.whoCards{display:grid;gap:8px}}
 </style>
 <div class="printonly printhead" id="printhead"><b>인플루엔자 감시 100년</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
 <nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../hall/">🏛 전시관</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../guides/">📕 지침서가</a><a class="gi" href="../whitepaper/">📗 백서</a><a class="gi" href="../vaccine/">💉 예방접종</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi on" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi" href="../data/">⬇ 자료실</a></div></nav>
@@ -242,6 +251,13 @@ nav:not(.gnav){display:none !important}
       </div>
     </div>
     <div class="insight">💡 <b>인사이트</b> — <b>2014-15 H3N2 clade 3C.2a drift</b>로 북반구 백신효과가 ~19%까지 급락한 게 대표적 부정합. "그해 백신이 통했는지"는 유행주 vs 백신주 정합성이 결정한다 — 실무 최고 가치 지표.</div>
+  </section>
+  <section>
+    <div class="kick"><span class="no">04-1</span><h2>WHO 권고 백신 구성 — 2026-27 북반구</h2></div>
+    <p class="sub" id="whoSub"></p>
+    <div class="card"><div style="overflow-x:auto;-webkit-overflow-scrolling:touch"><table id="whoTbl"></table></div><div id="whoCards" class="whoCards"></div>
+      <p id="whoFn" style="font-size:12.5px;color:var(--muted);margin:12px 0 0"></p></div>
+    <div class="insight" id="whoIns"></div>
   </section>
 
   <section>
@@ -347,33 +363,7 @@ const FLUNET={"world":[{"year":1997,"AH3":4502,"H1N1pdm":0,"AH1":178,"BVic":0,"B
 {"year":2024,"AH3":518,"H1N1pdm":424,"AH1":0,"BVic":623,"BYam":0,"INF_A":942,"INF_B":623},
 {"year":2025,"AH3":1949,"H1N1pdm":742,"AH1":0,"BVic":1001,"BYam":0,"INF_A":2691,"INF_B":1001},
 {"year":2026,"AH3":414,"H1N1pdm":46,"AH1":0,"BVic":1569,"BYam":0,"INF_A":460,"INF_B":1569}]};
-const CURATED={"pandemics":[{"year":1918,"subtype":"A(H1N1)","name":"스페인 독감","deaths":"5,000만+ 추정","note":"현대 모든 계절 H1N1의 조상. 감시체계 이전 — 사망 통계로만 재구성."},
-{"year":1957,"subtype":"A(H2N2)","name":"아시아 독감","deaths":"100만+","note":"1918 H1N1을 대체(항원 대변이). WHO GISRS(1952) 가동 후 첫 팬데믹."},
-{"year":1968,"subtype":"A(H3N2)","name":"홍콩 독감","deaths":"100만+","note":"H2N2를 대체. H3N2는 현재까지 주요 계절 아형으로 지속."},
-{"year":1977,"subtype":"A(H1N1)","name":"러시아 독감","deaths":"경증(주로 청소년)","note":"H1N1 재출현 → 이후 H3N2와 공존. 팬데믹 여부는 논쟁."},
-{"year":2009,"subtype":"A(H1N1)pdm09","name":"신종플루","deaths":"15~28만 추정","note":"돼지·조류·인체 유래 재조합. 기존 계절 H1N1을 대체. WHO 팬데믹 선언."}],
-"regimes":[{"from":1918,"to":1957,"label":"H1N1 단독 지배","subtypes":["H1N1"]},
-{"from":1957,"to":1968,"label":"H2N2 지배","subtypes":["H2N2"]},
-{"from":1968,"to":1977,"label":"H3N2 지배","subtypes":["H3N2"]},
-{"from":1977,"to":2009,"label":"H1N1 + H3N2 공존 (+B)","subtypes":["H1N1","H3N2","B"]},
-{"from":2009,"to":2027,"label":"H1N1pdm09 + H3N2 공존 (+B)","subtypes":["H1N1pdm09","H3N2","B"]}],
-"vaccine_seasons":[{"season":"2003-04","match":"miss","vac":"A/Panama/2007/99 (H3N2)","circ":"A/Fujian/411/2002 drift","note":"H3N2 Fujian주 항원 drift — 백신주와 부정합, 소아 중증 다발","ax":{"ag":"drift","li":"na","mf":"ok","basis":"HI 항원분석"}},
-{"season":"2007-08","match":"miss","vac":"A/Wisconsin/67/2005 (H3N2) 등","circ":"A/Brisbane/10/2007 drift + B계통 불일치","note":"H3N2·B 양쪽 부정합","ax":{"ag":"drift","li":"mismatch","mf":"ok","basis":"HI+계통"}},
-{"season":"2009-10","match":"special","vac":"계절 3가 + pdm09 단가 별도","circ":"A(H1N1)pdm09 대유행","note":"팬데믹 — 단가백신 긴급 생산·접종","ax":{"ag":"na","li":"na","mf":"na","basis":"팬데믹 별도"}},
-{"season":"2012-13","match":"partial","vac":"B/Wisconsin/1/2010 (Yamagata)","circ":"B 두 계통 혼재","note":"B계통 부정합 → 4가(QIV) 백신 도입의 배경","ax":{"ag":"match","li":"mismatch","mf":"ok","basis":"계통"}},
-{"season":"2014-15","match":"miss","vac":"A/Texas/50/2012 (H3N2, 3C.1)","circ":"A/Switzerland/9715293/2013 (3C.3a)","note":"★대표 부정합 — 미 CDC 백신효과 ~19%로 급락","ax":{"ag":"drift","li":"na","mf":"ok","basis":"clade(3C.3a)+VE 19%"}},
-{"season":"2017-18","match":"partial","vac":"A/Hong Kong/4801/2014 (H3N2)","circ":"H3N2 3C.2a + B/Yamagata 동시","note":"계란적응 문제로 H3N2 효과 저하(~25%), 3가는 B/Yam 미포함 — 고령 중증·초과사망","ax":{"ag":"match","li":"mismatch","mf":"egg","basis":"VE 25%+계란적응"}},
-{"season":"2019-20","match":"partial","vac":"B/Colorado/06/2017 (Victoria)","circ":"B/Victoria 조기 유행 → H1N1 2차","note":"B빅토리아 항원 변이 하위군 유행, 코로나로 시즌 조기 종료","ax":{"ag":"drift","li":"included","mf":"ok","basis":"계통 하위군"}},
-{"season":"2020-21","match":"na","vac":"—","circ":"유행 소멸","note":"코로나 방역(NPI)으로 독감 거의 소멸 — 정합성 평가 불가","ax":{"ag":"na","li":"na","mf":"na","basis":"유행 소멸"}},
-{"season":"2021-22","match":"partial","vac":"A/Cambodia/e0826360/2020 (H3N2)","circ":"H3N2 3C.2a1b.2a.2 하위군","note":"지연·저강도 유행, 하위군 이동","ax":{"ag":"drift","li":"included","mf":"ok","basis":"clade 하위군"}},
-{"season":"2023-24","match":"note","vac":"4가 → 3가 전환 권고","circ":"B/Yamagata 미검출 지속","note":"WHO, 백신에서 B/Yamagata 제외 권고 — 3가 회귀 시작","ax":{"ag":"na","li":"removed","mf":"na","basis":"WHO 정책(3가 회귀)"}}],
-"system_history":[{"year":1952,"event":"WHO 글로벌 인플루엔자 감시망(GISRS) 출범 — 아형 변화 추적 시작"},
-{"year":1996,"event":"FluNet 가동 — 실시간 실험실 감시 데이터 공개(정량 추적 가능)"},
-{"year":2005,"event":"한국 급성호흡기감염증 감시사업 시작"},
-{"year":2009,"event":"한국 KINRESS(인플루엔자·호흡기바이러스 실험실감시체계)로 확대"},
-{"year":2020,"event":"B/Yamagata 전세계 미검출 시작(사실상 멸종 추정)"}],
-"sources":["WHO GISRS(1952~)·FluNet(1996~)","History of Vaccines — Influenza Pandemics","Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종","질병관리청 감염병포털·KINRESS"],
-"meta":{"as_of":"2026-08-15","note":"정합성·VE 수치는 북반구/미국 CDC 기준(한국 VE 아님). WHO FluNet은 소급 수정될 수 있어 as_of 필수."}};
+const CURATED={"pandemics":[{"year":1918,"subtype":"A(H1N1)","name":"스페인 독감","deaths":"5,000만+ 추정","note":"현대 모든 계절 H1N1의 조상. 감시체계 이전 — 사망 통계로만 재구성."},{"year":1957,"subtype":"A(H2N2)","name":"아시아 독감","deaths":"100만+","note":"1918 H1N1을 대체(항원 대변이). WHO GISRS(1952) 가동 후 첫 팬데믹."},{"year":1968,"subtype":"A(H3N2)","name":"홍콩 독감","deaths":"100만+","note":"H2N2를 대체. H3N2는 현재까지 주요 계절 아형으로 지속."},{"year":1977,"subtype":"A(H1N1)","name":"러시아 독감","deaths":"경증(주로 청소년)","note":"H1N1 재출현 → 이후 H3N2와 공존. 팬데믹 여부는 논쟁."},{"year":2009,"subtype":"A(H1N1)pdm09","name":"신종플루","deaths":"15~28만 추정","note":"돼지·조류·인체 유래 재조합. 기존 계절 H1N1을 대체. WHO 팬데믹 선언."}],"regimes":[{"from":1918,"to":1957,"label":"H1N1 단독 지배","subtypes":["H1N1"]},{"from":1957,"to":1968,"label":"H2N2 지배","subtypes":["H2N2"]},{"from":1968,"to":1977,"label":"H3N2 지배","subtypes":["H3N2"]},{"from":1977,"to":2009,"label":"H1N1 + H3N2 공존 (+B)","subtypes":["H1N1","H3N2","B"]},{"from":2009,"to":2027,"label":"H1N1pdm09 + H3N2 공존 (+B)","subtypes":["H1N1pdm09","H3N2","B"]}],"vaccine_seasons":[{"season":"2003-04","match":"miss","vac":"A/Panama/2007/99 (H3N2)","circ":"A/Fujian/411/2002 drift","note":"H3N2 Fujian주 항원 drift — 백신주와 부정합, 소아 중증 다발","ax":{"ag":"drift","li":"na","mf":"ok","basis":"HI 항원분석"}},{"season":"2007-08","match":"miss","vac":"A/Wisconsin/67/2005 (H3N2) 등","circ":"A/Brisbane/10/2007 drift + B계통 불일치","note":"H3N2·B 양쪽 부정합","ax":{"ag":"drift","li":"mismatch","mf":"ok","basis":"HI+계통"}},{"season":"2009-10","match":"special","vac":"계절 3가 + pdm09 단가 별도","circ":"A(H1N1)pdm09 대유행","note":"팬데믹 — 단가백신 긴급 생산·접종","ax":{"ag":"na","li":"na","mf":"na","basis":"팬데믹 별도"}},{"season":"2012-13","match":"partial","vac":"B/Wisconsin/1/2010 (Yamagata)","circ":"B 두 계통 혼재","note":"B계통 부정합 → 4가(QIV) 백신 도입의 배경","ax":{"ag":"match","li":"mismatch","mf":"ok","basis":"계통"}},{"season":"2014-15","match":"miss","vac":"A/Texas/50/2012 (H3N2, 3C.1)","circ":"A/Switzerland/9715293/2013 (3C.3a)","note":"★대표 부정합 — 미 CDC 백신효과 ~19%로 급락","ax":{"ag":"drift","li":"na","mf":"ok","basis":"clade(3C.3a)+VE 19%"}},{"season":"2017-18","match":"partial","vac":"A/Hong Kong/4801/2014 (H3N2)","circ":"H3N2 3C.2a + B/Yamagata 동시","note":"계란적응 문제로 H3N2 효과 저하(~25%), 3가는 B/Yam 미포함 — 고령 중증·초과사망","ax":{"ag":"match","li":"mismatch","mf":"egg","basis":"VE 25%+계란적응"}},{"season":"2019-20","match":"partial","vac":"B/Colorado/06/2017 (Victoria)","circ":"B/Victoria 조기 유행 → H1N1 2차","note":"B빅토리아 항원 변이 하위군 유행, 코로나로 시즌 조기 종료","ax":{"ag":"drift","li":"included","mf":"ok","basis":"계통 하위군"}},{"season":"2020-21","match":"na","vac":"—","circ":"유행 소멸","note":"코로나 방역(NPI)으로 독감 거의 소멸 — 정합성 평가 불가","ax":{"ag":"na","li":"na","mf":"na","basis":"유행 소멸"}},{"season":"2021-22","match":"partial","vac":"A/Cambodia/e0826360/2020 (H3N2)","circ":"H3N2 3C.2a1b.2a.2 하위군","note":"지연·저강도 유행, 하위군 이동","ax":{"ag":"drift","li":"included","mf":"ok","basis":"clade 하위군"}},{"season":"2023-24","match":"note","vac":"4가 → 3가 전환 권고","circ":"B/Yamagata 미검출 지속","note":"WHO, 백신에서 B/Yamagata 제외 권고 — 3가 회귀 시작","ax":{"ag":"na","li":"removed","mf":"na","basis":"WHO 정책(3가 회귀)"}},{"season":"2024-25","match":"partial","vac":"A/Victoria/4897/2022 (H1N1) · A/Thailand/8/2022 (H3N2) · B/Austria/1359417/2021 (Vic)","circ":"H1N1 5a.2a.1 + H3N2 J.2 동시 유행 — 미국은 고강도 절기","note":"미국 잠정 VE(2024-09~2025-01, 4개 네트워크): 성인 외래 36~54%·입원 41~55%, 소아 입원 63~78%. H1N1(53~72%)이 H3N2(42~55%)보다 높았다","ax":{"ag":"drift","li":"removed","mf":"ok","basis":"CDC MMWR 잠정 VE(2025-02)"}},{"season":"2025-26","match":"partial","vac":"A/Victoria/4897/2022 (H1N1) · A/Croatia/10136RV/2023 (H3N2) · B/Austria/1359417/2021 (Vic)","circ":"H3N2 subclade K(구 J.2.4.1) — 2025-09 이후 대부분 지역 우세, 이른 절기(12월 정점)","note":"백신주 항혈청이 K를 잘 못 알아봤지만 잠정 VE는 예년 범위 — 유럽 9개 연구 성인 25~45%, 영국 소아 72~75%·성인 32~39%, 캐나다 약 40%. 부정합이 곧 무효는 아니다","ax":{"ag":"drift","li":"removed","mf":"ok","basis":"페릿 항혈청 저반응(WHO) + ECDC·UKHSA·캐나다 잠정 VE"}},{"season":"2026-27","match":"pending","vac":"A/Missouri/11/2025 (H1N1) · A/Darwin/1454/2025 (H3N2, 계란) · B/Tokyo/EIS13-175/2025 (Vic, 계란)","circ":"절기 전 — 판정 없음","note":"WHO 2026-02-27 권고. 세 성분 모두 교체(H3N2는 subclade K 겨냥). 정합성은 절기가 지나야 잰다","ax":{"ag":"na","li":"removed","mf":"egg","basis":"WHO 권고문 — 아직 판정 아님"}}],"system_history":[{"year":1952,"event":"WHO 글로벌 인플루엔자 감시망(GISRS) 출범 — 아형 변화 추적 시작"},{"year":1996,"event":"FluNet 가동 — 실시간 실험실 감시 데이터 공개(정량 추적 가능)"},{"year":2005,"event":"한국 급성호흡기감염증 감시사업 시작"},{"year":2009,"event":"한국 KINRESS(인플루엔자·호흡기바이러스 실험실감시체계)로 확대"},{"year":2020,"event":"B/Yamagata 전세계 미검출 시작(사실상 멸종 추정)"}],"sources":["WHO GISRS(1952~)·FluNet(1996~)","History of Vaccines — Influenza Pandemics","Nature Reviews Microbiology(2021), Lancet Microbe(2024) — B/Yamagata 멸종","질병관리청 감염병포털·KINRESS","WHO 백신 구성 권고문 — 북반구 2026-27(2026-02-27)·2025-26(2025-02-28)","CDC MMWR 2024-25 잠정 VE(2025-02) · ECDC·UKHSA·캐나다 SPSN 2025-26 잠정 VE(Eurosurveillance 2025-11~2026-01)"],"meta":{"as_of":"2026-08-15","note":"정합성·VE 수치는 북반구/미국 CDC 기준(한국 VE 아님). WHO FluNet은 소급 수정될 수 있어 as_of 필수."},"who_recommendation":{"season":"2026-27 북반구","date":"2026-02-27","period":"2025년 9월~2026년 1월 감시 자료","url":"https://www.who.int/news/item/27-02-2026-recommendations-for-influenza-vaccine-composition-for-the-2026-2027-northern-hemisphere-season","report":"https://cdn.who.int/media/docs/default-source/vcm-northern-hemisphere-recommendation-2026-2027/a.-27-feb-2026-recommended-composition-of-influenza-virus-vaccines-for-use-in-the-2026-2027-nouthern-hemisphere-influenza-season---full-report.pdf","prev":{"season":"2025-26 북반구","date":"2025-02-28"},"rows":[{"comp":"A(H1N1)pdm09","prev_egg":"A/Victoria/4897/2022","prev_cell":"A/Wisconsin/67/2022","egg":"A/Missouri/11/2025","cell":"A/Missouri/11/2025","changed":true,"why":"5a.2a.1 계통이 D.3.1·D.3.1.1 아계통으로 갈라졌다. 기존 백신 접종자 혈청에서 최근 유행주에 대한 항체가가 유의하게 낮았다"},{"comp":"A(H3N2)","prev_egg":"A/Croatia/10136RV/2023","prev_cell":"A/District of Columbia/27/2023","egg":"A/Darwin/1454/2025","cell":"A/Darwin/1415/2025","changed":true,"why":"J.2 아계통 가운데 K(구 J.2.4.1)가 대부분 지역에서 우세해졌다. 기존 백신주 항혈청이 J.2.3·J.2.4·K를 잘 못 알아봤다 — 2025-26 절기 유행이 바로 이 주였다"},{"comp":"B/Victoria","prev_egg":"B/Austria/1359417/2021","prev_cell":"B/Austria/1359417/2021","egg":"B/Tokyo/EIS13-175/2025","cell":"B/Pennsylvania/14/2025","changed":true,"why":"3a.2 계통의 C.3·C.3.1 아계통(HA D197N)이 기존 백신주에 잘 안 잡혔다. 계란 분리주는 HA 197~199 당화 부위를 잃는 계란적응 변이가 생겨 세포용과 다른 주를 골랐다"},{"comp":"B/Yamagata","prev_egg":"B/Phuket/3073/2013 (4가에 한해)","prev_cell":"—","egg":"권고 없음","cell":"권고 없음","changed":true,"why":"2020년 3월 이후 확인된 검출이 없다. 3가 구성만 권고"}],"note":"백신주 이름은 'A/지역/번호/연도-like virus' — 그 바이러스와 항원적으로 같은 계열이면 된다는 뜻이다. 계란 배양 백신과 세포·재조합 백신에 다른 주를 권고하는 것은 계란에서 자라며 생기는 적응 변이 때문이다. 국내 접종 백신의 실제 주는 식약처 허가 사항을 따른다.","insight":"세 성분이 한꺼번에 바뀌었다. 2025-26 절기는 H3N2 subclade K가 백신주와 어긋난 채 유행했는데도 성인 백신효과 25~45%, 소아 47~78%(유럽 9개 연구·영국)로 예년 범위였다 — <b>부정합이 곧 무효는 아니다</b>. 2026-27은 K를 겨냥한 Darwin주로 바꿨고, 판정은 절기가 끝난 뒤 트래커(04)에 적는다."}};
 const KORW={"w":[[2016,1,224,17,1],
 [2016,2,220,25,5],
 [2016,3,223,38,9],
@@ -999,10 +989,22 @@ document.getElementById('legend2').innerHTML=SUB.map(([k,l,cv])=>`<span><i class
   const col={miss:'--bad',partial:'--warn',special:'--neutral',na:'--neutral',note:'--neutral'};
   CURATED.vaccine_seasons.forEach(s=>{
     const d=document.createElement('div');d.className='c';d.style.background=cssv(col[s.match]||'--neutral');
-    d.innerHTML=`${s.season}<small>${s.match==='miss'?'부정합':s.match==='partial'?'부분':s.match==='special'?'팬데믹':s.match==='na'?'유행소멸':'정책'}</small>`;
+    d.innerHTML=`${s.season}<small>${s.match==='miss'?'부정합':s.match==='partial'?'부분':s.match==='special'?'팬데믹':s.match==='na'?'유행소멸':s.match==='pending'?'권고·미판정':'정책'}</small>`;
     d.addEventListener('mousemove',e=>showTip(`<b>${s.season}</b>${s.vac?`<br>백신주 ${s.vac}`:''}${s.circ?`<br>유행주 ${s.circ}`:''}${s.ax&&s.ax.basis?`<br>항원:${({match:'일치',drift:'drift',na:'—'})[s.ax.ag]||s.ax.ag} · B계통:${({included:'포함',mismatch:'부정합',missing:'미포함',removed:'제외',na:'—'})[s.ax.li]||s.ax.li} · 제조:${({ok:'정상',egg:'계란적응 이슈',na:'—'})[s.ax.mf]||s.ax.mf}<br>판정근거: ${s.ax.basis}`:''}<br><span style=\"opacity:.85\">${s.note}</span>`,e.clientX,e.clientY));
     d.addEventListener('mouseleave',hideTip);host.appendChild(d);
   });
+})();
+
+/* ---------- 04-1 WHO recommendation table ---------- */
+(function(){
+  const w=CURATED.who_recommendation; if(!w) return;
+  const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+  document.getElementById('whoSub').innerHTML=`WHO가 <b>${esc(w.date)}</b>에 낸 <b>${esc(w.season)}</b> 권고. ${esc(w.period)}로 판단했다. 직전(${esc(w.prev.season)}, ${esc(w.prev.date)})과 나란히 놓아 무엇이 바뀌었는지 본다. <a href="${esc(w.url)}" target="_blank" rel="noopener">WHO 원문 ↗</a> · <a href="${esc(w.report)}" target="_blank" rel="noopener">전체 보고서(PDF) ↗</a>`;
+  const rows=w.rows.map(r=>`<tr><td><b>${esc(r.comp)}</b></td><td>${esc(r.prev_egg)}${r.prev_cell&&r.prev_cell!==r.prev_egg?`<br><small style="opacity:.75">세포 ${esc(r.prev_cell)}</small>`:''}</td><td style="${r.changed?'font-weight:700':''}">${esc(r.egg)}</td><td>${esc(r.cell)}</td><td style="font-weight:400;white-space:normal;min-width:22ch">${esc(r.why)}</td></tr>`).join('');
+  document.getElementById('whoTbl').innerHTML=`<thead><tr><th>성분</th><th>${esc(w.prev.season)}<br><small>계란 기준</small></th><th>${esc(w.season)}<br><small>계란 배양</small></th><th>${esc(w.season)}<br><small>세포·재조합·핵산</small></th><th>왜 바꿨나 (WHO 보고서)</th></tr></thead><tbody>${rows}</tbody>`;
+  document.getElementById('whoCards').innerHTML=w.rows.map(r=>`<div class="wc"><b>${esc(r.comp)}</b><div class="l">${esc(w.prev.season)}</div><div class="v">${esc(r.prev_egg)}${r.prev_cell&&r.prev_cell!==r.prev_egg?` <small style="opacity:.75">· 세포 ${esc(r.prev_cell)}</small>`:''}</div><div class="l">${esc(w.season)} · 계란</div><div class="v new">${esc(r.egg)}</div><div class="l">${esc(w.season)} · 세포·재조합</div><div class="v">${esc(r.cell)}</div><div class="why">${esc(r.why)}</div></div>`).join('');
+  document.getElementById('whoFn').textContent=w.note;
+  document.getElementById('whoIns').innerHTML='💡 <b>인사이트</b> — '+w.insight;
 })();
 
 /* ---------- 05 B/Yamagata line ---------- */
