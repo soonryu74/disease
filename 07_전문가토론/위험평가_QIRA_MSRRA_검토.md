@@ -9,6 +9,26 @@
 - **필요성: 있다.** 질병관리청은 이미 분기별 위험평가(발생가능성×영향력 행렬, 6단계)를 하고 있고 결과를 보도자료 한 줄("종합 위험도 낮음")로만 낸다. 그 판단이 **어떤 근거로, 어느 시점에, WHO 판단과 얼마나 시차를 두고** 내려졌는지는 아무 데도 남지 않는다. 우리 자료는 그 빈칸을 채울 수 있다.
 - **태국 사례는 정정이 필요하다.** WHO 태국사무소 기사(2026-06-09)는 태국이 **QIRA**를 국가 보고체계 Smart DCIR에 통합했다고 적었다. MS-RRA 도입 기록은 찾지 못했다. 연수에서 들은 "태국이 MS-RRA를 도입"은 QIRA와 혼동이거나, 아직 공개되지 않은 내용이다.
 
+## 0-1. 근거의 공개성 — 내부 문서는 쓰지 않았다
+
+이 검토에 쓴 자료는 전부 **로그인 없이 누구나 내려받을 수 있는 공개 문서**다. 연수 슬라이드·배포 자료, 질병관리청 내부 보고서, 회원국 한정 자료는 **하나도 쓰지 않았다**(받은 것도 없다). 2026-09-16에 아래 URL 전부를 익명 접속으로 다시 열어 확인했다.
+
+| 자료 | 공개 근거 | 상태 | 비고 |
+|---|---|---|---|
+| WHO **QIRA 사용자 매뉴얼** | WHO 공식 출판물. ISBN 978-92-4-011279-7(전자)·011280-3(인쇄), © WHO 2026, **CC BY-NC-SA 3.0 IGO**. IRIS 다운로드 | 최종판 | 공개 출판일 2026-09-08. 비상업 목적 복제·번역·개작 허용(로고 사용 불가, 번역 시 면책문 부기) |
+| WHO **MS-RRA 사용자 매뉴얼** | WHO 동남아지역사무소(SEARO) 공개 페이지(2026-02-25 게시) + WHO CDN PDF. © WHO 2025, **CC BY-NC-SA 3.0 IGO** 문구 수록 | **디자인 전 최종본**(파일명 `ex_cleared_pre-designed-version` = 외부 공개 승인된 조판 전 판). ISBN 칸 공란 | 페이지 URL에 `internal-publications-detail`이 들어 있으나 이는 WHO CMS 경로명이고, 페이지·PDF 모두 제한 표시 없이 열린다. 본부 출판물 페이지(ISBN 9789240119383)는 현재 404 — 정식 조판판 게시 전. **인용 시 "SEARO 게시 조판 전 판"이라고 적는다** |
+| WHO **MS-RRA 도구 서식**(Worksheet·Output sheet, docx 8쪽) | WHO 본부 기술문서 페이지, 2026-03-31, Health Emergency Intelligence and Surveillance팀 | 최종 | 우리가 서식을 만들 때 그대로 쓸 수 있는 원본 |
+| WHO 위험평가 **도구 흐름도** | WHO CDN 공개 PDF(2024-12 기준, Risk Analysis Package 프로젝트) | 최종 | |
+| WHO **태국 사례** | WHO 태국사무소 기사 2026-06-09 | 공개 보도 | 태국 정부 내부 자료는 보지 않았다. 따라서 "MS-RRA 도입"은 확인 불가로 남긴다 |
+| WHO 2012 *Rapid risk assessment of acute public health events* | IRIS 공개 | 최종 | 두 도구의 모체 |
+| 학술 리뷰 (J Infect Public Health 2025) | PubMed 공개 초록 | 출판 | 본문은 초록만 참고 |
+| **질병관리청 감염병 위험평가·위기경보** | kdca.go.kr 공개 페이지(위험평가 페이지 최종 검토 2026-02-09) | 공개 | 방법·대상·6단계는 여기 적힌 것만 썼다. **개별 평가 결과서·회의록은 비공개이며 보지 않았다** |
+| 질병관리청 「감염병 ALERT」 | PHWR 2026;19(22) 공개 논문 | 출판 | |
+| 에볼라 '낮음'(8-27)·위험도 기반 검역(9-7) | 언론 보도(YTN 사이언스·한국사회적경제신문)와 질병관리청 공지 | 공개 | 보도자료 원문 링크는 질병관리청 게시판 세션 URL이어서 불안정 — 언론 전재본을 병기 |
+| 우리 자료 | 이 저장소(공개 GitHub) | 공개 | ⑪ 지정이력은 Q-CODE·질병관리청 공지에서, 상황판 WHO 등급은 WHO DON 공개 API에서 |
+
+두 WHO 매뉴얼의 라이선스(CC BY-NC-SA 3.0 IGO)는 **비상업·동일조건 공유**다. 이 저장소가 비상업으로 유지되는 한 도표·질문 구조를 한글로 옮겨 실습기에 넣는 것은 허용 범위이고, 그때 WHO 면책문("이 번역은 WHO가 만든 것이 아니다…")을 붙여야 한다. ④ 사업화 구상으로 넘어가면 이 조건을 다시 봐야 한다.
+
 ## 1. WHO 도구 두 가지 — 무엇이 다른가
 
 WHO는 2023년 19개 회원국 조사에서 "표준화된 위험평가 도구가 없다"는 요구를 받아 *Risk Analysis Package for Member States*를 만들었다. 결과물이 이 두 도구다. 2012년 *Rapid risk assessment of acute public health events* 매뉴얼의 후속이며, 국제보건규칙(IHR) 2024 개정(WHA77.17)의 "긴급 사건 48시간 내 평가" 의무를 받친다.
@@ -103,8 +123,9 @@ MS-RRA로 가면 질문 3·6(역량)이 절반이라 우리 자료로는 반쪽�
 
 ## 출처
 
-- WHO, *User manual for the QIRA algorithm for Member States* (2026-09-08, 58쪽): https://www.who.int/publications/i/item/97892401127971
-- WHO, *User manual for the MS-RRA tool* (93쪽): https://www.who.int/publications/i/item/9789240119383_1 · SEARO 사전판 PDF: https://cdn.who.int/media/docs/default-source/searo/whe/him/20260223_ms-rra-tool_ex_cleared_pre-designed-version.pdf
+- WHO, *User manual for the QIRA algorithm for Member States* (2026-09-08, 58쪽, ISBN 978-92-4-011279-7, CC BY-NC-SA 3.0 IGO): https://www.who.int/publications/i/item/97892401127971 · PDF: https://iris.who.int/server/api/core/bitstreams/7559a5ef-115f-4043-a3ea-3a4b060cc8fc/content · SEARO 조판 전 판(2026-02-25): https://www.who.int/southeastasia/internal-publications-detail/WHE2602261
+- WHO, *User manual for the MS-RRA tool* (93쪽, © WHO 2025, CC BY-NC-SA 3.0 IGO, **SEARO 게시 조판 전 판**, 2026-02-25): https://www.who.int/southeastasia/internal-publications-detail/WHE2602262 · PDF: https://cdn.who.int/media/docs/default-source/searo/whe/him/20260223_ms-rra-tool_ex_cleared_pre-designed-version.pdf
+- WHO, *Member State Rapid Risk Assessment tool* (서식 docx, 2026-03-31): https://www.who.int/publications/m/item/member-state-rapid-risk-assessment-tool
 - WHO, 위험평가 도구 흐름도(2024-12 기준): https://cdn.who.int/media/docs/default-source/documents/emergencies/20251106_final-ra-tools-flowchart.pdf
 - WHO Thailand, *Strengthening Risk Assessment of Health Emergencies in Thailand* (2026-06-09): https://www.who.int/thailand/news/feature-stories/detail/strengthening-risk-assessment-of-health-emergencies-in-thailand
 - WHO, *Rapid risk assessment of acute public health events* (2012): https://iris.who.int/handle/10665/70810
