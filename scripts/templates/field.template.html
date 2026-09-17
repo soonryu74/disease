@@ -134,6 +134,69 @@
   footer .maker a{color:var(--accent-ink)}
   @media(max-width:760px){.tiles{grid-template-columns:repeat(2,1fr)}.res{grid-template-columns:1fr}}
   @media(max-width:520px){.row{grid-template-columns:70px 1fr}}
+
+  /* ── 현장에서 쓰기 위한 것들 ─────────────────────────────────────────── */
+  /* 출처 성격 배지 — 공식 원문인지, 우리가 엮은 것인지, 계산한 것인지 */
+  .bdg{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap}
+  .bdg.official{background:var(--accent-soft);color:var(--accent-ink)}
+  .bdg.archive{background:var(--info-soft,#DCEDF1);color:var(--info-ink,#1B5561)}
+  .bdg.analysis{background:var(--model-soft,#E7E0F2);color:var(--model-ink,#4A3368)}
+
+  /* 시작 화면 — 검색 전에는 '못 찾았다'가 아니라 '무엇을 찾으시나요'를 보여준다 */
+  .start{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin:0 0 16px}
+  .start h2{margin:0 0 6px;font-size:18px;font-weight:800;letter-spacing:-.02em}
+  .start p{margin:0 0 14px;font-size:14px;color:var(--muted)}
+  .start .qz{display:flex;gap:7px;flex-wrap:wrap}
+  .start .qz button{font:inherit;font-size:14px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:0;border-radius:999px;padding:10px 16px;cursor:pointer;min-height:44px}
+  .start .qz button:hover{filter:brightness(.96)}
+  .start .lbl{font-size:12px;font-weight:800;letter-spacing:.06em;color:var(--faint);margin:0 0 7px}
+
+  /* 핵심 대응정보 — 신고와 격리가 가장 먼저, 가장 크게 */
+  .key{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 12px}
+  .kb{border:1px solid var(--line);border-left:4px solid var(--kc);border-radius:11px;padding:11px 13px;background:var(--surface-2)}
+  .kb .kl{font-size:11.5px;font-weight:800;letter-spacing:.04em;color:var(--muted)}
+  .kb .kv{font-size:17px;font-weight:800;line-height:1.3;margin-top:3px;color:var(--ink);letter-spacing:-.02em;
+    overflow-wrap:anywhere;word-break:keep-all}
+  .kb .kx{font-size:12px;color:var(--muted);margin-top:2px}
+  .kb.k-report{--kc:#C99A22} .kb.k-iso{--kc:#C05A47} .kb.k-incub{--kc:#2F7D8C} .kb.k-grade{--kc:var(--accent)}
+  .kb.miss .kv{font-size:14px;font-weight:700;color:var(--faint)}
+
+  /* 지침에서 확인해야 하는 것 — 없는 값을 지어내지 않는다 */
+  .ckg{border:1px dashed var(--line-strong);border-radius:11px;padding:11px 13px;margin:0 0 12px;font-size:13px;color:var(--muted)}
+  .ckg b{color:var(--ink)}
+
+  /* 현장모드 */
+  .fmode{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:700;
+    background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:999px;
+    padding:8px 14px;cursor:pointer;min-height:42px}
+  .fmode[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:#fff}
+  body.fm .thesis,body.fm .tiles,body.fm #conf,body.fm .res,body.fm #forms,
+  body.fm .card .box,body.fm .card .glist,body.fm .card .row.dim{display:none !important}
+  body.fm .card .kb .kv{font-size:21px}
+  body.fm .card summary{font-size:17px;padding:14px 12px}
+  body.fm .card .bd{font-size:16px}
+  body.fm .card .row{font-size:15.5px}
+  /* 현장모드: 거르개 줄과 붙박이 검색줄을 접어 핵심값을 첫 화면으로 끌어올린다 */
+  body.fm .tools{position:static;padding:10px 0 8px}
+  body.fm .tools .chips{display:none}
+  body.fm header{padding-top:14px}
+  body.fm h1{font-size:24px}
+  /* 현장모드에서 글자를 키우면 두 칸에 안 들어간다 — 좁은 화면은 한 줄에 하나씩 */
+  @media (max-width:560px){
+    .key{grid-template-columns:1fr 1fr}
+    body.fm .key{grid-template-columns:1fr}
+    body.fm .card .kb .kv{font-size:23px}
+  }
+
+  .actbar{display:flex;gap:7px;flex-wrap:wrap;margin:12px 0 0}
+  .actbar a,.actbar button{font:inherit;font-size:13px;font-weight:700;color:var(--accent-ink);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:9px;padding:10px 14px;cursor:pointer;min-height:44px;
+    display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+  .actbar a:hover,.actbar button:hover{background:var(--surface-2)}
+  .empty .alt{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:12px 0 0}
+  .empty .alt button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
 </style>
 </head>
 <body>
@@ -146,14 +209,16 @@
 <header>
   <p class="eyebrow">Field Response</p>
   <h1>현장 대응 카드</h1>
-  <p class="thesis">역학조사 현장에서 한 화면에 있어야 하는 것을 모았다 —
-  <b>지금 이 병의 급·신고기한·격리</b>, <b>펴야 할 지침</b>, <b>잠복기와 그 값이 국제 기준과 맞는지</b>.
-  질병관리청 자료를 US CDC·WHO·UKHSA·ECDC와 대조해 <b>우리 값이 좁은 곳</b>을 표시했다.</p>
+  <p class="thesis">감염병 이름을 찾으면 <b>신고·격리·잠복기·펴야 할 지침</b>을 한 화면에서 봅니다.
+  잠복기는 US CDC·WHO·UKHSA·ECDC와 대조해 <b>우리 값이 좁은 곳</b>을 표시했습니다.
+  <span class="bdg archive">아카이브 재구성</span> 질병관리청 지침·고시를 엮은 것이고, 지침 링크는 <span class="bdg official">공식 원자료</span>입니다.</p>
   <div class="tiles" id="tiles"></div>
 </header>
 
 <div class="tools">
-  <input class="search" id="q" type="search" placeholder="감염병 이름 (예: 홍역, 콜레라, 유행성이하선염)" autocomplete="off">
+  <input class="search" id="q" type="search" placeholder="감염병 이름 검색 (예: 홍역, MERS, 백일해)" autocomplete="off"
+         aria-label="감염병 이름 검색">
+  <button class="fmode" id="fmode" type="button" aria-pressed="false" title="글자를 키우고 부가 설명을 접어 현장에서 보기 좋게 바꾼다">🔦 현장모드</button>
   <div class="chips" id="chips">
     <button class="chip on" data-f="all">전체</button>
     <button class="chip" data-f="1">제1급</button>
@@ -166,8 +231,15 @@
 </div>
 
 <section>
+  <div class="start" id="start">
+    <h2>감염병을 검색하세요</h2>
+    <p>질병명을 넣으면 신고·격리·잠복기·펴야 할 지침을 한 화면에서 확인할 수 있습니다.
+       아래 목록을 그대로 훑어봐도 됩니다.</p>
+    <p class="lbl">주요 감염병</p>
+    <div class="qz" id="qz"></div>
+  </div>
   <div id="cards"></div>
-  <div class="empty" id="empty">해당 감염병을 찾지 못했다. 다른 이름으로 시도해 보라.</div>
+  <div class="empty" id="empty"></div>
 </section>
 
 <section>
@@ -207,6 +279,7 @@
 
 <script>
 const D = __DATA__;
+const enc = s => encodeURIComponent(String(s == null ? '' : s));
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const gnum = g => (String(g||'').match(/제(\d)급/)||[])[1] || '';
 
@@ -251,12 +324,25 @@ document.getElementById('cards').innerHTML = D.cards.map(c => {
       <span class="qk">${esc(quick)}</span>
     </summary>
     <div class="bd">
-      ${c.incub ? `<div class="row"><span class="k">잠복기</span><span>${esc(c.incub)}</span></div>` : ''}
-      ${c.report ? `<div class="row"><span class="k">신고</span><span>${esc(c.report)}${c.surv ? ' · '+esc(c.surv) : ''}</span></div>` : ''}
-      ${c.iso ? `<div class="row"><span class="k">격리</span><span>${esc(c.iso)}</span></div>` : ''}
+      <!-- 현장 순서: 신고 → 격리 → 잠복기 → 그 밖. 가나다가 아니라 손이 가는 순서다 -->
+      <div class="key">
+        <div class="kb k-grade"><div class="kl">급수·감시</div><div class="kv">${esc(c.grade||'—')}</div>
+          ${c.surv?`<div class="kx">${esc(c.surv)}</div>`:''}</div>
+        <div class="kb k-report${c.report?'':' miss'}"><div class="kl">신고</div>
+          <div class="kv">${c.report?esc(c.report):'자료 없음'}</div>
+          <div class="kx">${c.report?'법정 신고 기한':'지침 원문 확인'}</div></div>
+        <div class="kb k-iso${c.iso?'':' miss'}"><div class="kl">격리</div>
+          <div class="kv">${c.iso?esc(c.iso):'자료 없음'}</div>
+          <div class="kx">${c.iso?'':'지침 원문 확인'}</div></div>
+        <div class="kb k-incub${c.incub?'':' miss'}"><div class="kl">잠복기</div>
+          <div class="kv">${c.incub?esc(c.incub):'자료 없음'}</div>
+          <div class="kx">접촉자 감시 기간은 최대 잠복기 기준</div></div>
+      </div>
+      <div class="ckg">이 카드에 없는 <b>접촉자 관리 범위 · 검체 종류와 채취 시점 · 격리 해제 기준</b>은
+        지침 원문에서 확인하십시오. 없는 값을 추정해 채우지 않았습니다.</div>
       ${c.route ? `<div class="row"><span class="k">감염경로</span><span>${esc(c.route)}</span></div>` : ''}
-      ${c.tx ? `<div class="row"><span class="k">치료</span><span>${esc(c.tx)}</span></div>` : ''}
-      ${c.prev ? `<div class="row"><span class="k">예방</span><span>${esc(c.prev)}</span></div>` : ''}
+      ${c.tx ? `<div class="row dim"><span class="k">치료</span><span>${esc(c.tx)}</span></div>` : ''}
+      ${c.prev ? `<div class="row dim"><span class="k">예방</span><span>${esc(c.prev)}</span></div>` : ''}
       ${c.cross ? `<div class="box" style="--bc:${c.cross.verdict==='narrower'?'var(--warn)':c.cross.verdict==='match'?'var(--accent)':'var(--caut)'}">
         <h4>국제 기준 대조 — ${VF[c.cross.verdict][1]}</h4>
         <p>${esc(c.cross.why)}</p>
@@ -268,6 +354,13 @@ document.getElementById('cards').innerHTML = D.cards.map(c => {
         ${c.guides.map(x => guideLi(x,'d')).join('')}
         ${c.group_guides.map(x => guideLi(x,'g')).join('')}
       </ul>
+      <div class="actbar">
+        <a href="../dogam/#${enc(c.disease)}">📖 도감</a>
+        <a href="../chronicle/#${enc(c.disease)}">📜 급수 변천</a>
+        <a href="../guides/#${enc(c.disease)}">📕 지침 전체</a>
+        <button type="button" class="shr" data-d="${esc(c.disease)}">🔗 링크 복사</button>
+        <button type="button" class="prt" data-d="${esc(c.disease)}">🖨 인쇄</button>
+      </div>
       ${c.guides_total > c.guides.length ? `<p style="font-size:12px;color:var(--faint);margin:8px 0 0">제목에 병명이 있는 자료 ${c.guides_total}건 중 계열별 최신 ${c.guides.length}건만 표시 · 같은 계열은 최신판 하나로 접었다</p>` : ''}
     </div>
   </details>`;
@@ -319,15 +412,29 @@ document.getElementById('forms').innerHTML = `
     <p style="margin-top:8px">${esc(E.forms.reporting)}</p>
   </div>`;
 
-/* 필터 */
+/* 필터 · 상태 · 현장모드 — 화면이 어느 상태인지 분명히 나눈다 */
 (function(){
   const q = document.getElementById('q'), shown = document.getElementById('shown'),
-        empty = document.getElementById('empty'),
+        empty = document.getElementById('empty'), start = document.getElementById('start'),
         cards = [].slice.call(document.querySelectorAll('#cards .card')),
         chips = [].slice.call(document.querySelectorAll('#chips .chip'));
   let f = 'all';
+
+  /* 주요 감염병 — 이용 통계가 아니라 자료가 갖춰진 것 가운데 현장에서 자주 찾는 것 */
+  const SEED = ['홍역','백일해','결핵','중동호흡기증후군(MERS)','엠폭스','뎅기열','수두','A형간염'];
+  const names = cards.map(c => c.id);
+  const pick = SEED.map(s => names.find(n => n.replace(/\s/g,'').indexOf(s.replace(/\s/g,'')) > -1)
+                            || names.find(n => s.indexOf(n) > -1)).filter(Boolean);
+  document.getElementById('qz').innerHTML = [...new Set(pick)]
+    .map(n => `<button type="button" data-n="${esc(n)}">${esc(n)}</button>`).join('');
+  document.getElementById('qz').addEventListener('click', e => {
+    const b = e.target.closest('button'); if(!b) return;
+    location.hash = encodeURIComponent(b.dataset.n);
+  });
+
   function apply(){
-    const t = (q.value||'').toLowerCase().replace(/\s/g,'');
+    const raw = (q.value||'').trim();
+    const t = raw.toLowerCase().replace(/\s/g,'');
     let n = 0;
     cards.forEach(c => {
       const okF = f === 'all' || (f === 'warn' ? c.dataset.w === '1' : c.dataset.g === f);
@@ -336,7 +443,21 @@ document.getElementById('forms').innerHTML = `
       if (!c.hidden) n++;
     });
     shown.textContent = n;
-    empty.style.display = n ? 'none' : 'block';
+    /* 검색 전(INITIAL)과 찾지 못함(EMPTY)은 다른 상태다 — 같은 문구를 쓰면 고장으로 보인다 */
+    const searching = !!raw || f !== 'all';
+    start.style.display = searching ? 'none' : '';
+    if (n) { empty.style.display = 'none'; empty.innerHTML = ''; return; }
+    empty.style.display = 'block';
+    empty.innerHTML = `‘${esc(raw || '이 조건')}’에 해당하는 감염병을 찾지 못했습니다.
+      옛 이름이나 영문명으로도 찾을 수 있습니다.
+      <div class="alt">
+        <button type="button" data-r="1">전체 목록 보기</button>
+        <button type="button" onclick="location.href='../search/?q=${encodeURIComponent(raw)}'">통합검색에서 찾기</button>
+        <button type="button" onclick="location.href='../dogam/'">감염병 도감</button>
+      </div>`;
+    const rb = empty.querySelector('[data-r]');
+    if (rb) rb.onclick = () => { q.value=''; f='all';
+      chips.forEach(x => x.classList.toggle('on', x.dataset.f === 'all')); apply(); };
   }
   q.addEventListener('input', apply);
   chips.forEach(ch => ch.addEventListener('click', () => {
@@ -345,15 +466,58 @@ document.getElementById('forms').innerHTML = `
     apply();
   }));
   apply();
-  /* #질병명 으로 들어오면 필터를 풀고 그 카드를 펴서 보여 준다 */
-  function goHash(){
-    const h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
-    const el = document.getElementById(h); if (!el || !el.classList.contains('card')) return;
+
+  /* #질병명 또는 ?disease=질병명 으로 들어오면 그 카드를 펴서 보여 준다 */
+  function open(name){
+    const el = document.getElementById(name);
+    if (!el || !el.classList.contains('card')) return false;
     f = 'all'; q.value = '';
     chips.forEach(x => x.classList.toggle('on', x.dataset.f === 'all'));
     apply(); el.open = true; el.scrollIntoView({block:'start'});
+    return true;
+  }
+  function goHash(){
+    const h = decodeURIComponent(location.hash.slice(1));
+    if (h) { open(h); return; }
+    const d = new URLSearchParams(location.search).get('disease');
+    if (d) { if (!open(d)) { q.value = d; apply(); } }
   }
   goHash(); addEventListener('hashchange', goHash);
+
+  /* 링크 복사 · 카드 한 장만 인쇄 */
+  document.getElementById('cards').addEventListener('click', e => {
+    const sh = e.target.closest('.shr'), pr = e.target.closest('.prt');
+    if (sh){
+      e.preventDefault();
+      const url = location.origin + location.pathname + '#' + encodeURIComponent(sh.dataset.d);
+      const done = () => { const t = sh.textContent; sh.textContent = '✓ 복사됨'; setTimeout(()=>sh.textContent=t, 1600); };
+      if (navigator.share) { navigator.share({title: sh.dataset.d + ' 현장 대응카드', url}).catch(()=>{}); }
+      else if (navigator.clipboard) { navigator.clipboard.writeText(url).then(done, ()=>{}); }
+      else { prompt('이 주소를 복사하세요', url); }
+    }
+    if (pr){
+      e.preventDefault();
+      /* 고른 카드만 종이에 담는다 — 91종을 전부 뽑는 사고를 막는다 */
+      cards.forEach(c => { c.dataset.ph = c.hidden ? '1' : '0'; if (c.id !== pr.dataset.d) c.hidden = true; });
+      const card = document.getElementById(pr.dataset.d); if (card) card.open = true;
+      addEventListener('afterprint', function back(){
+        cards.forEach(c => { c.hidden = c.dataset.ph === '1'; });
+        removeEventListener('afterprint', back);
+      });
+      print();
+    }
+  });
+
+  /* 현장모드 — 기기에 기억시킨다(개인정보는 담지 않는다) */
+  const fm = document.getElementById('fmode');
+  function setFm(on){
+    document.body.classList.toggle('fm', on);
+    fm.setAttribute('aria-pressed', on ? 'true' : 'false');
+    fm.textContent = on ? '🔦 현장모드 끄기' : '🔦 현장모드';
+    try { localStorage.setItem('fieldMode', on ? '1' : '0'); } catch(e){}
+  }
+  fm.addEventListener('click', () => setFm(!document.body.classList.contains('fm')));
+  try { if (localStorage.getItem('fieldMode') === '1') setFm(true); } catch(e){}
 })();
 </script>
 </body>
