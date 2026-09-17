@@ -281,7 +281,7 @@ def tools_html(data_href='data/', home='./'):
 
 def printhead_html(title):
     return ('<div class="printonly printhead" id="printhead">'
-            f'<b>{title}</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br>'
+            f'<b>{title}</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br>'
             '<span class="purl"></span> · <span class="pdate"></span> · '
             '원자료: 질병관리청 · 법제처'
             '</div>')

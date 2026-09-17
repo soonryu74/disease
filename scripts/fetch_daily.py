@@ -335,12 +335,25 @@ def main():
             st.setdefault('last_ok', '')
             print(f'  ✗ {label}: {e}')
         status[sid] = st
-    new_count = 0
+    # 같은 글이 조용히 고쳐지는 일이 있다. 제목·게시일·경보단계가 바뀌면 그것만 '고쳐짐'으로 남긴다.
+    # 원문에서 사라진 것은 '철회'인지 '목록에서 밀려난 것'인지 구분할 수 없어 표시하지 않는다.
+    WATCH = ('title', 'date', 'level')
+    LABEL = {'title': '제목', 'date': '게시일', 'level': '경보 단계'}
+    new_count, upd_count = 0, 0
     for it in fetched:
         if it['id'] in by_id:
-            by_id[it['id']].update({k: v for k, v in it.items() if k in ('title', 'summary', 'date', 'level', '_raw')})
+            cur = by_id[it['id']]
+            changed = [LABEL[k] for k in WATCH
+                       if it.get(k) not in (None, '') and cur.get(k) not in (None, '') and it[k] != cur[k]]
+            cur.update({k: v for k, v in it.items() if k in ('title', 'summary', 'date', 'level', '_raw')})
+            cur['last_seen'] = today
+            if changed:
+                cur['updated'] = today
+                cur['changes'] = changed
+                upd_count += 1
         else:
             it['first_seen'] = today
+            it['last_seen'] = today
             by_id[it['id']] = it
             new_count += 1
     items = list(by_id.values())
@@ -386,7 +399,8 @@ def main():
     # 더 이상 쓰지 않는 출처는 원장에서 지운다. 남겨 두면 화면에 죽은 딱지가 붙는다.
     for k in [k for k in status if k != '_run' and k not in SRC_PREFIX]:
         del status[k]
-    status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'total': len(items)}
+    status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'updated': upd_count,
+                      'total': len(items)}
     json.dump(status, open(STATUS, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
     # 항목 원장을 남긴다. 이것이 없으면 다음 날 모든 항목이 다시 '새 항목'이 된다.
     json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
