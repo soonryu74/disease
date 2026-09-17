@@ -231,6 +231,9 @@
 
 
 
+
+
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -613,7 +616,8 @@ function section(sel, cntSel, rows, emptyMsg){
 })();
 
 /* ── 목록 검색·정렬·보기 ─────────────────────────────────────────────── */
-let q='', sortBy='date';
+let q = (new URLSearchParams(location.search).get('q') || '').trim().toLowerCase(), sortBy='date';
+if(q) document.getElementById('lq').value = q;
 document.getElementById('lq').addEventListener('input', e=>{ q=e.target.value.trim().toLowerCase(); limit=40; render(); });
 document.getElementById('lsort').addEventListener('change', e=>{ sortBy=e.target.value; render(); });
 (function(){

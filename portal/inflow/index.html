@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>해외유입 지도</title>
+<title>해외유입 감염병 지도·분석 | 감염병 자료 아카이브</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="국내 해외유입 감염병 신고자료를 국가·질병별로 지도와 표로 탐색하고 검역·해외발생·현장대응·원자료로 연결합니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -153,6 +154,13 @@
     .card{break-inside:avoid;box-shadow:none}
   }
 
+  /* 나라 하나에서 이어지는 곳 */
+  .panel .go{display:grid;gap:6px;margin:14px 0 0}
+  .panel .go a{display:block;border:1px solid var(--line-strong);border-radius:9px;padding:9px 11px;
+    font-size:12.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:40px;text-decoration:none}
+  .panel .go a:hover{background:var(--surface-2)}
+  .panel .go a small{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
+
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
 .printonly{display:none}
 @page{margin:14mm 12mm}
@@ -203,21 +211,6 @@
 .pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -285,7 +278,7 @@ nav:not(.gnav){display:none !important}
 </style>
 </head>
 <body>
-<div class="printonly printhead" id="printhead"><b>해외유입 지도</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<div class="printonly printhead" id="printhead"><b>해외유입 감염병 지도·분석 | 감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
 <nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi on" href="../inflow/" aria-current="page">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi on" href="../inflow/" aria-current="page">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi" href="../data/">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi" href="../data/#use">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
 (function(){
   var nav=document.querySelector('nav.gnav'); if(!nav) return;
@@ -745,6 +738,19 @@ function renderPanel(iso){
   if(r.rep_n && r.rep_n<3) h += `<div class="note">신고 ${r.rep_n}건. 위험도는 순위가 아니라 신호로만 읽을 것.</div>`;
   if(iso==='SSD') h += `<div class="note warn">말라리아 6건은 파병 부대 복귀로 보인다(원문은 국가만 적는다). 외국인 입국자 163명은 이 유입의 분모가 아니다. 어떤 공개 분모로도 맞게 나누지 못하는 사례.</div>`;
   if(iso==='RUS') h += `<div class="note warn">직항이 2022년 이후 사실상 끊겼다(3년 9편). 국적 입국자 ${fmt(r.nat_entries)}명은 거의 전부 경유 입국 — 직항 기준 위험도 ${fmt1(r.rate_air)}은 분모가 무너진 숫자다.</div>`;
+  // 이 나라에서 이어지는 곳. 숫자는 신고 건수이지 위험 순위가 아니므로, 판단은 각 쪽으로 넘긴다.
+  {
+    const c = encodeURIComponent(r.ko);
+    const dz = (r.rep_diseases[0] && r.rep_diseases[0][0]) || r.q_priority[0] || r.q_general[0] || '';
+    const e = encodeURIComponent(dz);
+    h += `<h4>이 나라에서 이어 보기</h4><div class="go">`
+      + `<a href="../quarantine/?country=${c}">🛂 현재 검역 지정 확인<small>분기마다 바뀐다</small></a>`
+      + `<a href="../daily/?q=${c}">📡 최근 해외 발생 자료<small>WHO·CDC·질병관리청</small></a>`
+      + (dz ? `<a href="../dogam/#${e}">📖 ${dz} 질병정보<small>병원체·잠복기·예방</small></a>` : '')
+      + (dz ? `<a href="../field/#${e}">🚑 ${dz} 현장 대응<small>신고·격리</small></a>` : '')
+      + `<a href="../data/">⬇ 이 표의 원자료<small>CSV · JSON</small></a>`
+      + `</div>`;
+  }
   panel.innerHTML = h;
 }
 

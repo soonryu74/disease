@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>해외유입 지도</title>
+<title>해외유입 감염병 지도·분석 | 감염병 자료 아카이브</title>
+<meta name="description" content="국내 해외유입 감염병 신고자료를 국가·질병별로 지도와 표로 탐색하고 검역·해외발생·현장대응·원자료로 연결합니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -151,6 +152,13 @@
     .panel{max-height:none}
     .card{break-inside:avoid;box-shadow:none}
   }
+
+  /* 나라 하나에서 이어지는 곳 */
+  .panel .go{display:grid;gap:6px;margin:14px 0 0}
+  .panel .go a{display:block;border:1px solid var(--line-strong);border-radius:9px;padding:9px 11px;
+    font-size:12.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:40px;text-decoration:none}
+  .panel .go a:hover{background:var(--surface-2)}
+  .panel .go a small{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
 </style>
 </head>
 <body>
@@ -600,6 +608,19 @@ function renderPanel(iso){
   if(r.rep_n && r.rep_n<3) h += `<div class="note">신고 ${r.rep_n}건. 위험도는 순위가 아니라 신호로만 읽을 것.</div>`;
   if(iso==='SSD') h += `<div class="note warn">말라리아 6건은 파병 부대 복귀로 보인다(원문은 국가만 적는다). 외국인 입국자 163명은 이 유입의 분모가 아니다. 어떤 공개 분모로도 맞게 나누지 못하는 사례.</div>`;
   if(iso==='RUS') h += `<div class="note warn">직항이 2022년 이후 사실상 끊겼다(3년 9편). 국적 입국자 ${fmt(r.nat_entries)}명은 거의 전부 경유 입국 — 직항 기준 위험도 ${fmt1(r.rate_air)}은 분모가 무너진 숫자다.</div>`;
+  // 이 나라에서 이어지는 곳. 숫자는 신고 건수이지 위험 순위가 아니므로, 판단은 각 쪽으로 넘긴다.
+  {
+    const c = encodeURIComponent(r.ko);
+    const dz = (r.rep_diseases[0] && r.rep_diseases[0][0]) || r.q_priority[0] || r.q_general[0] || '';
+    const e = encodeURIComponent(dz);
+    h += `<h4>이 나라에서 이어 보기</h4><div class="go">`
+      + `<a href="../quarantine/?country=${c}">🛂 현재 검역 지정 확인<small>분기마다 바뀐다</small></a>`
+      + `<a href="../daily/?q=${c}">📡 최근 해외 발생 자료<small>WHO·CDC·질병관리청</small></a>`
+      + (dz ? `<a href="../dogam/#${e}">📖 ${dz} 질병정보<small>병원체·잠복기·예방</small></a>` : '')
+      + (dz ? `<a href="../field/#${e}">🚑 ${dz} 현장 대응<small>신고·격리</small></a>` : '')
+      + `<a href="../data/">⬇ 이 표의 원자료<small>CSV · JSON</small></a>`
+      + `</div>`;
+  }
   panel.innerHTML = h;
 }
 

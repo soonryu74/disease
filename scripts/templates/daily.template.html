@@ -477,7 +477,9 @@ function section(sel, cntSel, rows, emptyMsg){
 })();
 
 /* ── 목록 검색·정렬·보기 ─────────────────────────────────────────────── */
-let q='', sortBy='date';
+/* 검역·유입지도에서 ?q=나라이름 으로 넘어온다 — 받지 않으면 빈손으로 열린다 */
+let q = (new URLSearchParams(location.search).get('q') || '').trim().toLowerCase(), sortBy='date';
+if(q) document.getElementById('lq').value = q;
 document.getElementById('lq').addEventListener('input', e=>{ q=e.target.value.trim().toLowerCase(); limit=40; render(); });
 document.getElementById('lsort').addEventListener('change', e=>{ sortBy=e.target.value; render(); });
 (function(){

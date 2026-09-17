@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>검역관리지역</title>
+<title>검역 및 해외유입 감염병 정보 | 감염병 자료 아카이브</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="국가·지역별 검역관리지역 지정 여부와 관련 감염병, 해외 발생정보, 국내 유입자료를 한곳에서 확인합니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -121,6 +122,21 @@
   footer .maker a{color:var(--accent-ink)}
   @media(max-width:820px){.tiles{grid-template-columns:repeat(2,1fr)}}
 
+  /* 나라 하나를 고르면 그 나라로 이어지는 곳 */
+  .row .go{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:6px;margin:9px 0 0}
+  .row .go a{display:block;border:1px solid var(--line-strong);border-radius:9px;padding:8px 10px;
+    font-size:12.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:40px;text-decoration:none}
+  .row .go a:hover{background:var(--surface-2)}
+  .qstart{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 12px}
+  .qstart h3{margin:0 0 5px;font-size:16px;font-weight:800}
+  .qstart p{margin:0 0 12px;font-size:13.5px;color:var(--muted)}
+  .qstart .qz{display:flex;gap:7px;flex-wrap:wrap}
+  .qstart .qz button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
+  .asof{font-size:12.5px;color:var(--muted);background:var(--surface-2);border-radius:9px;
+    padding:9px 12px;margin:0 0 12px;line-height:1.55}
+  .asof b{color:var(--ink)}
+
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
 .printonly{display:none}
 @page{margin:14mm 12mm}
@@ -171,20 +187,6 @@
 .pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -253,7 +255,7 @@ nav:not(.gnav){display:none !important}
 </style>
 </head>
 <body>
-<div class="printonly printhead" id="printhead"><b>검역관리지역</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<div class="printonly printhead" id="printhead"><b>검역 및 해외유입 감염병 정보 | 감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
 <nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi on" href="../quarantine/" aria-current="page">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi on" href="../quarantine/" aria-current="page">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi" href="../data/">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi" href="../data/#use">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
 (function(){
   var nav=document.querySelector('nav.gnav'); if(!nav) return;
@@ -270,7 +272,7 @@ nav:not(.gnav){display:none !important}
 <nav><div class="in">
   <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
   <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../checker/">🩺 검사기</a><a href="../dogam/">📖 도감</a><a href="../lab/">🔬 진단검사</a>
-<a href="../field/">🚑 현장카드</a></div></nav>
+</div></nav>
 
 <div class="wrap">
 <header id="main">
@@ -324,7 +326,9 @@ nav:not(.gnav){display:none !important}
 <section>
   <h2>국가로 찾기</h2>
   <p class="sdesc">나라 이름을 입력하면 그 나라가 어느 등급인지, 어떤 검역감염병 때문인지 나온다. 2026년 3분기(2026.7.1. 기준) 자료다.</p>
-  <input class="search" id="q" type="search" placeholder="나라 이름 (예: 베트남, 우간다, 미국)" autocomplete="off">
+  <div class="asof" id="qasof"></div>
+  <input class="search" id="q" type="search" placeholder="나라 이름 검색 (예: 베트남, 우간다, 미국)" autocomplete="off"
+         aria-label="나라 이름 검색">
   <div class="res" id="res"></div>
   <div class="empty" id="empty">해당 나라는 2026년 3분기 지정 목록에 없다. 지정되지 않은 지역이거나, 원문 표기가 다를 수 있다.</div>
 </section>
@@ -478,21 +482,51 @@ document.getElementById('breaks').innerHTML = D.breaks.map(b =>
   function render(term){
     const t = term.replace(/\s+/g, '');
     const hit = t ? names.filter(n => n.includes(t)) : [];
-    if (!t){ res.innerHTML = `<p style="color:var(--faint);font-size:13.5px">전체 <b>${names.length}개국</b>이 수록돼 있다. 나라 이름을 입력해 보라.</p>`; empty.style.display='none'; return; }
+    if (!t){
+      /* 검색 전에는 '없다'가 아니라 '무엇을 찾나'를 보여준다 */
+      res.innerHTML = `<div class="qstart"><h3>나라 또는 지역을 검색하세요</h3>
+        <p>그 나라가 어느 등급인지, 어떤 검역감염병 때문인지, 해외 발생과 국내 유입은 어디서 보는지 이어서 안내합니다.
+           전체 <b>${names.length}개국</b>이 수록돼 있습니다.</p>
+        <div class="qz">${['콩고민주공화국','우간다','베트남','필리핀','중국','미국']
+          .filter(x => names.includes(x)).map(x => `<button type="button" data-n="${esc(x)}">${esc(x)}</button>`).join('')}</div></div>`;
+      res.querySelectorAll('.qz button').forEach(b => b.onclick = () => { q.value = b.dataset.n; render(q.value); });
+      empty.style.display='none'; return;
+    }
     empty.style.display = hit.length ? 'none' : 'block';
     res.innerHTML = hit.map(n => {
       const c = D.countries[n];
+      const dz = (c.p[0] || c.g[0] || '');
+      const e = encodeURIComponent(n);
       return `<div class="row"><span class="nm">${esc(n)}</span>`
         + (c.p.length ? `<span class="badge bp">중점</span>` : '')
         + (c.g.length ? `<span class="badge bg">검역</span>` : '')
         + `<span class="ds">`
         + (c.p.length ? `<b>중점</b> ${esc(c.p.join(' · '))}<br>` : '')
         + (c.g.length ? `<b>검역</b> ${esc(c.g.join(' · '))}` : '')
-        + `</span></div>`;
+        + `</span>`
+        /* 검역 지정과 해외 발생은 다른 것이다. 지정 여부는 위에, 이어지는 곳은 아래에 따로 둔다. */
+        + `<div class="go">`
+        + `<a href="../inflow/">🌐 이 나라에서 얼마나 오나</a>`
+        + `<a href="../daily/?q=${e}">📡 최근 해외 발생 자료</a>`
+        + (dz ? `<a href="../dogam/#${encodeURIComponent(dz)}">📖 ${esc(dz)} 질병정보</a>` : '')
+        + (dz ? `<a href="../field/#${encodeURIComponent(dz)}">🚑 ${esc(dz)} 현장 대응</a>` : '')
+        + `<a href="../policy/">🎛 지정을 바꾸면 어떻게 되나</a>`
+        + `</div></div>`;
     }).join('');
   }
+  (function(){
+    /* 검역 지정은 분기마다 바뀐다. 이 표가 언제 기준인지 먼저 말한다. */
+    const el = document.getElementById('qasof'); if(!el) return;
+    const base = (D.current && D.current['기준']) || '';
+    el.innerHTML = `<b>이 표는 ${esc(base)} 기준입니다.</b> 검역관리지역은 분기마다, 때로는 분기 중에도 바뀝니다.
+      입국일 기준 현행 지정은 <a href="https://cov19ent.kdca.go.kr" target="_blank" rel="noopener">질병관리청 Q-CODE 누리집</a>에서 확인하십시오.
+      <span class="bdg archive">아카이브 재구성</span>`;
+  })();
   q.addEventListener('input', () => render(q.value));
-  render('');
+  /* ?country=이름 으로 들어오면 그 나라를 찾아 둔 채 연다 */
+  (function(){ const c = new URLSearchParams(location.search).get('country');
+    if (c) { q.value = c; } })();
+  render(q.value || '');
 })();
 
 /* ── 세계 매칭 ── */
