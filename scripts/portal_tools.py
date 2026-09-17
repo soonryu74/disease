@@ -324,6 +324,32 @@ def inject(path, depth):
     return True
 
 
+def ensure_head(path):
+    """문자셋·언어 선언이 없는 쪽에 머리를 세운다.
+
+    조각 파일로 시작한 쪽(허브·법령·인플루엔자)은 <title>부터 시작한다. GitHub Pages가
+    응답 헤더로 utf-8을 붙여 주기 때문에 지금까지 드러나지 않았지만, 다른 호스팅이나
+    파일로 열면 한글이 깨진다. 선언은 문서가 스스로 갖고 있어야 한다.
+    """
+    s = open(path, encoding='utf-8').read()
+    # 탭 아이콘 — 없으면 브라우저가 /favicon.ico 를 찾다가 콘솔에 404를 남긴다.
+    # 하위 경로 호스팅이라 외부 파일 대신 문서 안에 그려 넣는다.
+    if 'rel="icon"' not in s:
+        ico = ('<link rel="icon" href="data:image/svg+xml,'
+               '%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E'
+               '%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">')
+        if '</title>' in s:
+            s = s.replace('</title>', '</title>\n' + ico, 1)
+        else:
+            s = ico + '\n' + s
+        open(path, 'w', encoding='utf-8').write(s)
+    if re.search(r'<meta[^>]+charset', s, re.I):
+        return False
+    head = ('<!DOCTYPE html>\n<html lang="ko">\n<head>\n<meta charset="utf-8">\n')
+    open(path, 'w', encoding='utf-8').write(head + s)
+    return True
+
+
 def inject_all(portal_dir):
     n = 0
     for dirpath, _, files in os.walk(portal_dir):
@@ -333,7 +359,8 @@ def inject_all(portal_dir):
             p = os.path.join(dirpath, f)
             depth = 0 if os.path.dirname(p) == portal_dir else 1
             current = '' if depth == 0 else os.path.basename(dirpath)
-            did = inject(p, depth)
+            did = ensure_head(p)
+            did = inject(p, depth) or did
             did = inject_nav(p, depth, current) or did
             if did:
                 n += 1

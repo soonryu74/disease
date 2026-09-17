@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>통합검색 — 감염병 자료 아카이브</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="감염병명·국가·연도·지침·법령을 한 번에 검색합니다. 같은 감염병의 도감·현장카드·지침·연대기·예방접종을 하나로 묶어 보여줍니다.">
+<meta property="og:title" content="통합검색 — 감염병 자료 아카이브">
+<meta property="og:description" content="감염병명·국가·연도·지침·법령을 한 번에 검색합니다.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
+    --ink:#16211D; --muted:#5B6B65; --faint:#8A9793;
+    --line:#DCE4E1; --line-strong:#C4D0CB;
+    --accent:#0E6E63; --accent-soft:#D7ECE8; --accent-ink:#0A4A43;
+    --shadow:0 1px 2px rgba(16,33,29,.05),0 8px 28px rgba(16,33,29,.06);
+    --warn:#B23A3A; --warn-soft:#F6E3E3;
+    --info:#2F7D8C; --info-soft:#DCEDF1; --info-ink:#1B5561;
+    --model:#6A4C93; --model-soft:#E7E0F2; --model-ink:#4A3368;
+    --hl:#FDF3D0;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020;
+    --info:#6FBECB; --info-soft:#17333A; --info-ink:#9FD8E2;
+    --model:#B49BDC; --model-soft:#2A2338; --model-ink:#CDBBEC;
+    --hl:#4A3F1C;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#0D1412; --surface:#141E1A; --surface-2:#1B2723;
+    --ink:#E7EDEA; --muted:#9DACA6; --faint:#71807A;
+    --line:#243330; --line-strong:#32433E;
+    --accent:#54B7AA; --accent-soft:#193A35; --accent-ink:#9FE0D7;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 10px 30px rgba(0,0,0,.35);
+    --warn:#E07A7A; --warn-soft:#3A2020;
+    --info:#6FBECB; --info-soft:#17333A; --info-ink:#9FD8E2;
+    --model:#B49BDC; --model-soft:#2A2338; --model-ink:#CDBBEC;
+    --hl:#4A3F1C;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.62;letter-spacing:-.01em;word-break:keep-all;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif}
+  a{color:var(--accent-ink);text-decoration:none}
+  .num{font-variant-numeric:tabular-nums}
+  .wrap{max-width:900px;margin:0 auto;padding:0 16px 90px}
+  header{padding:28px 0 6px}
+  h1{font-size:clamp(22px,4.6vw,30px);margin:0;font-weight:800;letter-spacing:-.03em}
+  .lede{color:var(--muted);font-size:14px;margin:8px 0 0}
+
+  /* 검색창 — 이 페이지의 주인공 */
+  .sbox{position:sticky;top:0;z-index:30;background:var(--ground);padding:14px 0 10px;margin-top:8px}
+  .sin{display:flex;gap:8px;align-items:stretch}
+  .sin input{flex:1;min-width:0;font:inherit;font-size:16px;padding:14px 16px;border:2px solid var(--line-strong);
+    border-radius:12px;background:var(--surface);color:var(--ink)}
+  .sin input:focus{outline:none;border-color:var(--accent)}
+  .sin button{font:inherit;font-size:15px;font-weight:800;color:#fff;background:var(--accent);border:0;
+    border-radius:12px;padding:0 18px;cursor:pointer;min-height:48px}
+  .sin button:hover{filter:brightness(1.08)}
+  .ac{position:relative}
+  .aclist{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--surface);border:1px solid var(--line-strong);
+    border-radius:12px;box-shadow:0 12px 32px rgba(16,33,29,.16);overflow:hidden;z-index:40}
+  .aclist button{display:flex;width:100%;align-items:center;gap:10px;background:none;border:0;border-bottom:1px solid var(--line);
+    font:inherit;font-size:14.5px;color:var(--ink);text-align:left;padding:11px 14px;cursor:pointer;min-height:46px}
+  .aclist button:last-child{border-bottom:0}
+  .aclist button:hover,.aclist button[aria-selected="true"]{background:var(--surface-2)}
+  .aclist .kt{margin-left:auto;font-size:11.5px;font-weight:700;color:var(--muted);background:var(--surface-2);
+    border-radius:999px;padding:2px 9px;white-space:nowrap}
+
+  /* 종류 거르개 */
+  .chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+  .chips button{font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:34px}
+  .chips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .chips button:disabled{opacity:.4;cursor:default}
+
+  /* 출처 배지 — 지시서 26항 */
+  .bdg{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap;letter-spacing:-.01em}
+  .bdg.official{background:var(--accent-soft);color:var(--accent-ink)}
+  .bdg.archive{background:var(--info-soft);color:var(--info-ink)}
+  .bdg.analysis{background:var(--model-soft);color:var(--model-ink)}
+
+  /* 질병 묶음 카드 */
+  .hub{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:14px;
+    padding:18px 20px;margin:14px 0;box-shadow:var(--shadow)}
+  .hub h2{margin:0;font-size:22px;font-weight:800;letter-spacing:-.02em}
+  .hub .eng{font-size:14px;color:var(--muted);font-weight:600;margin-left:8px}
+  .hub .meta{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 0;font-size:12.5px;color:var(--muted)}
+  .hub .meta b{color:var(--ink)}
+  .hub .als{font-size:12.5px;color:var(--faint);margin:6px 0 0}
+  .hub .lk{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px;margin:14px 0 0}
+  .hub .lk a{display:block;border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;
+    font-size:13.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:44px}
+  .hub .lk a:hover{background:var(--surface-2)}
+  .hub .lk a small{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:2px}
+
+  /* 낱개 결과 */
+  .grp{margin:20px 0 0}
+  .grp h3{font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:800;margin:0 0 8px}
+  .r{display:block;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 14px;margin:0 0 7px}
+  .r:hover{background:var(--surface-2)}
+  .r .t{font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.4}
+  .r .s{font-size:12.5px;color:var(--muted);margin-top:2px}
+  .r .f{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:6px;font-size:11.5px;color:var(--faint)}
+  mark{background:var(--hl);color:inherit;border-radius:3px;padding:0 1px}
+  .more{font:inherit;font-size:13px;font-weight:700;color:var(--accent-ink);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:9px;padding:9px 14px;cursor:pointer;min-height:40px}
+
+  /* 상태 — INITIAL / LOADING / EMPTY / ERROR를 구분한다(지시서 38항) */
+  .state{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px 22px;margin:16px 0;text-align:center}
+  .state h2{margin:0 0 6px;font-size:18px;font-weight:800}
+  .state p{margin:0;color:var(--muted);font-size:14px}
+  .state.err{border-color:var(--warn);background:var(--warn-soft)}
+  .state.err h2,.state.err p{color:var(--warn)}
+  .sk{height:60px;border-radius:11px;background:linear-gradient(90deg,var(--surface-2) 25%,var(--surface) 50%,var(--surface-2) 75%);
+    background-size:200% 100%;animation:sh 1.2s linear infinite;margin:0 0 7px}
+  @keyframes sh{from{background-position:200% 0}to{background-position:-200% 0}}
+  @media (prefers-reduced-motion:reduce){.sk{animation:none}}
+  .sug{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:14px 0 0}
+  .sug button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
+  .tip{font-size:12.5px;color:var(--faint);margin:14px 0 0}
+  footer{padding:30px 0 20px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);margin-top:26px}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+.gnav *{box-sizing:border-box}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:6px 14px;display:flex;align-items:center;gap:6px;position:relative}
+.gnav .gbrand{font-weight:800;font-size:14px;color:var(--ink,#16211D);white-space:nowrap;margin-right:8px;text-decoration:none;flex:none;padding:6px 0}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav .gskip{position:absolute;left:-9999px;top:0;background:var(--accent,#0E6E63);color:#fff;padding:8px 12px;border-radius:8px;z-index:80}
+.gnav .gskip:focus{left:14px;top:6px}
+.gnav .gmenu{display:flex;align-items:center;gap:2px;flex:1;min-width:0}
+.gnav .gg{position:relative}
+.gnav .gt{font:inherit;font-size:13px;font-weight:700;color:var(--muted,#5B6B65);background:none;border:0;border-radius:8px;
+  padding:7px 10px;cursor:pointer;white-space:nowrap;line-height:1.4;min-height:36px}
+.gnav .gt:hover,.gnav .gg.open .gt{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav .gt.on{color:var(--accent-ink,#0A4A43);box-shadow:inset 0 -2px 0 var(--accent,#0E6E63);border-radius:8px 8px 0 0}
+.gnav .gt .car{font-size:10px;opacity:.6;margin-left:3px}
+.gnav .gd{display:none;position:absolute;left:0;top:calc(100% + 4px);min-width:250px;background:var(--surface,#fff);
+  border:1px solid var(--line,#DCE4E1);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(16,33,29,.14);z-index:75}
+.gnav .gg.open .gd{display:block}
+.gnav a.gi{display:block;font-size:13.5px;color:var(--ink,#16211D);padding:8px 10px;border-radius:8px;font-weight:600;
+  text-decoration:none;line-height:1.35;min-height:44px}
+.gnav a.gi small{display:block;font-size:11.5px;color:var(--muted,#5B6B65);font-weight:500;margin-top:1px}
+.gnav a.gi:hover,.gnav a.gi:focus-visible{background:var(--surface-2,#EEF2F0)}
+.gnav a.gi.on{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.gnav a.gi.on small{color:var(--accent-ink,#0A4A43)}
+.gnav .gsearch{margin-left:auto;font-size:13px;font-weight:800;color:#fff;background:var(--accent,#0E6E63);border-radius:999px;
+  padding:7px 14px;text-decoration:none;white-space:nowrap;flex:none;min-height:36px;display:inline-flex;align-items:center;gap:6px}
+.gnav .gsearch:hover{filter:brightness(1.08)}
+.gnav .gburger{display:none;font:inherit;font-size:13px;font-weight:700;background:var(--surface,#fff);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--ink,#16211D);min-height:40px;margin-left:auto}
+.gnav :focus-visible{outline:2px solid var(--accent,#0E6E63);outline-offset:2px}
+@media (hover:hover) and (min-width:761px){
+  .gnav .gg:hover .gd,.gnav .gg:focus-within .gd{display:block}
+}
+@media (max-width:760px){
+  /* 좁은 화면: 상표 + 검색 + ☰. 묶음은 아코디언으로 펼친다. 자료를 가리지 않도록 따라다니지 않는다. */
+  .gnav{position:static}
+  .gnav .gin{flex-wrap:wrap;padding:6px 12px}
+  .gnav .gbrand{font-size:13px;margin-right:auto}
+  .gnav .gsearch{margin-left:0;padding:6px 12px;font-size:12.5px;min-height:38px}
+  .gnav .gburger{display:inline-block;margin-left:0}
+  .gnav .gmenu{display:none;flex-direction:column;align-items:stretch;flex-basis:100%;padding:6px 0 4px;gap:4px}
+  .gnav.open .gmenu{display:flex}
+  .gnav .gg{border:1px solid var(--line,#DCE4E1);border-radius:10px;background:var(--surface,#fff)}
+  .gnav .gt{width:100%;text-align:left;font-size:14px;min-height:44px;border-radius:10px}
+  .gnav .gt.on{box-shadow:none;background:var(--accent-soft,#D7ECE8)}
+  .gnav .gd{display:none;position:static;min-width:0;border:0;border-top:1px solid var(--line,#DCE4E1);border-radius:0 0 10px 10px;box-shadow:none;padding:4px}
+  .gnav .gg.open .gd{display:block}
+}
+@media (prefers-reduced-motion:reduce){.gnav *{transition:none !important}}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>통합검색 — 감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi" href="../data/">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi" href="../data/#use">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
+(function(){
+  var nav=document.querySelector('nav.gnav'); if(!nav) return;
+  var burger=nav.querySelector('.gburger');
+  function closeAll(except){ nav.querySelectorAll('.gg.open').forEach(function(g){ if(g!==except){ g.classList.remove('open'); g.querySelector('.gt').setAttribute('aria-expanded','false'); } }); }
+  nav.querySelectorAll('.gt').forEach(function(t){
+    t.addEventListener('click',function(){ var g=t.parentNode, open=!g.classList.contains('open'); closeAll(g); g.classList.toggle('open',open); t.setAttribute('aria-expanded',open?'true':'false'); });
+  });
+  if(burger){ burger.addEventListener('click',function(){ var open=!nav.classList.contains('open'); nav.classList.toggle('open',open); burger.setAttribute('aria-expanded',open?'true':'false'); burger.textContent=open?'✕ 닫기':'☰ 메뉴'; if(open){ var on=nav.querySelector('.gt.on'); if(on){ on.parentNode.classList.add('open'); on.setAttribute('aria-expanded','true'); } } }); }
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) closeAll(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeAll(); if(nav.classList.contains('open')&&burger) burger.click(); } });
+})();
+</script>
+<div class="wrap">
+<header id="main">
+  <h1>통합검색</h1>
+  <p class="lede">감염병명·영문명·옛 이름·국가·연도·지침·법령을 한 번에 찾습니다. 같은 감염병의 도감·현장카드·지침·연대기·예방접종을 하나로 묶어 보여줍니다.</p>
+</header>
+
+<div class="sbox">
+  <form class="sin" id="form" role="search">
+    <div class="ac" style="flex:1;min-width:0">
+      <label class="visually-hidden" for="q" style="position:absolute;left:-9999px">검색어</label>
+      <input id="q" type="search" autocomplete="off" role="combobox" aria-expanded="false" aria-autocomplete="list"
+             aria-controls="aclist" placeholder="감염병명 · 국가 · 연도 · 지침 · 법령을 검색하세요">
+      <div id="aclist" role="listbox" aria-label="자동완성"></div>
+    </div>
+    <button type="submit">🔍 검색</button>
+  </form>
+  <div class="chips" id="chips" role="group" aria-label="종류 거르개"></div>
+</div>
+
+<div id="out" aria-live="polite"></div>
+
+<footer>
+  자료: 질병관리청 · 국가법령정보센터 · WHO · 미국 CDC · 국토교통부 · 법무부.
+  이 사이트는 질병관리청 공식 누리집이 아닌 공공자료 정리·분석 프로젝트입니다.
+  법적·의학적 판단은 최신 공식 원문을 확인하십시오.
+</footer>
+</div>
+
+<script>
+const COUNTS = {"질병": 98, "기록": 2380};
+const KINDS = ['전체','감염병','지침','법령','예방접종','국가','연대기','백서','현장','페이지'];
+const BADGE = {official:'공식 원자료', archive:'아카이브 재구성', analysis:'분석·모형'};
+const SEED = ['홍역','백일해','결핵','MERS','엠폭스','뎅기열','콜레라','인플루엔자'];
+let IDX = null, kind = '전체', shown = 30;
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const norm = s => String(s || '').replace(/[\s·・()（）\[\]{}·,.\-/]/g,'').toLowerCase();
+
+function mark(text, q){
+  const t = esc(text); if(!q) return t;
+  // 정규화 대조라 원문 위치를 모른다 — 공백을 무시한 느슨한 일치만 표시한다
+  const bare = q.replace(/[\s]/g,'');
+  if(!bare) return t;
+  const re = new RegExp('(' + bare.split('').map(c => c.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')).join('\\s*') + ')','i');
+  return t.replace(re, '<mark>$1</mark>');
+}
+
+function setState(html, cls){ $('#out').innerHTML = `<div class="state ${cls||''}">${html}</div>`; }
+
+function initial(){
+  $('#out').innerHTML = `<div class="state">
+      <h2>무엇을 찾으시나요?</h2>
+      <p>감염병 이름을 넣으면 도감·현장 대응카드·관리지침·연대기·예방접종이 한 카드로 묶여 나옵니다.
+         나라 이름, 연도, 지침 제목, 법령 개정도 찾을 수 있습니다.</p>
+      <div class="sug">${SEED.map(s=>`<button type="button" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      <p class="tip">검색 예: <b>홍역</b> · <b>MERS</b> · <b>베트남</b> · <b>2024 백일해</b> · <b>역학조사 지침</b><br>
+         색인 수록: 감염병 ${COUNTS['질병']}종 · 기록 ${COUNTS['기록'].toLocaleString()}건</p>
+    </div>`;
+  $('#out').querySelectorAll('.sug button').forEach(b => b.onclick = () => { $('#q').value = b.dataset.s; run(); });
+}
+
+function score(hay, q){
+  const i = hay.indexOf(q);
+  if(i < 0) return 0;
+  return i === 0 ? 3 : 1;           // 앞에서 맞으면 위로
+}
+
+function search(raw){
+  const q = norm(raw);
+  const terms = raw.trim().split(/\s+/).map(norm).filter(Boolean);
+  const hubs = IDX.hubs.map(h => {
+    let s = score(h.q, q);
+    if(!s && terms.length > 1 && terms.every(t => h.q.includes(t))) s = 1;
+    return s ? {h, s: s + (h.q === q ? 5 : 0)} : null;
+  }).filter(Boolean).sort((a,b) => b.s - a.s || a.h.name.length - b.h.name.length);
+
+  const recs = IDX.records.map(r => {
+    let s = score(r.q, q);
+    if(!s && terms.length > 1 && terms.every(t => r.q.includes(t))) s = 1;
+    return s ? {r, s} : null;
+  }).filter(Boolean).sort((a,b) => b.s - a.s || String(b.r.y||'').localeCompare(String(a.r.y||'')));
+  return {hubs, recs};
+}
+
+function hubHtml(h, raw){
+  const meta = [];
+  if(h.grade_label || h.grade) meta.push(`<b>${esc(h.grade_label || ('제' + h.grade + '급'))}</b>`);
+  if(h.incub) meta.push(`잠복기 ${esc(h.incub)}`);
+  if(h.route) meta.push(esc(String(h.route).slice(0,40)));
+  return `<div class="hub">
+    <h2>${mark(h.name, raw)}${h.eng ? `<span class="eng">${mark(h.eng, raw)}</span>` : ''}</h2>
+    ${meta.length ? `<div class="meta">${meta.join(' · ')}</div>` : ''}
+    ${h.alias && h.alias.length ? `<p class="als">옛 이름·다른 이름: ${h.alias.map(a=>mark(a,raw)).join(' · ')}</p>` : ''}
+    <div class="lk">${h.links.map(l => `<a href="${esc(l.u)}">${esc(l.l)} →<small>${esc(l.n || BADGE[l.k] || '')}</small></a>`).join('')}</div>
+  </div>`;
+}
+
+function recHtml(r, raw){
+  const ext = r.ext ? ' target="_blank" rel="noopener"' : '';
+  return `<a class="r" href="${esc(r.u)}"${ext}>
+    <div class="t">${mark(r.t, raw)}${r.ext ? ' ↗' : ''}</div>
+    ${r.s ? `<div class="s">${mark(r.s, raw)}</div>` : ''}
+    <div class="f"><span class="bdg ${esc(r.b)}">${esc(BADGE[r.b] || '')}</span><span>${esc(r.k)}</span>${r.src ? `<span>· ${esc(r.src)}</span>` : ''}</div>
+  </a>`;
+}
+
+function similar(raw){
+  const q = norm(raw);
+  if(!q) return [];
+  const all = IDX.hubs.map(h => h.name).concat(SEED);
+  const out = [];
+  for(const n of all){
+    const nq = norm(n);
+    if(nq.includes(q.slice(0,2)) || q.includes(nq.slice(0,2))) out.push(n);
+    if(out.length >= 6) break;
+  }
+  return [...new Set(out)];
+}
+
+function run(){
+  const raw = $('#q').value.trim();
+  history.replaceState(null, '', raw ? '?q=' + encodeURIComponent(raw) : location.pathname);
+  hideAc();
+  if(!raw){ initial(); renderChips({}); return; }
+  if(!IDX){ setState('<h2>불러오는 중…</h2><div class="sk"></div><div class="sk"></div>'); return; }
+
+  const {hubs, recs} = search(raw);
+  const byKind = {};
+  recs.forEach(x => { byKind[x.r.k] = (byKind[x.r.k] || 0) + 1; });
+  if(hubs.length) byKind['감염병'] = hubs.length;
+  renderChips(byKind);
+
+  const useHubs = (kind === '전체' || kind === '감염병') ? hubs : [];
+  const useRecs = recs.filter(x => kind === '전체' || x.r.k === kind);
+
+  if(!useHubs.length && !useRecs.length){
+    const sim = similar(raw);
+    setState(`<h2>‘${esc(raw)}’에 대한 결과가 없습니다.</h2>
+      <p>옛 이름이나 영문명으로도 찾을 수 있습니다. 지침은 제목의 일부만 넣어 보세요.</p>
+      ${sim.length ? `<div class="sug">${sim.map(s=>`<button type="button" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+        <p class="tip">혹시 이것을 찾으셨나요?</p>` : ''}
+      <div class="sug"><button type="button" data-go="../dogam/">감염병 도감</button>
+        <button type="button" data-go="../guides/">관리지침</button>
+        <button type="button" data-go="../daily/">상황판</button>
+        <button type="button" data-go="../data/">데이터</button></div>`);
+    $('#out').querySelectorAll('[data-s]').forEach(b => b.onclick = () => { $('#q').value = b.dataset.s; run(); });
+    $('#out').querySelectorAll('[data-go]').forEach(b => b.onclick = () => location.href = b.dataset.go);
+    return;
+  }
+
+  const groups = {};
+  useRecs.forEach(x => (groups[x.r.k] = groups[x.r.k] || []).push(x.r));
+  const order = ['현장','지침','연대기','예방접종','법령','백서','국가','페이지'];
+  let html = useHubs.slice(0, 4).map(x => hubHtml(x.h, raw)).join('');
+  for(const k of order.concat(Object.keys(groups).filter(k => !order.includes(k)))){
+    const rows = groups[k];
+    if(!rows || !rows.length) continue;
+    const cap = kind === '전체' ? Math.min(rows.length, shown === 30 ? 5 : rows.length) : shown;
+    html += `<div class="grp"><h3>${esc(k)} <span class="num">${rows.length}</span></h3>
+      ${rows.slice(0, cap).map(r => recHtml(r, raw)).join('')}
+      ${rows.length > cap ? `<button class="more" data-k="${esc(k)}">${esc(k)} ${rows.length - cap}건 더 보기</button>` : ''}</div>`;
+  }
+  $('#out').innerHTML = html;
+  $('#out').querySelectorAll('.more').forEach(b => b.onclick = () => { kind = b.dataset.k; shown = 200; run(); });
+}
+
+function renderChips(byKind){
+  $('#chips').innerHTML = KINDS.map(k => {
+    const n = k === '전체' ? Object.values(byKind).reduce((a,b)=>a+b,0) : (byKind[k] || 0);
+    const dis = k !== '전체' && !n;
+    return `<button type="button" class="${k===kind?'on':''}" data-k="${k}"${dis?' disabled':''}>${k}${n?` <span class="num">${n}</span>`:''}</button>`;
+  }).join('');
+  $('#chips').querySelectorAll('button').forEach(b => b.onclick = () => { kind = b.dataset.k; shown = 30; run(); });
+}
+
+/* ── 자동완성 ── */
+let acItems = [], acPos = -1;
+function hideAc(){ $('#aclist').innerHTML = ''; $('#q').setAttribute('aria-expanded','false'); acItems = []; acPos = -1; }
+function showAc(){
+  const raw = $('#q').value.trim(), q = norm(raw);
+  if(!q || !IDX){ hideAc(); return; }
+  const seen = new Set(), out = [];
+  const push = (label, k) => { const key = label + k; if(!seen.has(key) && out.length < 8){ seen.add(key); out.push({label, k}); } };
+  IDX.hubs.forEach(h => { if(h.q.startsWith(q)) push(h.name, '감염병'); });
+  IDX.hubs.forEach(h => { if(h.q.includes(q)) push(h.name, '감염병'); });
+  IDX.records.forEach(r => { if(r.k === '국가' && norm(r.t).startsWith(q)) push(r.t, '국가'); });
+  IDX.records.forEach(r => { if(r.k !== '국가' && r.q.includes(q)) push(r.t, r.k); });
+  acItems = out;
+  if(!out.length){ hideAc(); return; }
+  $('#aclist').innerHTML = `<div class="aclist">${out.map((o,i)=>
+    `<button type="button" role="option" aria-selected="false" data-i="${i}">${mark(o.label, raw)}<span class="kt">${esc(o.k)}</span></button>`).join('')}</div>`;
+  $('#q').setAttribute('aria-expanded','true');
+  $('#aclist').querySelectorAll('button').forEach(b => b.onclick = () => { $('#q').value = acItems[+b.dataset.i].label; run(); });
+}
+
+$('#q').addEventListener('input', showAc);
+$('#q').addEventListener('keydown', e => {
+  if(!acItems.length) return;
+  if(e.key === 'ArrowDown' || e.key === 'ArrowUp'){
+    e.preventDefault();
+    acPos = (acPos + (e.key === 'ArrowDown' ? 1 : acItems.length - 1)) % acItems.length;
+    $('#aclist').querySelectorAll('button').forEach((b,i) => b.setAttribute('aria-selected', i === acPos));
+    $('#q').value = acItems[acPos].label;
+  } else if(e.key === 'Escape'){ hideAc(); }
+});
+document.addEventListener('click', e => { if(!e.target.closest('.ac')) hideAc(); });
+$('#form').addEventListener('submit', e => { e.preventDefault(); kind = '전체'; shown = 30; run(); });
+
+/* ── 색인 ── */
+setState('<h2>색인을 불러오는 중…</h2><div class="sk"></div><div class="sk"></div>');
+fetch('index.json').then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
+  IDX = j;
+  // 대조용 문자열은 여기서 한 번 만든다(색인 파일을 반으로 줄이려고 저장하지 않았다)
+  IDX.records.forEach(r => { r.q = norm([r.t, r.s, r.d, r.x, r.y].join(' ')); r.src = IDX.srcs[r.src] || ''; });
+  const p = new URLSearchParams(location.search).get('q');
+  if(p){ $('#q').value = p; run(); } else { initial(); renderChips({}); }
+  $('#q').focus({preventScroll:true});
+}).catch(() => {
+  setState(`<h2>색인을 불러오지 못했습니다.</h2><p>새로고침하거나 각 페이지에서 바로 찾아보세요.</p>
+    <div class="sug"><button type="button" onclick="location.reload()">다시 시도</button>
+      <button type="button" onclick="location.href='../dogam/'">감염병 도감</button>
+      <button type="button" onclick="location.href='../guides/'">관리지침</button></div>`, 'err');
+});
+</script>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+
+</body>
+</html>

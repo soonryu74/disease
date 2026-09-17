@@ -1,4 +1,14 @@
-<title>감염병 자료 아카이브</title>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>감염병 자료 아카이브 | 대한민국 감염병 지식·근거·대응 플랫폼</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="법정감염병 정보, 관리지침, 법령, 국내외 발생정보, 검역, 감염병 통계를 한곳에서 검색하고 비교합니다. 공식 원자료와 연결된 감염병 자료 아카이브.">
+<meta property="og:title" content="감염병 자료 아카이브">
+<meta property="og:description" content="질병정보·법령·관리지침·국내외 발생정보·검역·통계를 공식 원자료와 연결해 한곳에서 제공합니다.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://soonryu74.github.io/disease/">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <style>
   :root{
@@ -95,6 +105,90 @@
   @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
   html{scroll-behavior:smooth}
 
+  /* ── 첫 화면: 검색이 주인공 ─────────────────────────────────────────── */
+  .hero{padding:44px 0 6px}
+  .hero h1{font-size:clamp(27px,5.2vw,44px);line-height:1.12;margin:0;font-weight:800;letter-spacing:-.035em;text-wrap:balance}
+  .hero .sub{font-size:clamp(14px,2.1vw,16.5px);color:var(--muted);max-width:56ch;margin:14px 0 0}
+  .hero .note{font-size:12.5px;color:var(--faint);margin:12px 0 0}
+  .hsearch{margin:22px 0 0}
+  .hsearch form{display:flex;gap:8px;max-width:760px}
+  .hsearch input{flex:1;min-width:0;font:inherit;font-size:16px;padding:15px 18px;border:2px solid var(--line-strong);
+    border-radius:13px;background:var(--surface);color:var(--ink)}
+  .hsearch input:focus{outline:none;border-color:var(--accent)}
+  .hsearch button{font:inherit;font-size:15px;font-weight:800;color:#fff;background:var(--accent);border:0;
+    border-radius:13px;padding:0 20px;cursor:pointer;min-height:52px;white-space:nowrap}
+  .hsearch button:hover{filter:brightness(1.08)}
+  .hsearch .ex{font-size:12.5px;color:var(--faint);margin:9px 0 0}
+  .hsearch .ex b{color:var(--muted);font-weight:600}
+
+  /* 대표 기능 4개 */
+  .quick{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:26px 0 0}
+  .qa{display:block;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--qc);
+    border-radius:13px;padding:17px 18px;transition:border-color .16s,background .16s,transform .16s}
+  .qa:hover{background:var(--surface-2);transform:translateY(-2px)}
+  .qa .ic{font-size:22px;line-height:1}
+  .qa b{display:block;font-size:15.5px;font-weight:800;color:var(--ink);margin:9px 0 4px;letter-spacing:-.02em}
+  .qa span{display:block;font-size:13px;color:var(--muted);line-height:1.5}
+  .qa em{display:block;font-style:normal;font-size:13px;font-weight:700;color:var(--qc);margin-top:10px}
+  .qa.q1{--qc:#0E6E63} .qa.q2{--qc:#C05A47} .qa.q3{--qc:#2F7D8C} .qa.q4{--qc:#6A4C93}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .qa.q1{--qc:#54B7AA}
+    :root:not([data-theme="light"]) .qa.q2{--qc:#E09585} :root:not([data-theme="light"]) .qa.q3{--qc:#6FBECB}
+    :root:not([data-theme="light"]) .qa.q4{--qc:#B49BDC}}
+  @media (prefers-reduced-motion:reduce){.qa:hover{transform:none}}
+
+  /* 오늘의 상황 */
+  .today{margin:34px 0 0}
+  .thead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin:0 0 12px}
+  .thead h2{font-size:clamp(17px,2.6vw,21px);margin:0;font-weight:800;letter-spacing:-.02em}
+  .thead .up{font-size:12.5px;color:var(--faint)}
+  .thead .go{margin-left:auto;font-size:13px;font-weight:700;color:var(--accent-ink)}
+  .tgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:10px}
+  .tc{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 15px}
+  .tc .n{font-size:13.5px;font-weight:800;color:var(--ink)}
+  .tc .stt{display:flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;margin:6px 0 0}
+  .tc .stt i{width:9px;height:9px;border-radius:50%;background:var(--ok,#0E6E63);font-style:normal;flex:none}
+  .tc.ok .stt{color:#0E6E63} .tc.ok .stt i{background:#0E6E63}
+  .tc.delay .stt{color:#9A6B12} .tc.delay .stt i{background:#C99A22}
+  .tc.err .stt{color:#B23A3A} .tc.err .stt i{background:#B23A3A}
+  .tc .d{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.45}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .tc.ok .stt{color:#54B7AA}
+    :root:not([data-theme="light"]) .tc.delay .stt{color:#D8BE6A}
+    :root:not([data-theme="light"]) .tc.err .stt{color:#E07A7A}}
+
+  /* 목적별 탐색 */
+  .purpose{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:14px 0 0}
+  .pc{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:16px 18px}
+  .pc h3{font-size:14.5px;margin:0 0 9px;font-weight:800;letter-spacing:-.02em}
+  .pc ul{margin:0;padding:0;list-style:none}
+  .pc li{margin:0 0 1px}
+  .pc a{display:block;font-size:13.5px;color:var(--ink);padding:7px 8px;border-radius:8px;min-height:36px}
+  .pc a:hover{background:var(--surface-2)}
+  .pc a small{color:var(--faint);font-size:11.5px;margin-left:4px}
+
+  /* 70년 이야기 */
+  .story{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:24px 26px;margin:10px 0 0;
+    border-left:4px solid var(--c5)}
+  .story h2{font-size:clamp(18px,2.8vw,23px);margin:0 0 6px;font-weight:800;letter-spacing:-.02em}
+  .story p{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:62ch}
+
+  /* 사이트 성격 고지 */
+  .notice{font-size:12.5px;color:var(--muted);background:var(--surface-2);border:1px solid var(--line);
+    border-radius:10px;padding:10px 14px;margin:26px 0 0}
+
+  @media(max-width:900px){.quick{grid-template-columns:repeat(2,1fr)}.purpose{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){
+    .hero{padding:26px 0 4px}
+    .hero .note{display:none}
+    .hsearch form{flex-direction:column}
+    .hsearch button{min-height:48px;padding:12px}
+    .quick{grid-template-columns:1fr;gap:9px}
+    .qa{padding:14px 15px;display:grid;grid-template-columns:30px 1fr;gap:0 12px;align-items:start}
+    .qa .ic{grid-row:span 3}
+    .qa b{margin:0 0 3px}
+    .qa em{margin-top:6px}
+    .purpose{grid-template-columns:1fr}
+  }
+
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
 .printonly{display:none}
 @page{margin:14mm 12mm}
@@ -145,6 +239,9 @@
 .pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+
 
 
 
@@ -223,12 +320,81 @@ nav:not(.gnav){display:none !important}
 </div></nav>
 
 <div class="wrap">
-  <header id="main">
-    <p class="eyebrow">질병관리청 · 법제처 기반 · 정확·최신·연결</p>
-    <h1>대한민국 감염병 자료를<br>한곳에 정리하다</h1>
-    <p class="thesis">1954년 감염병예방법부터 현행 91종 법정감염병, 2,349건의 관리지침·서식, 질병관리청 백서, 그리고 감염병 자체의 실제 지식까지 — 흩어진 공공자료를 <b>공식 1차 출처에서 직접 수집·검증</b>해 하나의 지식베이스로 묶었다.</p>
-    <p class="src-note">모든 사실은 법제처 국가법령정보 Open API·질병관리청 공식자료에서 직접 수집. 법·조문은 현행 원문(139개 조문)과 대조 검증.</p>
+  <header id="main" class="hero">
+    <h1>대한민국 감염병 정보를<br>한곳에서 찾고, 비교하고, 확인하세요.</h1>
+    <p class="sub">질병정보·법령·관리지침·국내외 발생정보·검역·통계를 공식 원자료와 연결해 한곳에서 제공합니다.</p>
+    <p class="note">법제처 국가법령정보 Open API와 질병관리청 공식자료에서 직접 수집하고, 현행 원문과 대조해 검증했습니다.</p>
 
+    <div class="hsearch">
+      <form action="search/" method="get" role="search">
+        <label for="hq" style="position:absolute;left:-9999px">감염병·국가·연도·지침·법령 검색</label>
+        <input id="hq" name="q" type="search" autocomplete="off" placeholder="감염병명 · 국가 · 연도 · 지침 · 법령을 검색하세요">
+        <button type="submit">🔍 검색</button>
+      </form>
+      <p class="ex">예: <b>홍역</b> · <b>MERS</b> · <b>베트남</b> · <b>2024 백일해</b> · <b>역학조사 지침</b></p>
+    </div>
+
+    <div class="quick">
+      <a class="qa q1" href="daily/"><span class="ic">📡</span><b>오늘 무슨 일이 있나?</b>
+        <span>WHO·미국 CDC·질병관리청 최신 감염병 정보를 확인합니다.</span><em>오늘의 상황판 →</em></a>
+      <a class="qa q2" href="field/"><span class="ic">🚑</span><b>지금 이 감염병 어떻게 대응하지?</b>
+        <span>신고·격리·잠복기·지침을 한 화면에서 확인합니다.</span><em>현장 대응카드 →</em></a>
+      <a class="qa q3" href="checker/"><span class="ic">🩺</span><b>두 연도를 비교해도 되나?</b>
+        <span>감시체계 변화와 통계 단절점을 확인합니다.</span><em>단절점 검사기 →</em></a>
+      <a class="qa q4" href="dogam/"><span class="ic">📖</span><b>감염병 하나를 자세히 알고 싶다</b>
+        <span>91종 법정감염병의 핵심 정보를 검색합니다.</span><em>감염병 도감 →</em></a>
+    </div>
+  </header>
+
+  <section class="today" aria-labelledby="todayh">
+    <div class="thead">
+      <h2 id="todayh">오늘의 감염병 상황</h2>
+      <span class="up" id="tup"></span>
+      <a class="go" href="daily/">상황판 전체보기 →</a>
+    </div>
+    <div class="tgrid" id="tgrid">
+      <div class="tc"><div class="n">상황판</div><div class="d">수집 상태를 불러오는 중…</div></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="purposeh">
+    <div class="thead"><h2 id="purposeh">무엇을 하시겠습니까?</h2></div>
+    <div class="purpose">
+      <div class="pc"><h3>질병을 알고 싶을 때</h3><ul>
+        <li><a href="dogam/">감염병 도감 <small>91종</small></a></li>
+        <li><a href="pathogen/">병원체 도감</a></li>
+        <li><a href="vaccine/">예방접종</a></li>
+        <li><a href="lab/">진단검사 감시</a></li></ul></div>
+      <div class="pc"><h3>현장에서 대응할 때</h3><ul>
+        <li><a href="field/">현장 대응카드</a></li>
+        <li><a href="guides/">관리지침 <small>2,347건</small></a></li>
+        <li><a href="guides/?board=%EC%84%9C%EC%8B%9D">역학조사 서식</a></li>
+        <li><a href="quarantine/">검역 정보</a></li></ul></div>
+      <div class="pc"><h3>자료를 비교·분석할 때</h3><ul>
+        <li><a href="checker/">단절점 검사기</a></li>
+        <li><a href="cross/">교차검증</a></li>
+        <li><a href="chronicle/">감염병 연대기</a></li>
+        <li><a href="sim/">유행 시뮬레이터</a></li></ul></div>
+      <div class="pc"><h3>연구자료가 필요할 때</h3><ul>
+        <li><a href="data/">데이터 내려받기 <small>CSV·JSON</small></a></li>
+        <li><a href="whitepaper/">질병관리청 백서</a></li>
+        <li><a href="law/">감염병예방법 연혁</a></li>
+        <li><a href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 ↗</a></li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="story">
+      <h2>감염병 70년을 걸어보다</h2>
+      <p>과거를 이해해야 오늘을 더 잘 대비할 수 있습니다. 1954년 전염병예방법부터 오늘까지, 해마다 무엇이 달라졌는지 연도별 전시관에서 봅니다.</p>
+      <a class="clink" href="hall/" style="--ac:var(--c5)">🏛 연도별 전시관 보기 →</a>
+    </div>
+  </section>
+
+  <p class="notice">이 사이트는 질병관리청 공식 누리집이 아닌, 감염병 공공자료를 정리·분석하는 프로젝트입니다.
+    공식 원자료 링크를 모든 항목에 함께 싣습니다.</p>
+
+  <div class="divider"><h3>프로젝트 규모</h3><span class="ln"></span></div>
     <div class="band">
       <div class="st"><div class="b num">67</div><div class="l">감염병예방법<br>시행 버전(1954→)</div></div>
       <div class="st"><div class="b num">91</div><div class="l">현행 법정감염병<br>(전수67+표본24)</div></div>
@@ -237,7 +403,8 @@ nav:not(.gnav){display:none !important}
       <div class="st"><div class="b num">19<span style="font-size:.5em">판</span></div><div class="l">백서 발간이력<br>2004~2024</div></div>
       <div class="st"><div class="b num">5</div><div class="l">축 + 데이터<br>인프라</div></div>
     </div>
-  </header>
+
+  <div class="divider"><h3>모든 기능 — 축별로 보기</h3><span class="ln"></span></div>
 
 
   <section id="sd"><div class="card s5" style="border-top-color:var(--c1)">
@@ -508,15 +675,60 @@ nav:not(.gnav){display:none !important}
 
   <footer>
     <div class="foot-links">
+      <a href="search/">🔍 통합검색</a>
       <a href="data/">⬇ 자료 내려받기 (CSV·JSON 27개)</a>
-      <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz" target="_blank" rel="noopener">📦 GitHub 저장소 전체</a>
-      <a href="law/" target="_blank" rel="noopener">📊 연혁 상세 페이지</a>
+      <a href="data/#use">📋 데이터 출처·이용 안내</a>
+      <a href="https://github.com/soonryu74/disease" target="_blank" rel="noopener noreferrer">📦 GitHub 저장소</a>
+      <a href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener noreferrer">🕗 업데이트 기록</a>
+      <a href="https://github.com/soonryu74/disease/issues" target="_blank" rel="noopener noreferrer">🐞 오류 제보</a>
     </div>
-    <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
-    <div>데이터 원천: 법제처 국가법령정보 공동활용 Open API · 질병관리청(감염병포털·감염병누리집·국가건강정보포털) · 보건복지부.</div>
-    <div class="warn">⚠️ 참고용 정리물입니다. 법적·의학적 판단은 반드시 원문과 전문가(의료진·보건소) 확인을 거쳐야 합니다.</div>
+    <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener noreferrer"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
+    <div>공식 원자료: <a href="https://www.kdca.go.kr" target="_blank" rel="noopener noreferrer">질병관리청</a> ·
+      <a href="https://www.law.go.kr" target="_blank" rel="noopener noreferrer">국가법령정보센터</a> ·
+      <a href="https://www.who.int" target="_blank" rel="noopener noreferrer">WHO</a> ·
+      <a href="https://www.cdc.gov" target="_blank" rel="noopener noreferrer">미국 CDC</a> · 국토교통부 · 법무부.</div>
+    <div class="warn">⚠️ 이 사이트는 질병관리청 공식 누리집이 아닙니다. 질병관리청·법제처 등 공식 원자료를 기반으로 재구성한 참고용 자료이며,
+      법적·의학적 판단은 최신 공식 원문과 전문가(의료진·보건소) 확인을 거쳐야 합니다.</div>
   </footer>
 </div>
+<script>
+/* 오늘의 상황 — 새 수집 장치를 만들지 않고 상황판이 매일 쓰는 status.json을 그대로 읽는다.
+   불러오지 못하면 숫자를 지어내지 않고 '상황판에서 확인' 으로 물러선다. */
+(function(){
+  var grid = document.getElementById('tgrid'), up = document.getElementById('tup');
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function fallback(){
+    grid.innerHTML = ['WHO 질병 발생 뉴스','CDC 여행 건강 알림','CDC 발생조사','질병관리청 지침'].map(function(n){
+      return '<div class="tc"><div class="n">' + n + '</div><div class="d">상황판에서 확인 →</div></div>'; }).join('');
+    up.textContent = '';
+  }
+  fetch('daily/data/status.json').then(function(r){ if(!r.ok) throw 0; return r.json(); }).then(function(st){
+    var run = st._run || {};
+    if(run.run_at) up.textContent = '최종 수집 ' + run.run_at;
+    var cards = Object.keys(st).filter(function(k){ return k.charAt(0) !== '_'; }).map(function(k){
+      var s = st[k];
+      /* 새 글이 없는 것과 고장난 것을 가른다 — 새 글이 없다고 오류로 보이면 안 된다 */
+      var cls = 'ok', label = '정상 수집';
+      if(!s.ok){ cls = 'err'; label = '수집 오류'; }
+      else if(s.quiet){ cls = 'delay'; label = '새 소식 없음'; }
+      var d = [];
+      if(s.last_ok) d.push('마지막 확인 ' + String(s.last_ok).replace(/^\d{4}-/, ''));
+      if(s.latest) d.push('최근 게시 ' + s.latest + (s.age_days != null ? ' (' + s.age_days + '일 전)' : ''));
+      if(!s.ok && s.error) d = ['오류: ' + String(s.error).slice(0, 60)];
+      return '<div class="tc ' + cls + '"><div class="n">' + esc(s.label || k) + '</div>' +
+             '<div class="stt"><i></i>' + label + '</div><div class="d">' + esc(d.join('<br>')).replace(/&lt;br&gt;/g, '<br>') + '</div></div>';
+    });
+    if(run.total != null){
+      cards.push('<div class="tc"><div class="n">보관 중인 항목</div><div class="stt"><i style="background:var(--faint)"></i>' +
+        (run['new'] ? '오늘 새 항목 ' + run['new'] + '건' : '오늘 새 항목 없음') + '</div>' +
+        '<div class="d">전체 ' + run.total + '건 · <a href="daily/">상황판 →</a></div></div>');
+    }
+    grid.innerHTML = cards.join('') || '';
+    if(!cards.length) fallback();
+  }).catch(fallback);
+})();
+</script>
 <div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
 <script>
 /* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
