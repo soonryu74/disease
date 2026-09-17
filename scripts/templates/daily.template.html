@@ -85,7 +85,7 @@
   .sub button,.sub a.btn{font:inherit;font-size:13.5px;font-weight:800;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
   .sub a.btn.ghost{background:transparent;color:var(--accent-ink)}
   .sub .pending{font-size:12.5px;color:var(--muted);background:var(--surface-2);border-radius:9px;padding:8px 10px;margin-top:8px}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
   ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px} ul.tight li{margin:3px 0}
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
@@ -110,7 +110,9 @@
   details.en summary::-webkit-details-marker{display:none}
   details.en p{font-size:13.5px;line-height:1.75;margin:8px 0 0;color:var(--ink)}
   details.en ul{margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7}
+  /* 용어 병기는 붙여 두되, 좁은 화면에서는 줄을 넘기게 한다 — 안 그러면 가로로 삐져나간다 */
   .t{font-weight:700;color:var(--accent-ink);white-space:nowrap}
+  @media (max-width:420px){.t{white-space:normal;overflow-wrap:anywhere}}
   .t i{font-style:normal;font-weight:600;color:var(--muted);font-size:.86em;margin-left:2px}
   .terms{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 0}
   .terms span{font-size:11.5px;border-radius:999px;padding:2px 9px;background:var(--surface);border:1px solid var(--line)}
