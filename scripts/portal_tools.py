@@ -98,55 +98,152 @@ PRINT_JS = """
 
 # ── 공통 상단 메뉴 ─────────────────────────────────────────────────────
 # 페이지마다 제각각이던 내비를 조립 단계에서 하나로 통일한다. 페이지 자체 <nav>는 감춘다.
-NAV_ITEMS = [
-    ('', '🏠', '허브'), ('dogam/', '📖', '도감'), ('pathogen/', '🧫', '병원체'),
-    ('hall/', '🏛', '전시관'), ('chronicle/', '📜', '연대기'), ('checker/', '🩺', '검사기'), ('field/', '🚑', '현장카드'),
-    ('guides/', '📕', '지침서가'), ('whitepaper/', '📗', '백서'), ('vaccine/', '💉', '예방접종'),
-    ('inflow/', '🌐', '유입지도'), ('cross/', '🧪', '교차검증'), ('lab/', '🔬', '진단검사'),
-    ('quarantine/', '🛂', '검역'), ('policy/', '🎛', '정책실험'), ('sim/', '📈', '유행모형'), ('daily/', '📡', '상황판'), ('flu/', '🦠', '인플루엔자'),
-    ('law/', '⚖', '법령'), ('data/', '⬇', '자료실'),
+# 스무 개를 한 줄에 늘어놓던 것을 다섯 가지 '하려는 일' 아래로 묶는다. 주소는 하나도 바꾸지 않는다 —
+# 같은 페이지가 두 묶음에 들어갈 수 있다(검역관리지역은 '오늘'이기도 하고 '분석'이기도 하다).
+NAV_GROUPS = [
+    ('today', '📡', '오늘의 상황', [
+        ('daily/', '감염병 상황판', 'WHO·CDC·질병관리청 새 소식'),
+        ('flu/', '인플루엔자 감시', '아형·백신 정합성·주간 검출'),
+        ('inflow/', '해외유입 지도', '지정국에서 실제로 얼마나 들어오나'),
+        ('quarantine/', '검역관리지역', '지금 Q-CODE를 내야 하는 나라'),
+    ]),
+    ('disease', '🚑', '질병·현장대응', [
+        ('dogam/', '감염병 도감', '91종 법정감염병 정보'),
+        ('field/', '현장 대응카드', '신고·격리·잠복기·지침 한 화면'),
+        ('guides/', '관리지침', '1,727 계열 · 2,347건'),
+        ('vaccine/', '예방접종', '접종률과 집단면역 임계치'),
+        ('lab/', '진단검사', '병원체 검출 감시'),
+        ('pathogen/', '병원체 도감', '형태·분류'),
+    ]),
+    ('basis', '⚖', '제도·근거', [
+        ('chronicle/', '감염병 연대기', '급수·감시체계 변천 타임머신'),
+        ('law/', '감염병예방법 70년', '법령 연혁 192건'),
+        ('whitepaper/', '백서', '질병관리청 백서 19판'),
+        ('guides/', '지침 아카이브', '연도별 지침·서식'),
+        ('hall/', '연도별 전시관', '해마다 무엇이 달라졌나'),
+        ('brief/', '검토 보고', '위험평가 도구 검토'),
+    ]),
+    ('analysis', '🧪', '분석·실험', [
+        ('checker/', '단절점 검사기', '두 연도를 비교해도 되나'),
+        ('cross/', '교차검증', '신고 수와 검출 수 맞대기'),
+        ('quarantine/', '검역관리지역', '지정 이력과 단절점'),
+        ('inflow/', '해외유입 분석', '직항·입국자·유입 신고'),
+        ('policy/', '검역 정책실험실', '나라를 넣고 빼면 무엇이 새나'),
+        ('sim/', '유행 시뮬레이터', 'R₀·격리·접종 손잡이'),
+    ]),
+    ('data', '⬇', '데이터', [
+        ('data/', '데이터 다운로드', 'CSV · JSON 27개 파일'),
+        ('data/#use', '데이터 출처·이용 안내', '어디서 왔고 어떻게 써야 하나'),
+        ('https://github.com/soonryu74/disease', '원자료 저장소 (GitHub)', '수집 코드와 원본'),
+        ('https://github.com/soonryu74/disease/commits', '오류·수정 기록', '변경 이력'),
+    ]),
 ]
+SEARCH_HREF = 'search/'
+# 예전 코드(상황판 수집기 등)가 평면 목록을 참조할 수 있어 남겨 둔다
+NAV_ITEMS = [('', '🏠', '허브')] + [(h, ic, l) for _, ic, _, items in NAV_GROUPS for h, l, _ in items if '://' not in h]
+
 NAV_CSS = """
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
-.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
   font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
-/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
-   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
-.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
-  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
-.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav *{box-sizing:border-box}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:6px 14px;display:flex;align-items:center;gap:6px;position:relative}
+.gnav .gbrand{font-weight:800;font-size:14px;color:var(--ink,#16211D);white-space:nowrap;margin-right:8px;text-decoration:none;flex:none;padding:6px 0}
 .gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
-.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
-  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
-.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
-.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
-@media (max-width:760px){
-  /* 줄바꿈한 메뉴는 좁은 화면에서 네 줄이 된다. 그대로 고정하면 화면의 1/5을 먹으므로
-     따라다니지 않게 하고 위로 올려 보내 준다. 항목은 하나도 가리지 않는다. */
-  .gnav{position:static}
-  .gnav .gbrand{font-size:12.5px;margin-right:6px}
-  .gnav a.gi{font-size:12px;padding:4px 6px}
+.gnav .gskip{position:absolute;left:-9999px;top:0;background:var(--accent,#0E6E63);color:#fff;padding:8px 12px;border-radius:8px;z-index:80}
+.gnav .gskip:focus{left:14px;top:6px}
+.gnav .gmenu{display:flex;align-items:center;gap:2px;flex:1;min-width:0}
+.gnav .gg{position:relative}
+.gnav .gt{font:inherit;font-size:13px;font-weight:700;color:var(--muted,#5B6B65);background:none;border:0;border-radius:8px;
+  padding:7px 10px;cursor:pointer;white-space:nowrap;line-height:1.4;min-height:36px}
+.gnav .gt:hover,.gnav .gg.open .gt{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav .gt.on{color:var(--accent-ink,#0A4A43);box-shadow:inset 0 -2px 0 var(--accent,#0E6E63);border-radius:8px 8px 0 0}
+.gnav .gt .car{font-size:10px;opacity:.6;margin-left:3px}
+.gnav .gd{display:none;position:absolute;left:0;top:calc(100% + 4px);min-width:250px;background:var(--surface,#fff);
+  border:1px solid var(--line,#DCE4E1);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(16,33,29,.14);z-index:75}
+.gnav .gg.open .gd{display:block}
+.gnav a.gi{display:block;font-size:13.5px;color:var(--ink,#16211D);padding:8px 10px;border-radius:8px;font-weight:600;
+  text-decoration:none;line-height:1.35;min-height:44px}
+.gnav a.gi small{display:block;font-size:11.5px;color:var(--muted,#5B6B65);font-weight:500;margin-top:1px}
+.gnav a.gi:hover,.gnav a.gi:focus-visible{background:var(--surface-2,#EEF2F0)}
+.gnav a.gi.on{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.gnav a.gi.on small{color:var(--accent-ink,#0A4A43)}
+.gnav .gsearch{margin-left:auto;font-size:13px;font-weight:800;color:#fff;background:var(--accent,#0E6E63);border-radius:999px;
+  padding:7px 14px;text-decoration:none;white-space:nowrap;flex:none;min-height:36px;display:inline-flex;align-items:center;gap:6px}
+.gnav .gsearch:hover{filter:brightness(1.08)}
+.gnav .gburger{display:none;font:inherit;font-size:13px;font-weight:700;background:var(--surface,#fff);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--ink,#16211D);min-height:40px;margin-left:auto}
+.gnav :focus-visible{outline:2px solid var(--accent,#0E6E63);outline-offset:2px}
+@media (hover:hover) and (min-width:761px){
+  .gnav .gg:hover .gd,.gnav .gg:focus-within .gd{display:block}
 }
+@media (max-width:760px){
+  /* 좁은 화면: 상표 + 검색 + ☰. 묶음은 아코디언으로 펼친다. 자료를 가리지 않도록 따라다니지 않는다. */
+  .gnav{position:static}
+  .gnav .gin{flex-wrap:wrap;padding:6px 12px}
+  .gnav .gbrand{font-size:13px;margin-right:auto}
+  .gnav .gsearch{margin-left:0;padding:6px 12px;font-size:12.5px;min-height:38px}
+  .gnav .gburger{display:inline-block;margin-left:0}
+  .gnav .gmenu{display:none;flex-direction:column;align-items:stretch;flex-basis:100%;padding:6px 0 4px;gap:4px}
+  .gnav.open .gmenu{display:flex}
+  .gnav .gg{border:1px solid var(--line,#DCE4E1);border-radius:10px;background:var(--surface,#fff)}
+  .gnav .gt{width:100%;text-align:left;font-size:14px;min-height:44px;border-radius:10px}
+  .gnav .gt.on{box-shadow:none;background:var(--accent-soft,#D7ECE8)}
+  .gnav .gd{display:none;position:static;min-width:0;border:0;border-top:1px solid var(--line,#DCE4E1);border-radius:0 0 10px 10px;box-shadow:none;padding:4px}
+  .gnav .gg.open .gd{display:block}
+}
+@media (prefers-reduced-motion:reduce){.gnav *{transition:none !important}}
 """
+
+NAV_JS = """<script>
+(function(){
+  var nav=document.querySelector('nav.gnav'); if(!nav) return;
+  var burger=nav.querySelector('.gburger');
+  function closeAll(except){ nav.querySelectorAll('.gg.open').forEach(function(g){ if(g!==except){ g.classList.remove('open'); g.querySelector('.gt').setAttribute('aria-expanded','false'); } }); }
+  nav.querySelectorAll('.gt').forEach(function(t){
+    t.addEventListener('click',function(){ var g=t.parentNode, open=!g.classList.contains('open'); closeAll(g); g.classList.toggle('open',open); t.setAttribute('aria-expanded',open?'true':'false'); });
+  });
+  if(burger){ burger.addEventListener('click',function(){ var open=!nav.classList.contains('open'); nav.classList.toggle('open',open); burger.setAttribute('aria-expanded',open?'true':'false'); burger.textContent=open?'✕ 닫기':'☰ 메뉴'; if(open){ var on=nav.querySelector('.gt.on'); if(on){ on.parentNode.classList.add('open'); on.setAttribute('aria-expanded','true'); } } }); }
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) closeAll(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeAll(); if(nav.classList.contains('open')&&burger) burger.click(); } });
+})();
+</script>"""
 
 
 def nav_html(up, current):
-    items = []
-    for href, icon, label in NAV_ITEMS:
-        on = ' on' if href.rstrip('/') == current else ''
-        items.append(f'<a class="gi{on}" href="{up}{href or "./"}">{icon} {label}</a>')
-    return (f'<nav class="gnav"><div class="gin">'
+    """current: 포털 루트 기준 폴더명('' = 허브). 그 페이지가 든 묶음과 항목에 on을 단다."""
+    cur = (current or '').rstrip('/')
+    groups = []
+    for gid, icon, label, items in NAV_GROUPS:
+        links, g_on = [], False
+        for href, name, desc in items:
+            ext = '://' in href
+            on = (not ext) and href.split('#')[0].rstrip('/') == cur and cur != ''
+            g_on = g_on or on
+            url = href if ext else up + href
+            extra = ' target="_blank" rel="noopener"' if ext else ''
+            cls = ' on' if on else ''
+            cur_attr = ' aria-current="page"' if on else ''
+            links.append(f'<a class="gi{cls}" href="{url}"{extra}{cur_attr}>{name}<small>{desc}</small></a>')
+        groups.append(f'<div class="gg"><button class="gt{" on" if g_on else ""}" type="button" aria-expanded="false" aria-haspopup="true">'
+                      f'{icon} {label}<span class="car">▾</span></button><div class="gd">{"".join(links)}</div></div>')
+    return (f'<nav class="gnav" aria-label="전체 메뉴"><div class="gin">'
+            f'<a class="gskip" href="#main">본문으로 건너뛰기</a>'
             f'<a class="gbrand" href="{up}./">🦠 감염병 자료 아카이브<i>.</i></a>'
-            + ''.join(items) + '</div></nav>')
+            f'<a class="gsearch" href="{up}{SEARCH_HREF}" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a>'
+            f'<button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button>'
+            f'<div class="gmenu" id="gmenu">{"".join(groups)}</div>'
+            f'</div></nav>' + NAV_JS)
 
 
 def inject_nav(path, depth, current):
     s = open(path, encoding='utf-8').read()
     # 이미 있으면 걷어내고 다시 넣는다 — 메뉴 항목이 바뀌면 모든 쪽이 같이 바뀌어야 한다
-    s = re.sub(r'\n?<nav class="gnav">.*?</nav>(?:<script>.*?</script>)?', '', s, flags=re.S)
-    s = s.replace(NAV_CSS + '\n', '')
+    s = re.sub(r'\n?<nav class="gnav"[^>]*>.*?</nav>(?:<script>.*?</script>)?', '', s, flags=re.S)
+    # 예전 판의 메뉴 CSS(문구가 달라도)까지 걷어낸다. 메뉴 CSS는 언제나 첫 </style> 바로 앞에 있다.
+    s = re.sub(r'\n/\* ── 공통 메뉴[\s\S]*?(?=\n</style>)', '', s, count=1)
     if '</style>' in s:
         s = s.replace('</style>', NAV_CSS + '\n</style>', 1)
     else:
@@ -160,6 +257,9 @@ def inject_nav(path, depth, current):
     else:
         body = re.search(r'<body[^>]*>', s)
         s = (s[:body.end()] + '\n' + html + s[body.end():]) if body else html + s
+    # 건너뛰기 링크가 닿을 곳 — 본문 첫 <header>나 첫 <main>에 id를 단다(없으면 그대로 둔다)
+    if 'id="main"' not in s:
+        s = re.sub(r'<(main|header)(?![^>]*\bid=)', r'<\1 id="main"', s, count=1)
     open(path, 'w', encoding='utf-8').write(s)
     return True
 

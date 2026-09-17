@@ -153,79 +153,84 @@
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
 
 
-/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
-nav:not(.gnav){display:none !important}
-.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
-  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
-.gnav .gin{max-width:1100px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:2px;
-  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.gnav .gin::-webkit-scrollbar{display:none}
-.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
-.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
-.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
-  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
-.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
-.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
-@media (min-width:1000px){.gnav .gin{flex-wrap:wrap;overflow:visible}}
-
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
-.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
   font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
-/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
-   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
-.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
-  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
-.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav *{box-sizing:border-box}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:6px 14px;display:flex;align-items:center;gap:6px;position:relative}
+.gnav .gbrand{font-weight:800;font-size:14px;color:var(--ink,#16211D);white-space:nowrap;margin-right:8px;text-decoration:none;flex:none;padding:6px 0}
 .gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
-.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
-  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
-.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
-.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
-@media (max-width:520px){
-  .gnav .gbrand{font-size:12.5px;margin-right:6px}
-  .gnav a.gi{font-size:12px;padding:4px 6px}
+.gnav .gskip{position:absolute;left:-9999px;top:0;background:var(--accent,#0E6E63);color:#fff;padding:8px 12px;border-radius:8px;z-index:80}
+.gnav .gskip:focus{left:14px;top:6px}
+.gnav .gmenu{display:flex;align-items:center;gap:2px;flex:1;min-width:0}
+.gnav .gg{position:relative}
+.gnav .gt{font:inherit;font-size:13px;font-weight:700;color:var(--muted,#5B6B65);background:none;border:0;border-radius:8px;
+  padding:7px 10px;cursor:pointer;white-space:nowrap;line-height:1.4;min-height:36px}
+.gnav .gt:hover,.gnav .gg.open .gt{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav .gt.on{color:var(--accent-ink,#0A4A43);box-shadow:inset 0 -2px 0 var(--accent,#0E6E63);border-radius:8px 8px 0 0}
+.gnav .gt .car{font-size:10px;opacity:.6;margin-left:3px}
+.gnav .gd{display:none;position:absolute;left:0;top:calc(100% + 4px);min-width:250px;background:var(--surface,#fff);
+  border:1px solid var(--line,#DCE4E1);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(16,33,29,.14);z-index:75}
+.gnav .gg.open .gd{display:block}
+.gnav a.gi{display:block;font-size:13.5px;color:var(--ink,#16211D);padding:8px 10px;border-radius:8px;font-weight:600;
+  text-decoration:none;line-height:1.35;min-height:44px}
+.gnav a.gi small{display:block;font-size:11.5px;color:var(--muted,#5B6B65);font-weight:500;margin-top:1px}
+.gnav a.gi:hover,.gnav a.gi:focus-visible{background:var(--surface-2,#EEF2F0)}
+.gnav a.gi.on{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.gnav a.gi.on small{color:var(--accent-ink,#0A4A43)}
+.gnav .gsearch{margin-left:auto;font-size:13px;font-weight:800;color:#fff;background:var(--accent,#0E6E63);border-radius:999px;
+  padding:7px 14px;text-decoration:none;white-space:nowrap;flex:none;min-height:36px;display:inline-flex;align-items:center;gap:6px}
+.gnav .gsearch:hover{filter:brightness(1.08)}
+.gnav .gburger{display:none;font:inherit;font-size:13px;font-weight:700;background:var(--surface,#fff);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--ink,#16211D);min-height:40px;margin-left:auto}
+.gnav :focus-visible{outline:2px solid var(--accent,#0E6E63);outline-offset:2px}
+@media (hover:hover) and (min-width:761px){
+  .gnav .gg:hover .gd,.gnav .gg:focus-within .gd{display:block}
 }
-
-
-/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
-nav:not(.gnav){display:none !important}
-.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
-  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
-  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
-/* 좁은 화면에서는 가로로 밀지 않고 줄바꿈한다. 옆으로 미는 메뉴는 항목이 잘려 보여
-   '메뉴가 왜 잘리나' 하는 오해를 낳는다. 넓은 화면에서도 줄바꿈이므로 잘릴 일이 없다. */
-.gnav .gin{max-width:1100px;margin:0 auto;padding:8px 14px;display:flex;align-items:center;
-  gap:2px 4px;flex-wrap:wrap;row-gap:3px}
-.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
-.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
-.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
-  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
-.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
-.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
 @media (max-width:760px){
-  /* 줄바꿈한 메뉴는 좁은 화면에서 네 줄이 된다. 그대로 고정하면 화면의 1/5을 먹으므로
-     따라다니지 않게 하고 위로 올려 보내 준다. 항목은 하나도 가리지 않는다. */
+  /* 좁은 화면: 상표 + 검색 + ☰. 묶음은 아코디언으로 펼친다. 자료를 가리지 않도록 따라다니지 않는다. */
   .gnav{position:static}
-  .gnav .gbrand{font-size:12.5px;margin-right:6px}
-  .gnav a.gi{font-size:12px;padding:4px 6px}
+  .gnav .gin{flex-wrap:wrap;padding:6px 12px}
+  .gnav .gbrand{font-size:13px;margin-right:auto}
+  .gnav .gsearch{margin-left:0;padding:6px 12px;font-size:12.5px;min-height:38px}
+  .gnav .gburger{display:inline-block;margin-left:0}
+  .gnav .gmenu{display:none;flex-direction:column;align-items:stretch;flex-basis:100%;padding:6px 0 4px;gap:4px}
+  .gnav.open .gmenu{display:flex}
+  .gnav .gg{border:1px solid var(--line,#DCE4E1);border-radius:10px;background:var(--surface,#fff)}
+  .gnav .gt{width:100%;text-align:left;font-size:14px;min-height:44px;border-radius:10px}
+  .gnav .gt.on{box-shadow:none;background:var(--accent-soft,#D7ECE8)}
+  .gnav .gd{display:none;position:static;min-width:0;border:0;border-top:1px solid var(--line,#DCE4E1);border-radius:0 0 10px 10px;box-shadow:none;padding:4px}
+  .gnav .gg.open .gd{display:block}
 }
+@media (prefers-reduced-motion:reduce){.gnav *{transition:none !important}}
 
 </style>
 </head>
 <body>
 <div class="printonly printhead" id="printhead"><b>진단검사 감시</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
-<nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../hall/">🏛 전시관</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../guides/">📕 지침서가</a><a class="gi" href="../whitepaper/">📗 백서</a><a class="gi" href="../vaccine/">💉 예방접종</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi on" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi" href="../data/">⬇ 자료실</a></div></nav>
+<nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi on" href="../lab/" aria-current="page">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi" href="../data/">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi" href="../data/#use">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
+(function(){
+  var nav=document.querySelector('nav.gnav'); if(!nav) return;
+  var burger=nav.querySelector('.gburger');
+  function closeAll(except){ nav.querySelectorAll('.gg.open').forEach(function(g){ if(g!==except){ g.classList.remove('open'); g.querySelector('.gt').setAttribute('aria-expanded','false'); } }); }
+  nav.querySelectorAll('.gt').forEach(function(t){
+    t.addEventListener('click',function(){ var g=t.parentNode, open=!g.classList.contains('open'); closeAll(g); g.classList.toggle('open',open); t.setAttribute('aria-expanded',open?'true':'false'); });
+  });
+  if(burger){ burger.addEventListener('click',function(){ var open=!nav.classList.contains('open'); nav.classList.toggle('open',open); burger.setAttribute('aria-expanded',open?'true':'false'); burger.textContent=open?'✕ 닫기':'☰ 메뉴'; if(open){ var on=nav.querySelector('.gt.on'); if(on){ on.parentNode.classList.add('open'); on.setAttribute('aria-expanded','true'); } } }); }
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) closeAll(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeAll(); if(nav.classList.contains('open')&&burger) burger.click(); } });
+})();
+</script>
 <nav><div class="in">
   <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
   <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../checker/">🩺 검사기</a><a href="../dogam/">📖 도감</a><a href="../quarantine/">🛂 검역</a>
 </div></nav>
 
 <div class="wrap">
-<header>
+<header id="main">
   <p class="eyebrow">Laboratory Surveillance</p>
   <h1>진단검사 감시</h1>
   <p class="thesis">신고 건수는 <b>의사가 신고한 수</b>이고, 검출률은 <b>검사실이 병원체를 확인한 비율</b>이다.
