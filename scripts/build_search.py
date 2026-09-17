@@ -248,7 +248,18 @@ def build():
 
     tpl = os.path.join(ROOT, 'scripts', 'templates', 'search.template.html')
     html = open(tpl, encoding='utf-8').read().replace('__COUNTS__', json.dumps(idx['counts'], ensure_ascii=False))
-    open(os.path.join(OUTDIR, 'index.html'), 'w', encoding='utf-8').write(html)
+    page = os.path.join(OUTDIR, 'index.html')
+    open(page, 'w', encoding='utf-8').write(html)
+
+    # 다른 페이지와 같은 머리글·메뉴·인쇄 도구를 붙인다
+    try:
+        from portal_tools import ensure_head, inject, inject_nav
+    except ImportError:
+        sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+        from portal_tools import ensure_head, inject, inject_nav
+    ensure_head(page)
+    inject(page, 1)
+    inject_nav(page, 1, 'search')
 
     kinds = {}
     for r in records:

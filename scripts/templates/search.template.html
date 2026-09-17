@@ -124,6 +124,22 @@
   .sug button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
     border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
   .tip{font-size:12.5px;color:var(--faint);margin:14px 0 0}
+  /* 질문으로 찾기 — 규칙으로만 고른다. 답을 만들지 않고 어느 페이지를 볼지만 알려준다 */
+  .ask{border:1px solid var(--c1,#2f6fdb);border-left-width:5px;border-radius:14px;
+       background:var(--surface-2);padding:16px 17px;margin:0 0 18px}
+  .ask h2{margin:0 0 4px;font-size:15.5px;letter-spacing:-.01em}
+  .ask .rd{font-size:12.5px;color:var(--muted);margin:0 0 12px;overflow-wrap:anywhere}
+  .ask .rd b{color:var(--ink)}
+  .ask .go{display:grid;gap:8px}
+  .ask .go a{display:block;background:var(--surface);border:1px solid var(--line);border-radius:11px;
+             padding:11px 13px;min-height:44px;text-decoration:none;color:var(--ink);font-weight:700;font-size:14px}
+  .ask .go a:hover{border-color:var(--c1,#2f6fdb)}
+  .ask .go a small{display:block;font-weight:500;font-size:12px;color:var(--muted);margin-top:2px;overflow-wrap:anywhere}
+  .ask .note{font-size:11.5px;color:var(--faint);margin:11px 0 0;overflow-wrap:anywhere}
+  .qex{display:flex;flex-wrap:wrap;gap:7px;margin:12px 0 0}
+  .qex button{font-size:12.5px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink);
+              border-radius:999px;padding:8px 13px;min-height:38px;cursor:pointer;text-align:left}
+  .qex button:hover{border-color:var(--c1,#2f6fdb)}
   footer{padding:30px 0 20px;color:var(--faint);font-size:12.5px;border-top:1px solid var(--line);margin-top:26px}
   :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 </style>
@@ -132,7 +148,8 @@
 <div class="wrap">
 <header id="main">
   <h1>통합검색</h1>
-  <p class="lede">감염병명·영문명·옛 이름·국가·연도·지침·법령을 한 번에 찾습니다. 같은 감염병의 도감·현장카드·지침·연대기·예방접종을 하나로 묶어 보여줍니다.</p>
+  <p class="lede">감염병명·영문명·옛 이름·국가·연도·지침·법령을 한 번에 찾습니다. 같은 감염병의 도감·현장카드·지침·연대기·예방접종을 하나로 묶어 보여줍니다.
+     <b>“홍역 신고 기준이 뭐야”</b>처럼 문장으로 물어도 됩니다.</p>
 </header>
 
 <div class="sbox">
@@ -185,10 +202,11 @@ function initial(){
       <p>감염병 이름을 넣으면 도감·현장 대응카드·관리지침·연대기·예방접종이 한 카드로 묶여 나옵니다.
          나라 이름, 연도, 지침 제목, 법령 개정도 찾을 수 있습니다.</p>
       <div class="sug">${SEED.map(s=>`<button type="button" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
-      <p class="tip">검색 예: <b>홍역</b> · <b>MERS</b> · <b>베트남</b> · <b>2024 백일해</b> · <b>역학조사 지침</b><br>
-         색인 수록: 감염병 ${COUNTS['질병']}종 · 기록 ${COUNTS['기록'].toLocaleString()}건</p>
+      <p class="tip" style="margin-top:20px"><b>문장으로 물어봐도 됩니다.</b> 낱말 규칙으로 어느 페이지를 볼지 골라 드립니다.</p>
+      <div class="qex">${QEX.map(s=>`<button type="button" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
+      <p class="tip">색인 수록: 감염병 ${COUNTS['질병']}종 · 기록 ${COUNTS['기록'].toLocaleString()}건</p>
     </div>`;
-  $('#out').querySelectorAll('.sug button').forEach(b => b.onclick = () => { $('#q').value = b.dataset.s; run(); });
+  $('#out').querySelectorAll('[data-s]').forEach(b => b.onclick = () => { $('#q').value = b.dataset.s; run(); });
 }
 
 function score(hay, q){
@@ -249,6 +267,136 @@ function similar(raw){
   return [...new Set(out)];
 }
 
+/* ── 질문으로 찾기 ──
+   서버도 모델도 쓰지 않는다. 낱말 규칙으로 '무엇을 묻는지'만 가려내어
+   우리 페이지 두세 곳을 골라 준다. 답(수치·판정)은 절대 만들지 않는다. */
+const INTENTS = [
+  {id:'report', w:['신고','보고','신고기간','신고서','몇급','급수','등급','법정감염병','즉시신고'],
+   label:'신고·급수', go:['field','law','chronicle']},
+  {id:'isolate', w:['격리','격리해제','접촉자','노출','밀접접촉','자가격리','차단','소독'],
+   label:'격리·접촉자 관리', go:['field','guides']},
+  {id:'clinic', w:['잠복기','증상','전파','전파경로','감염경로','전염','치명률','합병증','원인'],
+   label:'질병 기초 정보', go:['dogam','field','pathogen']},
+  {id:'vacc', w:['예방접종','백신','접종','면역','추가접종','기초접종'],
+   label:'예방접종', go:['vaccine','guides']},
+  {id:'stat', w:['통계','환자수','발생건수','몇명','몇건','추이','연도별','증가','감소','발생률','수치'],
+   label:'발생 통계', go:['data','checker','chronicle']},
+  {id:'break', w:['비교','비교가능','단절','기준변경','바뀌었','달라졌','같은기준','전수','표본'],
+   label:'연도 간 비교 가능성', go:['checker','data']},
+  {id:'guide', w:['지침','매뉴얼','가이드','대응지침','관리지침','절차','어떻게대응'],
+   label:'관리지침 원문', go:['guides','field']},
+  {id:'law', w:['법','법령','시행규칙','시행령','조문','개정','근거법','법적'],
+   label:'법령 근거', go:['law','chronicle']},
+  {id:'quar', w:['검역','검역감염병','입국','공항','항만','검역소','q코드','큐코드'],
+   label:'검역', go:['quarantine','inflow']},
+  {id:'inflow', w:['해외유입','유입','해외','여행','직항','항공','출국','입국자','국가별'],
+   label:'해외 발생·유입', go:['inflow','quarantine']},
+  {id:'hist', w:['역사','언제','과거','옛날','연혁','변천','처음','생겼','폐지','이름이바뀐'],
+   label:'제도 변천', go:['chronicle','law','hall']},
+  {id:'now', w:['오늘','최근','새소식','지금','현재','요즘','속보','알림'],
+   label:'오늘의 상황', go:['daily','inflow']},
+  {id:'flu', w:['독감','인플루엔자','절기','유행주의보','백신구성'],
+   label:'인플루엔자', go:['flu','vaccine']},
+  {id:'paper', w:['백서','보고서','정책자료','국정감사'],
+   label:'백서·정책자료', go:['whitepaper','chronicle']},
+  {id:'sim', w:['정책','시나리오','실험','가정','만약','효과','모형'],
+   label:'정책 실험·모형', go:['policy','sim']},
+];
+const DEST = {
+  field:{u:'../field/', l:'현장 대응카드', n:'급수·신고·격리·잠복기를 한 장에 모아 둔 곳', d:'disease'},
+  dogam:{u:'../dogam/', l:'감염병 도감', n:'질병별 기초 정보와 관련 자료 묶음', d:'disease'},
+  chronicle:{u:'../chronicle/', l:'감염병 연대기', n:'급수·명칭·제도가 언제 어떻게 바뀌었는지', d:'disease'},
+  checker:{u:'../checker/', l:'단절점 검사기', n:'연도별 수치를 그대로 비교해도 되는지 먼저 확인', d:'disease'},
+  pathogen:{u:'../pathogen/', l:'병원체 도감', n:'병원체 형태와 분류'},
+  guides:{u:'../guides/', l:'관리지침 모음', n:'질병관리청 지침 원문으로 바로 연결'},
+  vaccine:{u:'../vaccine/', l:'예방접종', n:'표준 접종 일정과 관련 지침'},
+  law:{u:'../law/', l:'법령·조문', n:'감염병예방법과 하위 법령의 개정 이력'},
+  data:{u:'../data/', l:'데이터 센터', n:'원자료 파일과 출처·갱신일'},
+  quarantine:{u:'../quarantine/', l:'검역 지정 현황', n:'국가별 검역감염병 지정', d:'country'},
+  inflow:{u:'../inflow/', l:'해외 발생·유입', n:'나라별 발생과 국내 유입 경로'},
+  daily:{u:'../daily/', l:'감염병 상황판', n:'WHO·CDC·질병관리청 새 소식(매일 06:00)', d:'q'},
+  flu:{u:'../flu/', l:'인플루엔자 감시', n:'절기별 유행과 WHO 백신 구성 권고'},
+  whitepaper:{u:'../whitepaper/', l:'백서·정책자료', n:'연도별 백서 원문 연결'},
+  hall:{u:'../hall/', l:'연대기 전시관', n:'시대별로 훑어보는 전시 형식'},
+  policy:{u:'../policy/', l:'정책 실험', n:'가정을 바꿔 보며 구조를 이해하는 실험실'},
+  sim:{u:'../sim/', l:'유행 시뮬레이터', n:'전파 구조를 손으로 돌려 보는 모형'},
+};
+const QEX = ['홍역 신고 기준이 뭐야', '백일해 격리는 며칠', '결핵 연도별 환자수 비교해도 되나',
+             '베트남 검역감염병 지정됐나', 'MERS 잠복기', '인플루엔자 백신 구성 권고'];
+
+/* 낱말 단위로만 이름을 알아본다.
+   문장 한가운데를 그냥 포함 검사하면 '검역감염병'의 '염병'이 장티푸스로 잡힌다.
+   그래서 어절의 앞에서 맞을 때만 인정하고, 어절 속 아무 데나 맞는 것은 네 글자 이상만 받는다. */
+function tokens(raw){
+  return String(raw).split(/[\s·・,./()[\]{}"'“”‘’?!:;~]+/).map(norm).filter(Boolean);
+}
+function nameHit(cand, toks){
+  const c = norm(cand);
+  if(c.length < 2) return 0;
+  for(const t of toks){
+    if(t === c) return c.length + 10;              // 어절이 그대로 이름이면 가장 확실하다
+    if(t.startsWith(c)) return c.length + 5;       // '홍역신고기준'처럼 붙여 쓴 경우
+    if(c.length >= 4 && t.includes(c)) return c.length;
+  }
+  return 0;
+}
+
+function parseAsk(raw){
+  const nq = norm(raw);
+  if(!nq || !IDX) return null;
+  const toks = tokens(raw);
+  // 1) 감염병 — 색인에 있는 이름만 인정한다
+  let dis = null;
+  for(const h of IDX.hubs){
+    for(const cand of [h.name, h.eng].concat(h.alias || [])){
+      const s = nameHit(cand, toks);
+      if(s && (!dis || s > dis.s)) dis = {h, s};
+    }
+  }
+  // 2) 국가 — 색인의 국가 기록에서만
+  let ctry = null;
+  for(const r of IDX.records){
+    if(r.k !== '국가') continue;
+    const s = nameHit(r.t, toks);
+    if(s && (!ctry || s > ctry.s)) ctry = {t:r.t, s};
+  }
+  // 3) 연도
+  const ym = raw.match(/(19|20)\d{2}/);
+  // 4) 의도
+  const hits = INTENTS.filter(it => it.w.some(w => nq.includes(norm(w))));
+  if(!hits.length) return null;                    // 의도가 없으면 평소 검색만 한다
+  const seen = new Set(), go = [];
+  for(const it of hits) for(const g of it.go){
+    if(seen.has(g) || !DEST[g]) continue;
+    seen.add(g); go.push(g);
+  }
+  return {dis, ctry, year: ym ? ym[0] : null, hits, go: go.slice(0, 3)};
+}
+
+function askHtml(a, raw){
+  const read = [];
+  if(a.dis) read.push(`감염병 <b>${esc(a.dis.h.name)}</b>`);
+  if(a.ctry) read.push(`국가 <b>${esc(a.ctry.t)}</b>`);
+  if(a.year) read.push(`연도 <b>${esc(a.year)}</b>`);
+  read.push(`묻는 것 <b>${a.hits.slice(0,2).map(h => esc(h.label)).join(' · ')}</b>`);
+  const links = a.go.map(g => {
+    const d = DEST[g];
+    let u = d.u;
+    if(d.d === 'disease' && a.dis) u += '?disease=' + encodeURIComponent(a.dis.h.name);
+    else if(d.d === 'country' && a.ctry) u += '?country=' + encodeURIComponent(a.ctry.t);
+    else if(d.d === 'q' && a.dis) u += '?q=' + encodeURIComponent(a.dis.h.name);
+    const tail = (d.d === 'disease' && a.dis) ? ` — ${esc(a.dis.h.name)}로 열립니다` : '';
+    return `<a href="${esc(u)}">${esc(d.l)} →<small>${esc(d.n)}${tail}</small></a>`;
+  }).join('');
+  return `<div class="ask">
+    <h2>질문으로 찾기</h2>
+    <p class="rd">질문에서 알아낸 것: ${read.join(' · ')}</p>
+    <div class="go">${links}</div>
+    <p class="note">낱말 규칙으로 페이지만 골랐습니다. 답을 대신 계산하거나 판정하지 않습니다.
+       아래에는 ‘${esc(raw)}’의 일반 검색 결과가 이어집니다.</p>
+  </div>`;
+}
+
 function run(){
   const raw = $('#q').value.trim();
   history.replaceState(null, '', raw ? '?q=' + encodeURIComponent(raw) : location.pathname);
@@ -256,7 +404,12 @@ function run(){
   if(!raw){ initial(); renderChips({}); return; }
   if(!IDX){ setState('<h2>불러오는 중…</h2><div class="sk"></div><div class="sk"></div>'); return; }
 
+  const ask = parseAsk(raw);
+  const askBox = ask ? askHtml(ask, raw) : '';
+
   const {hubs, recs} = search(raw);
+  // 문장으로 물으면 제목이 그대로 맞지 않는다. 알아본 감염병의 묶음 카드는 그대로 보여 준다
+  if(ask && ask.dis && !hubs.some(x => x.h === ask.dis.h)) hubs.unshift({h: ask.dis.h, s: 9});
   const byKind = {};
   recs.forEach(x => { byKind[x.r.k] = (byKind[x.r.k] || 0) + 1; });
   if(hubs.length) byKind['감염병'] = hubs.length;
@@ -267,14 +420,15 @@ function run(){
 
   if(!useHubs.length && !useRecs.length){
     const sim = similar(raw);
-    setState(`<h2>‘${esc(raw)}’에 대한 결과가 없습니다.</h2>
+    $('#out').innerHTML = askBox + `<div class="state"><h2>‘${esc(raw)}’${ask ? '와 그대로 일치하는 항목은' : '에 대한 결과가'} 없습니다.</h2>
+      ${ask ? '<p>문장 전체와 똑같은 제목은 색인에 없습니다. 위에서 고른 페이지로 가거나, 낱말 하나로 줄여 다시 찾아보세요.</p>' : ''}
       <p>옛 이름이나 영문명으로도 찾을 수 있습니다. 지침은 제목의 일부만 넣어 보세요.</p>
       ${sim.length ? `<div class="sug">${sim.map(s=>`<button type="button" data-s="${esc(s)}">${esc(s)}</button>`).join('')}</div>
         <p class="tip">혹시 이것을 찾으셨나요?</p>` : ''}
       <div class="sug"><button type="button" data-go="../dogam/">감염병 도감</button>
         <button type="button" data-go="../guides/">관리지침</button>
         <button type="button" data-go="../daily/">상황판</button>
-        <button type="button" data-go="../data/">데이터</button></div>`);
+        <button type="button" data-go="../data/">데이터</button></div></div>`;
     $('#out').querySelectorAll('[data-s]').forEach(b => b.onclick = () => { $('#q').value = b.dataset.s; run(); });
     $('#out').querySelectorAll('[data-go]').forEach(b => b.onclick = () => location.href = b.dataset.go);
     return;
@@ -283,7 +437,7 @@ function run(){
   const groups = {};
   useRecs.forEach(x => (groups[x.r.k] = groups[x.r.k] || []).push(x.r));
   const order = ['현장','지침','연대기','예방접종','법령','백서','국가','페이지'];
-  let html = useHubs.slice(0, 4).map(x => hubHtml(x.h, raw)).join('');
+  let html = askBox + useHubs.slice(0, 4).map(x => hubHtml(x.h, raw)).join('');
   for(const k of order.concat(Object.keys(groups).filter(k => !order.includes(k)))){
     const rows = groups[k];
     if(!rows || !rows.length) continue;
