@@ -299,6 +299,17 @@ def inject(path, depth):
     """depth: 포털 루트까지의 깊이(0=index, 1=하위 폴더)"""
     s = open(path, encoding='utf-8').read()
     if 'id="btnPrint"' in s:
+        # 이미 넣은 쪽이라도 머리글·꼬리말 문구는 매번 최신으로 바꾼다.
+        # 예전에는 여기서 그냥 돌아서서, 문구를 고쳐도 새로 만든 쪽에만 반영됐다.
+        m = re.search(r'<title>(.*?)</title>', s, re.S)
+        title = re.sub(r'\s+', ' ', m.group(1)).strip() if m else '감염병 자료 아카이브'
+        s2 = re.sub(r'<div class="printonly printhead" id="printhead">.*?</div>',
+                    printhead_html(title), s, count=1, flags=re.S)
+        s2 = re.sub(r'<div class="printonly printfoot">.*?</div>',
+                    printfoot_html(), s2, count=1, flags=re.S)
+        if s2 != s:
+            open(path, 'w', encoding='utf-8').write(s2)
+            return True
         return False
     m = re.search(r'<title>(.*?)</title>', s, re.S)
     title = re.sub(r'\s+', ' ', m.group(1)).strip() if m else '감염병 자료 아카이브'
