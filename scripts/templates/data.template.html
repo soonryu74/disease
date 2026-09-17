@@ -3,7 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>자료 내려받기</title>
+<title>감염병 데이터센터 | 감염병 자료 아카이브</title>
+<meta name="description" content="감염병 신고통계·법령·지침·검역·해외유입 등 공개 데이터를 CSV·JSON으로 확인하고 내려받습니다. 기간·출처·업데이트·단절점을 함께 봅니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -76,6 +77,41 @@
   footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
   footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
   footer .maker a{color:var(--accent-ink)}
+
+  /* ── 자료 카드 ─────────────────────────────────────────────────────── */
+  .dtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+  .dtools input[type=search]{flex:1;min-width:200px;font:inherit;font-size:16px;padding:12px 15px;
+    border:2px solid var(--line-strong);border-radius:12px;background:var(--surface);color:var(--ink)}
+  .dtools input:focus{outline:none;border-color:var(--accent)}
+  .dcats{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
+  .dcats button{font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:999px;padding:7px 13px;cursor:pointer;min-height:38px}
+  .dcats button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ds{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 10px}
+  .ds h3{margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.02em}
+  .ds .no{font-size:13.5px;color:var(--muted);margin:5px 0 0;line-height:1.6}
+  .ds .mt{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:7px;margin:12px 0 0}
+  .ds .mt div{background:var(--surface-2);border-radius:9px;padding:8px 10px}
+  .ds .mt b{display:block;font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25}
+  .ds .mt span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+  .ds .ca{font-size:12.5px;color:var(--warn,#B23A3A);background:var(--warn-soft,#F6E3E3);
+    border-radius:9px;padding:8px 11px;margin:10px 0 0;line-height:1.55}
+  .ds .acts{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+  .ds .acts a,.ds .acts button{font:inherit;font-size:13px;font-weight:700;color:var(--accent-ink);
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:9px;padding:9px 13px;
+    cursor:pointer;min-height:42px;display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+  .ds .acts a.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ds .acts a:hover,.ds .acts button:hover{filter:brightness(.97)}
+  .ds .acts a.brk{border-color:var(--warn,#B23A3A);color:var(--warn,#B23A3A)}
+  .ds details{margin:10px 0 0;border:0;padding:0}
+  .ds details summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);padding:6px 0;list-style:none}
+  .ds details summary::-webkit-details-marker{display:none}
+  .ds details summary::after{content:' ▾'}
+  .ds details[open] summary::after{content:' ▴'}
+  .cols{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
+  .cols code{font-size:11.5px}
+  .dnone{background:var(--surface);border:1px dashed var(--line-strong);border-radius:12px;padding:20px;
+    text-align:center;color:var(--muted);font-size:14px}
 </style>
 </head>
 <body>
@@ -103,6 +139,11 @@
   </ul>
 </div>
 
+<div class="dtools">
+  <label for="dq" style="position:absolute;left:-9999px">데이터셋 검색</label>
+  <input id="dq" type="search" placeholder="데이터셋을 검색하세요 — 예: 신고통계, 검역, 예방접종, 법령" autocomplete="off">
+</div>
+<div class="dcats" id="dcats" role="group" aria-label="분야 거르개"></div>
 <div id="groups"></div>
 
 <div class="note" style="background:var(--surface-2);color:var(--ink)">
@@ -126,22 +167,78 @@ const D = __DATA__;
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 document.getElementById('meta').textContent =
   `파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
-document.getElementById('groups').innerHTML = D.groups.map(g => `
-  <div class="grp">
-    <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
-    <p class="gdesc">${esc(g.desc)}</p>
-    ${g.items.map(i => `
-      <div class="f">
-        <span class="kind k-${i.kind}">${i.kind}</span>
-        <div class="body">
-          <div class="nm">${esc(i.file)}</div>
-          <div class="no">${esc(i.note)}</div>
-          ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
-          <div class="sz num">${i.rows != null ? i.rows.toLocaleString() + '행 · ' : ''}${esc(i.size)} · 저장소 경로 ${esc(i.repo)}</div>
-        </div>
-        <a class="dl" href="files/${encodeURIComponent(i.file)}" download>⬇ 내려받기</a>
-      </div>`).join('')}
-  </div>`).join('');
+let dq='', dcat='전체';
+
+function human(n){ return n==null ? '—' : n.toLocaleString('ko-KR'); }
+function period(i){ return (i.y0 && i.y1) ? (i.y0===i.y1 ? String(i.y0) : i.y0+'–'+i.y1) : '—'; }
+
+function dsHtml(g, i){
+  const csv = i.files.find(f=>f.k==='CSV'), js = i.files.find(f=>f.k==='JSON');
+  const cite = `${i.name}. 감염병 자료 아카이브. 원자료: ${i.src}. 기준일: ${i.updated}. `
+             + `https://soonryu74.github.io/disease/data/`;
+  return `<div class="ds" id="ds-${esc(i.name)}">
+    <h3>${esc(i.name)} <span class="bdg archive">아카이브 재구성</span></h3>
+    <p class="no">${esc(i.note)}</p>
+    <div class="mt">
+      <div><b>${esc(period(i))}</b><span>수록 기간</span></div>
+      <div><b>${human(i.rows)}</b><span>행</span></div>
+      <div><b>${i.cols ? human(i.cols) : '—'}</b><span>열(변수)</span></div>
+      <div><b>${esc(i.updated)}</b><span>아카이브 갱신</span></div>
+      <div><b>${esc(i.files.map(f=>f.k).join(' · '))}</b><span>${esc(i.files.map(f=>f.z).join(' · '))}</span></div>
+      <div><b style="font-size:12.5px">${esc(i.src)}</b><span>원자료 출처</span></div>
+    </div>
+    ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
+    ${i.brk ? `<div class="ca">⚠️ 연도를 이어 읽는 자료입니다. 감시체계·사례정의가 바뀐 해가 있을 수 있으니
+      <b>비교 전에 단절점을 확인</b>하십시오.</div>` : ''}
+    <div class="acts">
+      ${csv ? `<a class="pri" href="files/${encodeURIComponent(csv.f)}" download>⬇ CSV (${esc(csv.z)})</a>` : ''}
+      ${js ? `<a class="${csv?'':'pri'}" href="files/${encodeURIComponent(js.f)}" download>⬇ JSON (${esc(js.z)})</a>` : ''}
+      ${js ? `<a href="files/${encodeURIComponent(js.f)}" target="_blank" rel="noopener">JSON 열기 ↗</a>` : ''}
+      ${i.brk ? `<a class="brk" href="../checker/">🩺 단절점 검사</a>` : ''}
+      <a href="${esc(g.page)}">이 자료를 쓰는 화면 →</a>
+      <button type="button" class="cite" data-c="${esc(cite)}">📋 인용문 복사</button>
+    </div>
+    ${(i.head||[]).length ? `<details><summary>변수 ${i.cols ? i.cols+'개' : ''} 보기</summary>
+      <div class="cols">${i.head.map(h=>`<code>${esc(h)}</code>`).join('')}</div>
+      <p class="no" style="margin-top:6px">저장소 경로 <code>${esc(i.repo)}</code></p></details>` : ''}
+  </div>`;
+}
+
+function renderData(){
+  const cats = ['전체', ...D.groups.map(g=>g.title)];
+  document.getElementById('dcats').innerHTML = cats.map(c=>
+    `<button type="button" class="${c===dcat?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  document.getElementById('dcats').querySelectorAll('button').forEach(b=>
+    b.onclick = () => { dcat = b.dataset.c; renderData(); });
+
+  let shown = 0;
+  const html = D.groups.filter(g => dcat==='전체' || g.title===dcat).map(g => {
+    const items = g.items.filter(i => !dq ||
+      (i.name + ' ' + i.note + ' ' + (i.caution||'') + ' ' + i.src + ' ' + g.title).toLowerCase().includes(dq));
+    if(!items.length) return '';
+    shown += items.length;
+    return `<div class="grp">
+      <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
+      <p class="gdesc">${esc(g.desc)}</p>
+      ${items.map(i=>dsHtml(g,i)).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('groups').innerHTML = html ||
+    `<div class="dnone"><b>조건에 맞는 데이터가 없습니다.</b><br>다른 낱말로 찾거나 분야를 ‘전체’로 되돌려 보세요.</div>`;
+  document.getElementById('groups').querySelectorAll('.cite').forEach(b=>{
+    b.onclick = () => { const t=b.textContent;
+      const done=()=>{ b.textContent='✓ 복사됨'; setTimeout(()=>b.textContent=t,1600); };
+      if(navigator.clipboard) navigator.clipboard.writeText(b.dataset.c).then(done,()=>{});
+      else prompt('인용문', b.dataset.c); };
+  });
+  document.getElementById('meta').textContent =
+    `자료 ${shown}종 · 파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
+}
+document.getElementById('dq').addEventListener('input', e=>{ dq=e.target.value.trim().toLowerCase(); renderData(); });
+renderData();
+/* ?dataset=이름 으로 들어오면 그 자료로 내려간다 */
+(function(){ const d=new URLSearchParams(location.search).get('dataset');
+  if(!d) return; const el=document.getElementById('ds-'+d); if(el) el.scrollIntoView({block:'start'}); })();
 </script>
 </body>
 </html>

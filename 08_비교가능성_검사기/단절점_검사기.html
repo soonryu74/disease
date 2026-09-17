@@ -155,6 +155,18 @@
     .ecard{grid-template-columns:1fr;gap:6px}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  /* 왜 필요한가 — 처음 온 사람을 위한 한 장 */
+  .why{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 16px;padding:0 18px}
+  .why summary{cursor:pointer;padding:14px 0;font-weight:800;font-size:15.5px;list-style:none}
+  .why summary::-webkit-details-marker{display:none}
+  .why summary::after{content:' ▾';color:var(--muted)}
+  .why[open] summary::after{content:' ▴'}
+  .whyb{padding:0 0 16px;font-size:14px;line-height:1.7;color:var(--muted)}
+  .whyb p{margin:0 0 10px} .whyb b{color:var(--ink)}
+  .wsteps{margin:0 0 12px;padding-left:20px}
+  .wsteps li{margin:5px 0}
+  .wnote{font-size:13px;color:var(--muted);background:var(--surface-2,#EEF2F0);border-radius:10px;padding:10px 13px;margin:0}
 </style>
 
 <div class="wrap">
@@ -165,6 +177,23 @@
       그 지점을 모르고 두 해를 나란히 놓으면 유행을 잘못 읽는다.
       질병과 두 연도를 고르면 <b>비교해도 되는지, 안 된다면 왜인지</b>를 판정한다.</p>
   </header>
+
+  <details class="why" id="why">
+    <summary>왜 단절점을 확인해야 하나요?</summary>
+    <div class="whyb">
+      <p><b>같은 병이라도 해마다 '무엇을 세는지'가 바뀝니다.</b> 매독이 대표적입니다.</p>
+      <ol class="wsteps">
+        <li><b>2019</b> — 제3군 <b>전수감시</b>. 의사가 본 모든 환자를 신고</li>
+        <li><b>2020</b> — 제4급 <b>표본감시</b>로 전환. 정해진 표본기관에서만 신고</li>
+        <li><b>2024</b> — 제3급 <b>전수감시</b>로 복귀. 신고 대상 범위도 3종 → 5종으로 확대</li>
+      </ol>
+      <p>그래서 <b>2024년 숫자가 2019년보다 커 보여도 유행이 커졌다는 뜻이 아닙니다.</b>
+        세는 그물이 달라졌을 뿐일 수 있습니다. 실제로 같은 범위로 다시 계산하면
+        2018년 2,280건 → 2024년 1,519건으로 <b>줄었습니다</b>.</p>
+      <p class="wnote">이 검사기는 두 연도 사이에 이런 변화가 있었는지 찾아, 비교해도 되는지와
+        안 된다면 무엇 때문인지를 알려 줍니다. 붙여 쓸 각주 문장도 만들어 줍니다.</p>
+    </div>
+  </details>
 
   <div class="console">
     <div class="ctrls">
@@ -252,6 +281,15 @@
     });
   });
   elD.value = '매독'; elA.value = 2023; elB.value = 2024;
+  // 다른 쪽(도감·데이터센터)에서 ?disease=이름 으로 넘겨 주면 그 병을 고른 채로 연다.
+  // 목록에 없는 이름이면 기본값을 유지하고 조용히 넘어간다 — 빈 화면을 만들지 않는다.
+  (function(){
+    var want = new URLSearchParams(location.search).get('disease');
+    if(!want) return;
+    var hit = D.diseases.filter(function(d){ return d.name === want; })[0]
+           || D.diseases.filter(function(d){ return d.name.indexOf(want) > -1 || want.indexOf(d.name) > -1; })[0];
+    if(hit){ elD.value = hit.name; document.getElementById('why').open = false; }
+  })();
 
   var fmt = function(n){ return n == null ? '—' : n.toLocaleString('ko-KR'); };
   // 대체 연도는 반드시 상대 연도의 같은 쪽(시간 순서)을 유지해야 한다.

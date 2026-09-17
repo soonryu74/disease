@@ -1,5 +1,5 @@
 {
- "as_of": "2026-09-08",
+ "as_of": "2026-09-15",
  "source": "https://www.kdca.go.kr/kdca/2873/subview.do",
  "items": [
   {
@@ -169,7 +169,7 @@
    "cover": "https://www.kdca.go.kr/sites/kdca/images/sub/whitepaper2004(kor).jpg",
    "file": "",
    "hidden": true,
-   "cover_status": 0,
+   "cover_status": 206,
    "cover_file": "whitepaper2004(kor).jpg"
   }
  ],

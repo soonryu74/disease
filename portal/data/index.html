@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>자료 내려받기</title>
+<title>감염병 데이터센터 | 감염병 자료 아카이브</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="감염병 신고통계·법령·지침·검역·해외유입 등 공개 데이터를 CSV·JSON으로 확인하고 내려받습니다. 기간·출처·업데이트·단절점을 함께 봅니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -78,6 +79,41 @@
   footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
   footer .maker a{color:var(--accent-ink)}
 
+  /* ── 자료 카드 ─────────────────────────────────────────────────────── */
+  .dtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+  .dtools input[type=search]{flex:1;min-width:200px;font:inherit;font-size:16px;padding:12px 15px;
+    border:2px solid var(--line-strong);border-radius:12px;background:var(--surface);color:var(--ink)}
+  .dtools input:focus{outline:none;border-color:var(--accent)}
+  .dcats{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
+  .dcats button{font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:999px;padding:7px 13px;cursor:pointer;min-height:38px}
+  .dcats button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ds{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 10px}
+  .ds h3{margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.02em}
+  .ds .no{font-size:13.5px;color:var(--muted);margin:5px 0 0;line-height:1.6}
+  .ds .mt{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:7px;margin:12px 0 0}
+  .ds .mt div{background:var(--surface-2);border-radius:9px;padding:8px 10px}
+  .ds .mt b{display:block;font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25}
+  .ds .mt span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+  .ds .ca{font-size:12.5px;color:var(--warn,#B23A3A);background:var(--warn-soft,#F6E3E3);
+    border-radius:9px;padding:8px 11px;margin:10px 0 0;line-height:1.55}
+  .ds .acts{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+  .ds .acts a,.ds .acts button{font:inherit;font-size:13px;font-weight:700;color:var(--accent-ink);
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:9px;padding:9px 13px;
+    cursor:pointer;min-height:42px;display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+  .ds .acts a.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ds .acts a:hover,.ds .acts button:hover{filter:brightness(.97)}
+  .ds .acts a.brk{border-color:var(--warn,#B23A3A);color:var(--warn,#B23A3A)}
+  .ds details{margin:10px 0 0;border:0;padding:0}
+  .ds details summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);padding:6px 0;list-style:none}
+  .ds details summary::-webkit-details-marker{display:none}
+  .ds details summary::after{content:' ▾'}
+  .ds details[open] summary::after{content:' ▴'}
+  .cols{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
+  .cols code{font-size:11.5px}
+  .dnone{background:var(--surface);border:1px dashed var(--line-strong);border-radius:12px;padding:20px;
+    text-align:center;color:var(--muted);font-size:14px}
+
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
 .printonly{display:none}
 @page{margin:14mm 12mm}
@@ -128,16 +164,6 @@
 .pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
-
-
-
-
-
-
-
-
-
-
 
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
@@ -204,7 +230,7 @@ nav:not(.gnav){display:none !important}
 </style>
 </head>
 <body>
-<div class="printonly printhead" id="printhead"><b>자료 내려받기</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<div class="printonly printhead" id="printhead"><b>감염병 데이터센터 | 감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
 <nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi on" href="../data/" aria-current="page">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi on" href="../data/#use" aria-current="page">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
 (function(){
   var nav=document.querySelector('nav.gnav'); if(!nav) return;
@@ -242,6 +268,11 @@ nav:not(.gnav){display:none !important}
   </ul>
 </div>
 
+<div class="dtools">
+  <label for="dq" style="position:absolute;left:-9999px">데이터셋 검색</label>
+  <input id="dq" type="search" placeholder="데이터셋을 검색하세요 — 예: 신고통계, 검역, 예방접종, 법령" autocomplete="off">
+</div>
+<div class="dcats" id="dcats" role="group" aria-label="분야 거르개"></div>
 <div id="groups"></div>
 
 <div class="note" style="background:var(--surface-2);color:var(--ink)">
@@ -261,28 +292,84 @@ nav:not(.gnav){display:none !important}
 </div>
 
 <script>
-const D = {"groups":[{"title":"⑱ 예방접종","page":"../vaccine/","desc":"「전국 어린이 예방접종률 현황」과 집단면역 문턱 계산에 쓴 값.","items":[{"file":"어린이_예방접종률.csv","note":"연도 × 연령 × 백신 접종률·접종자수(2017~2025). 예방접종도우미 게시글 본문 표에서 그대로 뽑았다.","caution":"'완전'의 뜻이 해마다 바뀐다 — 2017년 9종에서 2025년 13종으로 늘었다. 연도를 그냥 이으면 안 된다. 원문 이상값은 '이상' 열에 표시만 하고 지우지 않았다.","size":"26 KB","rows":664,"kind":"CSV","repo":"18_예방접종/data/어린이_예방접종률.csv"},{"file":"어린이_예방접종률.json","note":"위와 같은 자료 + 해마다 무엇을 세었는지(백신 목록·조사 연령), 담지 않은 판과 그 이유.","caution":"","size":"95 KB","rows":null,"kind":"JSON","repo":"18_예방접종/data/어린이_예방접종률.json"},{"file":"백신_감염병_연결.json","note":"백신 ↔ 법정감염병 ↔ 백신 효과(VE). 집단면역 문턱 Vc = (1 − 1/R₀)/VE 계산의 입력이다.","caution":"VE는 문헌의 대표값이며 접종 횟수·경과 기간·유행 균주에 따라 크게 달라진다. 사실의 진술이 아니라 계산의 입력이다.","size":"4 KB","rows":null,"kind":"JSON","repo":"18_예방접종/data/백신_감염병_연결.json"}]},{"title":"⑮ 해외유입 지도","page":"../inflow/","desc":"검역 지정 · 항공 도착 · 국적별 입국 · 유입 신고를 나라 하나로 묶은 표.","items":[{"file":"국가별_유입_종합.csv","note":"219개국 — 직항 도착여객(환승 제외)·국적별 입국자·검역 지정 종수·유입 신고·백만 명당 건수.","caution":"분모가 둘이다. 국적(여권)과 노선(항공권)은 서로 다른 사람을 센다. 신고 3건 미만의 비율은 순위로 쓰지 말 것.","size":"14 KB","rows":220,"kind":"CSV","repo":"15_해외유입_지도/data/국가별_유입_종합.csv"},{"file":"국토부_국가별_도착여객.csv","note":"국토교통부 지역·국가별 항공통계 — 2024·2025·2026(1~7월) 도착 여객기 전체·환승.","caution":"직항 노선이 있는 나라만 있다. 경유 입국은 경유지 나라로 잡힌다.","size":"7 KB","rows":178,"kind":"CSV","repo":"15_해외유입_지도/data/국토부_국가별_도착여객.csv"},{"file":"법무부_국적별_입국자.csv","note":"법무부 통계월보 — 2022-01~2026-07 월별·국적별 외국인 입국자 (공공데이터포털 15099989 원본).","caution":"외국인만 있다. 우리 국민 귀국자는 없다.","size":"272 KB","rows":10829,"kind":"CSV","repo":"15_해외유입_지도/data/법무부_국적별_입국자.csv"}]},{"title":"⑬ 교차검증","page":"../cross/","desc":"신고 축과 검출 축을 겹쳐 놓은 판정 결과.","items":[{"file":"교차검증.json","note":"대조쌍 7 · 이례 26 · 유입국 44 · 원문 발견 4건. 페이지가 그대로 쓰는 원본.","caution":"판정은 이 저장소의 계산이며 질병관리청의 공식 해석이 아니다.","size":"136 KB","rows":null,"kind":"JSON","repo":"13_교차검증/data/교차검증.json"}]},{"title":"⑫ 신고 감시","page":"../lab/","desc":"「주간 건강과 질병」 환자감시(신고) 표. 4주 간격 36개 주차.","items":[{"file":"전수감시_주간신고.csv","note":"62종 × 36주 — 금주 신고수·연 누계·5년 주별 평균·예년대비배수.","caution":"'열부분추출=Y'는 원문에서 5년평균 칸이 비어 열 수가 달랐던 행이다(매독·엠폭스). 앞 두 칸만 신뢰할 것.","size":"96 KB","rows":1675,"kind":"CSV","repo":"12_신고_감시/data/전수감시_주간신고.csv"},{"file":"해외유입_신고국가.csv","note":"유입 신고 193건 — 감염병 × 국가 × 신고수.","caution":"2024년 43주 뎅기열의 '온두리스'는 원문 오기다(온두라스).","size":"8 KB","rows":193,"kind":"CSV","repo":"12_신고_감시/data/해외유입_신고국가.csv"},{"file":"표본감시_의사환자분율.csv","note":"인플루엔자 ILI·수족구·안과감염병 (외래 1,000명당) + 표본기관 수.","caution":"","size":"2 KB","rows":36,"kind":"CSV","repo":"12_신고_감시/data/표본감시_의사환자분율.csv"},{"file":"연도별_확정신고수.csv","note":"감염병 × 연도 확정 통계.","caution":"","size":"15 KB","rows":433,"kind":"CSV","repo":"12_신고_감시/data/연도별_확정신고수.csv"},{"file":"성매개감염병_기관당신고.csv","note":"5종 보고기관당 신고수.","caution":"","size":"6 KB","rows":180,"kind":"CSV","repo":"12_신고_감시/data/성매개감염병_기관당신고.csv"},{"file":"수인성식품매개_집단발생.csv","note":"주간 집단발생 건수·환자수.","caution":"","size":"987 B","rows":36,"kind":"CSV","repo":"12_신고_감시/data/수인성식품매개_집단발생.csv"},{"file":"표기_원장.json","note":"원문 표기 흔들림과 통합 규칙.","caution":"CRE는 3년 사이 표기가 세 번 바뀌었다.","size":"971 B","rows":null,"kind":"JSON","repo":"12_신고_감시/data/표기_원장.json"}]},{"title":"⑩ 진단검사 감시","page":"../lab/","desc":"병원체감시(검출률) 표. 2023년 48주 ~ 2026년 35주.","items":[{"file":"호흡기바이러스_주간검출률.csv","note":"총검출률 + 9종 주별 검출률(%). 139주.","caution":"한 검체에서 둘 이상 검출될 수 있어 개별 병원체의 합은 총검출률과 다르다.","size":"8 KB","rows":139,"kind":"CSV","repo":"10_진단검사_감시/data/호흡기바이러스_주간검출률.csv"},{"file":"급성설사세균_주간분리.csv","note":"검체 수 + 9종 건수·분리율. 138주.","caution":"","size":"12 KB","rows":138,"kind":"CSV","repo":"10_진단검사_감시/data/급성설사세균_주간분리.csv"},{"file":"급성설사바이러스_주간검출.csv","note":"검체 수 + 5종 건수·검출률. 139주.","caution":"5세 이하 아동 검체만 대상이다.","size":"8 KB","rows":139,"kind":"CSV","repo":"10_진단검사_감시/data/급성설사바이러스_주간검출.csv"},{"file":"인플루엔자_양성률.csv","note":"양성률 + 아형(H1N1pdm09·H3N2·B) + 표본의료기관 수.","caution":"주간 시계열이 필요하면 호흡기바이러스 표의 인플루엔자 열을 쓰는 게 낫다.","size":"2 KB","rows":37,"kind":"CSV","repo":"10_진단검사_감시/data/인플루엔자_양성률.csv"},{"file":"엔테로바이러스_주간검출.csv","note":"검출률 + 임상증후군별(무균성수막염·수족구병·합병증 동반·기타).","caution":"","size":"2 KB","rows":37,"kind":"CSV","repo":"10_진단검사_감시/data/엔테로바이러스_주간검출.csv"},{"file":"수집원장.json","note":"어느 호에서 어떤 표를 몇 주치 얻었는지.","caution":"","size":"8 KB","rows":null,"kind":"JSON","repo":"10_진단검사_감시/data/수집원장.json"}]},{"title":"⑪ 검역관리지역","page":"../quarantine/","desc":"검역법 제5조 지정. 원문 매트릭스를 복원하고 공표 국가 수와 대조 검산했다.","items":[{"file":"2026Q3_중점검역관리지역.csv","note":"25개국 × 5종 매트릭스 (2026.7.1. 기준).","caution":"2026.9.7. 개정으로 현행은 31개국이다. 이 표는 대조 검산을 마친 시점의 것이다.","size":"670 B","rows":25,"kind":"CSV","repo":"11_검역관리지역/data/2026Q3_중점검역관리지역.csv"},{"file":"2026Q3_검역관리지역.csv","note":"173개국 × 15종 매트릭스 (2026.7.1. 기준).","caution":"","size":"6 KB","rows":173,"kind":"CSV","repo":"11_검역관리지역/data/2026Q3_검역관리지역.csv"},{"file":"지정이력.json","note":"2024년 상반기~2026년 3분기 시기별 요약 · 단절점 4건 · 세계 상황 매칭.","caution":"분기 도중 개정이 잦다. 분기 시작일 자료만 보면 틀린다.","size":"10 KB","rows":null,"kind":"JSON","repo":"11_검역관리지역/data/지정이력.json"},{"file":"2026Q3_지정내역.json","note":"감염병별 국가 목록과 검산 결과.","caution":"","size":"2 KB","rows":null,"kind":"JSON","repo":"11_검역관리지역/data/2026Q3_지정내역.json"}]},{"title":"⑨ 연대기 · ⑧ 검사기","page":"../chronicle/","desc":"시점 인지형 국면과 비교 가능성 규칙.","items":[{"file":"전시물.json","note":"연대기 전시관에 걸린 전시물 원장 — 법령 연혁·급수변동·지침 목록·백서 목록·연보 신고수·검역 지정이력·예방접종률에서 기계로 뽑아 연도별로 묶었다.","caution":"순위는 갈래별 가중치이며 중요도의 객관적 척도가 아니다. 무엇을 큰일로 볼지는 보는 사람이 정한다.","size":"65 KB","rows":null,"kind":"JSON","repo":"09_감염병연대기/data/전시물.json"},{"file":"연대기.json","note":"법정감염병 91종 × 국면(지위·감시·신고·격리·범위·분모) + 단절점 32건 + 오류 원장.","caution":"⭐ 전 구간 원문 대조 12종 외 79종은 매핑표 기반 자동 생성이다.","size":"105 KB","rows":null,"kind":"JSON","repo":"09_감염병연대기/data/연대기.json"},{"file":"비교가능성_규칙.json","note":"81항목 비교 가능성 규칙 — 단절점·결측 구간·부분연도.","caution":"","size":"36 KB","rows":null,"kind":"JSON","repo":"08_비교가능성_검사기/data/비교가능성_규칙.json"},{"file":"별칭사전.json","note":"옛 이름·별칭 사전(나병→한센병, 원숭이두창→엠폭스 등)과 시점별 유효 구간.","caution":"","size":"5 KB","rows":null,"kind":"JSON","repo":"05_감염병_질병정보/별칭사전.json"}]},{"title":"① 법령 · ② 지침 · ③ 백서","page":"../law/","desc":"제도 축.","items":[{"file":"감염병예방법_연혁_전체.csv","note":"감염병예방법 시행 버전 연혁(1954~).","caution":"","size":"22 KB","rows":192,"kind":"CSV","repo":"01_감염병예방법_연혁/data/감염병예방법_연혁_전체.csv"},{"file":"급수변동_이력.json","note":"급수·감시체계 변경 이력 16건.","caution":"","size":"9 KB","rows":null,"kind":"JSON","repo":"01_감염병예방법_연혁/data/급수변동_이력.json"},{"file":"감염병지정고시_연혁.json","note":"고시 지정 연혁.","caution":"","size":"2 KB","rows":null,"kind":"JSON","repo":"01_감염병예방법_연혁/data/감염병지정고시_연혁.json"},{"file":"지침_통합목록.csv","note":"관리지침 통합 목록 — 누리집 게시판 5곳 전량 + 감염병포털, 제목·연도로 중복 제거. 계열키·판 수·최신판과 분야(감염병 / 그 밖) 표기. → 지침 서가에서 그대로 볼 수 있다.","caution":"감염병포털 게시판만 보면 2023년 이후 신판(바이러스 간염 통합지침 등)이 빠진다. 현행은 누리집 게시판이 정본. 지침 게시판에는 만성질환·건강증진 사업 지침도 섞여 오므로 '분야' 열로 걸러 쓸 것.","size":"514 KB","rows":2347,"kind":"CSV","repo":"02_지침_정리/data/지침_통합목록.csv"},{"file":"지침_전체목록_KDCA게시판.csv","note":"질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량.","caution":"","size":"343 KB","rows":2469,"kind":"CSV","repo":"02_지침_정리/data/지침_전체목록_KDCA게시판.csv"},{"file":"지침_전체목록_감염병포털.csv","note":"감염병포털 게시판 358건(2002~2026).","caution":"2022년 이후 갱신이 드문 게시판이다.","size":"66 KB","rows":358,"kind":"CSV","repo":"02_지침_정리/data/지침_전체목록_감염병포털.csv"},{"file":"백서_목록.json","note":"질병관리청 백서 발간 이력 — 게시판 소스 실측. 화면에 안 보이는(주석 처리된) 항목과 표지 이미지 생존 여부를 함께 담았다.","caution":"2004~2011·2014~2015년판은 본문 PDF가 없다. 표지만 남아 있어 발간 사실만 확인된다.","size":"7 KB","rows":null,"kind":"JSON","repo":"03_백서_정리/data/백서_목록.json"},{"file":"전수감시_신고수_2016_2025.csv","note":"연보 기반 전수감시 신고수(2016~2025).","caution":"","size":"5 KB","rows":73,"kind":"CSV","repo":"03_백서_정리/data/전수감시_신고수_2016_2025.csv"},{"file":"표본감시_기관수_2001_2025.csv","note":"표본감시 참여기관 수(2001~2025) — 분모 변화 원장.","caution":"기관 수가 바뀐 해는 앞뒤 비교가 불가능하다.","size":"2 KB","rows":9,"kind":"CSV","repo":"03_백서_정리/data/표본감시_기관수_2001_2025.csv"}]}],"total_files":37,"total_size":"1921 KB"};
+const D = {"groups":[{"title":"⑱ 예방접종","page":"../vaccine/","desc":"「전국 어린이 예방접종률 현황」과 집단면역 문턱 계산에 쓴 값.","items":[{"name":"어린이_예방접종률","note":"연도 × 연령 × 백신 접종률·접종자수(2017~2025). 예방접종도우미 게시글 본문 표에서 그대로 뽑았다.","caution":"'완전'의 뜻이 해마다 바뀐다 — 2017년 9종에서 2025년 13종으로 늘었다. 연도를 그냥 이으면 안 된다. 원문 이상값은 '이상' 열에 표시만 하고 지우지 않았다.","rows":664,"cols":7,"head":["연도","연령","출생연도","백신","항목","값","이상"],"y0":2017,"y1":2025,"updated":"2026-09-12","repo":"18_예방접종/data/어린이_예방접종률.csv","files":[{"f":"어린이_예방접종률.csv","k":"CSV","z":"26 KB"},{"f":"어린이_예방접종률.json","k":"JSON","z":"95 KB"}],"src":"질병관리청 예방접종도우미","brk":true},{"name":"백신_감염병_연결","note":"백신 ↔ 법정감염병 ↔ 백신 효과(VE). 집단면역 문턱 Vc = (1 − 1/R₀)/VE 계산의 입력이다.","caution":"VE는 문헌의 대표값이며 접종 횟수·경과 기간·유행 균주에 따라 크게 달라진다. 사실의 진술이 아니라 계산의 입력이다.","rows":12,"cols":null,"head":["_about","as_of","threshold_note","vaccines","disease_ve_override"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"18_예방접종/data/백신_감염병_연결.json","files":[{"f":"백신_감염병_연결.json","k":"JSON","z":"4 KB"}],"src":"질병관리청 예방접종도우미","brk":false}]},{"title":"⑮ 해외유입 지도","page":"../inflow/","desc":"검역 지정 · 항공 도착 · 국적별 입국 · 유입 신고를 나라 하나로 묶은 표.","items":[{"name":"국가별_유입_종합","note":"219개국 — 직항 도착여객(환승 제외)·국적별 입국자·검역 지정 종수·유입 신고·백만 명당 건수.","caution":"분모가 둘이다. 국적(여권)과 노선(항공권)은 서로 다른 사람을 센다. 신고 3건 미만의 비율은 순위로 쓰지 말 것.","rows":220,"cols":14,"head":["ISO3","국가","지역","직항도착여객(환승제외)","환승여객","도착편수","외국인입국자(국적)","검역관리지역_종수","중점_종수","유입신고_건수","유입신고_질병","건수_백만직항여객당","건수_백만입국자당","국적/노선비"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"15_해외유입_지도/data/국가별_유입_종합.csv","files":[{"f":"국가별_유입_종합.csv","k":"CSV","z":"14 KB"}],"src":"질병관리청 · 국토교통부 · 법무부","brk":false},{"name":"국토부_국가별_도착여객","note":"국토교통부 지역·국가별 항공통계 — 2024·2025·2026(1~7월) 도착 여객기 전체·환승.","caution":"직항 노선이 있는 나라만 있다. 경유 입국은 경유지 나라로 잡힌다.","rows":178,"cols":6,"head":["연도","지역","국가","도착편수","도착여객_전체","도착여객_환승"],"y0":2024,"y1":2026,"updated":"2026-09-12","repo":"15_해외유입_지도/data/국토부_국가별_도착여객.csv","files":[{"f":"국토부_국가별_도착여객.csv","k":"CSV","z":"7 KB"}],"src":"질병관리청 · 국토교통부 · 법무부","brk":false},{"name":"법무부_국적별_입국자","note":"법무부 통계월보 — 2022-01~2026-07 월별·국적별 외국인 입국자 (공공데이터포털 15099989 원본).","caution":"외국인만 있다. 우리 국민 귀국자는 없다.","rows":10829,"cols":4,"head":["년","월","국적지역","입국자수"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"15_해외유입_지도/data/법무부_국적별_입국자.csv","files":[{"f":"법무부_국적별_입국자.csv","k":"CSV","z":"272 KB"}],"src":"질병관리청 · 국토교통부 · 법무부","brk":false}]},{"title":"⑬ 교차검증","page":"../cross/","desc":"신고 축과 검출 축을 겹쳐 놓은 판정 결과.","items":[{"name":"교차검증","note":"대조쌍 7 · 이례 26 · 유입국 44 · 원문 발견 4건. 페이지가 그대로 쓰는 원본.","caution":"판정은 이 저장소의 계산이며 질병관리청의 공식 해석이 아니다.","rows":44,"cols":null,"head":["built_from","pairs","anomalies","inflow","findings","min_pairs","min_base"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"13_교차검증/data/교차검증.json","files":[{"f":"교차검증.json","k":"JSON","z":"136 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":false}]},{"title":"⑫ 신고 감시","page":"../lab/","desc":"「주간 건강과 질병」 환자감시(신고) 표. 4주 간격 36개 주차.","items":[{"name":"전수감시_주간신고","note":"62종 × 36주 — 금주 신고수·연 누계·5년 주별 평균·예년대비배수.","caution":"'열부분추출=Y'는 원문에서 5년평균 칸이 비어 열 수가 달랐던 행이다(매독·엠폭스). 앞 두 칸만 신뢰할 것.","rows":1675,"cols":11,"head":["연도","주차","기준일","급","감염병","금주신고수","연누계","5년주별평균","예년대비배수","열부분추출","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"12_신고_감시/data/전수감시_주간신고.csv","files":[{"f":"전수감시_주간신고.csv","k":"CSV","z":"96 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"해외유입_신고국가","note":"유입 신고 193건 — 감염병 × 국가 × 신고수.","caution":"2024년 43주 뎅기열의 '온두리스'는 원문 오기다(온두라스).","rows":193,"cols":6,"head":["연도","주차","감염병","유입국가","신고수","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"12_신고_감시/data/해외유입_신고국가.csv","files":[{"f":"해외유입_신고국가.csv","k":"CSV","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"표본감시_의사환자분율","note":"인플루엔자 ILI·수족구·안과감염병 (외래 1,000명당) + 표본기관 수.","caution":"","rows":36,"cols":11,"head":["인플루엔자_주차","인플루엔자_기준일","ILI_1000명당","ILI_표본기관수","ILI_유행기준","수족구_주차","수족구_1000명당","수족구_표본기관수","유행성각결막염_1000명당","급성출혈성결막염_1000명당","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"12_신고_감시/data/표본감시_의사환자분율.csv","files":[{"f":"표본감시_의사환자분율.csv","k":"CSV","z":"2 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"연도별_확정신고수","note":"감염병 × 연도 확정 통계.","caution":"","rows":433,"cols":4,"head":["감염병","연도","신고수","출처호"],"y0":2018,"y1":2025,"updated":"2026-09-12","repo":"12_신고_감시/data/연도별_확정신고수.csv","files":[{"f":"연도별_확정신고수.csv","k":"CSV","z":"15 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"성매개감염병_기관당신고","note":"5종 보고기관당 신고수.","caution":"","rows":180,"cols":4,"head":["주차","감염병","보고기관당_신고수","출처호"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"12_신고_감시/data/성매개감염병_기관당신고.csv","files":[{"f":"성매개감염병_기관당신고.csv","k":"CSV","z":"6 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"수인성식품매개_집단발생","note":"주간 집단발생 건수·환자수.","caution":"","rows":36,"cols":6,"head":["주차","금주_건수","금주_환자수","누적_건수","누적_환자수","출처호"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"12_신고_감시/data/수인성식품매개_집단발생.csv","files":[{"f":"수인성식품매개_집단발생.csv","k":"CSV","z":"987 B"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"표기_원장","note":"원문 표기 흔들림과 통합 규칙.","caution":"CRE는 3년 사이 표기가 세 번 바뀌었다.","rows":4,"cols":null,"head":["표기_통합","표기_변경"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"12_신고_감시/data/표기_원장.json","files":[{"f":"표기_원장.json","k":"JSON","z":"971 B"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":false}]},{"title":"⑩ 진단검사 감시","page":"../lab/","desc":"병원체감시(검출률) 표. 2023년 48주 ~ 2026년 35주.","items":[{"name":"호흡기바이러스_주간검출률","note":"총검출률 + 9종 주별 검출률(%). 139주.","caution":"한 검체에서 둘 이상 검출될 수 있어 개별 병원체의 합은 총검출률과 다르다.","rows":139,"cols":13,"head":["연도","주차","총검출률","아데노","보카","파라인플루엔자","RSV","리노","메타뉴모","코로나","인플루엔자","코로나19","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"10_진단검사_감시/data/호흡기바이러스_주간검출률.csv","files":[{"f":"호흡기바이러스_주간검출률.csv","k":"CSV","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"급성설사세균_주간분리","note":"검체 수 + 9종 건수·분리율. 138주.","caution":"","rows":138,"cols":24,"head":["연도","주차","검체수","살모넬라_건수","살모넬라_분리율","병원성대장균_건수","병원성대장균_분리율","세균성이질_건수","세균성이질_분리율","장염비브리오_건수","장염비브리오_분리율","비브리오콜레라_건수","비브리오콜레라_분리율","캄필로박터_건수"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"10_진단검사_감시/data/급성설사세균_주간분리.csv","files":[{"f":"급성설사세균_주간분리.csv","k":"CSV","z":"12 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"급성설사바이러스_주간검출","note":"검체 수 + 5종 건수·검출률. 139주.","caution":"5세 이하 아동 검체만 대상이다.","rows":139,"cols":16,"head":["연도","주차","검체수","노로_건수","노로_검출률","그룹A로타_건수","그룹A로타_검출률","장내아데노_건수","장내아데노_검출률","아스트로_건수","아스트로_검출률","사포_건수","사포_검출률","합계_건수"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"10_진단검사_감시/data/급성설사바이러스_주간검출.csv","files":[{"f":"급성설사바이러스_주간검출.csv","k":"CSV","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"인플루엔자_양성률","note":"양성률 + 아형(H1N1pdm09·H3N2·B) + 표본의료기관 수.","caution":"주간 시계열이 필요하면 호흡기바이러스 표의 인플루엔자 열을 쓰는 게 낫다.","rows":37,"cols":9,"head":["연도","주차","기준일","양성률","A_H1N1pdm09","A_H3N2","B","표본의료기관수","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"10_진단검사_감시/data/인플루엔자_양성률.csv","files":[{"f":"인플루엔자_양성률.csv","k":"CSV","z":"2 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"엔테로바이러스_주간검출","note":"검출률 + 임상증후군별(무균성수막염·수족구병·합병증 동반·기타).","caution":"","rows":37,"cols":11,"head":["연도","주차","기준일","검출률","양성건수","검체수","무균성수막염","수족구병_포진성구협염","합병증동반수족구병","기타","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","repo":"10_진단검사_감시/data/엔테로바이러스_주간검출.csv","files":[{"f":"엔테로바이러스_주간검출.csv","k":"CSV","z":"2 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"수집원장","note":"어느 호에서 어떤 표를 몇 주치 얻었는지.","caution":"","rows":37,"cols":null,"head":["수집호수","원장"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"10_진단검사_감시/data/수집원장.json","files":[{"f":"수집원장.json","k":"JSON","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":false}]},{"title":"⑪ 검역관리지역","page":"../quarantine/","desc":"검역법 제5조 지정. 원문 매트릭스를 복원하고 공표 국가 수와 대조 검산했다.","items":[{"name":"2026Q3_중점검역관리지역","note":"25개국 × 5종 매트릭스 (2026.7.1. 기준).","caution":"2026.9.7. 개정으로 현행은 31개국이다. 이 표는 대조 검산을 마친 시점의 것이다.","rows":25,"cols":6,"head":["국가(지역)","페스트","동물인플루엔자인체감염증","중동호흡기증후군","니파바이러스감염증","에볼라바이러스병"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"11_검역관리지역/data/2026Q3_중점검역관리지역.csv","files":[{"f":"2026Q3_중점검역관리지역.csv","k":"CSV","z":"670 B"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false},{"name":"2026Q3_검역관리지역","note":"173개국 × 15종 매트릭스 (2026.7.1. 기준).","caution":"","rows":173,"cols":16,"head":["국가(지역)","동물인플루엔자인체감염증","에볼라바이러스병","중동호흡기증후군","페스트","콜레라","황열","마버그열","라싸열","크리미안콩고출혈열","폴리오","홍역","뎅기열","치쿤구니야열"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"11_검역관리지역/data/2026Q3_검역관리지역.csv","files":[{"f":"2026Q3_검역관리지역.csv","k":"CSV","z":"6 KB"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false},{"name":"지정이력","note":"2024년 상반기~2026년 3분기 시기별 요약 · 단절점 4건 · 세계 상황 매칭.","caution":"분기 도중 개정이 잦다. 분기 시작일 자료만 보면 틀린다.","rows":15,"cols":null,"head":["schema","as_of","principle","legal_basis","definitions","structural_breaks","periods","matched_context","unverified"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"11_검역관리지역/data/지정이력.json","files":[{"f":"지정이력.json","k":"JSON","z":"10 KB"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false},{"name":"2026Q3_지정내역","note":"감염병별 국가 목록과 검산 결과.","caution":"","rows":15,"cols":null,"head":["기준","출처","근거","과태료","검산","중점_감염병별_국가","검역_감염병별_국가수","중점_지역세부"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"11_검역관리지역/data/2026Q3_지정내역.json","files":[{"f":"2026Q3_지정내역.json","k":"JSON","z":"2 KB"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false}]},{"title":"⑨ 연대기 · ⑧ 검사기","page":"../chronicle/","desc":"시점 인지형 국면과 비교 가능성 규칙.","items":[{"name":"전시물","note":"연대기 전시관에 걸린 전시물 원장 — 법령 연혁·급수변동·지침 목록·백서 목록·연보 신고수·검역 지정이력·예방접종률에서 기계로 뽑아 연도별로 묶었다.","caution":"순위는 갈래별 가중치이며 중요도의 객관적 척도가 아니다. 무엇을 큰일로 볼지는 보는 사람이 정한다.","rows":29,"cols":null,"head":["as_of","span","total","themes","years","note"],"y0":null,"y1":null,"updated":"2026-09-15","repo":"09_감염병연대기/data/전시물.json","files":[{"f":"전시물.json","k":"JSON","z":"137 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false},{"name":"연대기","note":"법정감염병 91종 × 국면(지위·감시·신고·격리·범위·분모) + 단절점 32건 + 오류 원장.","caution":"⭐ 전 구간 원문 대조 12종 외 79종은 매핑표 기반 자동 생성이다.","rows":91,"cols":null,"head":["as_of","principle","diseases","epochs","errors","source","breaks","coverage"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"09_감염병연대기/data/연대기.json","files":[{"f":"연대기.json","k":"JSON","z":"105 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false},{"name":"비교가능성_규칙","note":"81항목 비교 가능성 규칙 — 단절점·결측 구간·부분연도.","caution":"","rows":81,"cols":null,"head":["as_of","years","global","diseases","source"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"08_비교가능성_검사기/data/비교가능성_규칙.json","files":[{"f":"비교가능성_규칙.json","k":"JSON","z":"36 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false},{"name":"별칭사전","note":"옛 이름·별칭 사전(나병→한센병, 원숭이두창→엠폭스 등)과 시점별 유효 구간.","caution":"","rows":18,"cols":null,"head":["schema","as_of","principle","test_cases","entries"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"05_감염병_질병정보/별칭사전.json","files":[{"f":"별칭사전.json","k":"JSON","z":"5 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false}]},{"title":"① 법령 · ② 지침 · ③ 백서","page":"../law/","desc":"제도 축.","items":[{"name":"감염병예방법_연혁_전체","note":"감염병예방법 시행 버전 연혁(1954~).","caution":"","rows":192,"cols":9,"head":["법령구분","법령명","법령ID","법령일련번호(MST)","제개정구분","공포일자","공포번호","시행일자","연혁코드"],"y0":1954,"y1":2026,"updated":"2026-09-12","repo":"01_감염병예방법_연혁/data/감염병예방법_연혁_전체.csv","files":[{"f":"감염병예방법_연혁_전체.csv","k":"CSV","z":"22 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"급수변동_이력","note":"급수·감시체계 변경 이력 16건.","caution":"","rows":16,"cols":null,"head":["schema","as_of","caveat","events","totals_check"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"01_감염병예방법_연혁/data/급수변동_이력.json","files":[{"f":"급수변동_이력.json","k":"JSON","z":"9 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"감염병지정고시_연혁","note":"고시 지정 연혁.","caution":"","rows":10,"cols":null,"head":["as_of","source","note","gosi"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"01_감염병예방법_연혁/data/감염병지정고시_연혁.json","files":[{"f":"감염병지정고시_연혁.json","k":"JSON","z":"2 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"지침_통합목록","note":"관리지침 통합 목록 — 누리집 게시판 5곳 전량 + 감염병포털, 제목·연도로 중복 제거. 계열키·판 수·최신판과 분야(감염병 / 그 밖) 표기. → 지침 서가에서 그대로 볼 수 있다.","caution":"감염병포털 게시판만 보면 2023년 이후 신판(바이러스 간염 통합지침 등)이 빠진다. 현행은 누리집 게시판이 정본. 지침 게시판에는 만성질환·건강증진 사업 지침도 섞여 오므로 '분야' 열로 걸러 쓸 것.","rows":2347,"cols":11,"head":["제목","등록일","연도","분야","출처","게시판","최신판","판수","URL","URL2","계열키"],"y0":1998,"y1":2026,"updated":"2026-09-12","repo":"02_지침_정리/data/지침_통합목록.csv","files":[{"f":"지침_통합목록.csv","k":"CSV","z":"514 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"지침_전체목록_KDCA게시판","note":"질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량.","caution":"","rows":2469,"cols":5,"head":["게시판","artclId","제목","등록일","URL"],"y0":2000,"y1":2026,"updated":"2026-09-12","repo":"02_지침_정리/data/지침_전체목록_KDCA게시판.csv","files":[{"f":"지침_전체목록_KDCA게시판.csv","k":"CSV","z":"343 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"지침_전체목록_감염병포털","note":"감염병포털 게시판 358건(2002~2026).","caution":"2022년 이후 갱신이 드문 게시판이다.","rows":358,"cols":6,"head":["번호","제목","등록일","조회","문서번호","URL"],"y0":2018,"y1":2026,"updated":"2026-09-12","repo":"02_지침_정리/data/지침_전체목록_감염병포털.csv","files":[{"f":"지침_전체목록_감염병포털.csv","k":"CSV","z":"66 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"백서_목록","note":"질병관리청 백서 발간 이력 — 게시판 소스 실측. 화면에 안 보이는(주석 처리된) 항목과 표지 이미지 생존 여부를 함께 담았다.","caution":"2004~2011·2014~2015년판은 본문 PDF가 없다. 표지만 남아 있어 발간 사실만 확인된다.","rows":23,"cols":null,"head":["as_of","source","items","hidden","downloadable","mislinked"],"y0":null,"y1":null,"updated":"2026-09-15","repo":"03_백서_정리/data/백서_목록.json","files":[{"f":"백서_목록.json","k":"JSON","z":"7 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"전수감시_신고수_2016_2025","note":"연보 기반 전수감시 신고수(2016~2025).","caution":"","rows":73,"cols":13,"head":["급","감염병명","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","비고"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"03_백서_정리/data/전수감시_신고수_2016_2025.csv","files":[{"f":"전수감시_신고수_2016_2025.csv","k":"CSV","z":"5 KB"}],"src":"법제처 국가법령정보 Open API","brk":true},{"name":"표본감시_기관수_2001_2025","note":"표본감시 참여기관 수(2001~2025) — 분모 변화 원장.","caution":"기관 수가 바뀐 해는 앞뒤 비교가 불가능하다.","rows":9,"cols":28,"head":["감시군","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012"],"y0":null,"y1":null,"updated":"2026-09-12","repo":"03_백서_정리/data/표본감시_기관수_2001_2025.csv","files":[{"f":"표본감시_기관수_2001_2025.csv","k":"CSV","z":"2 KB"}],"src":"법제처 국가법령정보 Open API","brk":true}]}],"total_files":37,"total_size":"1994 KB"};
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 document.getElementById('meta').textContent =
   `파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
-document.getElementById('groups').innerHTML = D.groups.map(g => `
-  <div class="grp">
-    <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
-    <p class="gdesc">${esc(g.desc)}</p>
-    ${g.items.map(i => `
-      <div class="f">
-        <span class="kind k-${i.kind}">${i.kind}</span>
-        <div class="body">
-          <div class="nm">${esc(i.file)}</div>
-          <div class="no">${esc(i.note)}</div>
-          ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
-          <div class="sz num">${i.rows != null ? i.rows.toLocaleString() + '행 · ' : ''}${esc(i.size)} · 저장소 경로 ${esc(i.repo)}</div>
-        </div>
-        <a class="dl" href="files/${encodeURIComponent(i.file)}" download>⬇ 내려받기</a>
-      </div>`).join('')}
-  </div>`).join('');
+let dq='', dcat='전체';
+
+function human(n){ return n==null ? '—' : n.toLocaleString('ko-KR'); }
+function period(i){ return (i.y0 && i.y1) ? (i.y0===i.y1 ? String(i.y0) : i.y0+'–'+i.y1) : '—'; }
+
+function dsHtml(g, i){
+  const csv = i.files.find(f=>f.k==='CSV'), js = i.files.find(f=>f.k==='JSON');
+  const cite = `${i.name}. 감염병 자료 아카이브. 원자료: ${i.src}. 기준일: ${i.updated}. `
+             + `https://soonryu74.github.io/disease/data/`;
+  return `<div class="ds" id="ds-${esc(i.name)}">
+    <h3>${esc(i.name)} <span class="bdg archive">아카이브 재구성</span></h3>
+    <p class="no">${esc(i.note)}</p>
+    <div class="mt">
+      <div><b>${esc(period(i))}</b><span>수록 기간</span></div>
+      <div><b>${human(i.rows)}</b><span>행</span></div>
+      <div><b>${i.cols ? human(i.cols) : '—'}</b><span>열(변수)</span></div>
+      <div><b>${esc(i.updated)}</b><span>아카이브 갱신</span></div>
+      <div><b>${esc(i.files.map(f=>f.k).join(' · '))}</b><span>${esc(i.files.map(f=>f.z).join(' · '))}</span></div>
+      <div><b style="font-size:12.5px">${esc(i.src)}</b><span>원자료 출처</span></div>
+    </div>
+    ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
+    ${i.brk ? `<div class="ca">⚠️ 연도를 이어 읽는 자료입니다. 감시체계·사례정의가 바뀐 해가 있을 수 있으니
+      <b>비교 전에 단절점을 확인</b>하십시오.</div>` : ''}
+    <div class="acts">
+      ${csv ? `<a class="pri" href="files/${encodeURIComponent(csv.f)}" download>⬇ CSV (${esc(csv.z)})</a>` : ''}
+      ${js ? `<a class="${csv?'':'pri'}" href="files/${encodeURIComponent(js.f)}" download>⬇ JSON (${esc(js.z)})</a>` : ''}
+      ${js ? `<a href="files/${encodeURIComponent(js.f)}" target="_blank" rel="noopener">JSON 열기 ↗</a>` : ''}
+      ${i.brk ? `<a class="brk" href="../checker/">🩺 단절점 검사</a>` : ''}
+      <a href="${esc(g.page)}">이 자료를 쓰는 화면 →</a>
+      <button type="button" class="cite" data-c="${esc(cite)}">📋 인용문 복사</button>
+    </div>
+    ${(i.head||[]).length ? `<details><summary>변수 ${i.cols ? i.cols+'개' : ''} 보기</summary>
+      <div class="cols">${i.head.map(h=>`<code>${esc(h)}</code>`).join('')}</div>
+      <p class="no" style="margin-top:6px">저장소 경로 <code>${esc(i.repo)}</code></p></details>` : ''}
+  </div>`;
+}
+
+function renderData(){
+  const cats = ['전체', ...D.groups.map(g=>g.title)];
+  document.getElementById('dcats').innerHTML = cats.map(c=>
+    `<button type="button" class="${c===dcat?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  document.getElementById('dcats').querySelectorAll('button').forEach(b=>
+    b.onclick = () => { dcat = b.dataset.c; renderData(); });
+
+  let shown = 0;
+  const html = D.groups.filter(g => dcat==='전체' || g.title===dcat).map(g => {
+    const items = g.items.filter(i => !dq ||
+      (i.name + ' ' + i.note + ' ' + (i.caution||'') + ' ' + i.src + ' ' + g.title).toLowerCase().includes(dq));
+    if(!items.length) return '';
+    shown += items.length;
+    return `<div class="grp">
+      <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
+      <p class="gdesc">${esc(g.desc)}</p>
+      ${items.map(i=>dsHtml(g,i)).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('groups').innerHTML = html ||
+    `<div class="dnone"><b>조건에 맞는 데이터가 없습니다.</b><br>다른 낱말로 찾거나 분야를 ‘전체’로 되돌려 보세요.</div>`;
+  document.getElementById('groups').querySelectorAll('.cite').forEach(b=>{
+    b.onclick = () => { const t=b.textContent;
+      const done=()=>{ b.textContent='✓ 복사됨'; setTimeout(()=>b.textContent=t,1600); };
+      if(navigator.clipboard) navigator.clipboard.writeText(b.dataset.c).then(done,()=>{});
+      else prompt('인용문', b.dataset.c); };
+  });
+  document.getElementById('meta').textContent =
+    `자료 ${shown}종 · 파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
+}
+document.getElementById('dq').addEventListener('input', e=>{ dq=e.target.value.trim().toLowerCase(); renderData(); });
+renderData();
+/* ?dataset=이름 으로 들어오면 그 자료로 내려간다 */
+(function(){ const d=new URLSearchParams(location.search).get('dataset');
+  if(!d) return; const el=document.getElementById('ds-'+d); if(el) el.scrollIntoView({block:'start'}); })();
 </script>
-<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 질병관리청 공식 누리집이 아닌 공공자료 정리·분석 프로젝트의 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 최신 공식 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
 <script>
 /* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
 (function(){

@@ -142,8 +142,19 @@ def build():
         notes = ''.join(f'<p class="nt">{md_inline(n)}</p>' for n in d['notes'])
         alias_html = (f'<div class="als">옛 이름·별칭: {H.escape(" · ".join(d["aliases"]))}</div>'
                       if d['aliases'] else '')
-        alias_html += (f'<div class="als"><a href="../pathogen/#{quote(d["name"])}">'
-                       f'🧫 병원체 3D 형태 보기 →</a></div>')
+        # 도감은 읽고 끝나는 백과가 아니라 그 병으로 들어가는 문이다.
+        # 질병명을 그대로 넘겨 각 쪽이 같은 병을 펴 놓은 채 열리게 한다.
+        q = quote(d['name'])
+        hub = (
+            '<div class="hub">'
+            f'<a class="h1" href="../field/#{q}">🚑 현장 대응<small>신고·격리·잠복기</small></a>'
+            f'<a href="../guides/#{q}">📕 관리지침<small>현행 지침 찾기</small></a>'
+            f'<a href="../chronicle/#{q}">📜 분류 변천<small>급수·감시가 언제 바뀌었나</small></a>'
+            f'<a href="../checker/?disease={q}">🩺 단절점 검사<small>두 연도를 비교해도 되나</small></a>'
+            f'<a href="../pathogen/#{q}">🧫 병원체 형태<small>3차원 모형</small></a>'
+            f'<a href="../search/?q={q}">🔍 이 병의 모든 자료<small>지침·법령·통계까지</small></a>'
+            '</div>')
+        alias_html += hub
         eng = f'<span class="eng">{H.escape(d["eng"])}</span>' if d['eng'] else ''
         cards.append(
             f'<details class="dz" id="{H.escape(d["name"])}" data-g="{g}" data-s="{H.escape(hay)}">'
@@ -174,7 +185,7 @@ PAGE_TMPL = '''<!DOCTYPE html>
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>감염병 질병정보 도감</title>
+<title>감염병 도감 | 감염병 자료 아카이브</title>\n<meta name="description" content="법정감염병의 병원체·감염경로·잠복기·증상·치료·예방과 현장대응·지침·법령·통계를 한곳에서 확인합니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -251,6 +262,24 @@ PAGE_TMPL = '''<!DOCTYPE html>
   .als{margin-top:10px;font-size:12.5px;color:var(--accent-ink);background:var(--accent-soft);
     border-radius:9px;padding:7px 11px;display:inline-block}
   .empty{display:none;text-align:center;color:var(--faint);padding:40px 0;font-size:14px}
+  /* 질병 허브 — 이 병에 대해 사이트가 가진 것으로 가는 문 */
+  .hub{display:grid;grid-template-columns:repeat(auto-fill,minmax(178px,1fr));gap:7px;margin:14px 0 0}
+  .hub a{display:block;border:1px solid var(--line-strong);border-radius:10px;padding:9px 12px;
+    font-size:13.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:44px}
+  .hub a:hover{background:var(--surface-2)}
+  .hub a small{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:1px}
+  .hub a.h1{border-color:var(--accent);background:var(--accent-soft);color:var(--accent-ink)}
+  .hub a.h1 small{color:var(--accent-ink);opacity:.8}
+  /* 시작 안내 — 검색 전에는 '없다'가 아니라 '무엇을 찾나'를 보여준다 */
+  .start{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:0 0 14px}
+  .start h2{margin:0 0 5px;font-size:17px;font-weight:800}
+  .start p{margin:0 0 12px;font-size:14px;color:var(--muted)}
+  .start .qz{display:flex;gap:7px;flex-wrap:wrap}
+  .start .qz button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
+  .empty .alt{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:12px 0 0}
+  .empty .alt button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
+    border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
 
   .legend{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 20px;margin:18px 0}
   .legend h2{font-size:14px;margin:0 0 8px}
@@ -287,9 +316,14 @@ PAGE_TMPL = '''<!DOCTYPE html>
   </div>
 </div>
 
+<div class="start" id="start">
+  <h2>감염병을 검색하세요</h2>
+  <p>한글·영문·옛 이름 모두 찾습니다. 질병을 펴면 현장 대응·관리지침·분류 변천·단절점 검사로 바로 갈 수 있습니다.</p>
+  <div class="qz" id="qz"></div>
+</div>
 <div class="list" id="list">
 __CARDS__
-<div class="empty" id="empty">검색 결과가 없습니다. 다른 이름(옛 이름·영문)으로 시도해 보세요.</div>
+<div class="empty" id="empty"></div>
 </div>
 
 <div class="legend">
@@ -315,6 +349,7 @@ __CARDS__
       empty=document.getElementById('empty'),
       cards=[].slice.call(document.querySelectorAll('.dz')),
       chips=[].slice.call(document.querySelectorAll('.chip')),
+      start=document.getElementById('start'),
       grade='all';
   function norm(s){return s.toLowerCase().replace(/\\s+/g,'');}
   function apply(){
@@ -324,8 +359,38 @@ __CARDS__
       c.hidden=!ok; if(ok)n++;
     });
     shown.textContent=n;
-    empty.style.display=n?'none':'block';
+    /* 검색 전(INITIAL)과 못 찾음(EMPTY)은 다른 상태다. 같은 문구를 쓰면 고장으로 보인다. */
+    var searching = !!(q.value||'').trim() || grade!=='all';
+    start.style.display = searching ? 'none' : '';
+    if(n){ empty.style.display='none'; empty.innerHTML=''; return; }
+    empty.style.display='block';
+    var raw=(q.value||'').trim();
+    empty.innerHTML = '\u2018' + esc(raw || '이 조건') + '\u2019에 해당하는 감염병을 찾지 못했습니다.'
+      + ' 옛 이름이나 영문명으로도 찾을 수 있습니다.'
+      + '<div class="alt"><button type="button" data-act="reset">전체 목록 보기</button>'
+      + '<button type="button" data-act="search">통합검색에서 찾기</button></div>';
+    empty.querySelectorAll('button').forEach(function(b){
+      b.onclick = function(){
+        if(b.dataset.act === 'reset'){ q.value=''; grade='all';
+          chips.forEach(function(x){x.classList.toggle('on', x.dataset.g==='all');}); apply(); }
+        else { location.href = '../search/?q=' + encodeURIComponent(raw); }
+      };
+    });
   }
+  function esc(x){return String(x==null?'':x).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  /* 주요 감염병 — 이용 통계가 아니라 자료가 갖춰진 것 가운데 자주 찾는 것 */
+  var SEED=['홍역','백일해','결핵','중동호흡기증후군','엠폭스','뎅기열','수두','A형간염'];
+  var names=cards.map(function(c){return c.id;});
+  var pick=SEED.map(function(sd){
+    return names.filter(function(n){return n.replace(/\s/g,'').indexOf(sd.replace(/\s/g,''))>-1;})[0]
+        || names.filter(function(n){return sd.indexOf(n)>-1;})[0];
+  }).filter(Boolean);
+  document.getElementById('qz').innerHTML = pick.filter(function(v,i,a){return a.indexOf(v)===i;})
+    .map(function(n){return '<button type="button" data-n="'+esc(n)+'">'+esc(n)+'</button>';}).join('');
+  document.getElementById('qz').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return; location.hash=encodeURIComponent(b.dataset.n);
+  });
   q.addEventListener('input',apply);
   chips.forEach(function(ch){ch.addEventListener('click',function(){
     grade=ch.dataset.g;
@@ -334,7 +399,10 @@ __CARDS__
   });});
   /* #질병명 으로 들어오면 필터를 풀고 그 카드를 펴서 보여 준다 */
   function goHash(){
-    var h=decodeURIComponent(location.hash.slice(1)); if(!h) return;
+    var h=decodeURIComponent(location.hash.slice(1));
+    if(!h){ var d=new URLSearchParams(location.search).get('disease');
+      if(d){ if(document.getElementById(d)) h=d; else { q.value=d; apply(); return; } } }
+    if(!h) return;
     var el=document.getElementById(h); if(!el||!el.classList.contains('dz')) return;
     grade='all'; q.value='';
     chips.forEach(function(x){x.classList.toggle('on',x.dataset.g==='all');});

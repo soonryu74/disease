@@ -6,6 +6,8 @@ GitHub Pages는 portal/ 만 배포하므로, 내려받게 하려면 파일이 �
 이 저장소가 경고해 온 '단절점 모르고 비교하기'를 그대로 반복하게 된다.
 """
 import csv
+import re
+from datetime import datetime
 import json
 import os
 import shutil
@@ -133,6 +135,54 @@ def rows_of(path):
     return None
 
 
+# 묶음별 원자료 출처 — 파일마다 적으면 곧 어긋나므로 묶음 단위로 둔다.
+SOURCE = {
+    '⑱': '질병관리청 예방접종도우미', '⑮': '질병관리청 · 국토교통부 · 법무부',
+    '⑬': '질병관리청 주간 건강과 질병(PHWR)', '⑫': '질병관리청 주간 건강과 질병(PHWR)',
+    '⑩': '질병관리청 주간 건강과 질병(PHWR)', '⑪': '질병관리청 검역 공지 · Q-CODE',
+    '⑨': '법제처 국가법령정보 · 질병관리청', '①': '법제처 국가법령정보 Open API',
+}
+# 연도를 이어 읽는 자료 — 이 파일들만 단절점 확인을 권한다(모든 자료에 경고를 붙이지 않는다)
+YEAR_SERIES = ('신고', '감시', '접종률', '검출', '분리', '양성률', '확정신고수', '집단발생')
+
+
+def scan_csv(path):
+    """행·열·연도 범위를 파일에서 직접 읽는다. 손으로 적어 두면 곧 어긋난다."""
+    try:
+        with open(path, encoding='utf-8-sig') as f:
+            r = csv.reader(f)
+            head = next(r, [])
+            n, years = 0, set()
+            ycol = next((i for i, h in enumerate(head) if h.strip() in ('연도', '년도', 'year', '기준연도')), None)
+            dcol = next((i for i, h in enumerate(head)
+                         if any(k in h for k in ('기준일', '등록일', '시행일자', '공포일자'))), None)
+            for row in r:
+                n += 1
+                for col in (ycol, dcol):
+                    if col is None or col >= len(row):
+                        continue
+                    m = re.search(r'(19|20)\d{2}', row[col] or '')
+                    if m:
+                        years.add(int(m.group(0)))
+            return {'rows': n, 'cols': len(head), 'head': head[:14],
+                    'y0': min(years) if years else None, 'y1': max(years) if years else None}
+    except Exception:  # noqa: BLE001
+        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None}
+
+
+def scan_json(path):
+    try:
+        d = json.load(open(path, encoding='utf-8'))
+        if isinstance(d, list):
+            keys = list(d[0].keys())[:14] if d and isinstance(d[0], dict) else []
+            return {'rows': len(d), 'cols': len(keys) or None, 'head': keys, 'y0': None, 'y1': None}
+        keys = list(d.keys())[:14]
+        big = max((len(v) for v in d.values() if isinstance(v, (list, dict))), default=None)
+        return {'rows': big, 'cols': None, 'head': keys, 'y0': d.get('y0'), 'y1': d.get('y1')}
+    except Exception:  # noqa: BLE001
+        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None}
+
+
 def build():
     os.makedirs(FILES, exist_ok=True)
     groups = []
@@ -150,12 +200,39 @@ def build():
             size = os.path.getsize(dst)
             total_files += 1
             total_bytes += size
+            kind = 'CSV' if name.endswith('.csv') else 'JSON'
+            sc = scan_csv(dst) if kind == 'CSV' else scan_json(dst)
             entries.append({'file': name, 'note': note, 'caution': caution,
-                            'size': human(size), 'rows': rows_of(dst),
-                            'kind': 'CSV' if name.endswith('.csv') else 'JSON',
-                            'repo': rel})
+                            'size': human(size), 'rows': sc['rows'], 'cols': sc['cols'],
+                            'head': sc['head'], 'y0': sc['y0'], 'y1': sc['y1'],
+                            'kind': kind, 'repo': rel,
+                            'updated': datetime.fromtimestamp(os.path.getmtime(src)).strftime('%Y-%m-%d')})
         if entries:
-            groups.append({'title': title, 'page': page, 'desc': desc, 'items': entries})
+            # 같은 이름의 CSV·JSON은 한 자료의 두 형식이다. 카드 하나로 묶고 내려받기만 둘로 둔다.
+            by_stem, order = {}, []
+            for e in entries:
+                stem = e['file'].rsplit('.', 1)[0]
+                if stem not in by_stem:
+                    by_stem[stem] = {'name': stem, 'note': e['note'], 'caution': e['caution'],
+                                     'rows': e['rows'], 'cols': e['cols'], 'head': e['head'],
+                                     'y0': e['y0'], 'y1': e['y1'], 'updated': e['updated'],
+                                     'repo': e['repo'], 'files': [],
+                                     'src': SOURCE.get(title[0], '질병관리청'),
+                                     'brk': any(k in stem for k in YEAR_SERIES)}
+                    order.append(stem)
+                d = by_stem[stem]
+                d['files'].append({'f': e['file'], 'k': e['kind'], 'z': e['size']})
+                for k in ('rows', 'cols', 'y0', 'y1'):
+                    if d[k] is None:
+                        d[k] = e[k]
+                if len(e['note']) > len(d['note']):
+                    d['note'] = e['note']
+                if e['caution'] and not d['caution']:
+                    d['caution'] = e['caution']
+                if e['head'] and not d['head']:
+                    d['head'] = e['head']
+            groups.append({'title': title, 'page': page, 'desc': desc,
+                           'items': [by_stem[k] for k in order]})
 
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'data.template.html'),
                 encoding='utf-8').read()
