@@ -28,7 +28,7 @@ from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
-from portal_tools import inject, inject_nav  # noqa: E402
+from portal_tools import ensure_head, inject, inject_nav  # noqa: E402
 from daily_enrich import ENRICH_V, enrich  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, 'portal', 'daily')
@@ -421,6 +421,10 @@ def render(items, status, today, run_at):
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     out = os.path.join(OUT_DIR, 'index.html')
     open(out, 'w', encoding='utf-8').write(tmpl.replace('__DATA__', js))
+    # 매일 새로 찍는 쪽이라 다른 쪽과 같은 손질을 여기서도 해야 한다.
+    # ensure_head를 빼먹어서, 아침마다 이 쪽만 파비콘이 사라졌다가
+    # 누군가 build_portal.py를 돌려야 돌아오는 상태였다.
+    ensure_head(out)
     inject(out, 1)
     inject_nav(out, 1, 'daily')
     print(f'→ portal/daily/index.html  {os.path.getsize(out):,}B')
