@@ -94,6 +94,24 @@
   .ds .mt div{background:var(--surface-2);border-radius:9px;padding:8px 10px}
   .ds .mt b{display:block;font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25}
   .ds .mt span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+  /* 미리보기 — 파일 앞 몇 줄, 그리고 연도별로 값이 있는 행 */
+  .ds details.pv{margin:8px 0 0}
+  .ds details.pv>summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);
+    list-style:none;display:inline-flex;align-items:center;gap:5px;background:var(--surface-2);
+    border-radius:999px;padding:7px 13px;min-height:36px}
+  .ds details.pv>summary::-webkit-details-marker{display:none}
+  .ds details.pv>summary::after{content:'▾';font-size:10px;opacity:.7}
+  .ds details.pv[open]>summary::after{content:'▴'}
+  .pvw{overflow-x:auto;margin:10px 0 0;-webkit-overflow-scrolling:touch}
+  .pvw table{border-collapse:collapse;font-size:12px;white-space:nowrap}
+  .pvw th,.pvw td{border:1px solid var(--line);padding:5px 9px;text-align:left}
+  .pvw th{background:var(--surface-2);font-weight:700;position:sticky;top:0}
+  .pvw td{font-variant-numeric:tabular-nums;color:var(--muted)}
+  .cov{display:flex;align-items:flex-end;gap:5px;flex-wrap:wrap;margin:12px 0 0}
+  .cov .cb{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:26px}
+  .cov .cb i{display:block;width:16px;background:var(--accent,#0E6E63);border-radius:3px 3px 0 0}
+  .cov .cb b{font-size:10.5px;font-weight:700;font-variant-numeric:tabular-nums}
+  .cov .cb span{font-size:10px;color:var(--faint)}
   .ds .ca{font-size:12.5px;color:var(--warn,#B23A3A);background:var(--warn-soft,#F6E3E3);
     border-radius:9px;padding:8px 11px;margin:10px 0 0;line-height:1.55}
   .ds .acts{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
@@ -201,7 +219,39 @@ function dsHtml(g, i){
     ${(i.head||[]).length ? `<details><summary>변수 ${i.cols ? i.cols+'개' : ''} 보기</summary>
       <div class="cols">${i.head.map(h=>`<code>${esc(h)}</code>`).join('')}</div>
       <p class="no" style="margin-top:6px">저장소 경로 <code>${esc(i.repo)}</code></p></details>` : ''}
+    ${preview(i)}
+    ${coverHtml(i)}
   </div>`;
+}
+
+/* 내려받기 전에 무엇이 들었는지 — 파일 앞 몇 줄을 그대로 보여 준다.
+   요약하거나 고치지 않는다. 화면이 좁으니 옆으로 밀어 보게 한다. */
+function preview(i){
+  const rows = i.sample || [];
+  if(!rows.length) return '';
+  const head = (i.head || []).slice(0, 8);
+  return `<details class="pv"><summary>앞 ${rows.length}줄 미리보기</summary>
+    <div class="pvw"><table>
+      ${head.length ? `<tr>${head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>` : ''}
+      ${rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}
+    </table></div>
+    <p class="no" style="margin-top:6px">파일에 적힌 그대로다. 열이 많으면 앞 여덟 개만 보인다 —
+      전체는 내려받아 보라.</p></details>`;
+}
+
+/* 연도별로 '값이 채워진 행'이 몇인지. 환자 수가 아니라 자료가 어디까지 있는지다.
+   그래서 선으로 잇지 않고 칸마다 따로 세운다 — 이어 읽으면 안 되는 자료이기도 하다. */
+function coverHtml(i){
+  const c = i.cover || [];
+  if(c.length < 2) return '';
+  const mx = Math.max(...c.map(x=>x[1])) || 1;
+  return `<details class="pv"><summary>연도별로 값이 있는 행</summary>
+    <div class="cov">${c.map(([y,n])=>
+      `<div class="cb" title="${y}년 ${n}행"><i style="height:${Math.max(3, Math.round(n/mx*56))}px"></i>
+        <b>${n}</b><span>${String(y).slice(2)}</span></div>`).join('')}</div>
+    <p class="no" style="margin-top:8px">값이 <b>채워진 행의 수</b>이지 환자 수가 아니다.
+      항목이 늘거나 줄면 이 수도 움직인다. 연도끼리 이어 읽기 전에
+      <a href="../checker/">단절점 검사</a>를 먼저 볼 것.</p></details>`;
 }
 
 function renderData(){

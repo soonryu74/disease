@@ -147,27 +147,41 @@ YEAR_SERIES = ('신고', '감시', '접종률', '검출', '분리', '양성률',
 
 
 def scan_csv(path):
-    """행·열·연도 범위를 파일에서 직접 읽는다. 손으로 적어 두면 곧 어긋난다."""
+    """행·열·연도 범위를 파일에서 직접 읽는다. 손으로 적어 두면 곧 어긋난다.
+       앞 몇 줄도 그대로 담는다 — 내려받기 전에 무엇이 들었는지 보이게."""
     try:
         with open(path, encoding='utf-8-sig') as f:
             r = csv.reader(f)
             head = next(r, [])
-            n, years = 0, set()
+            n, years, sample = 0, set(), []
             ycol = next((i for i, h in enumerate(head) if h.strip() in ('연도', '년도', 'year', '기준연도')), None)
             dcol = next((i for i, h in enumerate(head)
                          if any(k in h for k in ('기준일', '등록일', '시행일자', '공포일자'))), None)
+            # 열 이름 자체가 연도인 표(감염병명 × 2016…2025)도 있다
+            ycols = {i: int(h.strip()) for i, h in enumerate(head)
+                     if h and re.fullmatch(r'(19|20)\d{2}', h.strip())}
+            cover = {y: 0 for y in ycols.values()}
             for row in r:
                 n += 1
+                if len(sample) < 4:
+                    sample.append([(c or '')[:60] for c in row[:8]])
                 for col in (ycol, dcol):
                     if col is None or col >= len(row):
                         continue
                     m = re.search(r'(19|20)\d{2}', row[col] or '')
                     if m:
                         years.add(int(m.group(0)))
+                for i, y in ycols.items():
+                    if i < len(row) and (row[i] or '').strip() not in ('', '-'):
+                        cover[y] += 1
+            years |= set(ycols.values())
             return {'rows': n, 'cols': len(head), 'head': head[:14],
-                    'y0': min(years) if years else None, 'y1': max(years) if years else None}
+                    'y0': min(years) if years else None, 'y1': max(years) if years else None,
+                    'sample': sample,
+                    # 연도별로 '값이 채워진 행'이 몇인지. 통계값이 아니라 자료가 어디까지 있는지다
+                    'cover': [[y, cover[y]] for y in sorted(cover)] if cover else None}
     except Exception:  # noqa: BLE001
-        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None}
+        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None, 'sample': [], 'cover': None}
 
 
 def scan_json(path):
@@ -175,12 +189,15 @@ def scan_json(path):
         d = json.load(open(path, encoding='utf-8'))
         if isinstance(d, list):
             keys = list(d[0].keys())[:14] if d and isinstance(d[0], dict) else []
-            return {'rows': len(d), 'cols': len(keys) or None, 'head': keys, 'y0': None, 'y1': None}
+            return {'rows': len(d), 'cols': len(keys) or None, 'head': keys, 'y0': None, 'y1': None,
+                    'sample': [], 'cover': None}
         keys = list(d.keys())[:14]
         big = max((len(v) for v in d.values() if isinstance(v, (list, dict))), default=None)
-        return {'rows': big, 'cols': None, 'head': keys, 'y0': d.get('y0'), 'y1': d.get('y1')}
+        return {'rows': big, 'cols': None, 'head': keys, 'y0': d.get('y0'), 'y1': d.get('y1'),
+                'sample': [], 'cover': None}
     except Exception:  # noqa: BLE001
-        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None}
+        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None,
+                'sample': [], 'cover': None}
 
 
 def build():
@@ -205,6 +222,7 @@ def build():
             entries.append({'file': name, 'note': note, 'caution': caution,
                             'size': human(size), 'rows': sc['rows'], 'cols': sc['cols'],
                             'head': sc['head'], 'y0': sc['y0'], 'y1': sc['y1'],
+                            'sample': sc.get('sample') or [], 'cover': sc.get('cover'),
                             'kind': kind, 'repo': rel,
                             'updated': datetime.fromtimestamp(os.path.getmtime(src)).strftime('%Y-%m-%d')})
         if entries:
@@ -216,6 +234,7 @@ def build():
                     by_stem[stem] = {'name': stem, 'note': e['note'], 'caution': e['caution'],
                                      'rows': e['rows'], 'cols': e['cols'], 'head': e['head'],
                                      'y0': e['y0'], 'y1': e['y1'], 'updated': e['updated'],
+                                     'sample': e['sample'], 'cover': e['cover'],
                                      'repo': e['repo'], 'files': [],
                                      'src': SOURCE.get(title[0], '질병관리청'),
                                      'brk': any(k in stem for k in YEAR_SERIES)}
@@ -231,6 +250,11 @@ def build():
                     d['caution'] = e['caution']
                 if e['head'] and not d['head']:
                     d['head'] = e['head']
+                # 미리보기는 CSV 쪽이 사람 눈에 낫다. 먼저 담긴 것을 그대로 둔다.
+                if e['sample'] and not d['sample']:
+                    d['sample'] = e['sample']
+                if e['cover'] and not d['cover']:
+                    d['cover'] = e['cover']
             groups.append({'title': title, 'page': page, 'desc': desc,
                            'items': [by_stem[k] for k in order]})
 
