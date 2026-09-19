@@ -347,6 +347,40 @@ def inject(path, depth):
     return True
 
 
+# 검색 결과에 뜨는 한 줄. 쪽마다 제 템플릿에 적는 것이 맞지만 열한 쪽이 비어 있었고,
+# 템플릿이 제각각이라 한 곳에서 채운다. 템플릿에 이미 있으면 건드리지 않는다.
+DESCRIPTIONS = {
+    'field': '감염병 한 종의 급수·신고기한·격리·잠복기와 펴야 할 지침을 한 화면에 모았습니다. 역학조사 현장에서 바로 확인합니다.',
+    'checker': '두 연도의 감염병 통계를 그대로 비교해도 되는지 먼저 확인합니다. 감시체계·분류가 바뀐 지점을 짚어 줍니다.',
+    'guides': '질병관리청 관리지침과 서식을 감염병별·연도별로 찾습니다. 원문 게시물로 바로 연결합니다.',
+    'vaccine': '국가예방접종 접종률과 감염병별 집단면역 문턱을 함께 봅니다. 접종률의 기준이 해마다 달라진 점도 밝힙니다.',
+    'lab': '병원체 검출 감시 결과를 주 단위로 봅니다. 신고 건수와는 다른 축의 자료입니다.',
+    'pathogen': '법정감염병 91종을 병원체의 모양과 분류로 다시 세어 봅니다.',
+    'whitepaper': '질병관리청 백서를 연도별로 모아 원문으로 연결합니다. 그해를 정리한 공식 기록입니다.',
+    'hall': '1954년부터 지금까지 해마다 무엇이 달라졌는지 전시물로 걸어 두었습니다. 연도별 시간축으로 훑어봅니다.',
+    'flu': '인플루엔자 감시 100년을 절기별 유행, 아형 구성, WHO 백신 구성 권고로 나누어 봅니다.',
+    'cross': '신고 건수와 병원체 검출 수를 맞대어 봅니다. 숫자 하나만으로는 알 수 없는 것을 확인합니다.',
+    'policy': '검역관리지역에서 나라를 넣고 빼면 무엇이 달라지는지 실험합니다. 위험을 판정하지 않고 구조만 보여 줍니다.',
+}
+
+
+def ensure_description(path, current):
+    """<meta name="description">이 없으면 이 쪽에 맞는 한 줄을 넣는다."""
+    desc = DESCRIPTIONS.get(current)
+    if not desc:
+        return False
+    s = open(path, encoding='utf-8').read()
+    if re.search(r'<meta[^>]+name=["\']description', s, re.I):
+        return False
+    tag = f'<meta name="description" content="{desc}">'
+    if '</title>' in s:
+        s = s.replace('</title>', '</title>\n' + tag, 1)
+    else:
+        s = tag + '\n' + s
+    open(path, 'w', encoding='utf-8').write(s)
+    return True
+
+
 def ensure_head(path):
     """문자셋·언어 선언이 없는 쪽에 머리를 세운다.
 
@@ -383,6 +417,7 @@ def inject_all(portal_dir):
             depth = 0 if os.path.dirname(p) == portal_dir else 1
             current = '' if depth == 0 else os.path.basename(dirpath)
             did = ensure_head(p)
+            did = ensure_description(p, current) or did
             did = inject(p, depth) or did
             did = inject_nav(p, depth, current) or did
             if did:
