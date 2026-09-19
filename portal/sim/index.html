@@ -3,8 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>유행 시뮬레이터</title>
+<title>유행 시뮬레이터 | 감염병 자료 아카이브</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="감염병마다 잠복기·기초재생산수·증상 전 전염 일수를 넣고 격리·접촉자 추적·접종률을 움직여 봅니다. 곡선은 관측값이 아니라 모형 출력입니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -130,7 +131,36 @@
   .r0x .rule b{color:var(--ink);font-variant-numeric:tabular-nums}
   .r0x .thr{background:var(--surface-2);border-radius:10px;padding:10px 13px;font-size:13.5px;margin-top:10px}
   @media(max-width:700px){.r0x .bd{grid-template-columns:1fr}}
-  @media print{.quick,.shared .tg{display:none!important}.card{break-inside:avoid;box-shadow:none}}
+
+  /* 이 쪽이 무엇인지 먼저 밝힌다 — 여기 곡선은 관측이 아니라 계산이다 */
+  .kind{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:14px 0 0}
+  .kind p{margin:0;font-size:12.5px;color:var(--muted);flex:1;min-width:230px}
+
+  /* 시작 — 손잡이가 많은 쪽이라 들어오자마자 고를 것을 준다 */
+  .start{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--s1);
+    border-radius:14px;padding:17px 18px;margin:20px 0 0;box-shadow:var(--shadow)}
+  .start h2{margin:0 0 3px;font-size:16px;letter-spacing:-.015em}
+  .start .sd{margin:0 0 13px;font-size:13px;color:var(--muted)}
+  .start .qz{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:9px}
+  .start .qz button{text-align:left;font:inherit;cursor:pointer;background:var(--surface-2);
+    border:1px solid var(--line);border-radius:11px;padding:12px 14px;min-height:64px;color:var(--ink)}
+  .start .qz button:hover{border-color:var(--s1)}
+  .start .qz button b{display:block;font-size:13.5px;font-weight:700;letter-spacing:-.01em}
+  .start .qz button small{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:3px;line-height:1.5}
+  .start .sn{margin:12px 0 0;font-size:11.5px;color:var(--faint)}
+  /* 다른 쪽에서 넘어왔는데 그 병이 이 모형에 없을 때 — 조용히 딴 병을 보여주지 않는다 */
+  .miss{margin:10px 0 0;font-size:12.5px;line-height:1.6;color:var(--ink);
+    background:var(--surface-2);border-left:3px solid var(--warn);border-radius:0 8px 8px 0;padding:9px 12px}
+  .miss b{color:var(--warn)}
+
+  /* 고른 병으로 이어지는 곳 — 시뮬레이터는 구조를 보여주고, 사실은 다른 쪽에 있다 */
+  .goto{display:grid;grid-template-columns:repeat(auto-fill,minmax(176px,1fr));gap:7px;margin:12px 0 0}
+  .goto a{display:block;border:1px solid var(--line-strong);border-radius:10px;padding:10px 12px;
+    font-size:13.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:44px;text-decoration:none}
+  .goto a:hover{background:var(--surface-2)}
+  .goto a small{display:block;font-size:11.5px;font-weight:500;color:var(--muted);margin-top:1px}
+
+  @media print{.quick,.shared .tg,.start .qz{display:none!important}.card{break-inside:avoid;box-shadow:none}}
 
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
 .printonly{display:none}
@@ -182,25 +212,6 @@
 .pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
@@ -267,7 +278,7 @@ nav:not(.gnav){display:none !important}
 </style>
 </head>
 <body>
-<div class="printonly printhead" id="printhead"><b>유행 시뮬레이터</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<div class="printonly printhead" id="printhead"><b>유행 시뮬레이터 | 감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
 <nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi on" href="../sim/" aria-current="page">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi" href="../data/">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi" href="../data/#use">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
 (function(){
   var nav=document.querySelector('nav.gnav'); if(!nav) return;
@@ -288,7 +299,32 @@ nav:not(.gnav){display:none !important}
   <p class="thesis">감염병마다 <b>도감의 잠복기</b>, <b>문헌의 기초재생산수(R₀)</b>, <b>증상 전 전염 일수</b>를 넣고 SEIR 모형을 돌린다.
   격리 시점·격리 효과·접촉자 추적·접종률을 두 시나리오로 나란히 놓고 곡선이 어떻게 갈라지는지 본다.
   답은 숫자가 아니라 <b>어느 손잡이가 이 감염병에 듣고 어느 손잡이가 안 듣는지</b>다.</p>
+  <div class="kind">
+    <span class="bdg analysis">분석·모형</span>
+    <p>이 쪽의 곡선과 숫자는 <b>관측된 사실이 아니라 계산 결과</b>다. 실제로 몇 명이 앓았는지는
+      <a href="../data/">데이터 센터</a>의 신고 통계에 있고, 여기서는 그 통계를 예측하지 않는다.</p>
+  </div>
 </header>
+
+<section class="start" id="start">
+  <h2>무엇을 해보시겠습니까?</h2>
+  <p class="sd">누르면 감염병과 비교할 조건이 함께 맞춰진다. 그 뒤에는 손잡이를 마음대로 움직여도 된다.</p>
+  <div class="qz">
+    <button type="button" data-d="홍역" data-q="delay+1">
+      <b>격리를 하루 늦추면 얼마나 커지나</b>
+      <small>홍역 — R₀가 큰 병에서 하루가 어떤 차이를 내는지</small></button>
+    <button type="button" data-d="중동호흡기증후군" data-q="iso0">
+      <b>격리를 아예 안 하면 어떻게 되나</b>
+      <small>메르스 — R₀가 1보다 작은 병은 왜 스스로 잦아드는지</small></button>
+    <button type="button" data-d="코로나바이러스감염증-19" data-q="trace50">
+      <b>접촉자 추적이 격리보다 나을 때</b>
+      <small>코로나19 — 증상 전에 옮기는 병에서 격리가 늦는 이유</small></button>
+    <button type="button" data-d="백일해" data-q="vacc80">
+      <b>접종률을 올리면 얼마나 줄어드나</b>
+      <small>백일해 — 2024년에 크게 늘었던 병</small></button>
+  </div>
+  <p class="sn">고르지 않아도 된다. 아래에서 감염병과 손잡이를 직접 정해도 같다.</p>
+</section>
 
 <details class="card r0x" id="r0x" open>
   <summary><span class="ar">▶</span>R₀가 뭔가요 — 처음 보는 사람을 위한 설명</summary>
@@ -324,6 +360,7 @@ nav:not(.gnav){display:none !important}
     <div class="card dz">
       <h3>감염병</h3>
       <select id="dz"></select>
+      <p class="miss" id="miss" hidden></p>
       <dl class="kv" id="dzinfo"></dl>
     </div>
     <div class="card">
@@ -357,6 +394,9 @@ nav:not(.gnav){display:none !important}
     <svg class="chart" id="chart" viewBox="0 0 1000 380" role="img" aria-label="두 시나리오의 일별 새 감염자 곡선"></svg>
     <div class="legend"><span><i style="border-color:var(--s1)"></i>시나리오 A</span><span><i style="border-color:var(--s2)"></i>시나리오 B</span><span class="muted">· 점은 정점</span></div>
   </div>
+
+  <p class="small muted" style="margin:16px 0 0"><b>여기까지는 계산이다.</b> 이 감염병의 실제 규정과 실제 통계는 다음에 있다.</p>
+  <div class="goto" id="goto"></div>
 </section>
 
 <section id="real">
@@ -473,6 +513,20 @@ const sel=document.getElementById('dz');
 DZ.forEach((d,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${d.name} · R₀ ${d.r0[0]}–${d.r0[1]}`; sel.appendChild(o); });
 sel.value=S.dz;
 sel.onchange=()=>{ S.dz=+sel.value; S.A.r0=null; S.B.r0=null; renderAll(); history.replaceState(null,'','#'+encodeURIComponent(dz().name)); };
+
+/* 고른 병으로 이어지는 곳.
+   시뮬레이터는 구조를 보여줄 뿐이고, 급수·신고·격리 같은 사실과 실제 통계는 다른 쪽에 있다. */
+function drawGoto(){
+  const n = encodeURIComponent(dz().name);
+  document.getElementById('goto').innerHTML =
+    `<a href="../dogam/?disease=${n}">📖 이 병의 기초 정보<small>도감 — 증상·전파경로·예방</small></a>`
+  + `<a href="../field/?disease=${n}">🚑 현장 대응<small>급수·신고·격리 — 모형이 아닌 규정</small></a>`
+  + `<a href="../chronicle/?disease=${n}">🕰 분류·감시 변천<small>언제 무엇이 바뀌었나</small></a>`
+  + `<a href="../checker/?disease=${n}">🩺 두 연도를 비교해도 되나<small>단절점 검사기</small></a>`
+  + `<a href="../vaccine/">💉 예방접종<small>실제 접종률과 집단면역 문턱</small></a>`
+  + `<a href="../data/">⬇ 실제 신고통계<small>CSV · JSON 원자료</small></a>`;
+  document.title = dz().name + ' 유행 시뮬레이터 | 감염병 자료 아카이브';
+}
 function renderDz(){
   const d=dz();
   document.getElementById('dzinfo').innerHTML=`
@@ -612,7 +666,7 @@ function renderReal(ra){
 
 /* ── 조립 ── */
 function renderOut(){ const ra=run(S.A), rb=run(S.B); tiles('A',ra); tiles('B',rb); chart(ra,rb); why(ra); renderReal(ra); }
-function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); r0explain(); }
+function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); r0explain(); drawGoto(); }
 
 /* ── R₀ 쉬운 설명 — 고른 감염병으로 세대별 점을 그린다 ── */
 function r0explain(){
@@ -638,14 +692,52 @@ function r0explain(){
        접종 효과까지 넣은 실제 필요 접종률은 <a href="../vaccine/">⑱ 예방접종</a>에 있습니다.`
     : `R₀가 1보다 작아 사람 사이에서는 스스로 잦아듭니다. 그래서 이 병은 접종률보다 <b>유입을 막는 검역</b>이 관건입니다.`;
 }
-document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>{
-  const q=b.dataset.q; S.B={...S.A};
+/* B를 A에서 하나만 바꾸는 미리 맞춤. 아래 빠른 단추와 위 시작 패널이 같이 쓴다 */
+function applyPreset(q){
+  S.B={...S.A};
   if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1); if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
   if(q==='trace50') S.B.trace=50; if(q==='vacc80') S.B.vacc=80; if(q==='vacc95') S.B.vacc=95; if(q==='iso0') S.B.eff=0;
-  renderSliders('B'); renderOut(); });
+  renderSliders('B'); renderOut();
+}
+document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>applyPreset(b.dataset.q));
+
+/* 이름으로 병 고르기 — 같은 이름, 없으면 부분 일치. 못 찾으면 고르던 것을 그대로 둔다.
+   다른 쪽(도감·현장카드·검색)에서 ?disease= 로 넘겨 주면 그 병으로 열린다. */
+function pickDisease(want){
+  if(!want) return false;
+  let i = DZ.findIndex(d=>d.name===want);
+  if(i<0) i = DZ.findIndex(d=>d.name.indexOf(want)>-1 || want.indexOf(d.name)>-1);
+  if(i<0) return false;
+  S.dz=i; sel.value=i; S.A.r0=null; S.B.r0=null; return true;
+}
+
+document.querySelectorAll('#start .qz button').forEach(b=>b.onclick=()=>{
+  pickDisease(b.dataset.d);
+  renderAll();
+  applyPreset(b.dataset.q);
+  history.replaceState(null,'','#'+encodeURIComponent(dz().name));
+  const soft = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.getElementById('lab').scrollIntoView({behavior: soft?'smooth':'auto', block:'start'});
+});
 for(const k of ['N','I0','days','POP']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
 document.getElementById('logy').onclick=e=>{ S.log=!S.log; e.target.classList.toggle('on',S.log); renderOut(); };
-(function(){ const h=decodeURIComponent(location.hash.slice(1)); const i=DZ.findIndex(d=>d.name===h); if(i>=0){ S.dz=i; sel.value=i; } })();
+/* 다른 쪽에서 넘겨받은 이름이 이 모형에 없으면 그 사실을 밝힌다.
+   이 모형은 사람 사이 직접 전파되는 병만 담으므로, 없는 것이 오류가 아니라 범위다. */
+(function(){
+  const want = new URLSearchParams(location.search).get('disease') || decodeURIComponent(location.hash.slice(1));
+  if(!want) return;
+  if(pickDisease(want)) return;
+  // 받침에 따라 은/는을 고른다. 한글이 아니면 '는'
+  const josa = s => { const c = s.charCodeAt(s.length-1) - 0xAC00;
+    return (c >= 0 && c <= 11171 && c % 28 !== 0) ? '은' : '는'; };
+  const safe = want.replace(/[<>&]/g,'');
+  const el = document.getElementById('miss');
+  el.innerHTML = `<b>‘${safe}’${josa(safe)} 이 모형에 없습니다.</b> 이 시뮬레이터는 사람 사이에서 직접 전파되는 ${DZ.length}종만 담습니다.
+    아래는 기본값인 ${DZ[S.dz].name}입니다. 그 병의 사실이 필요하면
+    <a href="../dogam/?disease=${encodeURIComponent(want)}">도감</a> ·
+    <a href="../field/?disease=${encodeURIComponent(want)}">현장 대응카드</a>로 가십시오.`;
+  el.hidden = false;
+})();
 renderAll();
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderOut);
 new MutationObserver(renderOut).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
