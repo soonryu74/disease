@@ -133,6 +133,13 @@
   .qstart .qz button{font:inherit;font-size:13.5px;font-weight:700;color:var(--accent-ink);background:var(--accent-soft);
     border:0;border-radius:999px;padding:9px 15px;cursor:pointer;min-height:42px}
   .asof{font-size:12.5px;color:var(--muted);background:var(--surface-2);border-radius:9px;
+  /* 표의 기준일 이후에 있었던 공지 — 표를 고치지 않고 사실만 덧댄다 */
+  .since{margin:10px 0 0;background:var(--warn-soft,#FBEBEA);border-left:3px solid var(--warn,#B23A3A);
+    border-radius:0 9px 9px 0;padding:10px 13px}
+  .since b{display:block;font-size:13px;color:var(--warn,#B23A3A);margin-bottom:4px}
+  .since p{margin:0;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+  .since p.sm{margin-top:6px;font-size:11.5px;color:var(--muted)}
+  .row .since{grid-column:1/-1}
     padding:9px 12px;margin:0 0 12px;line-height:1.55}
   .asof b{color:var(--ink)}
 </style>
@@ -361,9 +368,28 @@ document.getElementById('breaks').innerHTML = D.breaks.map(b =>
       res.querySelectorAll('.qz button').forEach(b => b.onclick = () => { q.value = b.dataset.n; render(q.value); });
       empty.style.display='none'; return;
     }
+    /* 이 표 이후의 공지가 이 나라를 이름으로 언급하는가.
+       공지에 적힌 문장을 그대로 보여 줄 뿐, 표를 고쳐 쓰지는 않는다. */
+    const mentions = n => (D.later || []).filter(p => (p.note || '').includes(n));
+
+    if(!hit.length){
+      const named = (D.later || []).filter(p => (p.note || '').includes(t));
+      if(named.length){
+        empty.style.display = 'none';
+        res.innerHTML = named.map(p => `<div class="row"><span class="nm">${esc(t)}</span>
+          <span class="badge bg" style="background:var(--warn);color:#fff">표에 없음</span>
+          <span class="ds">‘${esc(t)}’는 ${esc(D.matrix_asof || '')} 표에 없습니다.
+            다만 <b>${esc(p.effective)}</b> 공지가 이 이름을 언급합니다.</span>
+          <div class="since"><p>${esc(p.note || '')}</p>
+            <p class="sm">출처 ${esc(p.source || '')}. 나라별 매트릭스 원문은 아직 대조하지 못했습니다 —
+              입국일 기준 현행 지정은 Q-CODE 누리집에서 확인하십시오.</p></div></div>`).join('');
+        return;
+      }
+    }
     empty.style.display = hit.length ? 'none' : 'block';
     res.innerHTML = hit.map(n => {
       const c = D.countries[n];
+      const later = mentions(n);
       const dz = (c.p[0] || c.g[0] || '');
       const e = encodeURIComponent(n);
       return `<div class="row"><span class="nm">${esc(n)}</span>`
@@ -373,6 +399,10 @@ document.getElementById('breaks').innerHTML = D.breaks.map(b =>
         + (c.p.length ? `<b>중점</b> ${esc(c.p.join(' · '))}<br>` : '')
         + (c.g.length ? `<b>검역</b> ${esc(c.g.join(' · '))}` : '')
         + `</span>`
+        + later.map(p => `<div class="since"><b>⚠️ ${esc(p.effective)} 공지가 이 나라를 언급합니다</b>
+            <p>${esc(p.note || '')}</p>
+            <p class="sm">위 지정 내용은 ${esc(D.matrix_asof || '')} 표의 것이라 이 변경이 반영돼 있지 않습니다.
+              출처 ${esc(p.source || '')}.</p></div>`).join('')
         /* 검역 지정과 해외 발생은 다른 것이다. 지정 여부는 위에, 이어지는 곳은 아래에 따로 둔다. */
         + `<div class="go">`
         + `<a href="../inflow/">🌐 이 나라에서 얼마나 오나</a>`
@@ -387,9 +417,21 @@ document.getElementById('breaks').innerHTML = D.breaks.map(b =>
     /* 검역 지정은 분기마다 바뀐다. 이 표가 언제 기준인지 먼저 말한다. */
     const el = document.getElementById('qasof'); if(!el) return;
     const base = (D.current && D.current['기준']) || '';
-    el.innerHTML = `<b>이 표는 ${esc(base)} 기준입니다.</b> 검역관리지역은 분기마다, 때로는 분기 중에도 바뀝니다.
+    let h = `<b>이 표는 ${esc(base)} 기준입니다.</b> 검역관리지역은 분기마다, 때로는 분기 중에도 바뀝니다.
       입국일 기준 현행 지정은 <a href="https://cov19ent.kdca.go.kr" target="_blank" rel="noopener">질병관리청 Q-CODE 누리집</a>에서 확인하십시오.
       <span class="bdg archive">아카이브 재구성</span>`;
+    /* 표의 기준일 뒤에 이미 개정 공지가 있으면 그 사실을 먼저 알린다.
+       나라별 매트릭스는 그 공지의 원문을 아직 대조하지 못했다 — 없는 표를 지어내지 않는다. */
+    for(const p of (D.later || [])){
+      const g = p.general && p.general.countries, r = p.priority && p.priority.countries;
+      h += `<div class="since"><b>⚠️ 이 표 이후에 바뀐 것이 있습니다 — ${esc(p.effective)}</b>
+        <p>${esc(p.note || '')}</p>
+        <p class="sm">그때 집계로는 검역관리지역 ${g == null ? '—' : esc(String(g))}개국 ·
+          중점검역관리지역 ${r == null ? '—' : esc(String(r))}개국입니다.
+          아래 나라별 표는 ${esc(base)}의 것이라 이 변경이 아직 반영돼 있지 않습니다.
+          출처 ${esc(p.source || '')}.</p></div>`;
+    }
+    el.innerHTML = h;
   })();
   q.addEventListener('input', () => render(q.value));
   /* ?country=이름 으로 들어오면 그 나라를 찾아 둔 채 연다 */

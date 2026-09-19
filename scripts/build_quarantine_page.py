@@ -31,7 +31,20 @@ def build():
             ds = [head[i] for i, v in enumerate(row[1:]) if v.strip()]
             countries.setdefault(c, {'p': [], 'g': []})['g'] = ds
 
+    # 나라별 표는 분기 기준 고시에서 뽑는다. 그런데 분기 도중 개정 공지가 잦다 —
+    # 지금도 표는 2026.7.1 기준인데 2026.9.7 공지가 이미 있다.
+    # 없는 매트릭스를 지어내지 않는다. 대신 '표의 기준일'과 '그 뒤에 있었던 공지'를
+    # 따로 들고 가서, 나라를 찾은 사람에게 그 사실을 먼저 알린다.
+    import re as _re
+    m = _re.search(r'(\d{4})\.(\d{1,2})\.(\d{1,2})', q3['기준'])
+    matrix_date = f'{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}' if m else None
+    later = [p for p in hist['periods']
+             if matrix_date and (p.get('effective') or '') > matrix_date]
+
     data = {
+        'matrix_asof': q3['기준'],
+        'matrix_date': matrix_date,
+        'later': later,
         'as_of': hist['as_of'],
         'definitions': hist['definitions'],
         'legal_basis': hist['legal_basis'],
