@@ -127,6 +127,17 @@
 
   /* 목록 도구 */
   .lbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  /* 수집일 거르개 — 아카이브에 실제로 있는 날만 선다 */
+  .dayfilter{margin:0 0 14px}
+  .dchips{display:flex;gap:7px;flex-wrap:wrap}
+  .dchips button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;
+    padding:7px 12px;min-height:44px;text-align:left;line-height:1.3}
+  .dchips button span{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
+  .dchips button:hover{border-color:var(--accent)}
+  .dchips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .dchips button.on span{color:rgba(255,255,255,.85)}
+  .dnote{font-size:11.5px;color:var(--faint);margin:8px 0 0;line-height:1.6;overflow-wrap:anywhere}
   .lbar input[type=search]{flex:1;min-width:170px;font:inherit;font-size:15px;padding:10px 13px;
     border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);color:var(--ink)}
   .lbar select{font:inherit;font-size:13px;padding:9px 11px;border:1px solid var(--line-strong);
@@ -223,6 +234,7 @@
     </div>
   </div>
   <div class="chips" id="chips"></div>
+  <div class="dayfilter" id="dayf"></div>
   <div class="howko"><b>한글 요약은 번역이 아니다.</b> 원문에서 병명·나라·숫자·기준일·위험 평가·여행 제한 권고를 뽑아 틀에 맞춰 적은 것이다.
 못 뽑은 것은 비워 둔다. 영어 핵심 문장은 그대로 두고 낱말마다 한글을 달았다(<span class="t">outbreak<i>발생(유행)</i></span>처럼).
 그림·표는 WHO 원문의 것을 그대로 가져온다. 판단이 필요한 대목은 원문을 열어 확인할 것.</div>
@@ -306,7 +318,44 @@ document.getElementById('run').innerHTML =
   }).join('');
 
 /* 필터 */
-let f='all', limit=40;
+let f='all', limit=40, seenDay='all';
+
+/* 수집일 — 아카이브에 실제로 적힌 날만 모은다.
+   처음 본 날(first_seen)과 고쳐진 날(updated)을 함께 센다.
+   이 아카이브가 시작된 날 이전의 기록은 없다. 없는 날짜를 고르게 하지 않는다. */
+(function(){
+  const el = document.getElementById('dayf'); if(!el) return;
+  const cnt = {};
+  for(const it of D.items){
+    for(const d of [it.first_seen, it.updated]){
+      if(!d) continue;
+      (cnt[d] = cnt[d] || {n:0, u:0});
+      if(d === it.first_seen) cnt[d].n++; else cnt[d].u++;
+    }
+  }
+  const days = Object.keys(cnt).sort().reverse();
+  if(days.length < 2){                       // 하루치뿐이면 고를 것이 없다
+    el.innerHTML = `<p class="dnote">이 아카이브는 <b>${esc(days[0] || D.today)}</b>부터 모읍니다.
+      아직 하루치뿐이라 날짜로 고를 것이 없습니다. 그 전 기록은 저희에게 없습니다.</p>`;
+    return;
+  }
+  const md = d => d.slice(5).replace('-', '월 ') + '일';
+  el.innerHTML = `<div class="dchips"><button type="button" data-d="all" class="on">모든 날</button>`
+    + days.map(d => {
+        const c = cnt[d], bits = [];
+        if(c.n) bits.push(`처음 ${c.n}`);
+        if(c.u) bits.push(`고쳐짐 ${c.u}`);
+        return `<button type="button" data-d="${esc(d)}">${esc(md(d))}<span>${bits.join(' · ')}</span></button>`;
+      }).join('')
+    + `</div><p class="dnote">수집한 날로 거릅니다. 이 아카이브는 <b>${esc(days[days.length-1])}</b>부터 모으며,
+        그 전에 나온 자료는 저희가 처음 본 날로만 적혀 있습니다 — 원문 게시일은 각 항목에 따로 있습니다.</p>`;
+  el.querySelector('.dchips').onclick = e => {
+    const b = e.target.closest('button'); if(!b) return;
+    seenDay = b.dataset.d; limit = 40;
+    el.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  };
+})();
 /* 출처 딱지는 실제로 보관된 항목에서 뽑는다 — 손으로 적어 두면 출처를 바꿀 때 죽은 딱지가 남는다 */
 const SRCS=[...new Set(D.items.map(x=>x.source))];
 const CH=[['all','전체'],['new','오늘 처음 수집'],...SRCS.map(s=>[s,s]),['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
@@ -314,6 +363,9 @@ document.getElementById('chips').innerHTML = CH.map(([k,l])=>`<button data-f="${
 document.getElementById('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; f=b.dataset.f; limit=40; document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x===b)); render(); };
 
 function pass(it){
+  /* 수집일 거르개. 없는 과거를 만들어 내지 않으려고, 아카이브에 실제로 적힌
+     날짜만 단추로 세운다. 그래서 날이 쌓이는 만큼만 늘어난다. */
+  if(seenDay !== 'all' && it.first_seen !== seenDay && it.updated !== seenDay) return false;
   if(f==='all') return true;
   if(f==='new') return it.first_seen===D.today && !D.first_run;
   if(f==='desig') return (it.joins||[]).some(j=>j.designated===true);
@@ -409,8 +461,11 @@ function seenHtml(it){
   const srcs = Object.entries(st).filter(([k])=>k!=='_run');
   const okN = srcs.filter(([,v])=>v.ok).length;
   const badN = srcs.length - okN;
-  const newN = D.first_run ? null : (run.new||0);
-  const updN = run.updated==null ? null : run.updated;
+  /* 아카이브에서 센다. 예전에는 '마지막 실행이 찾아낸 수'를 썼는데,
+     하루에 두 번 돌면(재시도·수동 실행) 두 번째가 0으로 덮어써서
+     아침에 들어온 새 자료가 없던 일이 됐다. 그날의 사실은 항목에 적혀 있다. */
+  const newN = D.first_run ? null : D.items.filter(x=>x.first_seen===D.today).length;
+  const updN = D.first_run ? null : D.items.filter(x=>x.updated===D.today && x.first_seen!==D.today).length;
   const cells = [
     {v: newN==null?'—':newN, l: newN==null ? '오늘 새 항목<br>비교 기준 없음(첫 수집)' : '오늘 새로 수집한 항목', hot: newN>0},
     {v: updN==null?'—':updN, l: updN==null ? '고쳐진 항목<br>기록 없음' : '오늘 고쳐진 항목', hot: updN>0},
@@ -499,10 +554,12 @@ function render(){
     /* 거른 결과가 없는 것과 수집이 실패한 것은 다르다 — 무엇을 지우면 되는지 알려 준다 */
     el.innerHTML = `<div class="nonew"><b>조건에 맞는 자료가 없습니다.</b>`
       + (q ? ` ‘${esc(q)}’(으)로는 보관 중인 ${D.items.length}건에서 찾지 못했습니다.` : '')
+      + (seenDay !== 'all' ? ` 수집일을 <b>${esc(seenDay)}</b>로 좁힌 상태입니다.` : '')
       + ` <button class="more" id="reset" style="margin-top:10px">조건 지우고 전체 보기</button></div>`;
     const rb=document.getElementById('reset');
-    if(rb) rb.onclick=()=>{ q=''; f='all'; document.getElementById('lq').value='';
+    if(rb) rb.onclick=()=>{ q=''; f='all'; seenDay='all'; document.getElementById('lq').value='';
       document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on', x.dataset.f==='all'));
+      document.querySelectorAll('#dayf button').forEach(x=>x.classList.toggle('on', x.dataset.d==='all'));
       limit=40; render(); };
     return;
   }
