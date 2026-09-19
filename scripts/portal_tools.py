@@ -251,7 +251,10 @@ def inject_nav(path, depth, current):
     # 이미 있으면 걷어내고 다시 넣는다 — 메뉴 항목이 바뀌면 모든 쪽이 같이 바뀌어야 한다
     s = re.sub(r'\n?<nav class="gnav"[^>]*>.*?</nav>(?:<script>.*?</script>)?', '', s, flags=re.S)
     # 예전 판의 메뉴 CSS(문구가 달라도)까지 걷어낸다. 메뉴 CSS는 언제나 첫 </style> 바로 앞에 있다.
-    s = re.sub(r'\n/\* ── 공통 메뉴[\s\S]*?(?=\n</style>)', '', s, count=1)
+    # 앞뒤 줄바꿈까지 같이 걷어내야 한다. 예전에는 </style> 앞 줄바꿈을 남겨 두고
+    # 그 앞에 또 넣어서, 다시 빌드할 때마다 빈 줄이 한 줄씩 늘었다 —
+    # 내용은 그대로인데 22쪽 전부가 바뀐 것으로 잡히던 원인이다.
+    s = re.sub(r'\n?/\* ── 공통 메뉴[\s\S]*?(?=</style>)', '', s, count=1)
     if '</style>' in s:
         s = s.replace('</style>', NAV_CSS + '\n</style>', 1)
     else:
