@@ -251,6 +251,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -342,6 +351,7 @@ nav:not(.gnav){display:none !important}
       <a href="../data/">데이터 센터</a>의 신고 통계에 있고, 여기서는 그 통계를 예측하지 않는다.</p>
   </div>
 </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>격리를 하루 늦추거나 접종률을 올리면 유행이 어떻게 달라지는지 직접 돌려 보는 곳입니다.</p><p>여기 숫자는 실제로 일어난 일이 아니라 계산한 결과입니다.</p></div>
 
 <section class="start" id="start">
   <h2>무엇을 해보시겠습니까?</h2>

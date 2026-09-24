@@ -113,6 +113,21 @@ python3 scripts/check_datasets.py   # 자료 점검만 따로. 고칠 것이 있
 각 쪽을 따로 다시 만들 때는 그 쪽의 빌더를 돌린 뒤 `build_portal.py`를 한 번 더
 돌려야 머리글·메뉴가 붙는다. 예: `python3 scripts/build_sim.py && python3 scripts/build_portal.py`
 
+## 쉬운 말
+
+중학교를 마친 사람이 읽을 수 있어야 한다는 기준으로 손본 것들이다.
+본문 글자는 바꾸지 않는다 — 화면에서 감싸거나 위에 얹기만 하므로 자료·통계·출처에는 영향이 없다.
+
+| 파일 | 하는 일 |
+|---|---|
+| `scripts/plain_glossary.py` | 어려운 낱말의 풀이. 각 쪽에서 그 말이 처음 나온 자리에만 뜻이 붙는다 |
+| `scripts/plain_summaries.py` | 쪽마다 첫머리에 놓는 '쉽게 말하면' 두세 문장 |
+
+둘 다 `build_portal.py` 가 조립할 때 모든 쪽에 같은 방식으로 넣는다. 고칠 때는 이 두 파일만 고치면 된다.
+
+`check_datasets.py` 가 감시 목록의 어려운 말이 본문에 나오는데 풀이가 없으면 알려 준다.
+새 낱말을 쓰기 시작했다면 `WATCH` 에 넣어 두면 풀이를 빠뜨렸을 때 걸린다.
+
 ## 상황판 이메일 — 아직 꺼져 있다
 
 RSS(`portal/daily/feed.xml`)는 지금도 돌아간다. 이메일은 저장소에 값을 넣어야 켜진다.

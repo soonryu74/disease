@@ -221,6 +221,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -313,6 +322,7 @@ nav:not(.gnav){display:none !important}
   모든 표에 <b>출처호</b> 열이 있어 어느 권 몇 호에서 온 수치인지 되짚을 수 있다.</p>
   <p class="meta num" id="meta"></p>
 </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>이 사이트가 쓰는 자료 파일을 그대로 내려받는 곳입니다.</p><p>엑셀이나 통계 프로그램에 바로 넣을 수 있습니다.</p><p>받기 전에 앞 몇 줄을 미리 볼 수 있습니다.</p></div>
 
 <div class="note">
   <b>받기 전에 — 이 자료를 잘못 쓰는 가장 흔한 방법</b>

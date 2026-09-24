@@ -281,6 +281,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -370,6 +379,7 @@ nav:not(.gnav){display:none !important}
       <div class="tile"><div class="big num">88<span style="font-size:.5em">종</span></div><div class="lab">현행 법정감염병<br><span class="u">제1~4급</span> (수시 변동)</div></div>
     </div>
   </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>감염병에 관한 법이 1954년부터 어떻게 바뀌어 왔는지 모았습니다.</p><p>어떤 내용이 언제 왜 바뀌었는지 짚어 볼 수 있습니다.</p></div>
 
   <section>
     <div class="kicker"><span class="no">01</span><div><h2>법의 큰 줄기</h2><p class="sub">제정에서 현행까지, 방향이 바뀐 순간들</p></div></div>

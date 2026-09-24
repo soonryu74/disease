@@ -260,6 +260,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
@@ -348,6 +357,7 @@ nav:not(.gnav){display:none !important}
       그 지점을 모르고 두 해를 나란히 놓으면 유행을 잘못 읽는다.
       질병과 두 연도를 고르면 <b>비교해도 되는지, 안 된다면 왜인지</b>를 판정한다.</p>
   </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>어떤 병의 작년 숫자와 올해 숫자를 그냥 견줘도 되는지 알려 줍니다.</p><p>병과 두 해를 고르기만 하면 됩니다.</p><p>견주면 안 될 때는 그 까닭까지 같이 나옵니다.</p></div>
 
   <details class="why" id="why">
     <summary>왜 단절점을 확인해야 하나요?</summary>

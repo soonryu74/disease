@@ -200,6 +200,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -291,6 +300,7 @@ nav:not(.gnav){display:none !important}
   모든 항목은 질병관리청 공식 자료(감염병포털·감염병누리집·국가건강정보포털·관리지침)에서 수집·교차확인했다.
   옛 이름(흑사병·천연두·원숭이두창…)으로도 검색된다.</p>
 </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>법으로 정한 감염병 91가지의 기본 정보를 모았습니다.</p><p>무엇이 일으키고 어떻게 옮으며 증상이 무엇인지 나옵니다.</p><p>흑사병이나 천연두처럼 옛 이름으로도 찾을 수 있습니다.</p></div>
 
 <div class="tools">
   <input class="search" id="q" type="search" placeholder="질병 이름·영문·옛 이름 검색 (예: 흑사병, MPOX, 쯔쯔가무시)" autocomplete="off">

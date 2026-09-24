@@ -222,6 +222,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -308,6 +317,7 @@ nav:not(.gnav){display:none !important}
   <b>좁게 지정하면</b> 가벼워지지만 새는 것이 생긴다. 여기서는 2026년 3분기 지정(173개국 × 15종)에서 출발해 나라를 넣고 빼면서
   <b>표본 유입 신고 중 잡히는 비율</b>과 <b>Q-CODE 대상 인원</b>이 어떻게 움직이는지를 본다.</p>
 </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>검역 대상 나라를 넣거나 빼면 무엇이 달라지는지 직접 해 보는 곳입니다.</p><p>위험을 판정하지 않습니다. 규칙을 바꿨을 때의 셈만 보여 줍니다.</p></div>
 
 <section id="lab">
   <div class="gauges" id="gauges"></div>

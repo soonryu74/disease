@@ -312,6 +312,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -426,6 +435,7 @@ nav:not(.gnav){display:none !important}
         <span>91종 법정감염병의 핵심 정보를 검색합니다.</span><em>감염병 도감 →</em></a>
     </div>
   </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>이 사이트는 대한민국 감염병 자료를 한곳에 모아 둔 곳입니다.</p><p>병 이름을 넣으면 그 병의 규정과 통계, 지침이 한꺼번에 나옵니다.</p><p>무엇부터 볼지 모르겠으면 위 검색창에 병 이름이나 나라 이름을 넣어 보십시오.</p></div>
 
   <section class="today" aria-labelledby="todayh">
     <div class="thead">

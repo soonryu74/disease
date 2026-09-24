@@ -360,6 +360,17 @@ def inject_credit(path):
     return True
 
 
+SUMMARY_CSS = """
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+"""
+
 TERMS_CSS = """
 /* ── 쉬운 말 풀이 — 어려운 낱말이 처음 나온 자리에 뜻을 단다 ────────── */
 .plainterm{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
@@ -387,6 +398,46 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 """
+
+
+def summary_html(current):
+    """이 쪽이 무엇인지 두세 문장으로. 기존 머리글은 그대로 두고 그 아래에 얹는다."""
+    try:
+        from plain_summaries import SUMMARIES
+    except ImportError:
+        import sys
+        sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+        from plain_summaries import SUMMARIES
+    lines = SUMMARIES.get(current)
+    if not lines:
+        return ''
+    body = ''.join(f'<p>{ln}</p>' for ln in lines)
+    return f'<div class="plainsum"><b>쉽게 말하면</b>{body}</div>'
+
+
+_SUM_RE = re.compile(r'\s*<div class="plainsum">.*?</div>', re.S)
+
+
+def inject_summary(path, current):
+    """머리글 바로 뒤에 놓는다. 머리글이 없으면 첫 제목 뒤에 놓는다."""
+    html = summary_html(current)
+    if not html:
+        return False
+    s = open(path, encoding='utf-8').read()
+    before = s
+    s = _SUM_RE.sub('', s)
+    m = re.search(r'</header>', s)
+    if m:
+        s = s[:m.end()] + '\n' + html + s[m.end():]
+    else:
+        m = re.search(r'</h1>', s)
+        if not m:
+            return False
+        s = s[:m.end()] + '\n' + html + s[m.end():]
+    if s == before:
+        return False
+    open(path, 'w', encoding='utf-8').write(s)
+    return True
 
 
 def terms_js():
@@ -614,7 +665,8 @@ def inject(path, depth):
         # 이 갈래로 돌아서는 바람에 크레딧 스타일이 스물두 쪽에 안 붙던 일이 있었다.
         # 자리가 중요하다. 메뉴 CSS는 매번 걷어내고 다시 넣는데, 그 걷어내는 범위가
         # 메뉴 주석부터 </style> 까지다. 그 뒤에 두면 다음 조립 때 같이 지워진다.
-        for css, probe in ((CREDIT_CSS, '.site-credit{'), (TERMS_CSS, '.glpop{')):
+        for css, probe in ((CREDIT_CSS, '.site-credit{'), (TERMS_CSS, '.glpop{'),
+                           (SUMMARY_CSS, '.plainsum{')):
             if probe in s2:
                 continue
             mark = '\n/* ── 공통 메뉴'
@@ -632,9 +684,9 @@ def inject(path, depth):
     # 1) 인쇄 CSS — 첫 </style> 앞에 넣어 그 파일의 색 토큰을 덮어쓴다
     marker = '/* ── 인쇄'
     if '</style>' in s:
-        s = s.replace('</style>', PRINT_CSS + CREDIT_CSS + TERMS_CSS + '\n</style>', 1)
+        s = s.replace('</style>', PRINT_CSS + CREDIT_CSS + TERMS_CSS + SUMMARY_CSS + '\n</style>', 1)
     else:
-        s = s.replace('</head>', f'<style>{PRINT_CSS}{CREDIT_CSS}{TERMS_CSS}</style>\n</head>', 1)
+        s = s.replace('</head>', f'<style>{PRINT_CSS}{CREDIT_CSS}{TERMS_CSS}{SUMMARY_CSS}</style>\n</head>', 1)
     # 2) 인쇄용 머리글.
     #    포털에는 <body>가 있는 완전한 문서와 <title>로 시작하는 조각 파일이 섞여 있다.
     #    조각 파일에 맨 앞으로 넣으면 <title>보다 앞서므로, 스타일 블록 뒤에 넣는다.
@@ -732,6 +784,7 @@ def inject_all(portal_dir):
             did = ensure_description(p, current) or did
             did = inject(p, depth) or did
             did = inject_nav(p, depth, current) or did
+            did = inject_summary(p, current) or did
             did = inject_terms(p) or did
             did = inject_credit(p) or did
             if did:

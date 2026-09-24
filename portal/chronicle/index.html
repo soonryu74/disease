@@ -271,6 +271,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
@@ -367,6 +376,7 @@ nav:not(.gnav){display:none !important}
       <a href="../hall/"><b>🏛 연대기 전시관</b></a>은 <b>연도별 시간축</b>이다 —
       해마다 무엇이 달라졌는지를 전시물 156점으로 걸어 두었다.</p>
   </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>한 감염병이 언제 몇 급이었고 어떻게 세었는지를 시간 순서로 보여 줍니다.</p><p>병을 고르고 날짜를 옮기면 그 시점의 사실이 나옵니다.</p><p>확인하지 못한 구간은 빗금으로 두고 추측하지 않습니다.</p></div>
 
   <section id="tm">
     <div class="shead"><span class="sno">01</span><h2>타임머신</h2></div>

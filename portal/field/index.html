@@ -289,6 +289,15 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 @media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
   details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
 
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -381,6 +390,7 @@ nav:not(.gnav){display:none !important}
   <span class="bdg archive">아카이브 재구성</span> 질병관리청 지침·고시를 엮은 것이고, 지침 링크는 <span class="bdg official">공식 원자료</span>입니다.</p>
   <div class="tiles" id="tiles"></div>
 </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>감염병 이름을 찾으면 신고를 언제까지 해야 하는지, 격리가 필요한지를 한 화면에서 봅니다.</p><p>현장에서 급히 확인할 때 쓰라고 만든 화면입니다.</p><p>자료에 없는 값은 비워 두고 추측해 채우지 않습니다.</p></div>
 
 <div class="tools">
   <input class="search" id="q" type="search" placeholder="감염병 이름 검색 (예: 홍역, MERS, 백일해)" autocomplete="off"
