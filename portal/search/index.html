@@ -207,6 +207,32 @@ footer.site-credit, .site-credit{margin:28px 0 0;padding:0 16px 76px;text-align:
 footer.site-credit a, .site-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
 @media print{footer.site-credit, .site-credit{display:block !important;color:#6b7480;margin-top:6mm}}
 
+/* ── 쉬운 말 풀이 — 어려운 낱말이 처음 나온 자리에 뜻을 단다 ────────── */
+.plainterm{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
+  border-bottom:1px dashed currentColor;opacity:.98}
+.plainterm::after{content:'뜻';font-size:.62em;vertical-align:.5em;margin-left:1px;opacity:.75;
+  font-weight:700;letter-spacing:0}
+.plainterm[aria-expanded="true"]{background:var(--accent-soft,#D7ECE8)}
+.glpop{position:absolute;z-index:90;max-width:min(320px,calc(100vw - 28px));
+  background:var(--surface,#fff);color:var(--ink,#16211D);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);
+  font-size:13.5px;line-height:1.65;font-weight:400;text-align:left;word-break:keep-all}
+.glpop b{display:block;font-size:14px;margin-bottom:4px}
+.glpop .more{display:block;margin-top:6px;font-size:12.5px;color:var(--muted,#5B6B65)}
+details.glbox{margin:22px 0 0;border:1px solid var(--line,#DCE4E1);border-radius:12px;
+  background:var(--surface-2,#EEF2F0)}
+details.glbox>summary{cursor:pointer;list-style:none;padding:12px 15px;font-size:13.5px;font-weight:700;
+  min-height:44px;display:flex;align-items:center;gap:6px}
+details.glbox>summary::-webkit-details-marker{display:none}
+details.glbox>summary::after{content:'▾';font-size:10px;opacity:.7}
+details.glbox[open]>summary::after{content:'▴'}
+details.glbox dl{margin:0;padding:0 15px 14px}
+details.glbox dt{font-size:13.5px;font-weight:700;margin-top:10px}
+details.glbox dd{margin:2px 0 0;font-size:13px;line-height:1.7;color:var(--muted,#5B6B65);word-break:keep-all}
+details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5px;opacity:.85}
+@media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
+  details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -671,6 +697,174 @@ fetch('index.json').then(r => { if(!r.ok) throw new Error(r.status); return r.js
     ph.querySelector('.pdate').textContent =
       d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
     ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+<script>
+/* 쉬운 말 풀이 — scripts/plain_glossary.py 한 곳에서 관리한다 */
+(function(){
+  var T = [["중점검역관리지역", "검역관리지역 가운데 특히 위험해서, 증상이 없어도 다녀온 사람 모두가 알려야 하는 지역.", ""], ["유효 재생산수", "지금 이 순간, 면역과 방역이 있는 상태에서 환자 한 명이 평균 몇 명에게 옮기는지.", "방역의 목표는 이 수를 1 아래로 내리는 것이다."], ["검역관리지역", "그 나라에 검역감염병이 돌고 있어, 다녀온 사람 가운데 증상이 있으면 알리게 한 지역.", "증상이 없으면 알릴 의무가 없다."], ["기초재생산수", "아무도 면역이 없을 때, 환자 한 명이 평균 몇 명에게 옮기는지를 나타낸 수.", "1보다 크면 번지고 1보다 작으면 사그라든다. R₀라고 쓴다."], ["법정감염병", "법으로 “생기면 반드시 신고하라”고 정해 둔 병.", "지금 91가지다. 목록은 계속 늘거나 줄어 왔다."], ["검역감염병", "국경에서 특별히 살피도록 검역법이 정해 둔 병.", "지금 15가지다."], ["지표 환자", "그 유행에서 처음으로 확인된 환자.", "가장 먼저 걸린 사람이라는 뜻은 아니다 — 처음 발견된 사람이다."], ["전수감시", "환자가 생길 때마다 한 사람도 빠짐없이 모두 신고받는 방식.", "그래서 이 방식의 숫자는 “그해 신고된 환자 수”에 가깝다."], ["표본감시", "전국에서 미리 정해 둔 병원 몇 곳만 골라 그곳 환자만 세는 방식.", "전체 환자 수가 아니다. 참여 병원이 늘거나 줄면 숫자도 같이 움직인다."], ["감시체계", "환자를 어떻게 찾아내고 어떻게 세는지에 대한 규칙 전체.", "전수감시와 표본감시가 그 종류다."], ["사례정의", "“어떤 사람을 이 병의 환자로 셀 것인가”를 적어 둔 기준.", "이 기준이 바뀌면 병이 그대로여도 세어지는 사람 수가 달라진다."], ["의사환자", "증상으로 보아 그 병이 의심되지만 검사로는 아직 확인되지 않은 사람.", "“의사”는 의심된다는 뜻이지 의사 선생님이 아니다."], ["인수공통", "동물과 사람이 서로 옮길 수 있는 병.", ""], ["수직감염", "어머니에게서 배 속의 아기나 갓 태어난 아기에게 옮는 것.", ""], ["음압격리", "방 안 공기가 밖으로 새어 나가지 않도록 기압을 낮춰 둔 병실에 환자를 두는 것.", "공기로 옮는 병에 쓴다."], ["역학조사", "누가 언제 어디서 어떻게 걸렸는지 되짚어 감염 경로를 찾는 조사.", ""], ["집단면역", "면역을 가진 사람이 인구에 충분히 많아져 유행이 저절로 사그라드는 상태.", ""], ["계통고찰", "한 주제를 다룬 연구를 빠짐없이 모아 정리한 논문.", "하나의 연구보다 믿을 만한 근거로 친다."], ["신뢰구간", "참값이 그 안에 있을 것으로 보는 범위.", "범위가 넓다면 그만큼 덜 확실하다는 뜻이다."], ["시행규칙", "시행령보다 더 세부를 정하는 규정. 장관이 정한다.", ""], ["에어로졸", "침방울보다 더 작아 공기 중에 한동안 떠 있는 알갱이.", "비말보다 멀리, 오래 간다."], ["카타르기", "백일해에서 감기처럼 보이는 초기 시기.", "기침이 심해지기 전인데 이때 가장 잘 옮는다."], ["단절점", "세는 규칙이 바뀌어서, 그 앞과 뒤의 숫자를 그대로 이어 보면 안 되는 지점.", "이 사이트가 가장 중요하게 여기는 개념이다. 단절점 검사기에서 확인할 수 있다."], ["병원체", "병을 일으키는 아주 작은 생물이나 물질.", "세균, 바이러스, 곰팡이, 기생충 따위가 있다."], ["잠복기", "병원체가 몸에 들어온 뒤 증상이 나타나기까지 걸리는 기간.", ""], ["무증상", "병원체가 몸에 들어왔지만 증상이 나타나지 않은 상태.", "증상이 없어도 남에게 옮길 수 있는 병이 있다."], ["전구기", "본격적인 증상이 나기 전에 먼저 나타나는 가벼운 증상 기간.", "홍역이라면 발진 전의 열과 기침이 이때다."], ["치명률", "그 병에 걸린 사람 가운데 숨진 사람의 비율.", ""], ["발생률", "일정 기간 동안 새로 병에 걸린 사람의 비율.", ""], ["유병률", "어느 시점에 그 병을 앓고 있는 사람의 비율.", "새로 걸린 사람만 세는 발생률과 다르다."], ["매개체", "병원체를 사람에게 옮겨 주는 생물.", "모기와 진드기가 대표적이다."], ["병원소", "병원체가 평소에 머물러 사는 곳.", "박쥐나 낙타 같은 동물이 그 자리일 때가 많다."], ["시행령", "법률이 큰 줄기를 정하면 그 세부를 정하는 규정. 대통령이 정한다.", ""], ["발병률", "그 병에 노출된 사람 가운데 실제로 병이 난 사람의 비율.", ""], ["코호트", "같은 조건에 놓인 사람들을 하나로 묶은 집단.", "“코호트 격리”는 같은 병에 노출된 사람들을 한 곳에 묶어 함께 격리하는 것이다."], ["표준화", "나이 구성처럼 서로 다른 조건을 같게 맞춰 놓고 비교하는 것.", "이렇게 해야 노인이 많은 지역과 적은 지역의 숫자를 견줄 수 있다."], ["임계치", "그 값을 넘으면 결과가 달라지는 경계가 되는 값.", ""], ["불현성", "감염됐지만 겉으로 드러나는 증상이 없는 상태.", ""], ["항체가", "피 속에 그 병에 맞서는 항체가 얼마나 있는지를 나타낸 값.", ""], ["혈청형", "같은 종의 세균이나 바이러스를 항체 반응으로 더 잘게 나눈 갈래.", ""], ["급수", "법정감염병을 얼마나 급히 알려야 하는지에 따라 네 묶음으로 나눈 것.", "제1급이 가장 급해서 곧바로 알려야 하고, 제4급은 일주일에 한 번 모아서 알린다."], ["신고", "의사나 병원이 환자를 발견했을 때 보건당국에 알리는 일.", "법정감염병은 신고가 의무다."], ["분모", "비율을 낼 때 아래에 놓는 수. “몇 명 가운데”에 해당하는 수다.", "분모가 달라지면 같은 환자 수라도 비율이 달라 보인다."], ["확진", "검사를 해서 그 병이 맞다고 확인된 것.", ""], ["비말", "기침이나 재채기, 말할 때 튀는 침방울.", ""], ["아형", "같은 바이러스 안에서 조금씩 다른 갈래.", "인플루엔자의 H1N1, H3N2 같은 것이 아형이다."], ["격리", "환자를 다른 사람과 떼어 놓아 병을 옮기지 못하게 하는 것.", ""], ["검역", "병이 나라 안으로 들어오지 못하게 공항과 항만에서 확인하는 일.", ""], ["문턱", "유행이 저절로 멈추려면 인구의 몇 퍼센트가 면역을 가져야 하는지, 그 경계가 되는 값.", "이 사이트에서 “집단면역 문턱”이라고 쓸 때의 뜻이다."], ["역산", "결과를 먼저 알고, 거꾸로 원인이 될 값을 구하는 것.", ""], ["고시", "행정기관이 정해서 공식적으로 알리는 문서.", "법률보다 아래에 있지만 지켜야 하는 힘이 있다. 감염병 지정이 이것으로 바뀐다."]];
+  var SKIP = {SCRIPT:1, STYLE:1, TEXTAREA:1, INPUT:1, SELECT:1, OPTION:1, CODE:1, PRE:1,
+              SVG:1, CANVAS:1, MATH:1};
+  var left = {}, found = [], DEF = {}, lastSig = null;
+  T.forEach(function(x){ left[x[0]] = x; DEF[x[0]] = [x[1], x[2]]; });
+
+  function skippable(n){
+    for (var a = n.parentNode; a && a !== document.body; a = a.parentNode){
+      if (a.nodeType !== 1) continue;
+      /* SVG 안쪽은 건드리지 않는다. 차트 글자에 단추를 넣으면 그려지지 않는다.
+         SVG 요소의 tagName 은 소문자라(svg, text, g) 대문자로 맞춰 본다. */
+      if (SKIP[String(a.tagName).toUpperCase()]) return true;
+      var c = a.className;
+      if (typeof c === 'string' && /\b(plainterm|glpop|glbox|gnav|printonly|pagetools|site-credit)\b/.test(c)) return true;
+      if (a.tagName === 'BUTTON' || a.hasAttribute('aria-hidden')) return true;
+    }
+    return false;
+  }
+
+  function wrap(node, term, def, more){
+    var i = node.nodeValue.indexOf(term);
+    if (i < 0) return false;
+    var after = node.splitText(i);
+    after.nodeValue = after.nodeValue.slice(term.length);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'plainterm'; btn.textContent = term;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', term + ' — 뜻 보기');
+    btn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); show(btn, term, def, more); };
+    node.parentNode.insertBefore(btn, after);
+    found.push([term, def, more]);
+    return true;
+  }
+
+  var pop = null;
+  function close(){ if (pop){ pop.remove(); pop = null; }
+    document.querySelectorAll('.plainterm[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded','false'); }); }
+  function show(btn, term, def, more){
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    close(); if (open) return;
+    btn.setAttribute('aria-expanded', 'true');
+    pop = document.createElement('span');
+    pop.className = 'glpop'; pop.setAttribute('role', 'tooltip');
+    pop.innerHTML = '<b></b><span></span>' + (more ? '<span class="more"></span>' : '');
+    pop.querySelector('b').textContent = term;
+    pop.querySelectorAll('span')[0].textContent = def;
+    if (more) pop.querySelector('.more').textContent = more;
+    document.body.appendChild(pop);
+    var r = btn.getBoundingClientRect(), w = pop.offsetWidth;
+    var x = Math.min(Math.max(8, r.left + scrollX), scrollX + innerWidth - w - 8);
+    pop.style.left = x + 'px';
+    pop.style.top = (r.bottom + scrollY + 6) + 'px';
+  }
+  document.addEventListener('click', function(e){ if (!e.target.closest('.plainterm,.glpop')) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  addEventListener('resize', close);
+
+  /* 쪽이 제 내용을 다 그린 뒤에 단다. 먼저 달면 나중 렌더링이 주석을 지워,
+     본문에는 없는 말이 아래 목록에만 남는 일이 생긴다(유입 지도에서 그랬다). */
+  function pass(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim() && !skippable(n)) nodes.push(n);
+    for (var i = 0; i < nodes.length; i++){
+      for (var k = 0; k < T.length; k++){
+        var t = T[k][0];
+        if (!left[t]) continue;
+        if (wrap(nodes[i], t, T[k][1], T[k][2])){ delete left[t]; }
+      }
+    }
+  }
+  function live(){
+    var m = {};
+    document.querySelectorAll('.plainterm').forEach(function(b){ m[b.textContent] = 1; });
+    return m;
+  }
+  function go(){
+    /* 아직 안 달린 말만 다시 찾는다. 쪽이 제 내용을 다시 그리면서 주석을 지워도
+       다음 차례에 되살아난다. */
+    var on = live();
+    left = {};
+    T.forEach(function(x){ if (!on[x[0]]) left[x[0]] = x; });
+    pass();
+    build();
+  }
+  /* 쪽이 제 내용을 다시 그릴 때마다 주석이 지워질 수 있다(유입 지도의 범례가 그렇다).
+     DOM 이 바뀌면 잠깐 기다렸다가 다시 단다. 달 것이 없으면 아무 일도 하지 않으므로 곧 잠잠해진다. */
+  var timer = null;
+  function start(){
+    go();
+    var runs = 0, mo = new MutationObserver(function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        go();
+        /* 늘 다시 그리는 쪽(지구본)에서 끝없이 돌지 않게 횟수를 막아 둔다.
+           목록이 그대로면 build 가 아무것도 안 하므로 보통은 금방 잠잠해진다. */
+        if (++runs >= 30) mo.disconnect();
+      }, 400);
+    });
+    mo.observe(document.body, {childList: true, subtree: true});
+  }
+  if (document.readyState === 'complete') setTimeout(start, 0);
+  else addEventListener('load', function(){ setTimeout(start, 0); });
+
+  function build(){
+  /* 목록은 화면에 실제로 달려 있는 주석에서 바로 만든다.
+     따로 모아 둔 배열을 쓰면, 쪽이 다시 그려져 주석이 지워졌을 때
+     본문에는 없는 말이 목록에만 남는다. */
+  var seen = {};
+  found = [];
+  document.querySelectorAll('.plainterm').forEach(function(b){
+    var t = b.textContent;
+    if (seen[t] || !DEF[t]) return;
+    seen[t] = 1; found.push([t, DEF[t][0], DEF[t][1]]);
+  });
+  /* 목록이 그대로면 손대지 않는다. 손댈 때마다 DOM 이 바뀌어 관찰이 다시 돌면 끝이 없다. */
+  var sig = found.map(function(f){ return f[0]; }).sort().join('|');
+  if (sig === lastSig) return;
+  lastSig = sig;
+  var old = document.querySelector('details.glbox');
+  var wasOpen = old && old.open;
+  if (old) old.remove();
+  if (!found.length) return;
+  found.sort(function(a, b){ return a[0].localeCompare(b[0], 'ko'); });
+  var box = document.createElement('details');
+  box.className = 'glbox';
+  var dl = found.map(function(f){
+    return '<dt></dt><dd data-m="' + (f[2] ? '1' : '') + '"></dd>';
+  }).join('');
+  box.innerHTML = '<summary>📘 이 쪽에 나온 어려운 말 ' + found.length + '개</summary><dl>' + dl + '</dl>';
+  if (wasOpen) box.open = true;
+  var dts = box.querySelectorAll('dt'), dds = box.querySelectorAll('dd');
+  found.forEach(function(f, j){
+    dts[j].textContent = f[0];
+    dds[j].textContent = f[1];
+    if (f[2]){ var i2 = document.createElement('i'); i2.textContent = f[2]; dds[j].appendChild(i2); }
+  });
+  /* 펼치는 순간 다시 센다. 쪽이 제 내용을 다시 그려 주석 하나가 사라져도,
+     읽는 사람이 보는 목록은 늘 본문과 같다. */
+  box.addEventListener('toggle', function(){
+    if (!box.open) return;
+    var now = {}, list = [];
+    document.querySelectorAll('.plainterm').forEach(function(b){
+      var t = b.textContent;
+      if (now[t] || !DEF[t]) return;
+      now[t] = 1; list.push([t, DEF[t][0], DEF[t][1]]);
+    });
+    list.sort(function(a, b2){ return a[0].localeCompare(b2[0], 'ko'); });
+    if (list.length === box.querySelectorAll('dt').length) return;
+    box.querySelector('summary').textContent = '📘 이 쪽에 나온 어려운 말 ' + list.length + '개';
+    var dl2 = box.querySelector('dl');
+    dl2.innerHTML = '';
+    list.forEach(function(f){
+      var dt = document.createElement('dt'); dt.textContent = f[0];
+      var dd = document.createElement('dd'); dd.textContent = f[1];
+      if (f[2]){ var i3 = document.createElement('i'); i3.textContent = f[2]; dd.appendChild(i3); }
+      dl2.appendChild(dt); dl2.appendChild(dd);
+    });
+    lastSig = list.map(function(f){ return f[0]; }).sort().join('|');
+  });
+  var cr = document.querySelector('.site-credit');
+  if (cr) cr.parentNode.insertBefore(box, cr); else document.body.appendChild(box);
   }
 })();
 </script>

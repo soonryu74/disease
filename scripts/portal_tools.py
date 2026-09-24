@@ -360,6 +360,236 @@ def inject_credit(path):
     return True
 
 
+TERMS_CSS = """
+/* ── 쉬운 말 풀이 — 어려운 낱말이 처음 나온 자리에 뜻을 단다 ────────── */
+.plainterm{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
+  border-bottom:1px dashed currentColor;opacity:.98}
+.plainterm::after{content:'뜻';font-size:.62em;vertical-align:.5em;margin-left:1px;opacity:.75;
+  font-weight:700;letter-spacing:0}
+.plainterm[aria-expanded="true"]{background:var(--accent-soft,#D7ECE8)}
+.glpop{position:absolute;z-index:90;max-width:min(320px,calc(100vw - 28px));
+  background:var(--surface,#fff);color:var(--ink,#16211D);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);
+  font-size:13.5px;line-height:1.65;font-weight:400;text-align:left;word-break:keep-all}
+.glpop b{display:block;font-size:14px;margin-bottom:4px}
+.glpop .more{display:block;margin-top:6px;font-size:12.5px;color:var(--muted,#5B6B65)}
+details.glbox{margin:22px 0 0;border:1px solid var(--line,#DCE4E1);border-radius:12px;
+  background:var(--surface-2,#EEF2F0)}
+details.glbox>summary{cursor:pointer;list-style:none;padding:12px 15px;font-size:13.5px;font-weight:700;
+  min-height:44px;display:flex;align-items:center;gap:6px}
+details.glbox>summary::-webkit-details-marker{display:none}
+details.glbox>summary::after{content:'▾';font-size:10px;opacity:.7}
+details.glbox[open]>summary::after{content:'▴'}
+details.glbox dl{margin:0;padding:0 15px 14px}
+details.glbox dt{font-size:13.5px;font-weight:700;margin-top:10px}
+details.glbox dd{margin:2px 0 0;font-size:13px;line-height:1.7;color:var(--muted,#5B6B65);word-break:keep-all}
+details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5px;opacity:.85}
+@media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
+  details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
+"""
+
+
+def terms_js():
+    """쪽마다 어려운 낱말 첫 자리에만 뜻을 달고, 맨 아래에 그 쪽에 나온 말만 모은다.
+
+    본문 글자는 바꾸지 않는다 — 화면에서 감싸기만 한다. 그래서 자료·통계에는 아무 영향이 없다.
+    """
+    try:
+        from plain_glossary import TERMS, ORDER
+    except ImportError:
+        import sys
+        sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+        from plain_glossary import TERMS, ORDER
+    data = json.dumps([[t, TERMS[t][0], TERMS[t][1]] for t in ORDER], ensure_ascii=False)
+    return """<script>
+/* 쉬운 말 풀이 — scripts/plain_glossary.py 한 곳에서 관리한다 */
+(function(){
+  var T = __TERMS__;
+  var SKIP = {SCRIPT:1, STYLE:1, TEXTAREA:1, INPUT:1, SELECT:1, OPTION:1, CODE:1, PRE:1,
+              SVG:1, CANVAS:1, MATH:1};
+  var left = {}, found = [], DEF = {}, lastSig = null;
+  T.forEach(function(x){ left[x[0]] = x; DEF[x[0]] = [x[1], x[2]]; });
+
+  function skippable(n){
+    for (var a = n.parentNode; a && a !== document.body; a = a.parentNode){
+      if (a.nodeType !== 1) continue;
+      /* SVG 안쪽은 건드리지 않는다. 차트 글자에 단추를 넣으면 그려지지 않는다.
+         SVG 요소의 tagName 은 소문자라(svg, text, g) 대문자로 맞춰 본다. */
+      if (SKIP[String(a.tagName).toUpperCase()]) return true;
+      var c = a.className;
+      if (typeof c === 'string' && /\\b(plainterm|glpop|glbox|gnav|printonly|pagetools|site-credit)\\b/.test(c)) return true;
+      if (a.tagName === 'BUTTON' || a.hasAttribute('aria-hidden')) return true;
+    }
+    return false;
+  }
+
+  function wrap(node, term, def, more){
+    var i = node.nodeValue.indexOf(term);
+    if (i < 0) return false;
+    var after = node.splitText(i);
+    after.nodeValue = after.nodeValue.slice(term.length);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'plainterm'; btn.textContent = term;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', term + ' — 뜻 보기');
+    btn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); show(btn, term, def, more); };
+    node.parentNode.insertBefore(btn, after);
+    found.push([term, def, more]);
+    return true;
+  }
+
+  var pop = null;
+  function close(){ if (pop){ pop.remove(); pop = null; }
+    document.querySelectorAll('.plainterm[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded','false'); }); }
+  function show(btn, term, def, more){
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    close(); if (open) return;
+    btn.setAttribute('aria-expanded', 'true');
+    pop = document.createElement('span');
+    pop.className = 'glpop'; pop.setAttribute('role', 'tooltip');
+    pop.innerHTML = '<b></b><span></span>' + (more ? '<span class="more"></span>' : '');
+    pop.querySelector('b').textContent = term;
+    pop.querySelectorAll('span')[0].textContent = def;
+    if (more) pop.querySelector('.more').textContent = more;
+    document.body.appendChild(pop);
+    var r = btn.getBoundingClientRect(), w = pop.offsetWidth;
+    var x = Math.min(Math.max(8, r.left + scrollX), scrollX + innerWidth - w - 8);
+    pop.style.left = x + 'px';
+    pop.style.top = (r.bottom + scrollY + 6) + 'px';
+  }
+  document.addEventListener('click', function(e){ if (!e.target.closest('.plainterm,.glpop')) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  addEventListener('resize', close);
+
+  /* 쪽이 제 내용을 다 그린 뒤에 단다. 먼저 달면 나중 렌더링이 주석을 지워,
+     본문에는 없는 말이 아래 목록에만 남는 일이 생긴다(유입 지도에서 그랬다). */
+  function pass(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim() && !skippable(n)) nodes.push(n);
+    for (var i = 0; i < nodes.length; i++){
+      for (var k = 0; k < T.length; k++){
+        var t = T[k][0];
+        if (!left[t]) continue;
+        if (wrap(nodes[i], t, T[k][1], T[k][2])){ delete left[t]; }
+      }
+    }
+  }
+  function live(){
+    var m = {};
+    document.querySelectorAll('.plainterm').forEach(function(b){ m[b.textContent] = 1; });
+    return m;
+  }
+  function go(){
+    /* 아직 안 달린 말만 다시 찾는다. 쪽이 제 내용을 다시 그리면서 주석을 지워도
+       다음 차례에 되살아난다. */
+    var on = live();
+    left = {};
+    T.forEach(function(x){ if (!on[x[0]]) left[x[0]] = x; });
+    pass();
+    build();
+  }
+  /* 쪽이 제 내용을 다시 그릴 때마다 주석이 지워질 수 있다(유입 지도의 범례가 그렇다).
+     DOM 이 바뀌면 잠깐 기다렸다가 다시 단다. 달 것이 없으면 아무 일도 하지 않으므로 곧 잠잠해진다. */
+  var timer = null;
+  function start(){
+    go();
+    var runs = 0, mo = new MutationObserver(function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        go();
+        /* 늘 다시 그리는 쪽(지구본)에서 끝없이 돌지 않게 횟수를 막아 둔다.
+           목록이 그대로면 build 가 아무것도 안 하므로 보통은 금방 잠잠해진다. */
+        if (++runs >= 30) mo.disconnect();
+      }, 400);
+    });
+    mo.observe(document.body, {childList: true, subtree: true});
+  }
+  if (document.readyState === 'complete') setTimeout(start, 0);
+  else addEventListener('load', function(){ setTimeout(start, 0); });
+
+  function build(){
+  /* 목록은 화면에 실제로 달려 있는 주석에서 바로 만든다.
+     따로 모아 둔 배열을 쓰면, 쪽이 다시 그려져 주석이 지워졌을 때
+     본문에는 없는 말이 목록에만 남는다. */
+  var seen = {};
+  found = [];
+  document.querySelectorAll('.plainterm').forEach(function(b){
+    var t = b.textContent;
+    if (seen[t] || !DEF[t]) return;
+    seen[t] = 1; found.push([t, DEF[t][0], DEF[t][1]]);
+  });
+  /* 목록이 그대로면 손대지 않는다. 손댈 때마다 DOM 이 바뀌어 관찰이 다시 돌면 끝이 없다. */
+  var sig = found.map(function(f){ return f[0]; }).sort().join('|');
+  if (sig === lastSig) return;
+  lastSig = sig;
+  var old = document.querySelector('details.glbox');
+  var wasOpen = old && old.open;
+  if (old) old.remove();
+  if (!found.length) return;
+  found.sort(function(a, b){ return a[0].localeCompare(b[0], 'ko'); });
+  var box = document.createElement('details');
+  box.className = 'glbox';
+  var dl = found.map(function(f){
+    return '<dt></dt><dd data-m="' + (f[2] ? '1' : '') + '"></dd>';
+  }).join('');
+  box.innerHTML = '<summary>📘 이 쪽에 나온 어려운 말 ' + found.length + '개</summary><dl>' + dl + '</dl>';
+  if (wasOpen) box.open = true;
+  var dts = box.querySelectorAll('dt'), dds = box.querySelectorAll('dd');
+  found.forEach(function(f, j){
+    dts[j].textContent = f[0];
+    dds[j].textContent = f[1];
+    if (f[2]){ var i2 = document.createElement('i'); i2.textContent = f[2]; dds[j].appendChild(i2); }
+  });
+  /* 펼치는 순간 다시 센다. 쪽이 제 내용을 다시 그려 주석 하나가 사라져도,
+     읽는 사람이 보는 목록은 늘 본문과 같다. */
+  box.addEventListener('toggle', function(){
+    if (!box.open) return;
+    var now = {}, list = [];
+    document.querySelectorAll('.plainterm').forEach(function(b){
+      var t = b.textContent;
+      if (now[t] || !DEF[t]) return;
+      now[t] = 1; list.push([t, DEF[t][0], DEF[t][1]]);
+    });
+    list.sort(function(a, b2){ return a[0].localeCompare(b2[0], 'ko'); });
+    if (list.length === box.querySelectorAll('dt').length) return;
+    box.querySelector('summary').textContent = '📘 이 쪽에 나온 어려운 말 ' + list.length + '개';
+    var dl2 = box.querySelector('dl');
+    dl2.innerHTML = '';
+    list.forEach(function(f){
+      var dt = document.createElement('dt'); dt.textContent = f[0];
+      var dd = document.createElement('dd'); dd.textContent = f[1];
+      if (f[2]){ var i3 = document.createElement('i'); i3.textContent = f[2]; dd.appendChild(i3); }
+      dl2.appendChild(dt); dl2.appendChild(dd);
+    });
+    lastSig = list.map(function(f){ return f[0]; }).sort().join('|');
+  });
+  var cr = document.querySelector('.site-credit');
+  if (cr) cr.parentNode.insertBefore(box, cr); else document.body.appendChild(box);
+  }
+})();
+</script>""".replace('__TERMS__', data)
+
+
+_TERMS_RE = re.compile(r'\s*<script>\s*/\* 쉬운 말 풀이.*?</script>', re.S)
+
+
+def inject_terms(path):
+    """쉬운 말 풀이 장치를 붙인다. 이미 있으면 새것으로 갈아 끼운다."""
+    s = open(path, encoding='utf-8').read()
+    before = s
+    s = _TERMS_RE.sub('', s)
+    js = terms_js()
+    if '</body>' in s:
+        s = s.replace('</body>', js + '\n</body>', 1)
+    else:
+        s = s.rstrip() + '\n' + js + '\n'
+    if s == before:
+        return False
+    open(path, 'w', encoding='utf-8').write(s)
+    return True
+
+
 def printfoot_html():
     return ('<div class="printonly printfoot">'
             '⚠️ 질병관리청 공식 누리집이 아닌 공공자료 정리·분석 프로젝트의 참고용 정리물이다. '
@@ -384,12 +614,14 @@ def inject(path, depth):
         # 이 갈래로 돌아서는 바람에 크레딧 스타일이 스물두 쪽에 안 붙던 일이 있었다.
         # 자리가 중요하다. 메뉴 CSS는 매번 걷어내고 다시 넣는데, 그 걷어내는 범위가
         # 메뉴 주석부터 </style> 까지다. 그 뒤에 두면 다음 조립 때 같이 지워진다.
-        if '.site-credit{' not in s2:
+        for css, probe in ((CREDIT_CSS, '.site-credit{'), (TERMS_CSS, '.glpop{')):
+            if probe in s2:
+                continue
             mark = '\n/* ── 공통 메뉴'
             if mark in s2:
-                s2 = s2.replace(mark, CREDIT_CSS + mark, 1)
+                s2 = s2.replace(mark, css + mark, 1)
             elif '</style>' in s2:
-                s2 = s2.replace('</style>', CREDIT_CSS + '</style>', 1)
+                s2 = s2.replace('</style>', css + '</style>', 1)
         if s2 != s:
             open(path, 'w', encoding='utf-8').write(s2)
             return True
@@ -400,9 +632,9 @@ def inject(path, depth):
     # 1) 인쇄 CSS — 첫 </style> 앞에 넣어 그 파일의 색 토큰을 덮어쓴다
     marker = '/* ── 인쇄'
     if '</style>' in s:
-        s = s.replace('</style>', PRINT_CSS + CREDIT_CSS + '\n</style>', 1)
+        s = s.replace('</style>', PRINT_CSS + CREDIT_CSS + TERMS_CSS + '\n</style>', 1)
     else:
-        s = s.replace('</head>', f'<style>{PRINT_CSS}{CREDIT_CSS}</style>\n</head>', 1)
+        s = s.replace('</head>', f'<style>{PRINT_CSS}{CREDIT_CSS}{TERMS_CSS}</style>\n</head>', 1)
     # 2) 인쇄용 머리글.
     #    포털에는 <body>가 있는 완전한 문서와 <title>로 시작하는 조각 파일이 섞여 있다.
     #    조각 파일에 맨 앞으로 넣으면 <title>보다 앞서므로, 스타일 블록 뒤에 넣는다.
@@ -500,6 +732,7 @@ def inject_all(portal_dir):
             did = ensure_description(p, current) or did
             did = inject(p, depth) or did
             did = inject_nav(p, depth, current) or did
+            did = inject_terms(p) or did
             did = inject_credit(p) or did
             if did:
                 n += 1

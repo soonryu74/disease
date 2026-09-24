@@ -284,12 +284,46 @@ def check_data_page():
     note(f'데이터 센터가 내건 파일 {len(listed)}개 · 자료 묶음 {sum(len(g.get("items", [])) for g in D.get("groups", []))}개')
 
 
+# ── 6. 쉬운 말 — 어려운 낱말에 풀이가 있는가 ────────────────────────────
+def check_plain_words():
+    """본문에 나오는 어려운 말 가운데 풀이가 없는 것을 알려 준다.
+
+    화면 글자가 아니라 원본 HTML을 훑으므로 대강의 수만 본다. 그래도
+    '풀이가 통째로 빠진 말'은 이걸로 잡힌다.
+    """
+    try:
+        from plain_glossary import TERMS, WATCH
+    except Exception as e:                               # noqa: BLE001
+        warn('쉬운 말', f'풀이 사전을 읽지 못함 — {e}')
+        return
+    used, nogloss = set(), {}
+    for dirpath, _, fs in os.walk(PORTAL):
+        for f in fs:
+            if f != 'index.html':
+                continue
+            s = open(os.path.join(dirpath, f), encoding='utf-8').read()
+            # 주입한 사전 자체는 빼고 센다
+            s = re.sub(r'<script>\s*/\* 쉬운 말 풀이.*?</script>', '', s, flags=re.S)
+            for w in WATCH:
+                if w in s:
+                    used.add(w)
+                    if w not in TERMS:
+                        nogloss[w] = nogloss.get(w, 0) + 1
+    for w, n in sorted(nogloss.items(), key=lambda x: -x[1]):
+        warn('쉬운 말', f'풀이가 없는 말 — {w} ({n}쪽)')
+    idle = [t for t in TERMS if t not in used]
+    if idle:
+        note(f'쓰이지 않는 풀이 {len(idle)}개 — {", ".join(idle[:6])}')
+    note(f'풀이 {len(TERMS)}개 · 본문에 나온 어려운 말 {len(used)}개 · 풀이 없는 말 {len(nogloss)}개')
+
+
 def main():
     csvs, jsons = check_files()
     check_years(csvs)
     check_names(jsons, csvs)
     check_pages()
     check_data_page()
+    check_plain_words()
 
     print('── 자료 점검 ' + '─' * 50)
     for m in NOTES:
