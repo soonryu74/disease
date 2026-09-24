@@ -28,7 +28,7 @@ from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
-from portal_tools import ensure_head, inject, inject_nav  # noqa: E402
+from portal_tools import ensure_head, inject, inject_credit, inject_nav  # noqa: E402
 from daily_enrich import ENRICH_V, enrich  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, 'portal', 'daily')
@@ -427,6 +427,7 @@ def render(items, status, today, run_at):
     ensure_head(out)
     inject(out, 1)
     inject_nav(out, 1, 'daily')
+    inject_credit(out)
     print(f'→ portal/daily/index.html  {os.path.getsize(out):,}B')
 
 

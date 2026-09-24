@@ -336,7 +336,6 @@ __CARDS__
 </div>
 
 <footer>
-  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
   <div>출처: 감염병누리집 · 감염병포털 · 국가건강정보포털 · 예방접종도우미 · 병원체생물안전정보 · 급수별 대응·관리지침 —
     <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/05_%EA%B0%90%EC%97%BC%EB%B3%91_%EC%A7%88%EB%B3%91%EC%A0%95%EB%B3%B4" target="_blank" rel="noopener">원자료(GitHub)</a></div>
   <div class="warn">⚠️ 참고용 정리물입니다. 진단·치료는 반드시 의료진·보건소 확인을 거쳐야 합니다.</div>

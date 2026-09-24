@@ -163,12 +163,16 @@
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
 
 
-
-
-
-
-
-
+/* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
+   쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
+   선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
+footer.site-credit, .site-credit{margin:28px 0 0;padding:0 16px 76px;text-align:center;
+  font-size:.76rem;line-height:1.6;color:#8a94a0;word-break:keep-all;overflow-wrap:anywhere}
+/* 인쇄·자료받기 단추가 오른쪽 아래에 떠 있어서, 끝까지 내리면 크레딧을 가렸다.
+   단추 높이만큼 아래를 비워 둔다. 종이에는 단추가 없으니 그 여백을 되돌린다. */
+@media print{footer.site-credit, .site-credit{padding-bottom:0}}
+footer.site-credit a, .site-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media print{footer.site-credit, .site-credit{display:block !important;color:#6b7480;margin-top:6mm}}
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
@@ -381,7 +385,6 @@ nav:not(.gnav){display:none !important}
 </div>
 
 <footer>
-  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
   <div>출처: 감염병누리집 · 감염병포털 · 국가건강정보포털 · 예방접종도우미 · 병원체생물안전정보 · 급수별 대응·관리지침 —
     <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/05_%EA%B0%90%EC%97%BC%EB%B3%91_%EC%A7%88%EB%B3%91%EC%A0%95%EB%B3%B4" target="_blank" rel="noopener">원자료(GitHub)</a></div>
   <div class="warn">⚠️ 참고용 정리물입니다. 진단·치료는 반드시 의료진·보건소 확인을 거쳐야 합니다.</div>
@@ -483,6 +486,6 @@ nav:not(.gnav){display:none !important}
   }
 })();
 </script>
-
+<footer class="site-credit">기획·제작 지움웍스 · <a href="https://jieumworks.com" target="_blank" rel="noopener">jieumworks.com</a> · 2026년 9월</footer>
 </body>
 </html>

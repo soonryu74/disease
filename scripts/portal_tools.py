@@ -11,8 +11,45 @@
  - 카드·패널·표 행이 쪽 경계에서 잘리지 않게 한다
  - 출처·주소·인쇄일을 머리글로 찍는다 — 종이만 돌아다녀도 출처를 잃지 않게
 """
+import json
 import os
 import re
+
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# 제작 크레딧 — 문구와 날짜는 site-config.json 한 곳에서 관리한다.
+# 예전에는 열여섯 개 템플릿에 제각각 박혀 있어서, 날짜 한 번 고치려면 열여섯 군데를
+# 손대야 했고 문구도 '제작:'과 'Built by' 두 가지로 갈려 있었다.
+try:
+    _CFG = json.load(open(os.path.join(ROOT, 'site-config.json'), encoding='utf-8'))
+except Exception:                                        # noqa: BLE001
+    _CFG = {}
+CREDIT = _CFG.get('credit') or {}
+
+CREDIT_CSS = """
+/* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
+   쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
+   선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
+footer.site-credit, .site-credit{margin:28px 0 0;padding:0 16px 76px;text-align:center;
+  font-size:.76rem;line-height:1.6;color:#8a94a0;word-break:keep-all;overflow-wrap:anywhere}
+/* 인쇄·자료받기 단추가 오른쪽 아래에 떠 있어서, 끝까지 내리면 크레딧을 가렸다.
+   단추 높이만큼 아래를 비워 둔다. 종이에는 단추가 없으니 그 여백을 되돌린다. */
+@media print{footer.site-credit, .site-credit{padding-bottom:0}}
+footer.site-credit a, .site-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media print{footer.site-credit, .site-credit{display:block !important;color:#6b7480;margin-top:6mm}}
+"""
+
+
+def credit_html():
+    """맨 아래 한 줄. 본문이 끝난 뒤, 기존 안내 문구보다 더 아래에 놓는다."""
+    k = CREDIT
+    if not k:
+        return ''
+    return ('<footer class="site-credit">'
+            f'{k.get("role", "")} {k.get("name", "")} · '
+            f'<a href="{k.get("url", "")}" target="_blank" rel="noopener">{k.get("site", "")}</a>'
+            f' · {k.get("date", "")}</footer>')
+
 
 PRINT_CSS = """
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
@@ -283,11 +320,44 @@ def tools_html(data_href='data/', home='./'):
 
 
 def printhead_html(title):
+    site = CREDIT.get('site', 'jieumworks.com')
     return ('<div class="printonly printhead" id="printhead">'
-            f'<b>{title}</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br>'
+            f'<b>{title}</b> — 감염병 자료 아카이브 · 제작 {site}<br>'
             '<span class="purl"></span> · <span class="pdate"></span> · '
             '원자료: 질병관리청 · 법제처'
             '</div>')
+
+
+# 예전 판 크레딧 — 쪽마다 문구·자리가 달랐다. 새로 붙이기 전에 걷어낸다.
+# 두 가지 모양뿐이라 그 둘만 정확히 집어낸다. 다른 글은 건드리지 않는다.
+_OLD_CREDIT = (
+    re.compile(r'\s*<div class="maker">제작:.*?jieumworks\.com.*?</div>', re.S),
+    re.compile(r'\s*<div style="margin-top:6px">Built by\s*<a[^>]*jieumworks\.com.*?</div>', re.S),
+)
+_CREDIT_RE = re.compile(r'\s*<footer class="site-credit">.*?</footer>', re.S)
+
+
+def inject_credit(path):
+    """맨 아래 제작 크레딧을 붙인다. 이미 있으면 새 문구로 갈아 끼운다.
+
+    본문이 끝난 자리(</body> 바로 앞)에 두므로 기존 안내 문구보다 늘 아래에 온다.
+    """
+    html = credit_html()
+    if not html:
+        return False
+    s = open(path, encoding='utf-8').read()
+    before = s
+    for rx in _OLD_CREDIT:
+        s = rx.sub('', s)
+    s = _CREDIT_RE.sub('', s)
+    if '</body>' in s:
+        s = s.replace('</body>', html + '\n</body>', 1)
+    else:
+        s = s.rstrip() + '\n' + html + '\n'
+    if s == before:
+        return False
+    open(path, 'w', encoding='utf-8').write(s)
+    return True
 
 
 def printfoot_html():
@@ -310,6 +380,16 @@ def inject(path, depth):
                     printhead_html(title), s, count=1, flags=re.S)
         s2 = re.sub(r'<div class="printonly printfoot">.*?</div>',
                     printfoot_html(), s2, count=1, flags=re.S)
+        # 나중에 생긴 공용 스타일은 이미 주입된 쪽에도 넣어 준다.
+        # 이 갈래로 돌아서는 바람에 크레딧 스타일이 스물두 쪽에 안 붙던 일이 있었다.
+        # 자리가 중요하다. 메뉴 CSS는 매번 걷어내고 다시 넣는데, 그 걷어내는 범위가
+        # 메뉴 주석부터 </style> 까지다. 그 뒤에 두면 다음 조립 때 같이 지워진다.
+        if '.site-credit{' not in s2:
+            mark = '\n/* ── 공통 메뉴'
+            if mark in s2:
+                s2 = s2.replace(mark, CREDIT_CSS + mark, 1)
+            elif '</style>' in s2:
+                s2 = s2.replace('</style>', CREDIT_CSS + '</style>', 1)
         if s2 != s:
             open(path, 'w', encoding='utf-8').write(s2)
             return True
@@ -320,9 +400,9 @@ def inject(path, depth):
     # 1) 인쇄 CSS — 첫 </style> 앞에 넣어 그 파일의 색 토큰을 덮어쓴다
     marker = '/* ── 인쇄'
     if '</style>' in s:
-        s = s.replace('</style>', PRINT_CSS + '\n</style>', 1)
+        s = s.replace('</style>', PRINT_CSS + CREDIT_CSS + '\n</style>', 1)
     else:
-        s = s.replace('</head>', f'<style>{PRINT_CSS}</style>\n</head>', 1)
+        s = s.replace('</head>', f'<style>{PRINT_CSS}{CREDIT_CSS}</style>\n</head>', 1)
     # 2) 인쇄용 머리글.
     #    포털에는 <body>가 있는 완전한 문서와 <title>로 시작하는 조각 파일이 섞여 있다.
     #    조각 파일에 맨 앞으로 넣으면 <title>보다 앞서므로, 스타일 블록 뒤에 넣는다.
@@ -420,6 +500,7 @@ def inject_all(portal_dir):
             did = ensure_description(p, current) or did
             did = inject(p, depth) or did
             did = inject_nav(p, depth, current) or did
+            did = inject_credit(p) or did
             if did:
                 n += 1
                 print('  도구·메뉴 주입', os.path.relpath(p, os.path.dirname(portal_dir)))

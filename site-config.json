@@ -1,0 +1,12 @@
+{
+ "brand": "감염병 자료 아카이브",
+ "baseUrl": "https://soonryu74.github.io/disease",
+ "note": "credit 은 모든 쪽 맨 아래 제작 크레딧입니다. 날짜는 여기서만 고칩니다. 스타일은 scripts/portal_tools.py 의 CREDIT_CSS(.site-credit) 한 곳에 있습니다.",
+ "credit": {
+  "role": "기획·제작",
+  "name": "지움웍스",
+  "site": "jieumworks.com",
+  "url": "https://jieumworks.com",
+  "date": "2026년 9월"
+ }
+}

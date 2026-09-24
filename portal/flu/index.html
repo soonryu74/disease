@@ -154,6 +154,17 @@
 
 
 
+/* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
+   쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
+   선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
+footer.site-credit, .site-credit{margin:28px 0 0;padding:0 16px 76px;text-align:center;
+  font-size:.76rem;line-height:1.6;color:#8a94a0;word-break:keep-all;overflow-wrap:anywhere}
+/* 인쇄·자료받기 단추가 오른쪽 아래에 떠 있어서, 끝까지 내리면 크레딧을 가렸다.
+   단추 높이만큼 아래를 비워 둔다. 종이에는 단추가 없으니 그 여백을 되돌린다. */
+@media print{footer.site-credit, .site-credit{padding-bottom:0}}
+footer.site-credit a, .site-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media print{footer.site-credit, .site-credit{display:block !important;color:#6b7480;margin-top:6mm}}
+
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
 .gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
@@ -1174,3 +1185,4 @@ drawStack();
   }
 })();
 </script>
+<footer class="site-credit">기획·제작 지움웍스 · <a href="https://jieumworks.com" target="_blank" rel="noopener">jieumworks.com</a> · 2026년 9월</footer>
