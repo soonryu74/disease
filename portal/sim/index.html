@@ -132,6 +132,84 @@
   .r0x .thr{background:var(--surface-2);border-radius:10px;padding:10px 13px;font-size:13.5px;margin-top:10px}
   @media(max-width:700px){.r0x .bd{grid-template-columns:1fr}}
 
+  /* ── 체험 영역 ─────────────────────────────────────────────────── */
+  .inperr{margin:8px 0 0;font-size:13px;line-height:1.7;color:#fff;background:var(--warn);
+    border-radius:10px;padding:10px 13px;word-break:keep-all}
+  details.asum{margin:10px 0 0;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  details.asum>summary{cursor:pointer;list-style:none;padding:11px 15px;font-size:13.5px;font-weight:700;
+    min-height:44px;display:flex;align-items:center;gap:6px}
+  details.asum>summary::-webkit-details-marker{display:none}
+  details.asum>summary::after{content:'▾';font-size:10px;opacity:.7}
+  details.asum[open]>summary::after{content:'▴'}
+  details.asum .bd{padding:0 15px 14px}
+
+  .playwrap{margin:16px 0 0}
+  .pbar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:var(--surface);
+    border:1px solid var(--line);border-radius:14px;padding:12px 15px;box-shadow:var(--shadow);
+    position:sticky;top:var(--navh,0px);z-index:30}
+  .pbtns{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+  .pb{font:inherit;font-size:14px;font-weight:700;cursor:pointer;min-height:44px;padding:9px 15px;
+    border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);color:var(--ink)}
+  .pb.main{background:var(--accent);border-color:var(--accent);color:#fff;min-width:104px}
+  .pb:hover{border-color:var(--accent)}
+  .spd{display:inline-flex;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden}
+  .sp{font:inherit;font-size:13px;font-weight:700;cursor:pointer;border:0;background:var(--surface);
+    color:var(--muted);padding:0 11px;min-height:44px}
+  .sp.on{background:var(--accent);color:#fff}
+  .pslide{flex:1;min-width:230px}
+  .daylab{display:block;font-size:13px;color:var(--muted);margin-bottom:3px}
+  .daylab b{color:var(--ink);font-variant-numeric:tabular-nums;font-size:15px}
+  #dayslider{width:100%;min-height:44px}
+  .redo{margin:9px 0 0;font-size:13px;background:var(--accent-soft);color:var(--accent-ink);
+    border-radius:10px;padding:9px 13px}
+
+  .states{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:14px 0 0}
+  @media(max-width:760px){.states{grid-template-columns:1fr}}
+  .st{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--sc);
+    border-radius:14px;padding:14px 16px;box-shadow:var(--shadow);min-width:0}
+  .st h3{margin:0 0 10px;font-size:15px;font-weight:800;display:flex;align-items:center;gap:7px}
+  .st h3 .dot{width:10px;height:10px;border-radius:50%;background:var(--sc)}
+  .st h3 .sday{margin-left:auto;font-size:12px;font-weight:600;color:var(--muted)}
+  .dotfield{display:grid;grid-template-columns:repeat(25,1fr);gap:2px;margin:0 0 12px}
+  .dotfield i{display:block;width:100%;aspect-ratio:1;border-radius:50%;background:var(--sunk,#E3E6E0);
+    transition:background-color .35s ease}
+  .dotfield i.d-S{background:#9fb3c8}
+  .dotfield i.d-E{background:#eda100}
+  .dotfield i.d-I{background:#c0392b}
+  .dotfield i.d-R{background:#2e8b74}
+  @media(prefers-reduced-motion:reduce){.dotfield i{transition:none}}
+  .nums{display:grid;grid-template-columns:repeat(auto-fit,minmax(78px,1fr));gap:7px;margin:0}
+  .nums div{background:var(--surface-2);border-radius:9px;padding:8px 9px;min-width:0}
+  .nums dt{font-size:11px;color:var(--muted);font-weight:700;letter-spacing:.02em}
+  .nums dd{margin:2px 0 0;font-size:15px;font-weight:800;font-variant-numeric:tabular-nums;
+    line-height:1.2;overflow-wrap:anywhere}
+  .nums dd small{display:block;font-size:10.5px;font-weight:500;color:var(--muted)}
+  .leg{display:flex;flex-wrap:wrap;gap:8px 16px;margin:12px 0 0;font-size:12.5px;color:var(--muted)}
+  .leg i{width:11px;height:11px;border-radius:50%;display:inline-block;vertical-align:-1px;margin-right:5px}
+  .leg .k-S{background:#9fb3c8}.leg .k-E{background:#eda100}
+  .leg .k-I{background:#c0392b}.leg .k-R{background:#2e8b74}
+  .leg b{color:var(--ink)}
+  .dotnote{margin:8px 0 0;font-size:12px;color:var(--faint);line-height:1.65;word-break:keep-all}
+
+  table.cmpnow{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.cmpnow th,table.cmpnow td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:right;
+    white-space:nowrap;font-variant-numeric:tabular-nums}
+  table.cmpnow th:first-child,table.cmpnow td:first-child{text-align:left;white-space:normal}
+  table.cmpnow thead th{color:var(--muted);font-size:11.5px;border-bottom:1.5px solid var(--line-strong)}
+  table.cmpnow .a{color:var(--s1);font-weight:700}
+  table.cmpnow .b{color:var(--s2);font-weight:700}
+
+  .dls{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0}
+  .dls button,.filebtn{font:inherit;font-size:13.5px;font-weight:700;cursor:pointer;min-height:44px;
+    padding:10px 15px;border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);
+    color:var(--ink);display:inline-flex;align-items:center}
+  .dls button:hover,.filebtn:hover{border-color:var(--accent)}
+  .filebtn input{position:absolute;left:-9999px}
+  .dlmsg{margin:10px 0 0;font-size:13px;border-radius:10px;padding:9px 13px;
+    background:var(--accent-soft);color:var(--accent-ink);word-break:keep-all}
+  .dlmsg.bad{background:var(--warn);color:#fff}
+  @media print{.pbar,.dls,.dlmsg{display:none !important}.states{grid-template-columns:1fr 1fr}}
+
   /* 이 쪽이 무엇인지 먼저 밝힌다 — 여기 곡선은 관측이 아니라 계산이다 */
   .kind{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:14px 0 0}
   .kind p{margin:0;font-size:12.5px;color:var(--muted);flex:1;min-width:230px}
@@ -213,7 +291,6 @@
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
 
-
 /* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
    쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
    선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
@@ -259,6 +336,7 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 .plainsum p{margin:0}
 .plainsum p+p{margin-top:3px}
 @media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
@@ -359,8 +437,9 @@ nav:not(.gnav){display:none !important}
   <p class="thesis">감염병마다 <b>도감의 잠복기</b>, <b>문헌의 기초재생산수(R₀)</b>, <b>증상 전 전염 일수</b>를 넣고 SEIR 모형을 돌린다.
   격리 시점·격리 효과·접촉자 추적·접종률을 두 시나리오로 나란히 놓고 곡선이 어떻게 갈라지는지 본다.
   답은 숫자가 아니라 <b>어느 손잡이가 이 감염병에 듣고 어느 손잡이가 안 듣는지</b>다.</p>
+  <p class="thesis" style="margin-top:10px">같은 감염병에서 대응 조건을 바꾸고, 시간에 따른 차이를 살펴보세요.</p>
   <div class="kind">
-    <span class="bdg analysis">분석·모형</span>
+    <span class="bdg analysis">교육용 모형 · 실제 발생 예측이 아닙니다</span>
     <p>이 쪽의 곡선과 숫자는 <b>관측된 사실이 아니라 계산 결과</b>다. 실제로 몇 명이 앓았는지는
       <a href="../data/">데이터 센터</a>의 신고 통계에 있고, 여기서는 그 통계를 예측하지 않는다.</p>
   </div>
@@ -432,12 +511,31 @@ nav:not(.gnav){display:none !important}
   </div>
 
   <div class="shared">
-    <label>인구 <input type="number" id="N" min="1000" step="1000"></label>
-    <label>첫 감염자 <input type="number" id="I0" min="1" step="1"></label>
-    <label>기간(일) <input type="number" id="days" min="60" max="730" step="10"></label>
+    <label>인구 <input type="number" id="N" min="1000" max="50000000" step="1000"></label>
+    <label>첫 감염자 <input type="number" id="I0" min="0" max="1000000" step="1"></label>
+    <label>관찰 기간(일) <input type="number" id="days" min="30" max="730" step="10"></label>
     <button class="tg" id="logy">세로 로그</button>
-    <span class="small">·  두 시나리오 공통</span>
+    <span class="small">·  A·B 공통</span>
   </div>
+  <p class="inperr" id="inperr" hidden></p>
+
+  <details class="asum">
+    <summary>고급 — 이 실험이 깔고 있는 가정</summary>
+    <div class="bd">
+      <p class="small">아래 두 값은 <b>검증된 공통 효과가 아니라 이 저장소가 교육용으로 정한 출발점</b>이다.
+        예전에는 코드 안에 90%로 숨어 있어 화면에서 보이지 않았다. 여기서 바꾸면
+        그래프와 아래 역산 실험이 모두 같은 값을 쓴다.</p>
+      <div class="shared">
+        <label>백신 감염예방 효과(%) <input type="number" id="vaccEff" min="0" max="100" step="1"></label>
+        <label>접촉자 추적 효과(%) <input type="number" id="traceEff" min="0" max="100" step="1"></label>
+        <label>시간 칸(일) <input type="number" id="dtv" min="0.01" max="1" step="0.01"></label>
+      </div>
+      <p class="small muted" style="margin:10px 0 0">백신 효과는 <b>감염을 막는 효과</b>로 쓴다. 중증을 막는 효과와 다르다.
+        접종 횟수·나이·맞은 시기·유행하는 바이러스에 따라 달라지므로 하나의 수로 확정할 수 없다.
+        시간 칸은 계산을 몇 조각으로 나눌지이며, 값이 커도 엔진이 안전한 크기로 줄인다.</p>
+      <p class="small muted" style="margin:6px 0 0" id="vaccwarn"></p>
+    </div>
+  </details>
 
   <div class="scen">
     <div class="card sc" id="scA" style="--sc:var(--s1)"><h3><span class="dot"></span>시나리오 A</h3><div class="sliders"></div><div class="tiles"></div></div>
@@ -450,10 +548,71 @@ nav:not(.gnav){display:none !important}
     <button data-q="iso0">격리 안 함</button><button data-q="same">B = A</button>
   </div>
 
+  <!-- 집단 상태: 점은 비율의 그림이고, 숫자가 계산 결과다 -->
+  <div class="playwrap">
+    <div class="pbar">
+      <div class="pbtns">
+        <button type="button" id="pPlay" class="pb main" aria-label="재생">▶ 재생</button>
+        <button type="button" id="pReset" class="pb" aria-label="처음으로">⏮ 처음으로</button>
+        <span class="spd" role="group" aria-label="배속">
+          <button type="button" class="sp" data-s="0.5">0.5배</button>
+          <button type="button" class="sp on" data-s="1">1배</button>
+          <button type="button" class="sp" data-s="2">2배</button>
+          <button type="button" class="sp" data-s="4">4배</button>
+        </span>
+      </div>
+      <div class="pslide">
+        <label for="dayslider" class="daylab">경과 <b id="daynow">0</b>일 / <span id="daymax">365</span>일</label>
+        <input type="range" id="dayslider" min="0" max="365" step="1" value="0" aria-label="날짜 이동">
+      </div>
+    </div>
+    <p class="redo" id="redo" hidden>조건이 바뀌어 처음부터 다시 계산했습니다.</p>
+
+    <div class="states">
+      <div class="st" id="stA" style="--sc:var(--s1)">
+        <h3><span class="dot"></span>시나리오 A <span class="sday"></span></h3>
+        <div class="dotfield" aria-hidden="true"></div>
+        <dl class="nums"></dl>
+      </div>
+      <div class="st" id="stB" style="--sc:var(--s2)">
+        <h3><span class="dot"></span>시나리오 B <span class="sday"></span></h3>
+        <div class="dotfield" aria-hidden="true"></div>
+        <dl class="nums"></dl>
+      </div>
+    </div>
+
+    <div class="leg">
+      <span><i class="k-S"></i><b>S</b> 아직 안 걸린 사람</span>
+      <span><i class="k-E"></i><b>E</b> 걸렸지만 아직 못 옮기는 사람</span>
+      <span><i class="k-I"></i><b>I</b> 옮길 수 있는 사람</span>
+      <span><i class="k-R"></i><b>R</b> 회복·보호</span>
+    </div>
+    <p class="dotnote" id="dotnote"></p>
+
   <div class="card">
-    <h3>하루 새 감염자</h3>
+    <h3>하루 새 감염자 <span class="small muted">세로선이 지금 보는 날짜</span></h3>
     <svg class="chart" id="chart" viewBox="0 0 1000 380" role="img" aria-label="두 시나리오의 일별 새 감염자 곡선"></svg>
-    <div class="legend"><span><i style="border-color:var(--s1)"></i>시나리오 A</span><span><i style="border-color:var(--s2)"></i>시나리오 B</span><span class="muted">· 점은 정점</span></div>
+    <div class="legend"><span><i style="border-color:var(--s1)"></i>시나리오 A</span><span><i style="border-color:var(--s2)"></i>시나리오 B</span><span class="muted">· 점은 관찰 기간 안의 최대값</span></div>
+  </div>
+
+  <div class="card">
+    <h3>이 날짜까지의 A·B 비교</h3>
+    <div class="tw"><table class="cmpnow" id="cmpnow"></table></div>
+    <p class="small muted" style="margin:9px 0 0">누적 감염에는 <b>첫 감염자도 들어 있다</b>. 화면·CSV·그림이 모두 같은 정의를 쓴다.
+      소수로 나오는 것은 사람을 쪼갠 것이 아니라 <b>모형이 낸 기댓값</b>이다. 반올림해서 0명이 되어도 전파가 완전히 끊겼다는 뜻은 아니다.</p>
+  </div>
+  </div><!-- /.playwrap -->
+
+  <div class="card">
+    <h3>가져가기</h3>
+    <p class="small muted">지금 화면의 설정과 결과를 그대로 저장한다. 모두 이 브라우저 안에서 만들어지며 어디로도 보내지 않는다.</p>
+    <div class="dls">
+      <button type="button" id="dlPng">🖼 그림(PNG)</button>
+      <button type="button" id="dlCsv">📄 날짜별 표(CSV)</button>
+      <button type="button" id="dlJson">💾 설정 저장(JSON)</button>
+      <label class="filebtn">📂 설정 불러오기<input type="file" id="upJson" accept="application/json,.json"></label>
+    </div>
+    <p class="dlmsg" id="dlmsg" hidden></p>
   </div>
 
   <p class="small muted" style="margin:16px 0 0"><b>여기까지는 계산이다.</b> 이 감염병의 실제 규정과 실제 통계는 다음에 있다.</p>
@@ -461,9 +620,11 @@ nav:not(.gnav){display:none !important}
 </section>
 
 <section id="real">
-  <h2>실제와 맞춰 보기 — 한 해를 맞추면 다른 해가 틀어진다</h2>
-  <p class="sdesc">모형을 실제에 대 보는 가장 직접적인 방법: <b>전국 인구에 이 감염병을 풀어놓고, 실제 그 해 신고수가 나오려면 접종률을 몇 %로 놓아야 하는지</b> 거꾸로 푼다.
-  한 해만 맞추는 것은 쉽다 — 손잡이가 있으니까. 진짜 물음은 <b>같은 접종률로 여러 해가 함께 맞는가</b>이다. 안 맞으면 모형에 없는 기전이 있다는 뜻이다.</p>
+  <h2>가정을 바꿔 보는 역산 실험 — 숫자 하나로 열 해를 설명할 수 있나</h2>
+  <p class="sdesc">모형을 실제에 대 보는 한 가지 방법이다. <b>전국 인구에 이 감염병을 풀어놓고, 그해 실제 신고수가 나오려면 접종률을 몇 %로 놓아야 하는지</b> 거꾸로 푼다.
+  한 해만 맞추는 것은 쉽다 — 손잡이가 있으니까. 물음은 <b>같은 값으로 여러 해가 함께 맞는가</b>이다.
+  <b>이것은 실제 접종률을 알아내는 방법이 아니다.</b> 모형의 다른 손잡이를 고정해 두고 하나만 움직여 본 것이라,
+  여기서 나온 값은 밖에서 따로 확인한 적 없는 <b>이 모형 안에서만 뜻이 있는 수</b>다.</p>
   <div class="card">
     <div class="shared" style="margin:0 0 10px">
       <label>전국 인구 <input type="number" id="POP" min="1000000" step="100000"></label>
@@ -495,6 +656,12 @@ nav:not(.gnav){display:none !important}
     <p class="small muted">R₀·전염 기간·증상 전 전염 일수. 잠복기·전파경로는 ⑤ 도감(질병관리청 자료)에서 온다. '확인 필요'로 적힌 것은 개별 논문을 특정하지 못한 것이다.</p>
     <div class="tw"><table class="refs" id="refs"></table></div>
   </div>
+  <div class="card">
+    <h3>이번에 코드와 설명을 맞대어 본 결과</h3>
+    <p class="small muted">값을 새로 확인해 바꾼 것이 아니다. 서로 맞지 않는 곳과 숨어 있던 가정을 적어 둔 것이다.
+      근거를 확인하지 못한 항목은 값을 그대로 두었다.</p>
+    <div class="tw"><table class="refs" id="checks"></table></div>
+  </div>
 </section>
 
 <section id="honest">
@@ -502,83 +669,474 @@ nav:not(.gnav){display:none !important}
   <div class="grid2">
     <div class="card">
       <ul class="tight">
-        <li><b>모두가 모두와 똑같이 섞인다고 본다.</b> 나이·가정·학교·병원 같은 구조가 없다. 2015년 MERS처럼 병원 안 슈퍼전파로 번진 유행은 이 모형에 없다.</li>
+        <li><b>모두가 모두와 똑같이 섞인다고 본다.</b> 나이·가정·학교·병원 같은 구조가 없다. 2015년 국내 메르스처럼 병원 안에서 몇 사람이 많이 옮긴 유행은 이 모형으로 그릴 수 없다. 그러니 이 쪽의 메르스 결과를 “지역사회에서 안 퍼지니 검역만 하면 된다”로 읽으면 안 된다.</li>
+        <li><b>점은 사람이 아니다.</b> 화면의 점은 그 순간 집단의 구성비를 그린 것이다. 점 하나를 따라가도 그 사람의 이야기는 없고, 점끼리 닿는 것도 전파를 계산한 것이 아니다.</li>
         <li><b>R₀는 범위다.</b> 홍역 12~18, 코로나19 원형 2.5~3.5처럼 문헌마다 다르고 시대·인구에 따라 다르다. 슬라이더의 기본값은 범위 중앙이다.</li>
         <li><b>잠복기 ≠ 잠재기.</b> 도감의 잠복기(감염→증상)에서 증상 전 전염 일수를 뺀 것을 잠재기(감염→전염 시작)로 쓴다. 근사다.</li>
       </ul>
     </div>
     <div class="card">
       <ul class="tight">
-        <li><b>사람은 행동을 바꾼다.</b> 유행이 커지면 접촉을 줄인다. 모형은 안 줄인다. 그래서 정점은 실제보다 높고 이르게 나온다.</li>
+        <li><b>사람은 행동을 바꾼다.</b> 유행이 커지면 접촉을 줄이는데 이 모형은 줄이지 않는다. 그래서 정점의 높이와 시점이 실제와 다를 수 있다. 어느 쪽으로 얼마나 다를지는 이 쪽에서 실측과 대조해 확인한 적이 없다.</li>
         <li><b>무증상 감염</b>은 따로 없다. 폴리오처럼 대다수가 무증상인 감염병은 '증상 후 격리'가 거의 안 듣는데, 모형은 증상 전 전염 일수로만 그 사정을 흉내 낸다.</li>
-        <li><b>이 페이지는 정책 근거가 아니다.</b> 손잡이 사이의 관계를 눈으로 익히는 도구다. 실제 판단은 ⑭ 현장 대응 카드의 지침과 국제 기준으로.</li>
+        <li><b>이 쪽은 정책 근거가 아니다.</b> 손잡이 사이의 관계를 눈으로 익히는 도구다. 실제 환자 수를 예측하지 않고, 지침을 대신하지 않으며, 어떤 대책이 낫다고 추천하지 않는다. 실제 판단은 <a href="../field/">현장 대응카드</a>의 지침과 국제 기준으로.</li>
+        <li><b>정책을 도중에 넣는 모형이 아니다.</b> 조건은 0일부터 끝까지 그대로 간다. 재생 중에 손잡이를 움직이면 “20일째부터 개입”이 아니라 <b>처음부터 그 조건이었다면</b>으로 전부 다시 계산한다.</li>
+        <li><b>격리자 칸(Q)이 없다.</b> 격리는 전파율을 깎는 계수로만 들어간다. 그래서 이 모형은 “몇 명이 격리됐다”를 셀 수 없고, 화면에도 그런 숫자를 만들어 내지 않는다.</li>
       </ul>
     </div>
   </div>
 </section>
 
 <footer>
-  <div>매개변수 <code>17_유행_시뮬레이터/data/모형_매개변수.json</code> · 잠복기·전파경로는 ⑤ 도감 · 계산은 브라우저(<code>scripts/templates/sim.template.html</code>).</div>
+  <div>매개변수 <code>17_유행_시뮬레이터/data/모형_매개변수.json</code> · 잠복기·전파경로는 ⑤ 도감 · 계산 엔진 <code>scripts/templates/sim.engine.js</code>(브라우저에서 돈다) · 검산 <code>17_유행_시뮬레이터/engine_test.js</code>.</div>
 </footer>
 </div>
 
-<script id="data" type="application/json">{"diseases":[{"name":"홍역","r0":[12,18],"d_inf":8,"presym":2,"note":"발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":7.0,"hi":21.0,"typ":11.0,"text":"7~21일(흔히 10~12일)"},"route":"공기·비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":18,"2017":7,"2018":15,"2019":194,"2020":6,"2021":0,"2022":0,"2023":8,"2024":49,"2025":78},"note":""}},{"name":"백일해","r0":[12,17],"d_inf":21,"presym":0,"note":"카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.","src":"Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)","incubation":{"lo":7.0,"hi":10.0,"typ":8.5,"text":"통상 7~10일(최장 약 21일)"},"route":"호흡기 비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":129,"2017":318,"2018":980,"2019":496,"2020":123,"2021":21,"2022":31,"2023":292,"2024":48048,"2025":5491},"note":""}},{"name":"수두","r0":[8,10],"d_inf":7,"presym":2,"note":"발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.","src":"CDC Pink Book","incubation":{"lo":10.0,"hi":21.0,"typ":15.0,"text":"통상 10~21일(대개 14~16일)"},"route":"공기·비말, 수포액 접촉","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":54060,"2017":80092,"2018":96467,"2019":82868,"2020":31430,"2021":20929,"2022":18547,"2023":26964,"2024":31892,"2025":30248},"note":""}},{"name":"유행성이하선염","r0":[4,7],"d_inf":7,"presym":2,"note":"이하선 부종 2일 전~5일 후.","src":"Anderson & May 1991 · CDC","incubation":{"lo":14.0,"hi":18.0,"typ":16.0,"text":"14~18일"},"route":"호흡기 비말","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":17057,"2017":16924,"2018":19237,"2019":15967,"2020":9922,"2021":9708,"2022":6358,"2023":7737,"2024":6425,"2025":6720},"note":""}},{"name":"풍진","r0":[6,7],"d_inf":11,"presym":7,"note":"발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":12.0,"hi":23.0,"typ":16.0,"text":"12~23일(평균 14~18일)"},"route":"호흡기 비말, 태반 수직감염","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":11,"2017":7,"2018":0,"2019":8,"2020":2,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"디프테리아","r0":[6,7],"d_inf":14,"presym":0,"note":"치료 없으면 2~4주 균 배출. 항생제로 단축.","src":"Anderson & May 1991 (고전 추정, 백신 전 시대)","incubation":{"lo":2.0,"hi":5.0,"typ":3.5,"text":"2~5일"},"route":"비말핵·매개물, 피부 병변 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"폴리오","r0":[5,7],"d_inf":14,"presym":7,"note":"발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":3.0,"hi":35.0,"typ":4.5,"text":"3~35일(비마비성 3~6일, 마비성 평균 7~21일)"},"route":"분변-경구 또는 경구-경구. 전염기간 증상발생 11일 전 ~ 6주 후","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"인플루엔자","r0":[1.2,1.8],"d_inf":5,"presym":1,"note":"계절 인플루엔자. 증상 1일 전~5일 후.","src":"Biggerstaff 2014 (계통고찰)","incubation":{"lo":1.0,"hi":4.0,"typ":2.0,"text":"1~4일(평균 2일)"},"route":"비말, 오염된 손·물건 접촉","grade":"제4급","iso":null,"report":"7일 이내","annual":null},{"name":"신종인플루엔자","r0":[1.4,1.6],"d_inf":5,"presym":1,"note":"2009 A(H1N1)pdm09 기준.","src":"Biggerstaff 2014 · Fraser 2009","incubation":{"lo":null,"hi":null,"typ":2.5,"text":"미확인(계절인플루엔자 기준 통상 1~4일)"},"route":"비말, 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"코로나바이러스감염증-19","r0":[2.5,3.5],"d_inf":8,"presym":2,"note":"2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.","src":"Liu 2020 (계통고찰) · WHO","incubation_fallback":"1~14일(보통 5~7일)","incubation_fallback_src":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값","incubation":{"lo":1.0,"hi":14.0,"typ":6.0,"text":"1~14일(보통 5~7일)","fallback":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"},"route":null,"grade":"제4급","iso":null,"report":"주 1회","annual":{"years":{"2022":28424349,"2023":5517540},"note":"2023 통계는 8.30까지(8.31 제4급 전환). 2024~ 표본감시라 전수표에 없음"}},{"name":"중증급성호흡기증후군","r0":[2,4],"d_inf":10,"presym":0,"note":"증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.","src":"Lipsitch 2003 · WHO","incubation_fallback":"2~10일(보통 4~6일)","incubation_fallback_src":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값","incubation":{"lo":2.0,"hi":10.0,"typ":5.0,"text":"2~10일(보통 4~6일)","fallback":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값"},"route":"호흡기 비말, 분비액의 점막 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"중동호흡기증후군","r0":[0.5,0.9],"d_inf":10,"presym":0,"note":"지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.","src":"Breban 2013 · Cauchemez 2014","incubation_fallback":"2~14일(보통 5~6일)","incubation_fallback_src":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값","incubation":{"lo":2.0,"hi":14.0,"typ":5.5,"text":"2~14일(보통 5~6일)","fallback":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"},"route":"낙타 접촉, 환자 밀접접촉(의료기관 내 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":1,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"에볼라바이러스병","r0":[1.5,2.5],"d_inf":10,"presym":0,"note":"증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.","src":"WHO Ebola Response Team 2014 · Althaus 2014","incubation":{"lo":2.0,"hi":21.0,"typ":11.5,"text":"2~21일"},"route":"감염 동물(과일박쥐·영장류) 접촉, 환자·사망자 혈액·체액 직·간접 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"엠폭스","r0":[1.1,2.4],"d_inf":21,"presym":1,"note":"2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.","src":"WHO mpox 2022","incubation":{"lo":5.0,"hi":21.0,"typ":9.5,"text":"5~21일(보통 6~13일)"},"route":"병변·체액 직접접촉, 성접촉, 밀접 비말, 오염물·감염동물 접촉, 수직감염","grade":"제3급","iso":"격리 해제(일반의료체계)","report":"24시간 이내","annual":{"years":{"2022":4,"2023":151,"2024":17,"2025":27},"note":"고시 2024.1.1 개정으로 제2급→제3급. 2022-2023은 제2급 행에 기재"}},{"name":"니파바이러스감염증","r0":[0.2,0.5],"d_inf":10,"presym":0,"note":"사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.","src":"Luby 2009 · Nikolay 2019","incubation_fallback":"4~14일(최대 45일 보고)","incubation_fallback_src":"도감이 잠복기를 병원체 항목에 병기 → 같은 값","incubation":{"lo":4.0,"hi":14.0,"typ":9.0,"text":"4~14일(최대 45일 보고)","fallback":"도감이 잠복기를 병원체 항목에 병기 → 같은 값"},"route":"병원소 과일박쥐(*Pteropus*)·돼지. ① 감염동물 접촉 ② ⭐오염된 과일·생 대추야자 수액 섭취 ③ 환자 체액 접촉(사람 간 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2025":0},"note":"2025.9.8 고시 신규 지정. 2025 통계는 9.8 이후분"}}],"defaults":{"iso_delay":2,"iso_eff":0.8,"trace":0.0,"trace_eff":0.9,"vacc":0.0,"vacc_eff":0.9,"N":100000,"I0":10,"days":365},"about":"사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.","references":{"Anderson & May 1991":{"cite":"Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.","what":"R₀ 고전 추정표(백신 도입 전 인구)","confidence":"표준 교과서"},"CDC Pink Book":{"cite":"CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.","what":"전염 기간·잠복기·증상 전 전염","confidence":"표준"},"Heymann CCDM":{"cite":"Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.","what":"전염 기간·증상 전 전염 일수의 일반 출처","confidence":"표준"},"Biggerstaff 2014":{"cite":"Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.","what":"인플루엔자 R₀ 계통고찰","confidence":"표준"},"Fraser 2009":{"cite":"Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.","what":"2009 신종인플루엔자 R₀","confidence":"표준"},"Liu 2020":{"cite":"Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.","what":"코로나19 원형주 R₀ 계통고찰","confidence":"표준"},"Lipsitch 2003":{"cite":"Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.","what":"SARS R₀·격리 효과","confidence":"표준"},"Breban 2013":{"cite":"Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.","what":"MERS R₀ < 1","confidence":"표준"},"Cauchemez 2014":{"cite":"Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.","what":"MERS R₀","confidence":"표준"},"WHO Ebola Response Team 2014":{"cite":"WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.","what":"에볼라 R₀·잠복기","confidence":"표준"},"Althaus 2014":{"cite":"Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.","what":"에볼라 R₀","confidence":"표준"},"WHO mpox 2022":{"cite":"WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.","what":"엠폭스(clade IIb) R₀ 1.1–2.4","confidence":"확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"},"Luby 2009":{"cite":"Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.","what":"니파 사람 간 전파","confidence":"표준"},"Nikolay 2019":{"cite":"Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.","what":"니파 R₀ 0.33","confidence":"표준"},"Keeling & Rohani 2008":{"cite":"Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.","what":"SEIR 모형 자체","confidence":"표준"}},"scenario_provenance":"시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다.","population":51700000,"population_note":"전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.","annual_source":"③ 백서 정리 · 연보 기반 전수감시 신고수 2016~2025"}</script>
+<script>/* 유행 시뮬레이터 계산 엔진 — 화면과 떼어 놓은 순수 계산.
+
+   왜 떼어 놓았나
+     화면에 붙어 있으면 시험할 수가 없다. 이 파일은 DOM 을 쓰지 않으므로
+     브라우저 밖(node)에서 그대로 불러 검산할 수 있다.
+     빌드할 때 build_sim.py 가 이 내용을 HTML 안에 그대로 넣는다 —
+     따로 받아 가는 파일이 늘지 않는다.
+
+   이 모형이 무엇인가
+     구획 하나하나가 '사람 묶음'인 결정론적 SEIR 모형이다.
+     개인을 따라다니지 않는다. 그래서 '누가 누구에게 옮겼는지'는 이 모형에 없다.
+     같은 입력이면 언제나 같은 결과가 나온다(무작위 요소 없음).
+
+   S 아직 안 걸린 사람 / E 걸렸지만 아직 남에게 못 옮기는 사람 /
+   I 남에게 옮길 수 있는 사람 / R 회복했거나 처음부터 보호받던 사람.
+*/
+(function (root) {
+  'use strict';
+
+  var MODEL = 'SEIR-deterministic';
+  var VERSION = '2.0.0';
+  var SCHEMA = 'disease-sim/1';
+
+  /* 입력이 받아들일 수 있는 범위. 화면·JSON·코드가 모두 이 표 하나를 본다. */
+  var LIMITS = {
+    N:      {min: 1000,  max: 50000000, int: true,  label: '인구'},
+    I0:     {min: 0,     max: 1000000,  int: true,  label: '첫 감염자'},
+    days:   {min: 30,    max: 730,      int: true,  label: '관찰 기간(일)'},
+    r0:     {min: 0,     max: 50,       int: false, label: 'R₀'},
+    delay:  {min: 0,     max: 14,       int: false, label: '증상→격리(일)'},
+    eff:    {min: 0,     max: 100,      int: false, label: '격리 효과(%)'},
+    trace:  {min: 0,     max: 100,      int: false, label: '접촉자 추적(%)'},
+    vacc:   {min: 0,     max: 100,      int: false, label: '접종률(%)'},
+    vaccEff:  {min: 0,   max: 100,      int: false, label: '백신 감염예방 효과(%) — 가정'},
+    traceEff: {min: 0,   max: 100,      int: false, label: '추적 효과(%) — 가정'}
+  };
+
+  function num(v) {
+    if (typeof v === 'string') v = v.trim();
+    if (v === '' || v === null || v === undefined) return NaN;
+    var n = Number(v);
+    return isFinite(n) ? n : NaN;
+  }
+
+  /* 값 하나를 검사한다. 고치지 않고, 무엇이 왜 틀렸는지만 돌려준다. */
+  function checkOne(key, value) {
+    var L = LIMITS[key];
+    if (!L) return null;
+    var n = num(value);
+    if (isNaN(n)) return L.label + ': 숫자가 아닙니다';
+    if (L.int && Math.floor(n) !== n) return L.label + ': 정수여야 합니다';
+    if (n < L.min || n > L.max) return L.label + ': ' + L.min + '~' + L.max + ' 사이여야 합니다 (넣은 값 ' + n + ')';
+    return null;
+  }
+
+  /* 한 번에 전부 검사한다. 하나라도 틀리면 계산을 시작하지 않는다. */
+  function validate(common, scen, assume) {
+    var errs = [];
+    ['N', 'I0', 'days'].forEach(function (k) { var e = checkOne(k, common[k]); if (e) errs.push(e); });
+    ['delay', 'eff', 'trace', 'vacc'].forEach(function (k) { var e = checkOne(k, scen[k]); if (e) errs.push(e); });
+    if (scen.r0 !== null && scen.r0 !== undefined) {
+      var e0 = checkOne('r0', scen.r0); if (e0) errs.push(e0);
+    }
+    ['vaccEff', 'traceEff'].forEach(function (k) { var e = checkOne(k, assume[k]); if (e) errs.push(e); });
+    if (errs.length) return errs;
+
+    /* 사람 수가 서로 어긋나지 않는지. 보호받는 사람과 첫 감염자를 더해
+       전체 인구를 넘으면 아직 안 걸린 사람이 음수가 된다. */
+    var N = num(common.N), I0 = num(common.I0);
+    var prot = N * (num(scen.vacc) / 100) * (num(assume.vaccEff) / 100);
+    if (I0 > N) errs.push('첫 감염자가 인구보다 많습니다');
+    else if (prot + I0 > N) {
+      errs.push('보호받는 사람 ' + Math.round(prot).toLocaleString('ko-KR') + '명과 첫 감염자 ' +
+                I0.toLocaleString('ko-KR') + '명을 더하면 인구 ' + N.toLocaleString('ko-KR') + '명을 넘습니다');
+    }
+    return errs;
+  }
+
+  /* 한 칸이 너무 크면 값이 튄다. 가장 빠른 흐름에 맞춰 칸을 줄인다.
+     4차 룽게–쿠타는 같은 칸에서 전진 오일러보다 훨씬 정확하므로 여유를 둘 수 있다.
+     쓴 칸 크기는 결과(meta.dt)에 적어 둔다. */
+  function pickStep(beta, latent, Dinf, want) {
+    var fastest = Math.max(beta, 1 / latent, 1 / Dinf, 1e-9);
+    var safe = 0.5 / fastest;
+    var dt = Math.min(want, safe);
+    if (!(dt > 0) || !isFinite(dt)) dt = 0.01;
+    return Math.max(dt, 1e-4);
+  }
+
+  /* 변화율. y = [S, E, I, R, 누적 새 감염]
+     누적을 같이 적분해야 하루치 새 감염이 S 의 감소와 어긋나지 않는다. */
+  function deriv(y, beta, N, latent, Dinf) {
+    var S = y[0], E = y[1], I = y[2];
+    var ne = beta * I * S / N;
+    var ei = E / latent;
+    var ir = I / Dinf;
+    return [-ne, ne - ei, ei - ir, ir, ne];
+  }
+
+  function rk4(y, h, beta, N, latent, Dinf) {
+    var k1 = deriv(y, beta, N, latent, Dinf);
+    var y2 = [], y3 = [], y4 = [], i;
+    for (i = 0; i < 5; i++) y2[i] = y[i] + h / 2 * k1[i];
+    var k2 = deriv(y2, beta, N, latent, Dinf);
+    for (i = 0; i < 5; i++) y3[i] = y[i] + h / 2 * k2[i];
+    var k3 = deriv(y3, beta, N, latent, Dinf);
+    for (i = 0; i < 5; i++) y4[i] = y[i] + h * k3[i];
+    var k4 = deriv(y4, beta, N, latent, Dinf);
+    var out = [];
+    for (i = 0; i < 5; i++) out[i] = y[i] + h / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]);
+    return out;
+  }
+
+  /* 본 계산.
+       disease  모형 매개변수(이름·R₀ 범위·전염 기간·증상 전 전염 일수·잠복기)
+       common   인구·첫 감염자·관찰 기간
+       scen     이 시나리오의 대응 조건
+       assume   교육용 가정값(백신 효과·추적 효과·시간 칸)
+     돌려주는 것은 하루치 기록이 든 배열과 그 요약이다. */
+  function simulate(disease, common, scen, assume) {
+    assume = assume || {};
+    var A = {
+      vaccEff: assume.vaccEff === undefined ? 90 : num(assume.vaccEff),
+      traceEff: assume.traceEff === undefined ? 90 : num(assume.traceEff),
+      dt: assume.dt === undefined ? 0.25 : num(assume.dt)
+    };
+    var errs = validate(common, scen, A);
+    if (errs.length) return {ok: false, errors: errs};
+
+    var N = num(common.N), I0 = num(common.I0), days = num(common.days);
+    var R0 = (scen.r0 === null || scen.r0 === undefined)
+      ? Math.round((disease.r0[0] + disease.r0[1]) / 2 * 10) / 10 : num(scen.r0);
+    var Dinf = disease.d_inf, presym = disease.presym;
+    var latent = Math.max(1, disease.incubation.typ - presym);
+
+    /* 격리가 손대지 못하는 전염 기간의 몫.
+       증상 전 기간과 격리까지의 지연을 전염 기간으로 나눈 것이다.
+       하루하루 전염력이 같다고 본 기간 비율이지, 실제 전파의 몇 %가
+       그때 일어났는지를 잰 값이 아니다. */
+    var cov = Math.min(presym + num(scen.delay), Dinf) / Dinf;
+    var fIso = cov + (1 - cov) * (1 - num(scen.eff) / 100);
+    var fCt = 1 - (num(scen.trace) / 100) * (A.traceEff / 100);
+    var initialProtected = N * (num(scen.vacc) / 100) * (A.vaccEff / 100);
+    var S0 = N - initialProtected - I0;              // 처음에 아직 안 걸린 사람
+    var beta = R0 / Dinf * fIso * fCt;
+
+    /* 처음의 유효 재생산수. 실제 초기 S 를 쓴다.
+       예전에는 첫 감염자를 빼기 전 수를 썼다 — 첫 감염자가 적으면 차이가 거의 없지만
+       정의로는 S(0)/N 이 맞다. */
+    var Reff0 = R0 * fIso * fCt * (S0 / N);
+
+    var dt = pickStep(beta, latent, Dinf, A.dt);
+    var steps = Math.max(1, Math.round(1 / dt));
+    dt = 1 / steps;                                   // 하루가 정수 칸으로 나뉘게 맞춘다
+
+    var y = [S0, 0, I0, initialProtected, 0];        // S, E, I, R, 누적 새 감염
+    var history = [{day: 0, S: y[0], E: y[1], I: y[2], R: y[3], newInf: 0, cumInf: I0}];
+    var peak = {day: 0, newInf: 0};
+    var warnings = [];
+
+    for (var day = 1; day <= days; day++) {
+      var before = y[4];
+      for (var k = 0; k < steps; k++) y = rk4(y, dt, beta, N, latent, Dinf);
+      /* 아주 작은 음수는 계산 오차다. 0으로 눌러 두되 사람 수가 늘지 않게 한다. */
+      for (var q = 0; q < 4; q++) if (y[q] < 0 && y[q] > -1e-6) y[q] = 0;
+      var dayNew = y[4] - before;
+      if (dayNew < 0) dayNew = 0;
+      history.push({day: day, S: y[0], E: y[1], I: y[2], R: y[3],
+                    newInf: dayNew, cumInf: I0 + y[4]});
+      if (dayNew > peak.newInf) { peak = {day: day, newInf: dayNew}; }
+    }
+    var cum = I0 + y[4];
+
+    /* 끝까지 돌린 뒤 사람 수가 맞는지 본다. 어긋나면 숨기지 않고 알린다. */
+    var last = history[history.length - 1];
+    var total = last.S + last.E + last.I + last.R;
+    var relErr = Math.abs(total - N) / N;
+    if (relErr > 1e-8) warnings.push('사람 수 합계가 ' + relErr.toExponential(2) + ' 만큼 어긋났습니다');
+    for (var h = 0; h < history.length; h++) {
+      var x = history[h];
+      if (!isFinite(x.S + x.E + x.I + x.R + x.newInf + x.cumInf)) {
+        warnings.push(x.day + '일째 계산이 수로 나오지 않았습니다');
+        break;
+      }
+    }
+
+    /* 관찰이 끝난 날에도 E·I 가 남아 있으면 '끝났다'고 말하지 않는다. */
+    var stillRunning = (last.E + last.I) >= 1;
+    var endDay = null;
+    for (var j = peak.day + 1; j < history.length; j++) {
+      if (history[j].E + history[j].I < 1) { endDay = history[j].day; break; }
+    }
+
+    return {
+      ok: true,
+      model: MODEL, version: VERSION,
+      meta: {
+        name: disease.name, R0: R0, Reff0: Reff0, beta: beta, latent: latent,
+        Dinf: Dinf, presym: presym, cov: cov, fIso: fIso, fCt: fCt,
+        initialProtected: initialProtected, S0: S0, N: N, I0: I0, days: days,
+        dt: dt, stepsPerDay: steps,
+        vaccEff: A.vaccEff, traceEff: A.traceEff
+      },
+      history: history,
+      peak: peak,
+      totals: {
+        cumInf: cum,                 // 첫 감염자 I0 를 포함한 누적이다
+        cumIncludesI0: true,
+        attack: cum / N,
+        recovered: last.R - initialProtected,
+        endDay: endDay,
+        stillRunning: stillRunning
+      },
+      warnings: warnings
+    };
+  }
+
+  /* 비율을 점 개수로 바꾼다. 최대잔여법이라 합계가 늘 같다.
+     아주 작은 비율은 0개가 될 수 있다 — 그래서 실제 숫자를 따로 보여 줘야 한다. */
+  function allocate(values, dots) {
+    var sum = values.reduce(function (a, b) { return a + b; }, 0);
+    if (!(sum > 0)) return values.map(function () { return 0; });
+    var exact = values.map(function (v) { return v / sum * dots; });
+    var base = exact.map(Math.floor);
+    var used = base.reduce(function (a, b) { return a + b; }, 0);
+    var rest = exact.map(function (v, i) { return {i: i, f: v - base[i]}; })
+                    .sort(function (a, b) { return b.f - a.f; });
+    for (var k = 0; k < dots - used; k++) base[rest[k % rest.length].i]++;
+    return base;
+  }
+
+  var api = {
+    MODEL: MODEL, VERSION: VERSION, SCHEMA: SCHEMA, LIMITS: LIMITS,
+    simulate: simulate, validate: validate, checkOne: checkOne, allocate: allocate
+  };
+  if (typeof module !== 'undefined' && module.exports) module.exports = api;
+  root.SimEngine = api;
+})(typeof globalThis !== 'undefined' ? globalThis : this);
+</script>
+<script id="data" type="application/json">{"diseases":[{"name":"홍역","r0":[12,18],"d_inf":8,"presym":2,"note":"발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":7.0,"hi":21.0,"typ":11.0,"text":"7~21일(흔히 10~12일)"},"route":"공기·비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":18,"2017":7,"2018":15,"2019":194,"2020":6,"2021":0,"2022":0,"2023":8,"2024":49,"2025":78},"note":""}},{"name":"백일해","r0":[12,17],"d_inf":21,"presym":0,"note":"카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.","src":"Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)","incubation":{"lo":7.0,"hi":10.0,"typ":8.5,"text":"통상 7~10일(최장 약 21일)"},"route":"호흡기 비말(전염력 매우 높음)","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":129,"2017":318,"2018":980,"2019":496,"2020":123,"2021":21,"2022":31,"2023":292,"2024":48048,"2025":5491},"note":""}},{"name":"수두","r0":[8,10],"d_inf":7,"presym":2,"note":"발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.","src":"CDC Pink Book","incubation":{"lo":10.0,"hi":21.0,"typ":15.0,"text":"통상 10~21일(대개 14~16일)"},"route":"공기·비말, 수포액 접촉","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":54060,"2017":80092,"2018":96467,"2019":82868,"2020":31430,"2021":20929,"2022":18547,"2023":26964,"2024":31892,"2025":30248},"note":""}},{"name":"유행성이하선염","r0":[4,7],"d_inf":7,"presym":2,"note":"이하선 부종 2일 전~5일 후.","src":"Anderson & May 1991 · CDC","incubation":{"lo":14.0,"hi":18.0,"typ":16.0,"text":"14~18일"},"route":"호흡기 비말","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":17057,"2017":16924,"2018":19237,"2019":15967,"2020":9922,"2021":9708,"2022":6358,"2023":7737,"2024":6425,"2025":6720},"note":""}},{"name":"풍진","r0":[6,7],"d_inf":11,"presym":7,"note":"발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":12.0,"hi":23.0,"typ":16.0,"text":"12~23일(평균 14~18일)"},"route":"호흡기 비말, 태반 수직감염","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":11,"2017":7,"2018":0,"2019":8,"2020":2,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"디프테리아","r0":[6,7],"d_inf":14,"presym":0,"note":"치료 없으면 2~4주 균 배출. 항생제로 단축.","src":"Anderson & May 1991 (고전 추정, 백신 전 시대)","incubation":{"lo":2.0,"hi":5.0,"typ":3.5,"text":"2~5일"},"route":"비말핵·매개물, 피부 병변 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"폴리오","r0":[5,7],"d_inf":14,"presym":7,"note":"발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.","src":"Anderson & May 1991 · CDC Pink Book","incubation":{"lo":3.0,"hi":35.0,"typ":4.5,"text":"3~35일(비마비성 3~6일, 마비성 평균 7~21일)"},"route":"분변-경구 또는 경구-경구. 전염기간 증상발생 11일 전 ~ 6주 후","grade":"제2급","iso":"격리","report":"24시간 이내","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"인플루엔자","r0":[1.2,1.8],"d_inf":5,"presym":1,"note":"계절 인플루엔자. 증상 1일 전~5일 후.","src":"Biggerstaff 2014 (계통고찰)","incubation":{"lo":1.0,"hi":4.0,"typ":2.0,"text":"1~4일(평균 2일)"},"route":"비말, 오염된 손·물건 접촉","grade":"제4급","iso":null,"report":"7일 이내","annual":null},{"name":"신종인플루엔자","r0":[1.4,1.6],"d_inf":5,"presym":1,"note":"2009 A(H1N1)pdm09 기준.","src":"Biggerstaff 2014 · Fraser 2009","incubation":{"lo":null,"hi":null,"typ":2.5,"text":"미확인(계절인플루엔자 기준 통상 1~4일)"},"route":"비말, 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"코로나바이러스감염증-19","r0":[2.5,3.5],"d_inf":8,"presym":2,"note":"2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.","src":"Liu 2020 (계통고찰) · WHO","incubation_fallback":"1~14일(보통 5~7일)","incubation_fallback_src":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값","incubation":{"lo":1.0,"hi":14.0,"typ":6.0,"text":"1~14일(보통 5~7일)","fallback":"도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"},"route":null,"grade":"제4급","iso":null,"report":"주 1회","annual":{"years":{"2022":28424349,"2023":5517540},"note":"2023 통계는 8.30까지(8.31 제4급 전환). 2024~ 표본감시라 전수표에 없음"}},{"name":"중증급성호흡기증후군","r0":[2,4],"d_inf":10,"presym":0,"note":"증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.","src":"Lipsitch 2003 · WHO","incubation_fallback":"2~10일(보통 4~6일)","incubation_fallback_src":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값","incubation":{"lo":2.0,"hi":10.0,"typ":5.0,"text":"2~10일(보통 4~6일)","fallback":"도감: KDCA 미명시(문헌상 2~10일) → WHO 값"},"route":"호흡기 비말, 분비액의 점막 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":0,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"중동호흡기증후군","r0":[0.5,0.9],"d_inf":10,"presym":0,"note":"지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.","src":"Breban 2013 · Cauchemez 2014","incubation_fallback":"2~14일(보통 5~6일)","incubation_fallback_src":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값","incubation":{"lo":2.0,"hi":14.0,"typ":5.5,"text":"2~14일(보통 5~6일)","fallback":"도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"},"route":"낙타 접촉, 환자 밀접접촉(의료기관 내 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2016":0,"2017":0,"2018":1,"2019":0,"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"에볼라바이러스병","r0":[1.5,2.5],"d_inf":10,"presym":0,"note":"증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.","src":"WHO Ebola Response Team 2014 · Althaus 2014","incubation":{"lo":2.0,"hi":21.0,"typ":11.5,"text":"2~21일"},"route":"감염 동물(과일박쥐·영장류) 접촉, 환자·사망자 혈액·체액 직·간접 접촉","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2020":0,"2021":0,"2022":0,"2023":0,"2024":0,"2025":0},"note":""}},{"name":"엠폭스","r0":[1.1,2.4],"d_inf":21,"presym":1,"note":"2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.","src":"WHO mpox 2022","incubation":{"lo":5.0,"hi":21.0,"typ":9.5,"text":"5~21일(보통 6~13일)"},"route":"병변·체액 직접접촉, 성접촉, 밀접 비말, 오염물·감염동물 접촉, 수직감염","grade":"제3급","iso":"격리 해제(일반의료체계)","report":"24시간 이내","annual":{"years":{"2022":4,"2023":151,"2024":17,"2025":27},"note":"고시 2024.1.1 개정으로 제2급→제3급. 2022-2023은 제2급 행에 기재"}},{"name":"니파바이러스감염증","r0":[0.2,0.5],"d_inf":10,"presym":0,"note":"사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.","src":"Luby 2009 · Nikolay 2019","incubation_fallback":"4~14일(최대 45일 보고)","incubation_fallback_src":"도감이 잠복기를 병원체 항목에 병기 → 같은 값","incubation":{"lo":4.0,"hi":14.0,"typ":9.0,"text":"4~14일(최대 45일 보고)","fallback":"도감이 잠복기를 병원체 항목에 병기 → 같은 값"},"route":"병원소 과일박쥐(*Pteropus*)·돼지. ① 감염동물 접촉 ② ⭐오염된 과일·생 대추야자 수액 섭취 ③ 환자 체액 접촉(사람 간 전파)","grade":"제1급","iso":"음압격리","report":"즉시","annual":{"years":{"2025":0},"note":"2025.9.8 고시 신규 지정. 2025 통계는 9.8 이후분"}}],"defaults":{"iso_delay":2,"iso_eff":0.8,"trace":0.0,"trace_eff":0.9,"vacc":0.0,"vacc_eff":0.9,"N":100000,"I0":10,"days":365},"about":"사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.","check":{"as_of":"2026-10-05","principle":"여기 적힌 것은 코드와 설명을 맞대어 본 결과다. 원문을 새로 확인해 값을 바꾼 것이 아니다. 근거를 확인하지 못한 항목은 값을 그대로 두고 아래에 남긴다.","items":[{"target":"풍진 d_inf","status":"확인 필요","found":"전염 기간을 11일로 넣어 두었는데 같은 항목의 설명은 '발진 7일 전~7일 후'다. 설명대로면 14~15일이라 서로 맞지 않는다.","action":"값을 바꾸지 않았다. 어느 쪽이 맞는지 공식 출처의 전염 기간 정의를 확인해야 한다."},{"target":"vacc_eff · trace_eff 0.9","status":"교육용 가정","found":"두 값이 코드 안에 상수로 숨어 있어 화면에서 보이지 않았다. 질환별 근거가 붙어 있지 않다.","action":"값은 그대로 두되 화면의 고급 설정으로 꺼냈다. 역산 실험도 같은 값을 쓴다."},{"target":"접종률 손잡이","status":"확인 필요","found":"15종 모두에 접종률 손잡이가 있지만, 각 병에 실제로 쓸 백신이 있는지·대상이 누구인지·감염을 얼마나 막는지는 이 저장소에서 확인하지 않았다.","action":"손잡이 이름을 \"보호 비율(접종 가정)\"으로 바꾸고, 실제 접종 이야기는 ⑱ 예방접종으로 보내도록 적었다."},{"target":"증상 전 전파 비중 presym/d_inf","status":"표현 수정","found":"'전염의 몇 %'로 적혀 있었다. 실제로는 하루하루 전염력이 같다고 보고 기간을 나눈 비율이다.","action":"'격리가 손대지 못하는 전염 기간의 몫'으로 고치고 가정을 함께 적었다. 값은 그대로다."},{"target":"초기 유효재생산수","status":"정의 수정","found":"첫 감염자를 빼기 전 S0 를 쓰고 있었다.","action":"실제 초기 S(0)=N−보호−I0 로 바꿨다. 기본값에서 차이는 0.01%다."},{"target":"적분 방식","status":"계산 수정","found":"전진 오일러 dt=0.25 였다. 홍역처럼 전파가 빠른 병에서 칸 크기에 따라 정점이 0.3%쯤 움직였다.","action":"4차 룽게–쿠타로 바꿨다. dt 0.25와 0.01의 결과가 소수 셋째 자리까지 같다. 대표 시나리오의 누적 감염 차이는 기존 대비 최대 0.34%다."},{"target":"신고수 역산","status":"해석 수정","found":"'한 값으로 10년이 맞는다', '유효 면역 수준' 같은 표현이 외부에서 확인한 추정치처럼 읽혔다.","action":"모형 안에서만 뜻이 있는 수라고 적고, 실제 접종률이나 면역 수준으로 부르지 않도록 고쳤다."}]},"references":{"Anderson & May 1991":{"cite":"Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.","what":"R₀ 고전 추정표(백신 도입 전 인구)","confidence":"표준 교과서"},"CDC Pink Book":{"cite":"CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.","what":"전염 기간·잠복기·증상 전 전염","confidence":"표준"},"Heymann CCDM":{"cite":"Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.","what":"전염 기간·증상 전 전염 일수의 일반 출처","confidence":"표준"},"Biggerstaff 2014":{"cite":"Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.","what":"인플루엔자 R₀ 계통고찰","confidence":"표준"},"Fraser 2009":{"cite":"Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.","what":"2009 신종인플루엔자 R₀","confidence":"표준"},"Liu 2020":{"cite":"Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.","what":"코로나19 원형주 R₀ 계통고찰","confidence":"표준"},"Lipsitch 2003":{"cite":"Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.","what":"SARS R₀·격리 효과","confidence":"표준"},"Breban 2013":{"cite":"Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.","what":"MERS R₀ < 1","confidence":"표준"},"Cauchemez 2014":{"cite":"Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.","what":"MERS R₀","confidence":"표준"},"WHO Ebola Response Team 2014":{"cite":"WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.","what":"에볼라 R₀·잠복기","confidence":"표준"},"Althaus 2014":{"cite":"Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.","what":"에볼라 R₀","confidence":"표준"},"WHO mpox 2022":{"cite":"WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.","what":"엠폭스(clade IIb) R₀ 1.1–2.4","confidence":"확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"},"Luby 2009":{"cite":"Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.","what":"니파 사람 간 전파","confidence":"표준"},"Nikolay 2019":{"cite":"Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.","what":"니파 R₀ 0.33","confidence":"표준"},"Keeling & Rohani 2008":{"cite":"Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.","what":"SEIR 모형 자체","confidence":"표준"}},"scenario_provenance":"시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다.","population":51700000,"population_note":"전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.","annual_source":"③ 백서 정리 · 연보 기반 전수감시 신고수 2016~2025"}</script>
 <script>
 (function(){
 'use strict';
 const D = JSON.parse(document.getElementById('data').textContent);
 const DZ = D.diseases, DEF = D.defaults;
+const E = SimEngine;
 const css = k => getComputedStyle(document.documentElement).getPropertyValue(k).trim();
 const fmt = n => n==null ? '—' : Math.round(n).toLocaleString('ko-KR');
 const f1 = n => n==null ? '—' : (Math.round(n*10)/10).toFixed(1);
 const f2 = n => n==null ? '—' : n.toFixed(2);
+const esc = s => String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+const DOTS = 300;
 
-/* ── 상태 ── */
-const S = {dz: DZ.findIndex(d=>d.name==='홍역')>=0 ? DZ.findIndex(d=>d.name==='홍역') : 0,
+/* ── 상태 ──────────────────────────────────────────────────────────
+   S 는 사용자가 정한 것, RES 는 계산 결과다. 결과는 조건이 바뀔 때 한 번만 만들고,
+   재생은 만들어 둔 기록을 읽기만 한다. 슬라이더를 움직인다고 다시 계산하지 않는다. */
+const S = {dz: Math.max(0, DZ.findIndex(d=>d.name==='홍역')),
            N: DEF.N, I0: DEF.I0, days: DEF.days, log: false, POP: D.population,
+           assume: {vaccEff: DEF.vacc_eff*100, traceEff: DEF.trace_eff*100, dt: 0.25},
            A: {r0:null, delay:DEF.iso_delay, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100},
            B: {r0:null, delay:DEF.iso_delay+1, eff:DEF.iso_eff*100, trace:DEF.trace*100, vacc:DEF.vacc*100}};
+const RES = {A:null, B:null};
+const PLAY = {on:false, speed:1, day:0, raf:null, last:0, acc:0};
+
 function dz(){ return DZ[S.dz]; }
 function r0mid(){ const r=dz().r0; return Math.round((r[0]+r[1])/2*10)/10; }
+function common(){ return {N:S.N, I0:S.I0, days:S.days}; }
+const $ = id => document.getElementById(id);
 
-/* ── 모형 ── */
-function run(p){
-  const d = dz(); const R0 = p.r0 ?? r0mid();
-  const Dinf = d.d_inf, presym = d.presym;
-  const latent = Math.max(1, d.incubation.typ - presym);
-  const tIso = presym + p.delay;                       // 감염력 시작 후 격리까지 (일)
-  const cov = Math.min(tIso, Dinf)/Dinf;                // 격리 전에 지나가는 전염 기간 몫
-  const fIso = cov + (1-cov)*(1-p.eff/100);
-  const fCt = 1 - (p.trace/100)*DEF.trace_eff;
-  const S0 = S.N*(1 - (p.vacc/100)*DEF.vacc_eff);
-  const beta = R0/Dinf*fIso*fCt;
-  const Reff = R0*fIso*fCt*S0/S.N;
-  let s=S0 - S.I0, e=0, i=S.I0, r=S.N-S0;
-  const dt=0.25, inc=[]; let peak=0, peakDay=0, cum=S.I0, endDay=null;
-  for(let day=0; day<S.days; day++){
-    let newDay=0;
-    for(let k=0;k<1/dt;k++){
-      const ne = beta*i*s/S.N*dt, ei = e/latent*dt, ir = i/Dinf*dt;
-      s-=ne; e+=ne-ei; i+=ei-ir; r+=ir; newDay+=ne;
-    }
-    inc.push(newDay); cum+=newDay;
-    if(newDay>peak){ peak=newDay; peakDay=day; }
-    if(endDay==null && day>peakDay && e+i<1) endDay=day;
+/* ── 계산은 여기 한 곳에서만 ──────────────────────────────────────── */
+function recompute(reason){
+  const a = E.simulate(dz(), common(), S.A, S.assume);
+  const b = E.simulate(dz(), common(), S.B, S.assume);
+  const err = $('inperr');
+  if(!a.ok || !b.ok){
+    const msgs = [...new Set([].concat(a.errors||[], b.errors||[]))];
+    err.innerHTML = '<b>이 조건으로는 계산할 수 없습니다.</b><br>' + msgs.map(esc).join('<br>')
+      + '<br><span style="opacity:.85">값을 고치면 바로 다시 계산합니다. 앞선 결과는 그대로 둡니다.</span>';
+    err.hidden = false;
+    return false;
   }
-  return {R0, Reff, latent, fIso, fCt, cov, S0, inc, peak, peakDay, cum, endDay, attack: cum/S.N};
+  err.hidden = true;
+  RES.A = a; RES.B = b;
+  stop();
+  PLAY.day = 0;
+  const sl = $('dayslider');
+  sl.max = String(S.days); sl.value = '0';
+  $('daymax').textContent = S.days;
+  if(reason){ const r=$('redo'); r.hidden=false; clearTimeout(r._t); r._t=setTimeout(()=>{r.hidden=true;}, 4000); }
+  renderFrame(); chart(); why(); renderReal();
+  const w = [].concat(a.warnings||[], b.warnings||[]);
+  if(w.length) console.warn('시뮬레이터 경고:', w);
+  return true;
 }
 
-/* ── 병 정보 ── */
-const sel=document.getElementById('dz');
-DZ.forEach((d,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${d.name} · R₀ ${d.r0[0]}–${d.r0[1]}`; sel.appendChild(o); });
-sel.value=S.dz;
-sel.onchange=()=>{ S.dz=+sel.value; S.A.r0=null; S.B.r0=null; renderAll(); history.replaceState(null,'','#'+encodeURIComponent(dz().name)); };
+/* ── 집단 상태 — 점은 비율의 그림, 숫자가 계산 결과 ───────────────── */
+function dotIndex(){ /* 점 자리는 고정이다. 상태만 바뀐다. */
+  if(dotIndex._c) return dotIndex._c;
+  const arr=[]; for(let i=0;i<DOTS;i++) arr.push(i);
+  return (dotIndex._c = arr);
+}
+function paintState(side){
+  const r = RES[side]; if(!r) return;
+  const h = r.history[Math.min(PLAY.day, r.history.length-1)];
+  const box = $('st'+side);
+  const field = box.querySelector('.dotfield');
+  if(field.childElementCount !== DOTS){
+    field.innerHTML = dotIndex().map(()=> '<i></i>').join('');
+  }
+  const counts = E.allocate([h.S, h.E, h.I, h.R], DOTS);
+  const cls = []; const keys=['d-S','d-E','d-I','d-R'];
+  counts.forEach((n,k)=>{ for(let x=0;x<n;x++) cls.push(keys[k]); });
+  const kids = field.children;
+  for(let i=0;i<DOTS;i++){ const c = cls[i]||'d-S'; if(kids[i].className!==c) kids[i].className=c; }
 
-/* 고른 병으로 이어지는 곳.
-   시뮬레이터는 구조를 보여줄 뿐이고, 급수·신고·격리 같은 사실과 실제 통계는 다른 쪽에 있다. */
+  const prot = r.meta.initialProtected;
+  const rec = Math.max(0, h.R - prot);
+  box.querySelector('.sday').textContent = h.day + '일째';
+  box.querySelector('.nums').innerHTML =
+      cell('S 아직 안 걸림', h.S, counts[0])
+    + cell('E 아직 못 옮김', h.E, counts[1])
+    + cell('I 옮길 수 있음', h.I, counts[2])
+    + cell('R 회복·보호', h.R, counts[3], prot>0 ? ('보호 '+fmt(prot)+' + 회복 '+fmt(rec)) : null)
+    + cell('그날 새 감염', h.newInf, null)
+    + cell('누적 감염', h.cumInf, null, '첫 감염자 포함');
+}
+function cell(k, v, dots, note){
+  return '<div><dt>'+esc(k)+'</dt><dd>'+fmt(v)
+    + (dots!=null ? '<small>점 '+dots+'개</small>' : '')
+    + (note ? '<small>'+esc(note)+'</small>' : '') + '</dd></div>';
+}
+function renderFrame(){
+  if(!RES.A || !RES.B) return;
+  paintState('A'); paintState('B');
+  $('daynow').textContent = PLAY.day;
+  $('dayslider').value = String(PLAY.day);
+  const n = S.N, per = n / DOTS;
+  $('dotnote').innerHTML = '점 ' + DOTS + '개가 인구 ' + fmt(n) + '명을 나눠 맡는다 — <b>점 하나가 약 '
+    + fmt(per) + '명</b>이다. 점은 <b>집단의 비율을 그린 것</b>이고 사람 한 명이 아니다. '
+    + '누가 누구에게 옮겼는지는 이 모형에 없다. 비율이 아주 작으면 점이 0개가 되므로 위 숫자를 함께 보라.';
+  cmpTable();
+  drawCursor();
+}
+
+/* ── 선택한 날짜의 A·B 비교 ───────────────────────────────────────── */
+function cmpTable(){
+  const a = RES.A.history[PLAY.day], b = RES.B.history[PLAY.day];
+  const diff = (x,y) => {
+    const d = y - x;
+    const p = x === 0 ? '계산 불가' : ((d/x*100).toFixed(1) + '%');
+    return '<td>' + (d>=0?'+':'') + fmt(d) + '</td><td>' + (x===0?'<span class="muted">계산 불가</span>':((d>=0?'+':'')+p)) + '</td>';
+  };
+  const rows = [
+    ['이 날짜까지 누적 감염', a.cumInf, b.cumInf],
+    ['이 날 새 감염', a.newInf, b.newInf],
+    ['지금 옮길 수 있는 사람 I', a.I, b.I],
+    ['지금 아직 못 옮기는 사람 E', a.E, b.E]
+  ].map(([k,x,y]) => '<tr><td>'+esc(k)+'</td><td class="a">'+fmt(x)+'</td><td class="b">'+fmt(y)+'</td>'+diff(x,y)+'</tr>').join('');
+  const pk = (r) => fmt(r.peak.newInf) + '명 · ' + r.peak.day + '일째';
+  const fin = (r) => r.totals.stillRunning
+      ? '<span style="color:var(--warn)">관찰 종료 · 유행 진행 중</span>'
+      : (r.totals.endDay!=null ? (r.totals.endDay + '일째 잦아듦') : '유행 안 됨');
+  $('cmpnow').innerHTML =
+      '<thead><tr><th>항목</th><th>A</th><th>B</th><th>B−A</th><th>차이(%)</th></tr></thead><tbody>'
+    + rows
+    + '<tr><td>관찰 기간 안 하루 새 감염 최대</td><td class="a">'+pk(RES.A)+'</td><td class="b">'+pk(RES.B)+'</td><td colspan="2" class="muted">‘하루 새 감염’의 최대값이다</td></tr>'
+    + '<tr><td>관찰 끝 상태</td><td class="a">'+fin(RES.A)+'</td><td class="b">'+fin(RES.B)+'</td><td colspan="2" class="muted">같은 기간으로만 견준다</td></tr>'
+    + '</tbody>';
+}
+
+/* ── 재생 ─────────────────────────────────────────────────────────── */
+function play(){
+  if(!RES.A) return;
+  if(PLAY.day >= S.days) PLAY.day = 0;
+  PLAY.on = true; PLAY.last = performance.now(); PLAY.acc = 0;
+  $('pPlay').textContent = '⏸ 멈춤';
+  $('pPlay').setAttribute('aria-label','멈춤');
+  PLAY.raf = requestAnimationFrame(tick);
+}
+function stop(){
+  PLAY.on = false;
+  if(PLAY.raf) cancelAnimationFrame(PLAY.raf);
+  PLAY.raf = null;
+  const b = $('pPlay');
+  if(b){ b.textContent = (PLAY.day>=S.days) ? '↻ 다시 재생' : '▶ 재생'; b.setAttribute('aria-label','재생'); }
+}
+function tick(now){
+  if(!PLAY.on) return;
+  const dtms = Math.min(250, now - PLAY.last);   /* 탭이 가려졌다 돌아와도 건너뛰지 않게 상한을 둔다 */
+  PLAY.last = now;
+  PLAY.acc += dtms * PLAY.speed / 1000 * 18;     /* 1배속에서 1초에 약 18일 */
+  while(PLAY.acc >= 1){ PLAY.acc -= 1; PLAY.day++; }
+  if(PLAY.day >= S.days){ PLAY.day = S.days; renderFrame(); stop(); return; }
+  renderFrame();
+  PLAY.raf = requestAnimationFrame(tick);
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.hidden) stop(); });
+
+/* ── 그래프 ───────────────────────────────────────────────────────── */
+let CH = null;
+function chart(){
+  const W=1000,H=380,L=64,R=16,T=18,B=44; const w=W-L-R, h=H-T-B;
+  const ia = RES.A.history.map(x=>x.newInf), ib = RES.B.history.map(x=>x.newInf);
+  const n = ia.length;
+  const maxv = Math.max(1, ...ia, ...ib);
+  const y = v => S.log ? T + h - (Math.log10(Math.max(v,0.5)+0.5)/Math.log10(maxv+0.5))*h : T + h - v/maxv*h;
+  const x = i => L + i/(n-1)*w;
+  const path = inc => inc.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
+  const ticks=[]; const raw=Math.max(1,maxv/6), mag=Math.pow(10,Math.floor(Math.log10(raw))), rr=raw/mag;
+  const step=mag*(rr<1.5?1:rr<3.5?2:rr<7.5?5:10);
+  if(!S.log){ for(let v=0; v<=maxv; v+=step) ticks.push(v); }
+  else { for(let e=0; Math.pow(10,e)<=maxv; e++) ticks.push(Math.pow(10,e)); ticks.unshift(0); }
+  const xt=[]; for(let d=0; d<n; d+=n>400?90:n>180?60:30) xt.push(d);
+  const grid=css('--grid'), faint=css('--faint'), ink=css('--ink');
+  let s=`<g font-size="12" fill="${faint}">`;
+  for(const v of ticks) s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${grid}"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${fmt(v)}</text>`;
+  for(const d of xt) s+=`<text x="${x(d)}" y="${H-18}" text-anchor="middle">${d}일</text>`;
+  s+=`<text x="${L}" y="${H-2}" fill="${faint}">→ 첫 감염자가 들어온 뒤 지난 날</text></g>`;
+  s+=`<path d="${path(ib)}" fill="none" stroke="${css('--s2')}" stroke-width="2.6" stroke-linejoin="round"/>`;
+  s+=`<path d="${path(ia)}" fill="none" stroke="${css('--s1')}" stroke-width="2.6" stroke-linejoin="round"/>`;
+  for(const [r,c] of [[RES.A,'--s1'],[RES.B,'--s2']]) if(r.peak.newInf>=1)
+    s+=`<circle cx="${x(r.peak.day)}" cy="${y(r.peak.newInf)}" r="4.5" fill="${css(c)}" stroke="${css('--surface')}" stroke-width="2"/>`
+     + `<text x="${x(r.peak.day)+8}" y="${y(r.peak.newInf)-8}" font-size="12" font-weight="700" fill="${ink}">${fmt(r.peak.newInf)}명 · ${r.peak.day}일째</text>`;
+  s+=`<g id="cur"></g>`;
+  $('chart').innerHTML = s;
+  CH = {W,H,L,R,T,B,w,h,n,x,y,maxv};
+  drawCursor();
+}
+function drawCursor(){
+  if(!CH) return;
+  const g = $('chart').querySelector('#cur'); if(!g) return;
+  const px = CH.x(Math.min(PLAY.day, CH.n-1));
+  g.innerHTML = `<line x1="${px}" x2="${px}" y1="${CH.T}" y2="${CH.T+CH.h}" stroke="${css('--ink')}" stroke-width="1.5" stroke-dasharray="4 3" opacity=".65"/>`
+    + `<text x="${Math.min(px+6, CH.W-CH.R-54)}" y="${CH.T+12}" font-size="12" font-weight="700" fill="${css('--ink')}">${PLAY.day}일</text>`;
+}
+
+/* ── 질병 정보·설명 (기존 유지) ───────────────────────────────────── */
+const sel = $('dz');
+DZ.forEach((d,i)=>{ const o=document.createElement('option'); o.value=i; o.textContent=`${d.name} · R₀ ${d.r0[0]}–${d.r0[1]}`; sel.appendChild(o); });
+sel.value = S.dz;
+sel.onchange = ()=>{ S.dz=+sel.value; S.A.r0=null; S.B.r0=null; renderAll(true); history.replaceState(null,'','#'+encodeURIComponent(dz().name)); };
+
 function drawGoto(){
   const n = encodeURIComponent(dz().name);
-  document.getElementById('goto').innerHTML =
+  $('goto').innerHTML =
     `<a href="../dogam/?disease=${n}">📖 이 병의 기초 정보<small>도감 — 증상·전파경로·예방</small></a>`
   + `<a href="../field/?disease=${n}">🚑 현장 대응<small>급수·신고·격리 — 모형이 아닌 규정</small></a>`
   + `<a href="../chronicle/?disease=${n}">🕰 분류·감시 변천<small>언제 무엇이 바뀌었나</small></a>`
@@ -588,181 +1146,186 @@ function drawGoto(){
   document.title = dz().name + ' 유행 시뮬레이터 | 감염병 자료 아카이브';
 }
 function renderDz(){
-  const d=dz();
-  document.getElementById('dzinfo').innerHTML=`
-    <dt>지위</dt><dd>${d.grade?`<span class="gb">${d.grade}</span>`:''}${d.iso||''} · 신고 ${d.report||'—'}</dd>
-    <dt>잠복기 (도감)</dt><dd>${d.incubation.text} <span class="src">→ 대표값 ${d.incubation.typ}일</span></dd>
-    <dt>전파경로 (도감)</dt><dd style="font-weight:600">${d.route||'—'}</dd>
-    <dt>R₀ (문헌)</dt><dd>${d.r0[0]}–${d.r0[1]} <span class="src">${d.src}</span></dd>
+  const d = dz();
+  $('dzinfo').innerHTML=`
+    <dt>지위</dt><dd>${d.grade?`<span class="gb">${esc(d.grade)}</span>`:''}${esc(d.iso||'')} · 신고 ${esc(d.report||'—')}</dd>
+    <dt>잠복기 (도감)</dt><dd>${esc(d.incubation.text)} <span class="src">→ 대표값 ${d.incubation.typ}일</span></dd>
+    <dt>전파경로 (도감)</dt><dd style="font-weight:600">${esc(d.route||'—')}</dd>
+    <dt>R₀ (문헌)</dt><dd>${d.r0[0]}–${d.r0[1]} <span class="src">${esc(d.src)}</span></dd>
     <dt>전염 기간</dt><dd>${d.d_inf}일 <span class="src">대표값</span></dd>
     <dt>증상 전 전염</dt><dd>${d.presym}일</dd>
-    <dt>메모</dt><dd style="font-weight:500">${d.note}</dd>`;
-  document.getElementById('dinf').textContent=d.d_inf; document.getElementById('presym').textContent=d.presym;
+    <dt>메모</dt><dd style="font-weight:500">${esc(d.note)}</dd>`;
+  $('dinf').textContent=d.d_inf; $('presym').textContent=d.presym;
+  const vw = $('vaccwarn');
+  vw.innerHTML = (d.vaccine_note ? esc(d.vaccine_note)
+    : '이 모형에서 ‘접종률’은 <b>인구의 몇 %가 감염으로부터 보호받고 있는가</b>라는 가정을 넣는 손잡이다. '
+      + '이 병에 실제로 쓸 수 있는 백신이 있는지, 누가 대상인지, 감염을 얼마나 막는지는 여기서 확인하지 않았다. '
+      + '실제 접종 이야기는 <a href="../vaccine/">예방접종</a>에서 보라.');
+}
+function why(){
+  const d = dz(), ra = RES.A; const share = Math.round(d.presym/d.d_inf*100);
+  let t = `<b>${esc(d.name)}</b>은 R₀ ${d.r0[0]}–${d.r0[1]}, 전염 기간 ${d.d_inf}일 가운데 증상 전이 ${d.presym}일(기간으로 ${share}%). `;
+  if(d.r0[1] < 1) t += `R₀ 범위가 1 아래라 이 모형에서는 사람 사이에서 스스로 잦아든다. 그래서 이 조건에서는 격리 손잡이보다 유입 자체가 규모를 정한다.`;
+  else if(share >= 25) t += `전염 기간의 ${share}%가 증상 전이다. <b>증상 뒤에 시작하는 격리는 그 앞을 건드리지 못한다</b> — 이 모형에서는 접촉자 추적과 보호 비율이 더 크게 움직인다.`;
+  else if(d.r0[0] >= 8) t += `증상 전 기간은 짧지만 R₀가 커서, 격리만으로 유효 재생산수를 1 아래로 내리기 어렵다.`;
+  else t += `전염이 증상 뒤에 몰려 있어 이 모형에서는 빠른 격리가 크게 듣는다.`;
+  t += ` 지금 A의 처음 유효 재생산수 ${f2(ra.meta.Reff0)}, 격리가 손대지 못하는 전염 기간의 몫 ${Math.round(ra.meta.cov*100)}%.`;
+  t += ` <span class="muted">‘몫’은 하루하루 전염력이 같다고 보고 기간을 나눈 비율이다. 실제 전파의 몇 %가 그때 일어났는지를 잰 값이 아니다.</span>`;
+  $('why').innerHTML = t;
 }
 
-/* ── 슬라이더 ── */
-const SL=[['r0','R₀',null,null,0.1,v=>f1(v)],['delay','증상→격리',0,14,1,v=>v+'일'],['eff','격리 효과',0,100,5,v=>v+'%'],['trace','접촉자 추적',0,100,5,v=>v+'%'],['vacc','접종률',0,100,5,v=>v+'%']];
+/* ── 손잡이 ───────────────────────────────────────────────────────── */
+const SL=[['r0','R₀',null,null,0.1,v=>f1(v)],['delay','증상→격리',0,14,1,v=>v+'일'],
+          ['eff','격리 효과',0,100,5,v=>v+'%'],['trace','접촉자 추적',0,100,5,v=>v+'%'],
+          ['vacc','보호 비율(접종 가정)',0,100,5,v=>v+'%']];
 function renderSliders(id){
   const p=S[id], d=dz(); const box=document.querySelector(`#sc${id} .sliders`);
-  box.innerHTML=SL.map(([k,l,lo,hi,st,f])=>{ const mn=k==='r0'?Math.max(0.1,d.r0[0]*0.5):lo, mx=k==='r0'?d.r0[1]*1.5:hi; const v=k==='r0'?(p.r0??r0mid()):p[k];
-    return `<div class="sl"><label>${l}</label><input type="range" data-k="${k}" min="${mn}" max="${mx}" step="${st}" value="${v}"><span class="v num">${f(v)}</span></div>`; }).join('');
-  box.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{ const k=inp.dataset.k; p[k]=+inp.value; inp.nextElementSibling.textContent=SL.find(s=>s[0]===k)[5](+inp.value); renderOut(); });
+  box.innerHTML=SL.map(([k,l,lo,hi,st,f])=>{
+    const mn=k==='r0'?Math.max(0,d.r0[0]*0.5):lo, mx=k==='r0'?d.r0[1]*1.5:hi;
+    const v=k==='r0'?(p.r0??r0mid()):p[k];
+    return `<div class="sl"><label>${esc(l)}</label><input type="range" data-k="${k}" min="${mn}" max="${mx}" step="${st}" value="${v}" aria-label="${esc(id)} ${esc(l)}"><span class="v num">${f(v)}</span></div>`;
+  }).join('');
+  box.querySelectorAll('input').forEach(inp=>inp.oninput=()=>{
+    const k=inp.dataset.k; p[k]=+inp.value;
+    inp.nextElementSibling.textContent=SL.find(s=>s[0]===k)[5](+inp.value);
+    recompute('조건 변경');
+  });
 }
-function tiles(id,res){
-  const el=document.querySelector(`#sc${id} .tiles`);
+function tiles(id){
+  const r = RES[id]; const el=document.querySelector(`#sc${id} .tiles`);
   el.innerHTML=[
-    ['유효 재생산수', f2(res.Reff), res.Reff>=1?'hot':'ok', res.Reff>=1?'1 이상 — 번진다':'1 미만 — 잦아든다'],
-    ['정점', res.peak<1?'—':fmt(res.peak)+'<small>명/일</small>', '', res.peak<1?'유행 안 됨':`${res.peakDay+1}일째`],
-    ['누적 감염', fmt(res.cum), '', `${(res.attack*100).toFixed(1)}%`],
-    ['격리가 못 건드리는 전염', Math.round(res.cov*100)+'<small>%</small>', res.cov>0.5?'hot':'', '증상 전 + 지연'],
-    ['유행 끝', res.endDay==null?'—':fmt(res.endDay)+'<small>일</small>', '', res.endDay==null?(res.peak<1?'시작 안 함':'기간 안에 안 끝남'):'하루 1명 미만'],
+    ['처음 유효 재생산수', f2(r.meta.Reff0), r.meta.Reff0>=1?'hot':'ok', r.meta.Reff0>=1?'1 이상 — 번진다':'1 미만 — 잦아든다'],
+    ['관찰 기간 안 하루 최대', r.peak.newInf<1?'—':fmt(r.peak.newInf)+'<small>명/일</small>', '', r.peak.newInf<1?'유행 안 됨':`${r.peak.day}일째`],
+    ['누적 감염(첫 감염자 포함)', fmt(r.totals.cumInf), '', `${(r.totals.attack*100).toFixed(1)}%`],
+    ['격리가 못 건드리는 몫', Math.round(r.meta.cov*100)+'<small>%</small>', r.meta.cov>0.5?'hot':'', '기간 비율'],
+    ['관찰 끝', r.totals.stillRunning?'진행 중':(r.totals.endDay!=null?fmt(r.totals.endDay)+'<small>일</small>':'—'), '',
+      r.totals.stillRunning?'기간 안에 안 끝남':(r.totals.endDay!=null?'E+I 1명 미만':'시작 안 함')]
   ].map(([k,v,c,s])=>`<div class="t ${c}"><div class="k">${k}</div><div class="v num">${v}</div><div class="k" style="letter-spacing:0">${s}</div></div>`).join('');
 }
 
-/* ── 차트 ── */
-function chart(ra, rb){
-  const W=1000,H=380,L=64,R=16,T=18,B=44; const w=W-L-R, h=H-T-B;
-  const n=S.days; const maxv=Math.max(1,...ra.inc,...rb.inc);
-  const y = v => S.log ? T + h - (Math.log10(Math.max(v,0.5)+0.5)/Math.log10(maxv+0.5))*h : T + h - v/maxv*h;
-  const x = i => L + i/(n-1)*w;
-  const path = inc => inc.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join('');
-  const ticks=[]; const raw=Math.max(1,maxv/6), mag=Math.pow(10,Math.floor(Math.log10(raw))), r=raw/mag; const step=mag*(r<1.5?1:r<3.5?2:r<7.5?5:10);
-  if(!S.log){ for(let v=0; v<=maxv; v+=step) ticks.push(v); }
-  else { for(let e=0; Math.pow(10,e)<=maxv; e++) ticks.push(Math.pow(10,e)); ticks.unshift(0); }
-  const xt=[]; for(let d=0; d<=n; d+=n>400?90:n>180?60:30) xt.push(d);
-  const grid=css('--grid'), faint=css('--faint'), ink=css('--ink');
-  let s=`<g font-size="12" fill="${faint}">`;
-  for(const v of ticks) s+=`<line x1="${L}" x2="${W-R}" y1="${y(v)}" y2="${y(v)}" stroke="${grid}"/><text x="${L-8}" y="${y(v)+4}" text-anchor="end">${fmt(v)}</text>`;
-  for(const d of xt) s+=`<text x="${x(Math.min(d,n-1))}" y="${H-18}" text-anchor="middle">${d}일</text>`;
-  s+=`<text x="${L}" y="${H-2}" fill="${faint}">→ 첫 감염자 유입 후 경과일</text></g>`;
-  s+=`<path d="${path(rb.inc)}" fill="none" stroke="${css('--s2')}" stroke-width="2.6" stroke-linejoin="round"/>`;
-  s+=`<path d="${path(ra.inc)}" fill="none" stroke="${css('--s1')}" stroke-width="2.6" stroke-linejoin="round"/>`;
-  for(const [r,c] of [[ra,'--s1'],[rb,'--s2']]) if(r.peak>=1) s+=`<circle cx="${x(r.peakDay)}" cy="${y(r.peak)}" r="4.5" fill="${css(c)}" stroke="${css('--surface')}" stroke-width="2"/><text x="${x(r.peakDay)+8}" y="${y(r.peak)-8}" font-size="12" font-weight="700" fill="${ink}">${fmt(r.peak)}명 · ${r.peakDay+1}일째</text>`;
-  document.getElementById('chart').innerHTML=s;
-}
-
-/* ── 설명 ── */
-function why(ra){
-  const d=dz(); const share=Math.round(d.presym/d.d_inf*100);
-  let t=`<b>${d.name}</b>은 R₀ ${d.r0[0]}–${d.r0[1]}, 전염 기간 ${d.d_inf}일 중 증상 전 ${d.presym}일(${share}%). `;
-  if(d.r0[1]<1) t+=`R₀가 1 미만이라 사람 사이에서는 스스로 잦아든다. 격리보다 <b>유입 자체를 막는 검역</b>이 관건.`;
-  else if(share>=25) t+=`전염의 ${share}%가 증상 전에 일어난다. <b>증상 후 격리는 늦다</b> — 접촉자 추적과 접종이 R을 낮추는 실제 손잡이다.`;
-  else if(d.r0[0]>=8) t+=`증상 전 전염은 적지만 R₀가 커서 격리로 R을 1 밑으로 끌어내리기 어렵다. <b>접종률 ${Math.ceil((1-1/d.r0[1])*100)}% 이상</b>이 집단면역 문턱.`;
-  else t+=`증상 뒤에 전염이 집중된다. <b>빠른 격리가 실제로 듣는 병</b> — 2003년 SARS가 그랬다.`;
-  t+=` 지금 A의 유효 재생산수 ${f2(ra.Reff)}, 격리가 못 건드리는 전염 ${Math.round(ra.cov*100)}%.`;
-  document.getElementById('why').innerHTML=t;
-}
-
-/* ── 실제와 맞춰 보기 ── */
-/* 전국 인구에 이 감염병을 풀어놓고, 그 해 실제 신고수가 나오려면 접종률이 몇 %여야 하는지 역산한다.
-   접종률이 오르면 유행 규모는 단조 감소하므로 이분법으로 푼다. */
+/* ── 역산 실험 ────────────────────────────────────────────────────── */
 function attackAt(vacc, pop){
-  const p = {...S.A, vacc}; const save = {N: S.N};
-  S.N = pop; const r = run(p); S.N = save.N;
-  return r.cum / pop;
+  const scen = Object.assign({}, S.A, {vacc});
+  const r = E.simulate(dz(), {N:pop, I0:S.I0, days:S.days}, scen, S.assume);
+  return r.ok ? r.totals.cumInf / pop : NaN;
 }
 function requiredVacc(cases, pop){
   const target = cases / pop;
   const lo = attackAt(100, pop), hi = attackAt(0, pop);
-  if (hi < target) return {status:'under', note:'접종 0%로도 실제보다 작다 — 모형이 이 규모를 못 낸다'};
-  if (lo > target) return {status:'over', note:'접종 100%로도 실제보다 크다 — 모형이 과대하다'};
-  let a = 0, b = 100;
-  for (let i = 0; i < 40; i++) { const m = (a+b)/2; if (attackAt(m, pop) > target) a = m; else b = m; }
+  if(!isFinite(lo) || !isFinite(hi)) return {status:'over', note:'이 조건으로는 계산 불가'};
+  if(hi < target) return {status:'under', note:'보호 0%로도 모형이 실제보다 작다'};
+  if(lo > target) return {status:'over', note:'보호 100%로도 모형이 실제보다 크다'};
+  let a=0, b=100;
+  for(let i=0;i<40;i++){ const m=(a+b)/2; if(attackAt(m,pop)>target) a=m; else b=m; }
   return {status:'ok', vacc:(a+b)/2};
 }
-function renderReal(ra){
-  const d = dz(), el = document.getElementById('annual'), fit = document.getElementById('fit');
-  document.getElementById('popnote').textContent = D.population_note;
-  if (!d.annual) {
-    el.innerHTML = `<p class="small muted">${d.name}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`;
+function renderReal(){
+  const d = dz(), el = $('annual'), fit = $('fit');
+  $('popnote').textContent = D.population_note;
+  if(!d.annual){
+    el.innerHTML = `<p class="small muted">${esc(d.name)}은 전수감시 연보 표에 없다(표본감시이거나 통계가 없다).</p>`;
     fit.innerHTML = `<p class="small muted">이 감염병은 연보 전수감시 표에 없어 맞춰 볼 실제 값이 없다.</p>`;
     return;
   }
   const ys = Object.keys(d.annual.years).sort();
-  const mx = Math.max(1, ...ys.map(y => d.annual.years[y]));
   el.innerHTML = `<div class="tw"><table class="yrs"><tr><th>연도</th>${ys.map(y=>`<th>${y}</th>`).join('')}</tr>`
     + `<tr><td>신고</td>${ys.map(y=>`<td class="num">${fmt(d.annual.years[y])}</td>`).join('')}</tr></table></div>`
-    + (d.annual.note ? `<p class="small muted" style="margin:6px 0 0">${d.annual.note}</p>` : '')
-    + `<p class="small muted" style="margin:8px 0 0">출처 — ${D.annual_source}</p>`;
-
+    + (d.annual.note ? `<p class="small muted" style="margin:6px 0 0">${esc(d.annual.note)}</p>` : '')
+    + `<p class="small muted" style="margin:8px 0 0">출처 — ${esc(D.annual_source)}</p>`;
   const nz = ys.filter(y => d.annual.years[y] > 0);
-  if (!nz.length) {
-    fit.innerHTML = `<p style="font-size:13.5px"><b>${d.name}은 2016~2025년 신고가 전부 0이다.</b> 맞출 대상이 없다 — 이 감염병에 대해 모형은 "만약 들어온다면"만 말한다. 그것이 이 감염병의 현실이다.</p>`;
+  if(!nz.length){
+    fit.innerHTML = `<p style="font-size:13.5px"><b>${esc(d.name)}은 2016~2025년 신고가 전부 0이다.</b> 맞출 대상이 없다 — 이 감염병에 대해 모형은 “만약 들어온다면”만 말한다.</p>`;
     return;
   }
   const pop = S.POP;
-  const rows = nz.map(y => ({year:y, cases:d.annual.years[y], per100k:d.annual.years[y]/pop*1e5, ...requiredVacc(d.annual.years[y], pop)}));
-  const ok = rows.filter(r => r.status === 'ok');
-  const over = rows.filter(r => r.status === 'over');
-  const spread = ok.length > 1 ? Math.max(...ok.map(r=>r.vacc)) - Math.min(...ok.map(r=>r.vacc)) : null;
+  const rows = nz.map(y => Object.assign({year:y, cases:d.annual.years[y], per100k:d.annual.years[y]/pop*1e5}, requiredVacc(d.annual.years[y], pop)));
+  const ok = rows.filter(r=>r.status==='ok');
+  const over = rows.filter(r=>r.status==='over');
+  const spread = ok.length>1 ? Math.max(...ok.map(r=>r.vacc)) - Math.min(...ok.map(r=>r.vacc)) : null;
   let verdict;
-  if (over.length >= rows.length / 2) {
-    verdict = `<b style="color:var(--warn)">이 감염병에는 모형 자체가 맞지 않는다.</b> ${rows.length}개 해 중 ${over.length}개에서 "접종 100%로도 모형이 실제보다 크다"가 나왔다.`
-      + ` 모형은 <em>한번 들어오면 인구 안에서 스스로 퍼져 나가는 병</em>을 그린다. 실제 ${d.name}은 국내에서 지속 전파되지 않고 <b>유입에서 시작해 몇 명에서 그친다.</b>`
-      + ` 접종률을 아무리 올려도 모형은 "유행이 나거나 안 나거나"만 말하지, 실제처럼 <b>해마다 한 자리~두 자리 수</b>를 내지 못한다. 이 감염병의 규모를 정하는 것은 국내 전파력이 아니라 <b>유입 횟수</b>다 — 모형에 없는 축이다.`;
-  } else if (spread == null) {
+  if(over.length >= rows.length/2){
+    verdict = `<b style="color:var(--warn)">이 감염병에는 이 모형이 맞지 않는다.</b> ${rows.length}개 해 중 ${over.length}개에서 “보호 100%로도 모형이 실제보다 크다”가 나왔다.`
+      + ` 이 모형은 <em>한번 들어오면 인구 안에서 스스로 퍼져 나가는 병</em>을 그린다. 실제 ${esc(d.name)}은 국내에서 그렇게 퍼지지 않고 유입에서 시작해 몇 명에서 그친 해가 많다.`
+      + ` 규모를 정하는 것이 국내 전파력이 아닐 수 있다는 신호이지, 유입 횟수가 원인이라고 이 실험이 보여 준 것은 아니다.`;
+  } else if(spread == null){
     verdict = `맞춰 볼 수 있는 해가 ${ok.length}개뿐이라 여러 해를 견줄 수 없다.`;
-  } else if (spread < 5) {
-    verdict = `필요 접종률이 ${ok.length}개 해에 걸쳐 <b style="color:var(--accent-ink)">${spread.toFixed(1)}%포인트</b> 안에 모인다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
-      + ` <b>한 값으로 10년이 함께 맞는다.</b> 이 감염병의 해마다 규모가 <em>인구의 면역 수준 하나</em>로 대체로 설명된다는 뜻이다 — 모형이 이 감염병에 대해서는 뭔가를 잡고 있다.`
-      + ` 다만 이것은 맞춤이지 예측이 아니다. 그리고 여기서 나온 값은 실제 접종률이 아니라 <em>신고 기준으로 본 유효 면역 수준</em>이다(신고되지 않은 감염이 있으니).`;
+  } else if(spread < 5){
+    verdict = `필요한 보호 비율이 ${ok.length}개 해에 걸쳐 <b style="color:var(--accent-ink)">${spread.toFixed(1)}%포인트</b> 안에 모인다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
+      + ` 해마다 크게 다른 값을 넣지 않아도 이 모형이 그 숫자들을 낼 수 있다는 뜻이다.`
+      + ` <b>이것은 맞춤이지 검증이 아니다.</b> 같은 고정값을 바깥 자료로 확인한 적은 없고, 여기서 나온 값을 실제 접종률이나 인구의 면역 수준이라고 부를 수 없다.`;
   } else {
-    verdict = `필요 접종률이 해마다 <b style="color:var(--warn)">${spread.toFixed(1)}%포인트</b> 벌어진다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
-      + ` <b>한 값으로 여러 해를 설명하지 못한다.</b> 접종률이 해마다 그만큼 출렁이지 않으니, 규모를 움직인 것은 접종이 아니라 모형에 없는 기전이다 — 시간이 지나며 약해지는 면역, 해마다 다른 유입, 나이·집단 구조.`;
+    verdict = `필요한 보호 비율이 해마다 <b style="color:var(--warn)">${spread.toFixed(1)}%포인트</b> 벌어진다(${Math.min(...ok.map(r=>r.vacc)).toFixed(1)}% ~ ${Math.max(...ok.map(r=>r.vacc)).toFixed(1)}%).`
+      + ` 하나의 값으로 여러 해가 함께 맞지 않는다는 뜻이다. 이 모형에 없는 것이 규모를 움직였을 수 있다 — 시간이 지나며 약해지는 면역, 해마다 다른 유입, 나이·집단 구조. 어느 것인지는 이 실험으로 가릴 수 없다.`;
   }
-  fit.innerHTML = `<div class="tw"><table class="cmp"><tr><th>연도</th><th>실제 신고</th><th>10만 명당</th><th>이 해를 맞추는 데 필요한 접종률</th></tr>`
+  fit.innerHTML = `<div class="tw"><table class="cmp"><tr><th>연도</th><th>실제 신고</th><th>10만 명당</th><th>이 해를 맞추는 데 필요한 보호 비율</th></tr>`
     + rows.map(r => `<tr><td>${r.year}</td><td class="num">${fmt(r.cases)}</td><td class="num">${r.per100k<0.01?'&lt;0.01':f2(r.per100k)}</td>`
-        + `<td class="num">${r.status==='ok' ? `<b>${r.vacc.toFixed(1)}%</b>` : `<span style="color:var(--warn)">${r.note}</span>`}</td></tr>`).join('')
-    + `</table></div>`
-    + `<p style="font-size:13.5px;margin:12px 0 0">${verdict}</p>`
-    + `<p class="small muted" style="margin:8px 0 0">인구 ${fmt(pop)}명 · 현재 A 시나리오의 나머지 손잡이(R₀ ${f1(S.A.r0 ?? r0mid())}, 증상→격리 ${S.A.delay}일, 격리 효과 ${S.A.eff}%, 추적 ${S.A.trace}%)를 그대로 두고 접종률만 역산했다.</p>`;
+        + `<td class="num">${r.status==='ok'?`<b>${r.vacc.toFixed(1)}%</b>`:`<span style="color:var(--warn)">${esc(r.note)}</span>`}</td></tr>`).join('')
+    + `</table></div><p style="font-size:13.5px;margin:12px 0 0">${verdict}</p>`
+    + `<p class="small muted" style="margin:8px 0 0">인구 ${fmt(pop)}명 · A 시나리오의 나머지 손잡이(R₀ ${f1(S.A.r0 ?? r0mid())}, 증상→격리 ${S.A.delay}일, 격리 효과 ${S.A.eff}%, 추적 ${S.A.trace}%, 백신 효과 가정 ${S.assume.vaccEff}%)를 그대로 두고 보호 비율만 역산했다. 가정을 바꾸면 이 표도 바뀐다.</p>`;
 }
 (function refs(){
-  const R=D.references||{}; document.getElementById('prov').textContent=D.scenario_provenance||'';
-  const used=new Set(); DZ.forEach(d=>d.src.split(/·|\(/)[0].split(' · ').forEach(s=>used.add(s.trim())));
-  const rows=Object.entries(R).map(([k,v])=>`<tr><th>${k}</th><td>${v.cite}<br><span class="muted">${v.what}</span>${/확인/.test(v.confidence)?`<br><span class="need">확인 필요 — ${v.confidence.replace('확인 필요 — ','')}</span>`:''}</td><td class="muted small">${DZ.filter(d=>d.src.includes(k)).map(d=>d.name).join(', ')||'—'}</td></tr>`);
-  document.getElementById('refs').innerHTML=`<tr><th>약칭</th><th>서지</th><th>쓰인 병</th></tr>`+rows.join('');
+  const R=D.references||{}; $('prov').textContent=D.scenario_provenance||'';
+  const rows=Object.entries(R).map(([k,v])=>`<tr><th>${esc(k)}</th><td>${esc(v.cite)}<br><span class="muted">${esc(v.what)}</span>${/확인/.test(v.confidence)?`<br><span class="need">확인 필요 — ${esc(v.confidence.replace('확인 필요 — ',''))}</span>`:''}</td><td class="muted small">${DZ.filter(d=>d.src.includes(k)).map(d=>esc(d.name)).join(', ')||'—'}</td></tr>`);
+  $('refs').innerHTML=`<tr><th>약칭</th><th>서지</th><th>쓰인 병</th></tr>`+rows.join('');
+  const C = D.check;
+  if(C && C.items){
+    const badge = st => {
+      const cls = /확인 필요/.test(st) ? 'need' : 'muted';
+      return `<span class="${cls}">${esc(st)}</span>`;
+    };
+    $('checks').innerHTML = `<tr><th>대상</th><th>상태</th><th>무엇을 보았나 / 어떻게 했나</th></tr>`
+      + C.items.map(x=>`<tr><th>${esc(x.target)}</th><td>${badge(x.status)}</td>`
+        + `<td>${esc(x.found)}<br><span class="muted">→ ${esc(x.action)}</span></td></tr>`).join('')
+      + `<tr><th>기준</th><td class="muted">${esc(C.as_of)}</td><td class="muted">${esc(C.principle)}</td></tr>`;
+  }
 })();
 
-/* ── 조립 ── */
-function renderOut(){ const ra=run(S.A), rb=run(S.B); tiles('A',ra); tiles('B',rb); chart(ra,rb); why(ra); renderReal(ra); }
-function renderAll(){ renderDz(); renderSliders('A'); renderSliders('B'); renderOut(); r0explain(); drawGoto(); }
-
-/* ── R₀ 쉬운 설명 — 고른 감염병으로 세대별 점을 그린다 ── */
+/* ── R₀ 설명 (기존 유지) ──────────────────────────────────────────── */
 function r0explain(){
   const d=dz(), R=r0mid();
   const dots=(n,cls)=>{ const cap=200; let h=''; for(let i=0;i<Math.min(n,cap);i++) h+=`<i${cls?' class="'+cls+'"':''}></i>`;
     if(n>cap) h+=`<i class="more">… ${Math.round(n).toLocaleString('ko-KR')}명</i>`; return h; };
   const g1=R, g2=R*R;
-  document.getElementById('r0x-title').textContent=`${d.name} — R₀ 약 ${f1(R)}`;
-  document.getElementById('r0x-g0').innerHTML=dots(1,'z');
-  document.getElementById('r0x-l1').textContent=`1세대 — 그 한 명이 옮긴 사람: 약 ${f1(g1)}명`;
-  document.getElementById('r0x-g1').innerHTML=dots(Math.round(g1));
-  document.getElementById('r0x-l2').textContent=`2세대 — 그들이 다시 옮긴 사람: 약 ${Math.round(g2).toLocaleString('ko-KR')}명`;
-  document.getElementById('r0x-g2').innerHTML=dots(Math.round(g2));
+  $('r0x-title').textContent=`${d.name} — R₀ 약 ${f1(R)}`;
+  $('r0x-g0').innerHTML=dots(1,'z');
+  $('r0x-l1').textContent=`1세대 — 그 한 명이 옮긴 사람: 약 ${f1(g1)}명`;
+  $('r0x-g1').innerHTML=dots(Math.round(g1));
+  $('r0x-l2').textContent=`2세대 — 그들이 다시 옮긴 사람: 약 ${Math.round(g2).toLocaleString('ko-KR')}명`;
+  $('r0x-g2').innerHTML=dots(Math.round(g2));
   const thr=R>1?Math.max(0,1-1/R):0;
   const here=' <b>← 이 병</b>';
-  document.getElementById('r0x-rule').innerHTML=
+  $('r0x-rule').innerHTML=
     `<span>R₀ &gt; 1</span><span>퍼진다 — 홍역·백일해·인플루엔자${R>1?here:''}</span>`+
     `<span>R₀ = 1</span><span>한 명이 한 명만 옮긴다. 늘지도 줄지도 않는다${R===1?here:''}</span>`+
     `<span>R₀ &lt; 1</span><span>사그라든다 — 메르스·니파${R<1?here:''}</span>`;
-  if(R<1) document.getElementById('r0x-l1').textContent=`1세대 — 그 한 명이 옮긴 사람: 약 ${f1(R)}명, 한 명도 못 채운다`;
-  document.getElementById('r0x-thr').innerHTML = R>1
-    ? `이 R₀로 계산하면 <b>인구의 ${Math.round(thr*100)}%</b>가 면역이 있어야 유행이 스스로 멈춥니다 (1 − 1/R₀).
-       접종 효과까지 넣은 실제 필요 접종률은 <a href="../vaccine/">⑱ 예방접종</a>에 있습니다.`
-    : `R₀가 1보다 작아 사람 사이에서는 스스로 잦아듭니다. 그래서 이 병은 접종률보다 <b>유입을 막는 검역</b>이 관건입니다.`;
+  if(R<1) $('r0x-l1').textContent=`1세대 — 그 한 명이 옮긴 사람: 약 ${f1(R)}명, 한 명도 못 채운다`;
+  $('r0x-thr').innerHTML = R>1
+    ? `사람이 고르게 섞인다고 가정하면 <b>인구의 ${Math.round(thr*100)}%</b>가 면역일 때 이 모형에서 유행이 더 커지지 않는다 (1 − 1/R₀).
+       실제 인구는 고르게 섞이지 않으므로 이 값이 목표 접종률이거나 유행 종료를 보장하는 선은 아니다.
+       접종 효과까지 넣은 이야기는 <a href="../vaccine/">⑱ 예방접종</a>에 있다.`
+    : `R₀ 범위가 1 아래라 이 모형에서는 사람 사이에서 스스로 잦아든다.`;
 }
-/* B를 A에서 하나만 바꾸는 미리 맞춤. 아래 빠른 단추와 위 시작 패널이 같이 쓴다 */
+
+/* ── 프리셋·시작 패널 ─────────────────────────────────────────────── */
 function applyPreset(q){
-  S.B={...S.A};
-  if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1); if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
-  if(q==='trace50') S.B.trace=50; if(q==='vacc80') S.B.vacc=80; if(q==='vacc95') S.B.vacc=95; if(q==='iso0') S.B.eff=0;
-  renderSliders('B'); renderOut();
+  S.B = Object.assign({}, S.A);
+  const before = Object.assign({}, S.B);
+  if(q==='delay+1') S.B.delay=Math.min(14,S.A.delay+1);
+  if(q==='delay+3') S.B.delay=Math.min(14,S.A.delay+3);
+  if(q==='trace50') S.B.trace=50;
+  if(q==='vacc80') S.B.vacc=80;
+  if(q==='vacc95') S.B.vacc=95;
+  if(q==='iso0') S.B.eff=0;
+  renderSliders('B');
+  const changed = JSON.stringify(before)!==JSON.stringify(S.B) || q==='same';
+  recompute('조건 변경');
+  if(!changed){
+    const m=$('dlmsg'); m.className='dlmsg'; m.textContent='이미 한계값이라 B가 A와 같습니다 — 결과도 같습니다.';
+    m.hidden=false; clearTimeout(m._t); m._t=setTimeout(()=>{m.hidden=true;},4000);
+  }
 }
 document.querySelectorAll('.quick button').forEach(b=>b.onclick=()=>applyPreset(b.dataset.q));
 
-/* 이름으로 병 고르기 — 같은 이름, 없으면 부분 일치. 못 찾으면 고르던 것을 그대로 둔다.
-   다른 쪽(도감·현장카드·검색)에서 ?disease= 로 넘겨 주면 그 병으로 열린다. */
 function pickDisease(want){
   if(!want) return false;
   let i = DZ.findIndex(d=>d.name===want);
@@ -770,37 +1333,312 @@ function pickDisease(want){
   if(i<0) return false;
   S.dz=i; sel.value=i; S.A.r0=null; S.B.r0=null; return true;
 }
-
 document.querySelectorAll('#start .qz button').forEach(b=>b.onclick=()=>{
   pickDisease(b.dataset.d);
-  renderAll();
+  renderAll(false);
   applyPreset(b.dataset.q);
   history.replaceState(null,'','#'+encodeURIComponent(dz().name));
   const soft = !matchMedia('(prefers-reduced-motion: reduce)').matches;
-  document.getElementById('lab').scrollIntoView({behavior: soft?'smooth':'auto', block:'start'});
+  $('lab').scrollIntoView({behavior: soft?'smooth':'auto', block:'start'});
 });
-for(const k of ['N','I0','days','POP']){ const el=document.getElementById(k); el.value=S[k]; el.onchange=()=>{ S[k]=Math.max(+el.min, +el.value||S[k]); el.value=S[k]; renderOut(); }; }
-document.getElementById('logy').onclick=e=>{ S.log=!S.log; e.target.classList.toggle('on',S.log); renderOut(); };
-/* 다른 쪽에서 넘겨받은 이름이 이 모형에 없으면 그 사실을 밝힌다.
-   이 모형은 사람 사이 직접 전파되는 병만 담으므로, 없는 것이 오류가 아니라 범위다. */
+
+/* ── 공통 입력 ────────────────────────────────────────────────────── */
+function bindNum(id, key, holder){
+  const el=$(id); if(!el) return;
+  el.value = holder[key];
+  el.onchange = ()=>{
+    const v = Number(el.value);
+    const bad = E.checkOne(key==='dt'?null:key, v);
+    holder[key] = isFinite(v) ? v : holder[key];
+    if(id==='dtv') holder[key] = Math.min(1, Math.max(0.01, isFinite(v)?v:0.25));
+    el.value = holder[key];
+    recompute('조건 변경');
+  };
+}
+['N','I0','days'].forEach(k=>bindNum(k,k,S));
+bindNum('vaccEff','vaccEff',S.assume);
+bindNum('traceEff','traceEff',S.assume);
+bindNum('dtv','dt',S.assume);
+const popEl=$('POP'); if(popEl){ popEl.value=S.POP; popEl.onchange=()=>{ const v=Number(popEl.value); S.POP = isFinite(v)&&v>=1000 ? v : S.POP; popEl.value=S.POP; renderReal(); }; }
+$('logy').onclick=e=>{ S.log=!S.log; e.target.classList.toggle('on',S.log); chart(); };
+
+/* ── 재생 조작 ────────────────────────────────────────────────────── */
+$('pPlay').onclick = ()=>{ PLAY.on ? stop() : play(); };
+$('pReset').onclick = ()=>{ stop(); PLAY.day=0; renderFrame(); };
+document.querySelectorAll('.sp').forEach(b=>b.onclick=()=>{
+  PLAY.speed=+b.dataset.s;
+  document.querySelectorAll('.sp').forEach(x=>x.classList.toggle('on',x===b));
+});
+$('dayslider').oninput = e=>{ stop(); PLAY.day = Math.max(0, Math.min(S.days, +e.target.value||0)); renderFrame(); };
+
+/* ── 가져가기 ─────────────────────────────────────────────────────── */
+function msg(text, bad){
+  const m=$('dlmsg'); m.className='dlmsg'+(bad?' bad':''); m.textContent=text; m.hidden=false;
+  clearTimeout(m._t); m._t=setTimeout(()=>{m.hidden=true;}, 6000);
+}
+function stamp(){
+  const d=new Date(), p=n=>String(n).padStart(2,'0');
+  return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes());
+}
+function save(blob, name){
+  const u=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u), 1000);
+}
+function condText(p){
+  return `R₀ ${f1(p.r0 ?? r0mid())} · 증상→격리 ${p.delay}일 · 격리 효과 ${p.eff}% · 추적 ${p.trace}% · 보호 ${p.vacc}%`;
+}
+
+$('dlCsv').onclick = ()=>{
+  if(!RES.A) return;
+  const m = RES.A.meta;
+  const head = [
+    '# 감염병 유행 시뮬레이터 — 날짜별 계산 결과',
+    '# 이 표는 교육용 모형의 출력이며 실제 발생 예측이 아닙니다',
+    `# 모형=${RES.A.model} 판=${RES.A.version} 감염병=${m.name}`,
+    `# 인구=${m.N} 첫감염자=${m.I0} 관찰기간=${m.days}일 시간칸=${m.dt}`,
+    `# 가정: 백신 감염예방 효과=${m.vaccEff}% 접촉자 추적 효과=${m.traceEff}% (검증된 값이 아닌 교육용 가정)`,
+    `# A: ${condText(S.A)}`,
+    `# B: ${condText(S.B)}`,
+    '# 누적 감염에는 첫 감염자가 포함됩니다. 값은 반올림하지 않은 원시 계산값입니다',
+    '# 화면 숫자는 보기 좋게 반올림하므로 마지막 자리가 다를 수 있습니다'
+  ].join('\n');
+  const cols = ['일','A_S','A_E','A_I','A_R','A_새감염','A_누적','B_S','B_E','B_I','B_R','B_새감염','B_누적'];
+  const lines = RES.A.history.map((a,i)=>{
+    const b = RES.B.history[i];
+    return [a.day,a.S,a.E,a.I,a.R,a.newInf,a.cumInf,b.S,b.E,b.I,b.R,b.newInf,b.cumInf]
+      .map(v=>typeof v==='number'?v.toPrecision(12).replace(/\.?0+$/,''):v).join(',');
+  });
+  const csv = '﻿' + head + '\n' + cols.join(',') + '\n' + lines.join('\n') + '\n';
+  save(new Blob([csv],{type:'text/csv;charset=utf-8'}), `유행시뮬레이터_${dz().name}_${stamp()}.csv`);
+  msg(`CSV를 내려받았습니다 — ${RES.A.history.length}줄(0일 포함).`);
+};
+
+$('dlJson').onclick = ()=>{
+  const out = {
+    schema: E.SCHEMA, model: RES.A?RES.A.model:E.MODEL, version: E.VERSION,
+    savedAt: new Date().toISOString(),
+    disease: dz().name,
+    common: {N:S.N, I0:S.I0, days:S.days},
+    assume: Object.assign({}, S.assume),
+    A: Object.assign({}, S.A), B: Object.assign({}, S.B),
+    note: '이 파일은 설정만 담습니다. 결과는 불러올 때 다시 계산합니다.'
+  };
+  save(new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), `유행시뮬레이터_설정_${stamp()}.json`);
+  msg('설정을 저장했습니다. 같은 파일을 불러오면 같은 결과가 나옵니다.');
+};
+
+$('upJson').onchange = ev=>{
+  const f = ev.target.files && ev.target.files[0];
+  ev.target.value = '';
+  if(!f) return;
+  if(f.size > 200000){ msg('파일이 너무 큽니다(200KB 넘음). 설정 파일이 맞는지 확인하세요.', true); return; }
+  const fr = new FileReader();
+  fr.onerror = ()=> msg('파일을 읽지 못했습니다.', true);
+  fr.onload = ()=>{
+    let j;
+    try { j = JSON.parse(fr.result); }
+    catch(e){ msg('JSON 형식이 아닙니다. 기존 설정은 그대로 두었습니다.', true); return; }
+    const bad = checkConfig(j);
+    if(bad){ msg(bad + ' 기존 설정은 그대로 두었습니다.', true); return; }
+    /* 여기까지 왔으면 모두 유효하다. 한 번에 바꾼다. */
+    pickDisease(j.disease);
+    S.N=+j.common.N; S.I0=+j.common.I0; S.days=+j.common.days;
+    S.assume = {vaccEff:+j.assume.vaccEff, traceEff:+j.assume.traceEff, dt:+j.assume.dt};
+    ['A','B'].forEach(side=>{
+      const src=j[side];
+      S[side] = {r0: src.r0===null||src.r0===undefined?null:+src.r0,
+                 delay:+src.delay, eff:+src.eff, trace:+src.trace, vacc:+src.vacc};
+    });
+    ['N','I0','days'].forEach(k=>{ const el=$(k); if(el) el.value=S[k]; });
+    $('vaccEff').value=S.assume.vaccEff; $('traceEff').value=S.assume.traceEff; $('dtv').value=S.assume.dt;
+    renderAll(false);
+    msg(`설정을 불러왔습니다 — ${dz().name}.`);
+  };
+  fr.readAsText(f);
+};
+function checkConfig(j){
+  if(!j || typeof j!=='object' || Array.isArray(j)) return '설정 파일의 모양이 아닙니다.';
+  if(j.schema !== E.SCHEMA) return `이 쪽이 읽을 수 있는 설정이 아닙니다(schema=${esc(String(j.schema))}).`;
+  for(const k of ['disease','common','assume','A','B']) if(!(k in j)) return `‘${k}’ 항목이 없습니다.`;
+  if(typeof j.disease!=='string' || !DZ.some(d=>d.name===j.disease)) return '이 모형에 없는 감염병입니다.';
+  const allow = {common:['N','I0','days'], assume:['vaccEff','traceEff','dt'], A:['r0','delay','eff','trace','vacc'], B:['r0','delay','eff','trace','vacc']};
+  for(const grp of Object.keys(allow)){
+    const o=j[grp];
+    if(!o || typeof o!=='object' || Array.isArray(o)) return `‘${grp}’ 항목의 모양이 잘못됐습니다.`;
+    for(const k of Object.keys(o)) if(allow[grp].indexOf(k)<0) return `‘${grp}.${esc(k)}’는 허용되지 않는 항목입니다.`;
+    for(const k of allow[grp]) if(!(k in o)) return `‘${grp}.${k}’ 값이 없습니다.`;
+  }
+  const errs = E.validate(j.common, j.A, j.assume).concat(E.validate(j.common, j.B, j.assume));
+  if(errs.length) return errs[0] + '.';
+  if(j.A.r0!==null && j.A.r0!==undefined && E.checkOne('r0', j.A.r0)) return E.checkOne('r0', j.A.r0)+'.';
+  if(j.B.r0!==null && j.B.r0!==undefined && E.checkOne('r0', j.B.r0)) return E.checkOne('r0', j.B.r0)+'.';
+  return null;
+}
+
+$('dlPng').onclick = ()=>{
+  try { exportPng(); } catch(e){ msg('그림을 만들지 못했습니다: '+e.message, true); }
+};
+function exportPng(){
+  if(!RES.A) return;
+  const sc = 2, W = 1180;
+  /* 높이는 내용에 맞춰 잡는다. 전에는 넉넉히 잡아 아래가 휑하게 비었다. */
+  const gridRows = Math.ceil(DOTS/25);
+  const cellH = Math.min(14, ((W-100)/2 - 4)/25);
+  const H = 232 + gridRows*cellH + 24 + 6*20 + 16 + 16 + 26 + 230 + 40 + 22 + 4*20 + 10 + 34 + 24;
+  const c = document.createElement('canvas');
+  c.width = W*sc; c.height = H*sc;
+  const g = c.getContext('2d');
+  g.scale(sc, sc);
+  const F = "'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif";
+  g.fillStyle = '#ffffff'; g.fillRect(0,0,W,H);
+  let y = 46;
+  g.fillStyle = '#16211D'; g.font = '700 27px '+F;
+  g.fillText(`${dz().name} — 유행 시뮬레이터 비교`, 40, y); y += 28;
+  g.fillStyle = '#B23A3A'; g.font = '700 15px '+F;
+  g.fillText('교육용 모형 · 실제 발생 예측이 아닙니다', 40, y); y += 24;
+  g.fillStyle = '#5B6B65'; g.font = '13px '+F;
+  const m = RES.A.meta;
+  [`모형 ${RES.A.model} 판 ${RES.A.version} · 보는 날짜 ${PLAY.day}일째`,
+   `인구 ${fmt(m.N)}명 · 첫 감염자 ${fmt(m.I0)}명 · 관찰 ${m.days}일 · 시간 칸 ${m.dt}`,
+   `가정(검증된 값 아님): 백신 감염예방 효과 ${m.vaccEff}% · 접촉자 추적 효과 ${m.traceEff}%`,
+   `A  ${condText(S.A)}`,
+   `B  ${condText(S.B)}`].forEach(t=>{ g.fillText(t, 40, y); y += 19; });
+  y += 10;
+
+  /* 점 그림 두 개 */
+  const panelW = (W-100)/2;
+  ['A','B'].forEach((side, idx)=>{
+    const x0 = 40 + idx*(panelW+20);
+    const r = RES[side], h = r.history[Math.min(PLAY.day, r.history.length-1)];
+    g.strokeStyle = idx? '#eb6834':'#2a78d6'; g.lineWidth = 3;
+    g.beginPath(); g.moveTo(x0, y); g.lineTo(x0+panelW, y); g.stroke();
+    g.fillStyle = '#16211D'; g.font = '700 16px '+F;
+    g.fillText(`시나리오 ${side}`, x0, y+24);
+    const counts = E.allocate([h.S,h.E,h.I,h.R], DOTS);
+    const colors = ['#9fb3c8','#eda100','#c0392b','#2e8b74'];
+    const cols = 25, cell = Math.min(14, (panelW-4)/cols), top = y+36;
+    let n = 0;
+    for(let k=0;k<4;k++) for(let q=0;q<counts[k];q++){
+      const cx = x0 + (n%cols)*cell + cell/2, cy = top + Math.floor(n/cols)*cell + cell/2;
+      g.fillStyle = colors[k]; g.beginPath(); g.arc(cx, cy, cell*0.36, 0, Math.PI*2); g.fill(); n++;
+    }
+    const gridH = Math.ceil(DOTS/cols)*cell;
+    let ty = top + gridH + 24;
+    g.font = '13px '+F;
+    [['S 아직 안 걸림', h.S],['E 아직 못 옮김', h.E],['I 옮길 수 있음', h.I],
+     ['R 회복·보호', h.R],['그날 새 감염', h.newInf],['누적 감염(첫 감염자 포함)', h.cumInf]].forEach(([k,v])=>{
+      g.fillStyle = '#5B6B65'; g.fillText(k, x0, ty);
+      g.fillStyle = '#16211D'; g.font = '700 13px '+F;
+      g.fillText(fmt(v), x0+panelW-10-g.measureText(fmt(v)).width, ty);
+      g.font = '13px '+F; ty += 20;
+    });
+  });
+  y += 36 + Math.ceil(DOTS/25)*Math.min(14,(panelW-4)/25) + 24 + 6*20 + 16;
+
+  /* 범례 */
+  g.font = '12.5px '+F;
+  [['#9fb3c8','S 아직 안 걸림'],['#eda100','E 아직 못 옮김'],['#c0392b','I 옮길 수 있음'],['#2e8b74','R 회복·보호']]
+    .forEach(([col,lab],i)=>{
+      const lx = 40 + i*185;
+      g.fillStyle = col; g.beginPath(); g.arc(lx+5, y-4, 5, 0, Math.PI*2); g.fill();
+      g.fillStyle = '#5B6B65'; g.fillText(lab, lx+16, y);
+    });
+  y += 16;
+  g.fillStyle = '#8A9793'; g.font = '12px '+F;
+  g.fillText(`점 ${DOTS}개가 인구 ${fmt(S.N)}명을 나눠 맡는다 — 점 하나가 약 ${fmt(S.N/DOTS)}명. 점은 집단 비율의 그림이고 사람 한 명이 아니다.`, 40, y);
+  y += 26;
+
+  /* 곡선 */
+  const cw = W-80, ch = 230, cx0 = 40, cy0 = y;
+  g.strokeStyle = '#DCE4E1'; g.lineWidth = 1;
+  g.strokeRect(cx0, cy0, cw, ch);
+  const ia = RES.A.history.map(x=>x.newInf), ib = RES.B.history.map(x=>x.newInf);
+  const mx = Math.max(1, ...ia, ...ib), n2 = ia.length;
+  const px = i => cx0 + i/(n2-1)*cw, py = v => cy0 + ch - v/mx*ch;
+  [[ib,'#eb6834'],[ia,'#2a78d6']].forEach(([arr,col])=>{
+    g.strokeStyle = col; g.lineWidth = 2.2; g.beginPath();
+    arr.forEach((v,i)=> i? g.lineTo(px(i),py(v)) : g.moveTo(px(i),py(v)));
+    g.stroke();
+  });
+  const curX = px(Math.min(PLAY.day, n2-1));
+  g.strokeStyle = '#16211D'; g.setLineDash([4,3]); g.lineWidth = 1.4;
+  g.beginPath(); g.moveTo(curX, cy0); g.lineTo(curX, cy0+ch); g.stroke(); g.setLineDash([]);
+  g.fillStyle = '#5B6B65'; g.font = '12px '+F;
+  g.fillText('하루 새 감염자 — 최대 '+fmt(mx)+'명', cx0, cy0-6);
+  g.fillText(PLAY.day+'일', Math.min(curX+5, cx0+cw-30), cy0+14);
+  g.fillText('0일', cx0, cy0+ch+16);
+  g.fillText(S.days+'일', cx0+cw-30, cy0+ch+16);
+  y = cy0 + ch + 40;
+
+  /* 비교 숫자 */
+  const a = RES.A.history[PLAY.day], b = RES.B.history[PLAY.day];
+  g.fillStyle = '#16211D'; g.font = '700 15px '+F;
+  g.fillText(`${PLAY.day}일째 비교`, 40, y); y += 22;
+  g.font = '13px '+F;
+  [['이 날짜까지 누적 감염', a.cumInf, b.cumInf],
+   ['이 날 새 감염', a.newInf, b.newInf],
+   ['지금 옮길 수 있는 사람 I', a.I, b.I],
+   ['관찰 기간 안 하루 최대', RES.A.peak.newInf, RES.B.peak.newInf]].forEach(([k,x,z])=>{
+    g.fillStyle = '#5B6B65'; g.fillText(k, 40, y);
+    g.fillStyle = '#2a78d6'; g.fillText('A '+fmt(x), 420, y);
+    g.fillStyle = '#eb6834'; g.fillText('B '+fmt(z), 600, y);
+    g.fillStyle = '#5B6B65';
+    g.fillText('차이 ' + ((z-x)>=0?'+':'') + fmt(z-x) + (x===0?' (%: 계산 불가)':' ('+((z-x)/x*100>=0?'+':'')+((z-x)/x*100).toFixed(1)+'%)'), 780, y);
+    y += 20;
+  });
+  y += 10;
+  g.fillStyle = '#8A9793'; g.font = '12px '+F;
+  g.fillText('누적 감염에는 첫 감염자가 포함된다. 소수는 모형이 낸 기댓값이다.', 40, y); y += 17;
+  g.fillText('기획·제작 지움웍스 · jieumworks.com · ' + new Date().toISOString().slice(0,10), 40, y);
+
+  c.toBlob(bl=>{
+    if(!bl){ msg('그림을 만들지 못했습니다.', true); return; }
+    save(bl, `유행시뮬레이터_${dz().name}_${PLAY.day}일_${stamp()}.png`);
+    msg('그림을 내려받았습니다.');
+  }, 'image/png');
+}
+
+/* ── 조립 ─────────────────────────────────────────────────────────── */
+function renderAll(notify){
+  renderDz(); renderSliders('A'); renderSliders('B'); r0explain(); drawGoto();
+  if(recompute(notify ? '조건 변경' : null)){ tiles('A'); tiles('B'); }
+}
+
+/* 다른 쪽에서 넘겨받은 이름이 이 모형에 없으면 그 사실을 밝힌다. */
 (function(){
-  const want = new URLSearchParams(location.search).get('disease') || decodeURIComponent(location.hash.slice(1));
+  let want = '';
+  try { want = new URLSearchParams(location.search).get('disease') || decodeURIComponent(location.hash.slice(1)); }
+  catch(e){ want = ''; }                    /* 잘못 인코딩된 주소에서도 쪽이 멈추지 않게 한다 */
   if(!want) return;
   if(pickDisease(want)) return;
-  // 받침에 따라 은/는을 고른다. 한글이 아니면 '는'
-  const josa = s => { const c = s.charCodeAt(s.length-1) - 0xAC00;
-    return (c >= 0 && c <= 11171 && c % 28 !== 0) ? '은' : '는'; };
-  const safe = want.replace(/[<>&]/g,'');
-  const el = document.getElementById('miss');
-  el.innerHTML = `<b>‘${safe}’${josa(safe)} 이 모형에 없습니다.</b> 이 시뮬레이터는 사람 사이에서 직접 전파되는 ${DZ.length}종만 담습니다.
-    아래는 기본값인 ${DZ[S.dz].name}입니다. 그 병의 사실이 필요하면
-    <a href="../dogam/?disease=${encodeURIComponent(want)}">도감</a> ·
-    <a href="../field/?disease=${encodeURIComponent(want)}">현장 대응카드</a>로 가십시오.`;
+  const josa = s => { const ch = s.charCodeAt(s.length-1) - 0xAC00;
+    return (ch >= 0 && ch <= 11171 && ch % 28 !== 0) ? '은' : '는'; };
+  const safe = want.slice(0, 40);
+  const el = $('miss');
+  el.innerHTML = `<b>‘${esc(safe)}’${josa(safe)} 이 모형에 없습니다.</b> 이 시뮬레이터는 사람 사이에서 직접 전파되는 ${DZ.length}종만 담습니다.
+    아래는 기본값인 ${esc(DZ[S.dz].name)}입니다. 그 병의 사실이 필요하면
+    <a href="../dogam/?disease=${encodeURIComponent(safe)}">도감</a> ·
+    <a href="../field/?disease=${encodeURIComponent(safe)}">현장 대응카드</a>로 가십시오.`;
   el.hidden = false;
 })();
-renderAll();
-matchMedia('(prefers-color-scheme: dark)').addEventListener('change', renderOut);
-new MutationObserver(renderOut).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+
+renderAll(false);
+
+/* 재생 막대를 공통 메뉴 바로 아래에 붙인다. 메뉴 높이는 기기·폭마다 다르므로 재서 넣는다. */
+function fitBar(){
+  const nav = document.querySelector('nav.gnav');
+  const stuck = nav && /sticky|fixed/.test(getComputedStyle(nav).position);
+  const h = stuck ? Math.round(nav.getBoundingClientRect().height) : 0;
+  document.documentElement.style.setProperty('--navh', h + 'px');
+}
+fitBar();
+addEventListener('resize', fitBar);
+addEventListener('load', fitBar);
+
+const redraw = ()=>{ if(RES.A) chart(); };
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redraw);
+new MutationObserver(redraw).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
 })();
 </script>
 <div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 질병관리청 공식 누리집이 아닌 공공자료 정리·분석 프로젝트의 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 최신 공식 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
@@ -829,6 +1667,7 @@ new MutationObserver(renderOut).observe(document.documentElement,{attributes:tru
   }
 })();
 </script>
+
 <script>
 /* 쉬운 말 풀이 — scripts/plain_glossary.py 한 곳에서 관리한다 */
 (function(){

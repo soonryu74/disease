@@ -76,14 +76,19 @@ def build():
         k = norm(d['name'])
         d['annual'] = annual.get(k) or next((v for kk, v in annual.items() if kk.startswith(k[:6])), None)
     data = {'diseases': out, 'defaults': P['intervention_defaults'], 'about': P['_about'],
+            'check': P.get('_check'),
             'references': P.get('references', {}), 'scenario_provenance': P.get('scenario_provenance', ''),
             'population': 51_700_000,
             'population_note': '전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.',
             'annual_source': '③ 백서 정리 · 연보 기반 전수감시 신고수 2016~2025'}
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'sim.template.html'), encoding='utf-8').read()
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+    # 계산 엔진은 따로 받아 가는 파일을 늘리지 않으려고 쪽 안에 그대로 넣는다.
+    # 같은 파일을 node 에서 불러 검산하므로(17_유행_시뮬레이터/engine_test.js) 한 벌만 관리된다.
+    eng = open(os.path.join(ROOT, 'scripts', 'templates', 'sim.engine.js'), encoding='utf-8').read()
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    open(OUT, 'w', encoding='utf-8').write(tmpl.replace('__DATA__', js))
+    open(OUT, 'w', encoding='utf-8').write(
+        tmpl.replace('__ENGINE__', eng.replace('</', '<\\/')).replace('__DATA__', js))
     print(f"→ portal/sim/index.html  {os.path.getsize(OUT):,}B")
     for d in out:
         print(f"  {d['name']:<14} R0 {d['r0'][0]}–{d['r0'][1]} · 잠복 {d['incubation']['typ']}일 · 전염 {d['d_inf']}일 · 증상전 {d['presym']}일 · {d['grade']} {d['iso']}")
