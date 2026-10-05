@@ -12,6 +12,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 from build_field_page import dogam_fields, norm, current_phase  # noqa: E402
+from portal_tools import CREDIT  # noqa: E402
 
 SRC = os.path.join(ROOT, '17_유행_시뮬레이터', 'data', '모형_매개변수.json')
 OUT = os.path.join(ROOT, 'portal', 'sim', 'index.html')
@@ -105,8 +106,11 @@ def build():
     # 새 사실을 만들지 않는다. 연보 표와 ⑨ 연대기에 이미 있는 것만 모은다.
     covid = covid_case(annual, chron)
 
+    # 내려받는 그림에도 같은 크레딧을 찍는다. 문구는 site-config.json 한 곳에서만 온다.
+    credit = f"{CREDIT.get('role', '')} {CREDIT.get('name', '')} · {CREDIT.get('site', '')}".strip()
+
     data = {'diseases': out, 'defaults': P['intervention_defaults'], 'about': P['_about'],
-            'check': P.get('_check'), 'covid': covid,
+            'check': P.get('_check'), 'covid': covid, 'credit': credit,
             'references': P.get('references', {}), 'scenario_provenance': P.get('scenario_provenance', ''),
             'population': 51_700_000,
             'population_note': '전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.',

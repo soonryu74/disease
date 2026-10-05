@@ -1054,10 +1054,19 @@ function stamp(){
   const d=new Date(), p=n=>String(n).padStart(2,'0');
   return d.getFullYear()+p(d.getMonth()+1)+p(d.getDate())+'_'+p(d.getHours())+p(d.getMinutes());
 }
+/* 내려받는 파일 이름은 영문·숫자로만 짓는다.
+   크로미엄(크롬·엣지·안드로이드 기본 browser)은 a.download 에 한글이 섞이면
+   이름을 통째로 버리고 'download' 라는, 확장자도 없는 파일로 저장해 버린다.
+   그러면 받은 사람이 두 번 눌러도 열리지 않는다.
+   어떤 질환의 무엇인지는 파일 이름 대신 파일 안에 적는다 —
+   표에는 머리말 주석으로, 설정에는 disease 칸에, 그림에는 제목으로 들어가 있다. */
 function save(blob, name){
   const u=URL.createObjectURL(blob), a=document.createElement('a');
   a.href=u; a.download=name; document.body.appendChild(a); a.click(); a.remove();
   setTimeout(()=>URL.revokeObjectURL(u), 1000);
+}
+function fileName(kind, ext){
+  return 'disease-sim_' + kind + '_' + stamp() + '.' + ext;
 }
 function condText(p, d){
   const dd = d || dz();
@@ -1086,7 +1095,7 @@ $('dlCsv').onclick = ()=>{
       .map(v=>typeof v==='number'?v.toPrecision(12).replace(/\.?0+$/,''):v).join(',');
   });
   const csv = '﻿' + head + '\n' + cols.join(',') + '\n' + lines.join('\n') + '\n';
-  save(new Blob([csv],{type:'text/csv;charset=utf-8'}), `유행시뮬레이터_${dz().name}_${stamp()}.csv`);
+  save(new Blob([csv],{type:'text/csv;charset=utf-8'}), fileName('table','csv'));
   msg(`CSV를 내려받았습니다 — ${RES.A.history.length}줄(0일 포함).`);
 };
 
@@ -1100,7 +1109,7 @@ $('dlJson').onclick = ()=>{
     A: Object.assign({}, S.A), B: Object.assign({}, S.B),
     note: '이 파일은 설정만 담습니다. 결과는 불러올 때 다시 계산합니다.'
   };
-  save(new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), `유행시뮬레이터_설정_${stamp()}.json`);
+  save(new Blob([JSON.stringify(out,null,1)],{type:'application/json'}), fileName('settings','json'));
   msg('설정을 저장했습니다. 같은 파일을 불러오면 같은 결과가 나옵니다.');
 };
 
@@ -1266,11 +1275,11 @@ function exportPng(){
   y += 10;
   g.fillStyle = '#8A9793'; g.font = '12px '+F;
   g.fillText('누적 감염에는 첫 감염자가 포함된다. 소수는 모형이 낸 기댓값이다.', 40, y); y += 17;
-  g.fillText('기획·제작 지움웍스 · jieumworks.com · ' + new Date().toISOString().slice(0,10), 40, y);
+  g.fillText((D.credit||'') + ' · ' + new Date().toISOString().slice(0,10), 40, y);
 
   c.toBlob(bl=>{
     if(!bl){ msg('그림을 만들지 못했습니다.', true); return; }
-    save(bl, `유행시뮬레이터_${dz().name}_${PLAY.day}일_${stamp()}.png`);
+    save(bl, fileName('day'+PLAY.day,'png'));
     msg('그림을 내려받았습니다.');
   }, 'image/png');
 }
