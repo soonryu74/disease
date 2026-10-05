@@ -785,6 +785,24 @@ def ensure_head(path):
     return True
 
 
+def inject_page(path, depth, current):
+    """쪽 하나에 공통 손질을 모두 넣는다.
+
+    쪽을 따로 찍어 내는 빌더(상황판처럼 날마다 다시 찍는 쪽)는 이 함수를 불러야 한다.
+    예전에는 빌더마다 이 차례를 손으로 베껴 적었는데, 공통 손질이 하나 늘 때마다
+    베껴 적은 쪽이 그것만 빠진 채로 남았다. 파비콘이 그랬고(ensure_head),
+    '쉽게 말하면'과 쉬운 말 풀이가 또 그랬다.
+    여기 한 곳에만 적어 두면 다시는 어긋나지 않는다."""
+    did = ensure_head(path)
+    did = ensure_description(path, current) or did
+    did = inject(path, depth) or did
+    did = inject_nav(path, depth, current) or did
+    did = inject_summary(path, current) or did
+    did = inject_terms(path) or did
+    did = inject_credit(path) or did
+    return did
+
+
 def inject_all(portal_dir):
     n = 0
     for dirpath, _, files in os.walk(portal_dir):
@@ -794,14 +812,7 @@ def inject_all(portal_dir):
             p = os.path.join(dirpath, f)
             depth = 0 if os.path.dirname(p) == portal_dir else 1
             current = '' if depth == 0 else os.path.basename(dirpath)
-            did = ensure_head(p)
-            did = ensure_description(p, current) or did
-            did = inject(p, depth) or did
-            did = inject_nav(p, depth, current) or did
-            did = inject_summary(p, current) or did
-            did = inject_terms(p) or did
-            did = inject_credit(p) or did
-            if did:
+            if inject_page(p, depth, current):
                 n += 1
                 print('  도구·메뉴 주입', os.path.relpath(p, os.path.dirname(portal_dir)))
     return n
