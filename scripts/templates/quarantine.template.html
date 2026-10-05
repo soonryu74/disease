@@ -142,6 +142,26 @@
   .row .since{grid-column:1/-1}
     padding:9px 12px;margin:0 0 12px;line-height:1.55}
   .asof b{color:var(--ink)}
+
+  /* 지금 시행 중인 지정 */
+  .nowcard{border:1.5px solid var(--accent);border-radius:14px;padding:15px 17px;background:var(--surface-2)}
+  .nowh{font-weight:800;font-size:15px;margin:0 0 11px}
+  .nowg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .nowg>div{display:grid;gap:2px;padding:10px 12px;border-radius:11px;background:var(--ground)}
+  .nl{font-size:12px;color:var(--muted);font-weight:700}
+  .nv{font-size:22px;font-weight:800;line-height:1.1}
+  .nn{font-size:11.5px;color:var(--faint);line-height:1.45}
+  .nows{display:flex;flex-wrap:wrap;gap:9px;align-items:baseline;margin:11px 0 0;font-size:12px}
+  .nows a{color:var(--accent);font-weight:700}
+  .nows .nd{color:var(--faint)}
+  .rv{padding:1px 7px;border-radius:999px;font-weight:800;font-size:11px}
+  .rv.ok{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+  .rv.warn{background:color-mix(in srgb,var(--caut) 20%,transparent);color:var(--caut)}
+  .nownote{margin:10px 0 0;font-size:12.5px;color:var(--muted);line-height:1.6}
+  .nowwarn{margin:11px 0 0;padding:10px 12px;border-radius:11px;font-size:12.5px;line-height:1.6;
+    border:1px dashed var(--caut);background:color-mix(in srgb,var(--caut) 8%,transparent)}
+  .nowwarn b{color:var(--caut)}
+  @media (max-width:560px){ .nowg{grid-template-columns:1fr} }
 </style>
 </head>
 <body>
@@ -194,14 +214,20 @@
 </section>
 
 <section>
-  <h2>현행 중점검역관리지역</h2>
+  <h2>지금 시행 중인 지정</h2>
+  <div id="nowbox"></div>
+</section>
+
+<section>
+  <h2>중점검역관리지역 — 국가별 감염병</h2>
   <p class="sdesc" id="prihead"></p>
   <div id="pri"></div>
 </section>
 
 <section>
   <h2>국가로 찾기</h2>
-  <p class="sdesc">나라 이름을 입력하면 그 나라가 어느 등급인지, 어떤 검역감염병 때문인지 나온다. 2026년 3분기(2026.7.1. 기준) 자료다.</p>
+  <p class="sdesc">나라 이름을 입력하면 그 나라가 어느 등급인지, 어떤 검역감염병 때문인지 나온다.
+  <b>이 표는 2026년 3분기(2026.7.1. 기준) 자료다</b> — 지금 시행 중인 지정과 다를 수 있으니 위의 '지금 시행 중인 지정'을 먼저 볼 것.</p>
   <div class="asof" id="qasof"></div>
   <input class="search" id="q" type="search" placeholder="나라 이름 검색 (예: 베트남, 우간다, 미국)" autocomplete="off"
          aria-label="나라 이름 검색">
@@ -448,6 +474,37 @@ document.getElementById('src').innerHTML =
   `근거: ${esc(D.legal_basis)} · 출처: ${esc(D.current['출처'])} — `
   + `<a href="https://www.kdca.go.kr" target="_blank" rel="noopener">질병관리청</a> · `
   + `<a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz/11_%EA%B2%80%EC%97%AD%EA%B4%80%EB%A6%AC%EC%A7%80%EC%97%AD" target="_blank" rel="noopener">정리 데이터(GitHub)</a>`;
+
+/* ── 지금 시행 중인 지정 ─────────────────────────────────────────────
+   '현행'은 자료에 적어 두는 말이 아니라 오늘 날짜로 정해진다.
+   국가별 표는 3분기 기준이라 시기가 다르면 그 사실을 먼저 알린다. */
+(function(){
+  const box=document.getElementById('nowbox'); if(!box) return;
+  const cp=D.current_period, q4=D.q4, mx=D.matrix_date;
+  if(!cp){ box.innerHTML='<div class="asof">시행 중인 지정을 판정하지 못했습니다.</div>'; return; }
+  const stale = mx && cp.effective > mx;
+  const src = (q4 && q4['출처']) || {};
+  box.innerHTML = `
+    <div class="nowcard">
+      <div class="nowh">${esc(cp.effective.replace(/-/g,'.'))} 시행 · ${esc(cp.period)}</div>
+      <div class="nowg">
+        <div><span class="nl">중점검역관리지역</span><span class="nv">${cp.priority.countries}개국</span>
+          <span class="nn">${cp.priority.diseases||''}개 감염병 · 방문자 전원 Q-CODE 제출 의무</span></div>
+        <div><span class="nl">검역관리지역</span><span class="nv">${cp.general.countries}개국</span>
+          <span class="nn">${cp.general.diseases||''}개 감염병 · 증상 있는 사람 Q-CODE 제출 의무</span></div>
+      </div>
+      <div class="nows">
+        <span class="rv ${cp.verified?'ok':'warn'}">${esc(cp.confidence||'')}</span>
+        ${src['게시글']?`<a href="${esc(src['게시글'])}" target="_blank" rel="noopener">공식 안내</a>`:''}
+        ${src['첨부']?`<a href="${esc(src['첨부'])}" target="_blank" rel="noopener">국가 목록 PDF</a>`:''}
+        ${src['게시일']?`<span class="nd">게시 ${esc(src['게시일'])}${src['최종수정일']&&src['최종수정일']!==src['게시일']?` · 수정 ${esc(src['최종수정일'])}`:''} · 시행 ${esc(src['시행일']||cp.effective)}</span>`:''}
+      </div>
+      ${cp.note?`<p class="nownote">${esc(cp.note)}</p>`:''}
+      ${stale?`<div class="nowwarn"><b>아래 '국가로 찾기' 표는 ${esc((mx||'').replace(/-/g,'.'))} 기준입니다.</b>
+        지금 시행 중인 ${esc(cp.effective.replace(/-/g,'.'))} 지정이 반영돼 있지 않습니다.
+        입국일 기준 지정 여부는 위 공식 안내와 국가 목록 PDF에서 확인하십시오.</div>`:''}
+    </div>`;
+})();
 </script>
 </body>
 </html>

@@ -111,6 +111,15 @@
   .seen{font-size:11.5px;color:var(--faint);margin-top:6px;line-height:1.5}
   .seen b{color:var(--muted);font-weight:700}
 
+  /* 분류 확인 필요 — 상위 병원체 이름만 나온 글 */
+  .mb{border:1px dashed var(--caut);border-radius:10px;padding:9px 11px;margin:8px 0 0;
+    background:color-mix(in srgb,var(--caut) 7%,transparent)}
+  .mb b{color:var(--caut);font-size:12.5px}
+  .mb p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .mbc{margin:6px 0 0;font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+  .mbc a{color:var(--accent);font-weight:700}
+  .mbn{color:var(--faint)}
+
   /* 많이 언급된 것 — 횟수일 뿐 위험도가 아니다 */
   .agg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
   .agg>*{min-width:0}
@@ -425,6 +434,17 @@ function enHtml(it){
   const terms=(it.terms||[]).length?`<div class="terms">${it.terms.map(([e,k])=>`<span>${esc(e)}<i>${esc(k)}</i></span>`).join('')}</div>`:'';
   return `<details class="en"><summary>원문 핵심 문장 — 영어, 용어에 한글 병기 ▾</summary>${body}${terms}</details>`;
 }
+/* 병원체 '무리' 이름만 나온 글 — 국내 질환을 확정하지 않는다.
+   상위 병원체 이름으로 국내 법정 질환을 지정하면 서로 다른 병의 대응이 섞인다. */
+function maybeHtml(it){
+  const m = it.maybe || [];
+  if (!m.length) return '';
+  return m.map(x=>`<div class="mb"><b>분류 확인 필요</b>
+    <p>${esc(x.why)}</p>
+    ${(x.candidates||[]).length?`<div class="mbc">참고할 국내 질환
+      ${x.candidates.map(c=>`<a href="../dogam/#${enc(c)}">${esc(c)}</a>`).join('')}
+      <span class="mbn">— 이 글이 그 질환이라는 뜻이 아닙니다</span></div>`:''}</div>`).join('');
+}
 function itemHtml(it){
   /* 발행일과 '우리가 처음 수집한 날'은 다르다. 배지는 수집 기준이므로 그렇게 적는다. */
   const isNew=it.first_seen===D.today && !D.first_run;
@@ -434,6 +454,7 @@ function itemHtml(it){
     <div class="top"><span class="sb ${SB[it.source]||''}">${esc(it.source)}</span>${it.level?`<span class="lv">Level ${it.level}</span>`:''}<span class="num" title="발행일">${esc(it.date||'날짜 없음')}</span>${isNew?'<span class="nw" title="우리가 오늘 처음 수집한 항목이다. 발행일과 다르다">오늘 처음 수집</span>':''}</div>
     <h4><a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.title)}</a></h4>
     ${it.ko?`<p class="ko">${esc(it.ko)}</p>`:(it.summary?`<p>${esc(it.summary)}</p>`:'')}
+    ${maybeHtml(it)}
     ${factsHtml(it)}
     ${figsHtml(it)}
     ${tablesHtml(it)}

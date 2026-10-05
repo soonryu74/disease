@@ -8,7 +8,9 @@
  - 어디에 그리나     Natural Earth 110m
 
 그리고 KDCA가 내놓지 않는 숫자 하나를 만든다:
-    유입 신고 건수 ÷ 들어온 사람 수  = 나라별 유입 위험도
+    유입 신고 건수 ÷ 들어온 사람 수 — 단, 이것은 위험도가 아니다.
+분자와 분모의 관찰집단·기간·귀속 기준이 서로 달라 감염 위험의 추정치가 되지 못한다.
+탐색적 비교로만 싣고, 각각의 관측값과 자료 범위를 따로 보여 준다.
 분모가 둘(노선·국적)이라 둘 다 낸다. 어긋나는 나라는 그 어긋남이 정보다.
 """
 import csv
@@ -207,8 +209,15 @@ def build():
             'rep_n': n_rep,
             'rep_diseases': sorted(r['diseases'].items(), key=lambda x: -x[1]) if r else [],
             'rep_issues': sorted(r['issues']) if r else [],
-            'rate_air': per_million(n_rep, direct) if n_rep else (0.0 if direct else None),
-            'rate_nat': per_million(n_rep, moj.get(k)) if n_rep else (0.0 if moj.get(k) else None),
+            # 분자가 0이라고 0.0 을 적지 않는다. 우리가 가진 건 주간자료의 '표본 호'이므로
+            # 표본에서 안 잡힌 것(미수집)과 실제로 신고가 없었던 것(0건)을 구분할 수 없다.
+            # 구분할 수 없는 것을 0으로 적으면 '이 나라는 안전하다'로 읽힌다.
+            'rate_air': per_million(n_rep, direct) if n_rep and direct else None,
+            'rate_nat': per_million(n_rep, moj.get(k)) if n_rep and moj.get(k) else None,
+            'rep_state': ('표본에서 신고 확인' if n_rep else '표본에서 확인되지 않음'),
+            'rep_state_note': (None if n_rep else
+                               '이 저장소가 가진 것은 주간 감시자료의 표본 호입니다. '
+                               '표본에 없다는 것이 신고 0건이라는 뜻은 아닙니다.'),
         }
         # 국적 대비 노선: 1보다 훨씬 크면 우리 국민·환승 위주 노선, 훨씬 작으면 경유 입국 위주
         row['nat_over_air'] = (round(row['nat_entries'] / direct, 2)
@@ -251,7 +260,7 @@ def build():
     skew = sorted([x for x in rows if x['nat_over_air'] and (x['nat_entries'] or 0) > 20000],
                   key=lambda x: x['nat_over_air'])
 
-    # 위험도 구간: 0이 아닌 값의 사분위
+    # 탐색적 비의 구간: 0이 아닌 값의 사분위. 위험도가 아니므로 순위 해석에 쓰지 않는다.
     rates = sorted(x['rate_air'] for x in rows if x['rate_air'])
     def qtl(p):
         return rates[min(len(rates) - 1, int(p * len(rates)))] if rates else 0
@@ -262,6 +271,17 @@ def build():
             'period': PERIOD, 'report_span': span, 'report_issues': issues,
             'report_total': sum(x['rep_n'] for x in rows),
             'quarantine_basis': '2026년 3분기(2026.7.1. 기준)',
+            # 분자·분모의 범위를 글로 적어 화면 맨 앞에 띄운다. 비교 가능 여부를 읽는 사람이 판단하게.
+            'scopes': {
+                'num': ('주간 감시자료(PHWR) 표본 호의 해외유입 신고 · '
+                        '귀속 기준 감염 추정국가 · 수집 구간 {}~{} · 표본 {}개 호 · 합계 {}건'),
+                'air': ('국토교통부 노선별 도착여객(직항) · 귀속 기준 항공편 출발국 · '
+                        '구간 {}~{}'),
+                'nat': ('법무부 국적별 입국자 · 귀속 기준 국적 · 구간 {}~{} · '
+                        '내국인은 이 분모에 없다'),
+                'warn': ('셋은 관찰집단·기간·귀속 기준이 서로 다르다. '
+                         '나눈 값은 감염 위험이나 발생률의 추정치가 아니며 순위·자원 배분의 근거로 쓸 수 없다.'),
+            },
             'months': months, 'moj_unmapped_entries': moj_unmapped,
             'counts': {'countries': len(rows), 'on_map': sum(1 for x in rows if x['on_map']),
                        'with_air': sum(1 for x in rows if x['air_direct'] is not None),
@@ -320,7 +340,7 @@ def build():
     print(f"  신고 {data['meta']['report_total']}건 / 표본 {len(issues)}호 "
           f"{span[0][0]}-{span[0][1]}주~{span[1][0]}-{span[1][1]}주 · 국적 미매칭 입국자 {moj_unmapped:,}")
     print(f"  발견: 미지정 유입국 {len(rep_undesignated)} · 지정-직항없음 {len(desig_no_flight)} · "
-          f"지정-입국<1천 {len(desig_low_entries)} · 위험도 구간 {bins}")
+          f"지정-입국<1천 {len(desig_low_entries)} · 탐색적 비 구간 {bins}")
     return data
 
 

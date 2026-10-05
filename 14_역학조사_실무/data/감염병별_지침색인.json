@@ -1,7 +1,7 @@
 {
  "meta": {
   "as_of": "2026-09",
-  "source": "질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, 제목·연도로 통합 2349건",
+  "source": "질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, 제목·연도로 통합 2351건",
   "levels": {
    "direct": "지침 제목에 그 질병명·옛 이름·약어가 들어 있다 — 사실",
    "group": "그 질병이 속한 계열의 묶음 지침 — 찾아볼 후보. 묶음 지침이 실제로 어느 질병을 다루는지는 원문 목차 확인이 필요하다"
@@ -13,8 +13,9 @@
    "group": 24,
    "none": 0,
    "stale": 76,
+   "collision": 28,
    "total": 91,
-   "guidelines": 2349
+   "guidelines": 2351
   }
  },
  "index": [
@@ -352,17 +353,17 @@
    "icon": "💀",
    "direct": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 1,
+     "editions": 3,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -391,59 +392,46 @@
      "board": ""
     },
     {
-     "title": "원숭이두창 치료제 사용 안내서(2판) 개정",
-     "date": "2022.09.08",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228059/artclView.do",
+     "title": "두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침입니다.",
+     "date": "2022.01.25",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20220125628280733&q_clsfNo=0",
      "year": 2022,
      "kind": "direct",
      "group": null,
      "doc": "지침",
      "editions": 1,
      "stale": true,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "감염병포털",
+     "board": ""
     },
     {
-     "title": "원숭이두창 대응지침(지자체용) 제3판",
-     "date": "2022.08.16",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228054/artclView.do",
-     "year": 2022,
+     "title": "두창백신의 접종과 피접종자 관리』 교육교재",
+     "date": "2010.08.20",
+     "url": "https://www.kdca.go.kr/bbs/kdca/49/218873/artclView.do",
+     "year": 2010,
      "kind": "direct",
      "group": null,
-     "doc": "지침",
+     "doc": "기타",
      "editions": 1,
      "stale": true,
      "src": "KDCA게시판",
-     "board": "지침"
-    },
-    {
-     "title": "원숭이두창 검사실 진단 지침(제1판)",
-     "date": "2022.06.22",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228033/artclView.do",
-     "year": 2022,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": true,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "board": "교육자료"
     }
    ],
-   "direct_total": 13,
+   "direct_total": 11,
    "group": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "group",
      "group": "1급_생물테러",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -473,17 +461,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-    "date": "2025.01.02",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-    "year": 2025,
+    "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+    "date": "2026.01.15",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 1,
+    "editions": 3,
     "stale": false,
-    "src": "KDCA게시판",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -856,17 +844,17 @@
    "icon": "🥫",
    "direct": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 1,
+     "editions": 3,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -908,20 +896,20 @@
      "board": ""
     }
    ],
-   "direct_total": 8,
+   "direct_total": 10,
    "group": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "group",
      "group": "1급_생물테러",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -951,17 +939,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-    "date": "2025.01.02",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-    "year": 2025,
+    "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+    "date": "2026.01.15",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 1,
+    "editions": 3,
     "stale": false,
-    "src": "KDCA게시판",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -1132,17 +1120,17 @@
    "icon": "🐇",
    "direct": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 1,
+     "editions": 3,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -1184,7 +1172,7 @@
      "board": ""
     }
    ],
-   "direct_total": 8,
+   "direct_total": 10,
    "group": [
     {
      "title": "2026년도 진드기·설치류매개감염병 관리지침",
@@ -1213,17 +1201,17 @@
      "board": "지침"
     },
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "group",
      "group": "1급_생물테러",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -1253,17 +1241,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-    "date": "2025.01.02",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-    "year": 2025,
+    "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+    "date": "2026.01.15",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 1,
+    "editions": 3,
     "stale": false,
-    "src": "KDCA게시판",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -1779,17 +1767,17 @@
    "icon": "🐄",
    "direct": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 1,
+     "editions": 3,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -1844,20 +1832,20 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 9,
+   "direct_total": 11,
    "group": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "group",
      "group": "1급_생물테러",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -1913,17 +1901,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-    "date": "2025.01.02",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-    "year": 2025,
+    "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+    "date": "2026.01.15",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 1,
+    "editions": 3,
     "stale": false,
-    "src": "KDCA게시판",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -1932,17 +1920,17 @@
    "icon": "🐀",
    "direct": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 1,
+     "editions": 3,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -2010,20 +1998,20 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 10,
+   "direct_total": 12,
    "group": [
     {
-     "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-     "year": 2025,
+     "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+     "date": "2026.01.15",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+     "year": 2026,
      "kind": "group",
      "group": "1급_생물테러",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
+     "src": "보정",
+     "board": ""
     },
     {
      "title": "2024년 제1급감염병 두창，페스트，탄저，보툴리눔독소증，야토병 대응지침(2024.1월)",
@@ -2079,17 +2067,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
-    "date": "2025.01.02",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228263/artclView.do",
-    "year": 2025,
+    "title": "2026년도 제1급감염병(두창·페스트·탄저·보툴리눔독소증·야토병) 대응지침",
+    "date": "2026.01.15",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/309744/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 1,
+    "editions": 3,
     "stale": false,
-    "src": "KDCA게시판",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -3478,19 +3466,6 @@
    "icon": "💧",
    "direct": [
     {
-     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
-     "date": "2026.08.28",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
-     "year": 2026,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 4,
-     "stale": false,
-     "src": "KDCA게시판+감염병포털",
-     "board": "지침"
-    },
-    {
      "title": "감염병 위기 사회대응 매뉴얼(2026)",
      "date": "2026.08.18",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/312241/artclView.do",
@@ -3554,9 +3529,22 @@
      "stale": false,
      "src": "KDCA게시판",
      "board": "지침"
+    },
+    {
+     "title": "2026년 법정감염병 진단·신고기준 지침",
+     "date": "2026.05.14",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311073/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 3,
+     "stale": false,
+     "src": "KDCA게시판",
+     "board": "지침"
     }
    ],
-   "direct_total": 670,
+   "direct_total": 664,
    "group": [
     {
      "title": "2026년 수인성·식품매개감염병 관리지침 재안내",
@@ -3599,16 +3587,16 @@
     }
    ],
    "primary": {
-    "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
-    "date": "2026.08.28",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+    "title": "2026 검역감염병 대응지침",
+    "date": "2026.07.23",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311900/artclView.do",
     "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 4,
+    "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
+    "src": "KDCA게시판",
     "board": "지침"
    }
   },
@@ -7689,45 +7677,6 @@
    "icon": "🫁",
    "direct": [
     {
-     "title": "2026년 제1급감염병(중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS)) 대응지침",
-     "date": "2026.01.22",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/309847/artclView.do",
-     "year": 2026,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
-    },
-    {
-     "title": "2025년 제1급감염병(중동호흡기증후군(MERS)·중동급성호흡기증후군(SARS)) 대응지침",
-     "date": "2025.01.02",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228264/artclView.do",
-     "year": 2025,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": false,
-     "src": "KDCA게시판",
-     "board": "지침"
-    },
-    {
-     "title": "2024년 제1급감염병 중동호흡기증후군(MERS)중증급성호흡기증후군(SARS) 대응지침(2024.1월)",
-     "date": "2023.12.29",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228173/artclView.do",
-     "year": 2024,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 2,
-     "stale": true,
-     "src": "KDCA게시판",
-     "board": "지침"
-    },
-    {
      "title": "2023년제1급중동호흡기증후군[MERS]중증급성호흡기증후군[SARS]대응지침(2023.4.)",
      "date": "2023.04.21",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/228122/artclView.do",
@@ -7754,20 +7703,59 @@
      "board": "지침"
     },
     {
-     "title": "제1급감염병 중증급성호흡기증후군(SARS) 대응 지침(22년판)",
-     "date": "2022.01.25",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/227946/artclView.do",
-     "year": 2022,
+     "title": "제1급감염병 중증급성호흡기증후군[SARS] 대응지침",
+     "date": "2021.02.04",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/227828/artclView.do",
+     "year": 2021,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 3,
+     "editions": 2,
      "stale": true,
      "src": "KDCA게시판",
      "board": "지침"
+    },
+    {
+     "title": "2019년도 급성호흡기감염증 관리지침",
+     "date": "2019.08.13",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/227720/artclView.do",
+     "year": 2019,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 2,
+     "stale": true,
+     "src": "KDCA게시판+감염병포털",
+     "board": "지침"
+    },
+    {
+     "title": "법정감염병 표본감시 신고지침(급성호흡기감염증, 장관감염증, 엔테로바이러스감염증)",
+     "date": "2015.01.16",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/227431/artclView.do",
+     "year": 2015,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": true,
+     "src": "KDCA게시판+감염병포털",
+     "board": "지침"
+    },
+    {
+     "title": "2014년 급성호흡기감염증 표본감시 안내 지침",
+     "date": "2018.07.16",
+     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716327304255&q_clsfNo=0",
+     "year": 2014,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": true,
+     "src": "감염병포털",
+     "board": ""
     }
    ],
-   "direct_total": 20,
+   "direct_total": 14,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -7797,16 +7785,16 @@
     }
    ],
    "primary": {
-    "title": "2026년 제1급감염병(중동호흡기증후군(MERS)·중증급성호흡기증후군(SARS)) 대응지침",
-    "date": "2026.01.22",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/309847/artclView.do",
+    "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
+    "date": "2026.03.30",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/310611/artclView.do",
     "year": 2026,
-    "kind": "direct",
-    "group": null,
+    "kind": "group",
+    "group": "호흡기",
     "doc": "지침",
-    "editions": 1,
+    "editions": 7,
     "stale": false,
-    "src": "KDCA게시판",
+    "src": "KDCA게시판+감염병포털",
     "board": "지침"
    }
   },
@@ -8558,20 +8546,20 @@
      "board": "지침"
     },
     {
-     "title": "2024년 제1급감염병(동물인플루엔자 인체감염증) 대응지침(2024.10월)",
-     "date": "2024.10.29",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228244/artclView.do",
+     "title": "2024-2025절기 인플루엔자 국가예방접종 지원사업 관리지침(보건소용, 의료기관용)",
+     "date": "2024.07.08",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/228227/artclView.do",
      "year": 2024,
      "kind": "direct",
      "group": null,
      "doc": "지침",
-     "editions": 2,
+     "editions": 1,
      "stale": true,
      "src": "KDCA게시판",
      "board": "지침"
     }
    ],
-   "direct_total": 84,
+   "direct_total": 73,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",

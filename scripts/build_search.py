@@ -78,7 +78,10 @@ def attach_field(hubs, records):
             hub['route'] = c['route']
         if not hub.get('grade') and c.get('grade'):
             hub['grade_label'] = c['grade']
-        bits = [x for x in (c.get('report') and f"신고 {c['report']}", c.get('iso')) if x]
+        # iso 는 이제 근거 원장이 돌려주는 묶음이다 — 출처가 있으면 값, 없으면 '확인 필요'.
+        iso = c.get('iso') or {}
+        iso_bit = iso.get('isolation') if iso.get('ok') else None
+        bits = [x for x in (c.get('report') and f"신고 {c['report']}", iso_bit) if x]
         add_link(hub, '현장 대응카드', f"../field/#{n}", ARCHIVE, ' · '.join(bits))
         hub['guides'] = max(hub['guides'], c.get('guides_total') or 0)
         records.append({'t': f'{n} 현장 대응카드', 's': ' · '.join(bits) or '신고·격리·잠복기 한 화면',
@@ -195,6 +198,49 @@ def attach_country(records):
                         'b': ARCHIVE, 'x': r.get('ISO3', '')})
 
 
+def attach_entry_terms(records):
+    """병원체·증후군·상황으로 들어오는 길.
+
+    현장에서는 법정 질병명이 아니라 '노로바이러스', 'AFP', '설사 집단발생' 으로 먼저 떠올린다.
+    그런데 '노로바이러스'를 치면 0건이었다 — 법정 분류 이름만 색인했기 때문이다.
+
+    병원체를 질병과 같은 것으로 합치지는 않는다. '노로바이러스 = 장관감염증'이 아니라
+    '장관감염증을 일으키는 병원체 중 하나'다. 한 진입어가 여러 질환으로 갈 수 있으면
+    모두 보여 주고 고르게 한다 — 혈청형에 따라 신고 기준이 달라지는 대장균·살모넬라가 그렇다.
+    """
+    p = os.path.join(ROOT, '14_역학조사_실무', 'data', '진입어.json')
+    if not os.path.exists(p):
+        return 0
+    E = json.load(open(p, encoding='utf-8'))
+    n = 0
+    for kind, rows in (('병원체', E['병원체']), ('증후군', E['증후군_상황'])):
+        for r in rows:
+            words = [r['이름']] + list(r.get('영문') or []) + list(r.get('한글') or []) \
+                + list(r.get('약어') or [])
+            dzs = r.get('질병') or []
+            note = r.get('설명') or ''
+            if r.get('주의'):
+                note += ' ' + r['주의']
+            for dz in dzs:
+                records.append({
+                    't': f"{r['이름']} → {dz}",
+                    's': note,
+                    'k': kind, 'd': dz,
+                    'u': f'../field/#{dz}',
+                    'alt': ' '.join(words),          # 한글·영문·약어를 한 자리에
+                    'rel': r.get('관계') or '',
+                    'check': bool(r.get('확인필요')),
+                    'src': '이 사이트 정리 — 법정 분류와 현장 용어 연결',
+                    'b': ARCHIVE})
+                n += 1
+            if not dzs:
+                records.append({'t': r['이름'], 's': note, 'k': kind,
+                                'alt': ' '.join(words), 'u': '../field/',
+                                'src': '이 사이트 정리', 'b': ARCHIVE})
+                n += 1
+    return n
+
+
 def attach_pages(records):
     import portal_tools as pt
     for gid, icon, label, items in pt.NAV_GROUPS:
@@ -218,6 +264,7 @@ def build():
     attach_whitepaper(records)
     attach_country(records)
     attach_pages(records)
+    n_entry = attach_entry_terms(records)
 
     for n, hub in hubs.items():
         add_link(hub, '감염병 도감', f'../dogam/#{n}', ARCHIVE,

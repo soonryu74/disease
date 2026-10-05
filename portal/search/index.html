@@ -195,7 +195,6 @@
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
 
-
 /* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
    쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
    선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
@@ -241,6 +240,7 @@ details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5
 .plainsum p{margin:0}
 .plainsum p+p{margin-top:3px}
 @media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
@@ -365,7 +365,7 @@ nav:not(.gnav){display:none !important}
 </div>
 
 <script>
-const COUNTS = {"질병": 98, "기록": 2380};
+const COUNTS = {"질병": 98, "기록": 2415};
 const KINDS = ['전체','감염병','지침','법령','예방접종','국가','연대기','백서','현장','페이지'];
 const BADGE = {official:'공식 원자료', archive:'아카이브 재구성', analysis:'분석·모형'};
 const SEED = ['홍역','백일해','결핵','MERS','엠폭스','뎅기열','콜레라','인플루엔자'];
@@ -687,7 +687,7 @@ setState('<h2>색인을 불러오는 중…</h2><div class="sk"></div><div class
 fetch('index.json').then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
   IDX = j;
   // 대조용 문자열은 여기서 한 번 만든다(색인 파일을 반으로 줄이려고 저장하지 않았다)
-  IDX.records.forEach(r => { r.q = norm([r.t, r.s, r.d, r.x, r.y].join(' ')); r.src = IDX.srcs[r.src] || ''; });
+  IDX.records.forEach(r => { r.q = norm([r.t, r.s, r.d, r.x, r.y, r.alt].join(" ")); r.src = IDX.srcs[r.src] || ''; });
   const p = new URLSearchParams(location.search).get('q');
   if(p){ $('#q').value = p; run(); } else { initial(); renderChips({}); }
   $('#q').focus({preventScroll:true});

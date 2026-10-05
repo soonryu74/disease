@@ -228,14 +228,66 @@ def build():
             if re.search(pat, r['제목']):
                 grouped[g].append(r)
 
-    index, stats = [], {'direct': 0, 'group': 0, 'none': 0, 'stale': 0}
+    index, stats = [], {'direct': 0, 'group': 0, 'none': 0, 'stale': 0,
+                        'collision': 0}
+
+    # 다른 법정감염병 이름 안에 파묻혀 잡히는 것을 막는 자물쇠.
+    #
+    # '급성호흡기감염증'(제4급)의 별칭 '급성호흡기'가 '중증급성호흡기증후군(SARS)' 안에서
+    # 맞아, 제1급 MERS·SARS 대응지침이 이 질환의 1순위 지침으로 올라가 있었다.
+    # 급이 다르고 대상이 다른 지침이 현장 담당자에게 '지금 펴야 할 지침'으로 보였다.
+    #
+    # 그래서 어떤 열쇠가 제목에 맞았더라도, 그 자리가 '더 긴 다른 질병 이름' 안이면 버린다.
+    ALL_NAMES = sorted({norm(n) for d in diseases for n in ([d['name']] + list(d['names']))
+                        if len(norm(n)) >= 4}, key=len, reverse=True)
+
+    # 제목이 '제N급감염병(가·나·다)' 꼴로 대상을 못 박았는데 그 안에 이 병이 없고
+    # 급도 다르면, 제목에 글자가 겹쳤을 뿐 이 병의 지침이 아니다.
+    # 2025년판 제목에는 원문 오타('중동급성호흡기증후군')가 있어 이름 자물쇠로는 못 막는다.
+    # 급과 열거 대상으로 막는 쪽이 오타에도 견딘다.
+    GRADE_RE = re.compile(r'제\s*([1-4])\s*급\s*감염병\s*[\(（]([^)）]{4,})[\)）]')
+
+    def wrong_grade(title, dz, own_names):
+        m = GRADE_RE.search(title)
+        if not m:
+            return False
+        grade = '제' + m.group(1) + '급'
+        if (dz.get('grade') or '') == grade:
+            return False                      # 급이 같으면 열거에서 빠졌어도 함부로 버리지 않는다
+        listed = norm(m.group(2))
+        return not any(n and n in listed for n in own_names)
+
+    def buried(key, title_norm, own_names):
+        """key 가 맞은 자리가 '다른 질병의 더 긴 이름' 안에 들어 있는가."""
+        k = norm(key)
+        if not k:
+            return False
+        for other in ALL_NAMES:
+            if other in own_names or len(other) <= len(k):
+                continue
+            if k not in other:
+                continue
+            # 더 긴 다른 병 이름이 제목에 있고, 그 이름을 지우면 열쇠도 사라진다면 파묻힌 것
+            if other in title_norm and k not in title_norm.replace(other, ''):
+                return True
+        return False
+
     for dz in diseases:
         ks = keys_for(dz, aliases)
+        own = {norm(n) for n in ([dz['name']] + list(dz['names']))}
         direct = []
         for r in rows:
             t = norm(r['제목'])
-            if any(norm(k) in t for k in ks):
-                direct.append(r)
+            hit = [k for k in ks if norm(k) in t]
+            if not hit:
+                continue
+            if all(buried(k, t, own) for k in hit):
+                stats['collision'] += 1
+                continue
+            if wrong_grade(r['제목'], dz, own):
+                stats['collision'] += 1
+                continue
+            direct.append(r)
         direct += extra_map.get(dz['name'], [])        # 손으로 적은 보정은 직접 연결로
         direct_latest = latest_per_series(direct, 6)   # 계열마다 최신판만
 

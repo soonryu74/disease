@@ -497,7 +497,7 @@ setState('<h2>색인을 불러오는 중…</h2><div class="sk"></div><div class
 fetch('index.json').then(r => { if(!r.ok) throw new Error(r.status); return r.json(); }).then(j => {
   IDX = j;
   // 대조용 문자열은 여기서 한 번 만든다(색인 파일을 반으로 줄이려고 저장하지 않았다)
-  IDX.records.forEach(r => { r.q = norm([r.t, r.s, r.d, r.x, r.y].join(' ')); r.src = IDX.srcs[r.src] || ''; });
+  IDX.records.forEach(r => { r.q = norm([r.t, r.s, r.d, r.x, r.y, r.alt].join(" ")); r.src = IDX.srcs[r.src] || ''; });
   const p = new URLSearchParams(location.search).get('q');
   if(p){ $('#q').value = p; run(); } else { initial(); renderChips({}); }
   $('#q').focus({preventScroll:true});

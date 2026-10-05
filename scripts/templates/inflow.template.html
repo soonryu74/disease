@@ -159,6 +159,18 @@
     font-size:12.5px;font-weight:700;color:var(--ink);background:var(--surface);min-height:40px;text-decoration:none}
   .panel .go a:hover{background:var(--surface-2)}
   .panel .go a small{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
+
+  /* 비교 가능성 경고 — 이 쪽에서 가장 중요한 글이라 맨 앞에 크게 둔다 */
+  .caveat{border:1.5px solid var(--caut);border-radius:14px;padding:14px 16px;margin:18px 0 0;
+    background:color-mix(in srgb,var(--caut) 8%,transparent)}
+  .caveat>b{display:block;font-size:15px;color:var(--caut);margin:0 0 7px}
+  .caveat p{margin:0 0 7px;font-size:13.5px;line-height:1.65;color:var(--muted)}
+  .caveat p b{color:var(--ink)}
+  .scopes{display:grid;gap:7px;margin:11px 0 0;padding:11px 0 0;border-top:1px solid var(--line)}
+  .scopes>div{display:grid;grid-template-columns:190px 1fr;gap:10px;font-size:12.5px;line-height:1.5}
+  .scopes .sl{color:var(--muted);font-weight:700}
+  .scopes .sv{color:var(--ink)}
+  @media (max-width:560px){ .scopes>div{grid-template-columns:1fr;gap:1px} }
 </style>
 </head>
 <body>
@@ -172,14 +184,27 @@
   <p class="eyebrow">⑮ 해외유입 지도</p>
   <h1>지정된 나라에서<br>실제로 얼마나 들어왔나</h1>
   <p class="thesis">검역관리지역은 <b>어디를 막을지</b>의 목록이고, 항공·출입국 통계는 <b>어디서 왔는지</b>의 숫자다.
-  KDCA는 둘을 한 화면에 놓지 않는다. 여기서는 나라마다 <b>지정 여부 · 직항 도착 여객 · 국적별 입국자 · 실제 유입 신고</b>를 한 점에 모아
-  <b>들어온 사람 백만 명당 유입 신고 건수</b>를 낸다. 지구본을 돌려 나라를 누르면 그 나라의 네 숫자가 뜬다.</p>
+  KDCA는 둘을 한 화면에 놓지 않는다. 여기서는 나라마다 <b>지정 여부 · 직항 도착 여객 · 국적별 입국자 · 실제 유입 신고</b>를 한 점에 모아 나란히 보여 준다.
+  지구본을 돌려 나라를 누르면 그 나라의 네 숫자가 뜬다.</p>
+
+  <div class="caveat">
+    <b>이 쪽의 비(比)는 위험도가 아닙니다.</b>
+    <p>신고 건수와 이동량은 <b>관찰집단·기간·귀속 기준이 서로 다른 자료</b>입니다. 분자는 주간 감시자료 가운데 표본으로 수집한 호의 해외유입 신고(감염 추정국가 기준)이고,
+    분모는 전 기간 항공 도착여객(항공편 출발국) 또는 국적별 입국자(국적)입니다. 셋은 서로 다른 것을 셉니다.</p>
+    <p>그래서 둘을 나눈 값은 입국자의 감염 위험이나 나라별 발생률의 추정치가 <b>아니며</b>, 순위를 매기거나 검역 자원 배분의 근거로 쓸 수 없습니다.
+    이 쪽은 그 값을 <b>탐색적 비교</b>로만 싣고, 각각의 관측값과 자료 범위를 따로 보여 줍니다.</p>
+    <div class="scopes">
+      <div><span class="sl">분자 — 해외유입 신고</span><span class="sv" id="sc-num">—</span></div>
+      <div><span class="sl">분모 ㉮ — 직항 도착여객</span><span class="sv" id="sc-air">—</span></div>
+      <div><span class="sl">분모 ㉯ — 국적별 입국자</span><span class="sv" id="sc-nat">—</span></div>
+    </div>
+  </div>
   <div class="stats" id="stats"></div>
 </header>
 
 <section id="map">
-  <h2>지구본 — 항로가 곧 위험의 굵기</h2>
-  <p class="sdesc">호(弧)는 그 나라에서 인천으로 들어온 사람 수에 비례해 굵어진다(로그 눈금). 색은 검역관리지역 지정 여부나 유입 위험도.
+  <h2>지구본 — 항로의 굵기는 이동량이다</h2>
+  <p class="sdesc">호(弧)는 그 나라에서 인천으로 들어온 사람 수에 비례해 굵어진다(로그 눈금). 색은 검역관리지역 지정 여부, 또는 신고 건수를 이동량으로 나눈 탐색적 비(위험도가 아닙니다).
   끌어서 돌리고, 누르면 오른쪽에 나라 정보가 뜬다. 평면으로 바꾸면 전체가 한눈에 보인다.</p>
   <div class="card mapcard">
     <div class="ctl">
@@ -188,7 +213,7 @@
       <span class="lbl">굵기</span>
       <span class="grp" data-key="weight"><button data-v="air" class="on">직항 도착여객</button><button data-v="nat">국적별 입국자</button></span>
       <span class="lbl">색</span>
-      <span class="grp" data-key="color"><button data-v="quar" class="on">검역 지정</button><button data-v="rate">유입 위험도</button></span>
+      <span class="grp" data-key="color"><button data-v="quar" class="on">검역 지정</button><button data-v="rate" title="위험도가 아니라 탐색적 비교입니다">신고÷이동량(탐색)</button></span>
       <span class="lbl">필터</span>
       <span class="grp" data-key="filter"><button data-v="all" class="on">전체</button><button data-v="q">지정국</button><button data-v="r">유입신고국</button></span>
       <span class="sp"></span>
@@ -244,7 +269,7 @@
         <li><b>국적 ≠ 출발국.</b> 법무부 표는 여권 기준이다. 방콕에서 갈아탄 미국인은 미국으로, 러시아발 항공편의 한국인은 어디에도 잡히지 않는다. 그래서 분모를 둘 다 낸다.</li>
         <li><b>직항 ≠ 전부.</b> 국토부 노선 표에는 직항이 있는 <span id="src-air"></span>개국만 있다. 경유 입국은 경유지 나라로 잡힌다. 검역관리지역 <span id="src-nofl"></span>개국은 이 표에 없다.</li>
         <li><b>내국인은 분모에 없다.</b> 법무부 외국인 표에 우리 국민은 없고, 국민의 행선지별 출입국 통계는 공개되지 않는다. 남수단 말라리아 6건처럼 파병·근무 유입은 어느 분모로도 맞게 나누지 못한다.</li>
-        <li><b>신고는 표본.</b> 분자가 작다. 신고 3건 미만 나라의 위험도는 순위가 아니라 신호로만 읽어야 한다. 표에 흐리게 적었다.</li>
+        <li><b>신고는 표본.</b> 분자가 작다. 신고 3건 미만 나라의 비는 순위로 읽을 수 없다. 표에 흐리게 적었다.</li>
         <li><b>15종 밖은 검역이 잡지 않는다.</b> 유입 신고의 대부분은 매독·수두·C형간염처럼 검역감염병이 아니다. "지정 안 했는데 들어왔다"는 비교는 15종 안에서만 했다.</li>
       </ul>
     </div>
@@ -602,11 +627,11 @@ function renderPanel(iso){
       <div class="small muted" style="margin-top:6px">테두리 있는 것이 검역감염병 15종. ${quarSet.size?'':'이 나라 유입 신고는 모두 검역이 잡지 않는 병이다.'}</div>`;
   } else h += `<p class="empty">표본 ${M.report_issues.length}호에 없음</p>`;
   if(r.nat_over_air!=null && (r.nat_over_air>3 || r.nat_over_air<0.2) && (r.nat_entries>20000||r.air_direct>100000)){
-    h += `<div class="note">국적별 입국자가 직항 여객의 <b>${r.nat_over_air}배</b>. ${r.nat_over_air>3?'이 나라 국적자는 대부분 다른 나라를 거쳐 들어온다 — 직항 기준 위험도가 과대평가된다.':'이 노선 여객은 대부분 이 나라 국적이 아니다(우리 국민·제3국인). 국적 기준 위험도가 과대평가된다.'}</div>`;
+    h += `<div class="note">국적별 입국자가 직항 여객의 <b>${r.nat_over_air}배</b>. ${r.nat_over_air>3?'이 나라 국적자는 상당수가 다른 나라를 거쳐 들어온다 — 직항을 분모로 쓴 비는 분모가 작아 커 보인다.':'이 노선 여객이 모두 이 나라 국적은 아니다. 국적을 분모로 쓴 비는 분모가 작아 커 보인다.'}</div>`;
   }
-  if(r.rep_n && r.rep_n<3) h += `<div class="note">신고 ${r.rep_n}건. 위험도는 순위가 아니라 신호로만 읽을 것.</div>`;
+  if(r.rep_n && r.rep_n<3) h += `<div class="note">신고 ${r.rep_n}건. 분자가 이렇게 작으면 비를 순위로 읽을 수 없다.</div>`;
   if(iso==='SSD') h += `<div class="note warn">말라리아 6건은 파병 부대 복귀로 보인다(원문은 국가만 적는다). 외국인 입국자 163명은 이 유입의 분모가 아니다. 어떤 공개 분모로도 맞게 나누지 못하는 사례.</div>`;
-  if(iso==='RUS') h += `<div class="note warn">직항이 2022년 이후 사실상 끊겼다(3년 9편). 국적 입국자 ${fmt(r.nat_entries)}명은 거의 전부 경유 입국 — 직항 기준 위험도 ${fmt1(r.rate_air)}은 분모가 무너진 숫자다.</div>`;
+  if(iso==='RUS') h += `<div class="note warn">직항이 2022년 이후 사실상 끊겼다(3년 9편). 국적 입국자 ${fmt(r.nat_entries)}명은 거의 전부 경유 입국 — 직항을 분모로 쓴 ${fmt1(r.rate_air)}은 분모가 무너진 숫자다.</div>`;
   // 이 나라에서 이어지는 곳. 숫자는 신고 건수이지 위험 순위가 아니므로, 판단은 각 쪽으로 넘긴다.
   {
     const c = encodeURIComponent(r.ko);
@@ -635,7 +660,7 @@ function renderPanel(iso){
   fx.innerHTML = `
   <div class="grid2">
     <div class="card">
-      <h3>① 검역감염병 유입 ${qp.n_reports}건, 지정은 빈틈이 없었다</h3>
+      <h3>① 검역감염병 유입 ${qp.n_reports}건 — 지금 지정표로 과거 신고를 분류하면</h3>
       <div class="big">${qp.hit}<small>/ ${qp.hit+qp.miss} (질병, 국가) 쌍이 지정 목록 안</small></div>
       <p>표본 ${M.report_issues.length}호에서 검역감염병 15종으로 신고된 해외유입은 ${qp.n_reports}건, 나라·질병 쌍으로 ${qp.hit+qp.miss}가지다.
       ${qp.miss===0?`<b class="ok">전부</b> 그 병의 검역관리지역으로 지정된 나라에서 왔다. 지정 목록이 실제 유입과 맞물려 있다는 뜻이다.`:
@@ -663,7 +688,9 @@ function renderPanel(iso){
       ${bottom.map(x=>`<tr><td>${x.ko}</td><td class="num">${x.n}</td><td class="num">${fmt(x.direct)}</td><td class="num"><b>${fmt1(x.rate)}</b></td><td class="num">${x.rank_count}→<b>${x.rank_rate}</b></td></tr>`).join('')}</table></div>
     </div>
     <p class="small muted">뺀 나라: ${F.flips.filter(x=>x.n>=3 && BY[x.iso].nat_over_air>3).map(x=>`${x.ko}(국적/노선 ${BY[x.iso].nat_over_air}배)`).join(' · ')||'없음'}.
-    베트남은 건수 1위지만 직항으로 ${fmt(BY.VNM.air_direct)}명이 들어와 백만 명당 ${fmt1(BY.VNM.rate_air)}건이다. 일본은 ${fmt(BY.JPN.air_direct)}명에 ${fmt1(BY.JPN.rate_air)}건. 검역 인력을 나라별로 배분한다면 어느 순위를 써야 하는가 — 이 표가 그 질문이다.</p>
+    베트남은 건수 1위지만 직항으로 ${fmt(BY.VNM.air_direct)}명이 들어와 백만 명당 ${fmt1(BY.VNM.rate_air)}건이다. 일본은 ${fmt(BY.JPN.air_direct)}명에 ${fmt1(BY.JPN.rate_air)}건.
+    <b>이 숫자는 검역 인력 배분의 근거가 되지 못한다.</b> 분자와 분모의 관찰집단·기간·귀속 기준이 서로 달라(아래 ⑤ 참고) 나라별 감염 위험을 견주는 값이 아니기 때문이다.
+    건수 순위와 이동량 순위가 어긋난다는 사실 자체만 읽을 것.</p>
   </div>
   <div class="grid2">
     <div class="card">
@@ -671,7 +698,7 @@ function renderPanel(iso){
       <p>국적별 입국자 ÷ 직항 도착여객. 1에서 멀수록 두 분모가 서로 다른 사람을 세고 있다.</p>
       <table class="flip"><tr><th>나라</th><th>국적 입국자</th><th>직항 여객</th><th>비</th></tr>
       ${(F.skew||[]).map(x=>`<tr><td>${x.ko}</td><td class="num">${fmt(x.nat)}</td><td class="num">${fmt(x.direct)}</td><td class="num"><b>${x.ratio}</b></td></tr>`).join('')}</table>
-      <p class="small muted">러시아: 국적자 ${fmt(BY.RUS.nat_entries)}명이 들어왔는데 직항 여객은 ${fmt(BY.RUS.air_direct)}명. 직항이 끊긴 나라의 유입은 노선 표에서 사라진다. 베트남: 직항 여객 ${fmt(BY.VNM.air_direct)}명 중 베트남 국적은 ${fmt(BY.VNM.nat_entries)}명 — 나머지는 우리 국민 관광객이다. <b>"어느 나라에서 왔나"는 여권과 항공권이 서로 다른 답을 준다.</b></p>
+      <p class="small muted">러시아: 국적자 ${fmt(BY.RUS.nat_entries)}명이 들어왔는데 직항 여객은 ${fmt(BY.RUS.air_direct)}명. 직항이 끊긴 나라의 유입은 노선 표에서 사라진다. 베트남: 직항 여객 ${fmt(BY.VNM.air_direct)}명 중 베트남 국적 입국자는 ${fmt(BY.VNM.nat_entries)}명. 두 수의 차이가 어떤 사람들인지는 이 자료로 알 수 없다 — 국적과 항공 출발지는 서로 다른 집계이고, 우리 국민의 행선지별 출입국 통계는 공개되지 않는다. <b>"어느 나라에서 왔나"는 여권과 항공권이 서로 다른 답을 준다.</b></p>
     </div>
     <div class="card">
       <h3>⑤ 어느 분모로도 못 나누는 유입</h3>
@@ -732,6 +759,20 @@ const spinUntil = performance.now() + 20000;
   if(performance.now() > spinUntil) S.spin = false;
   if(S.spin) requestAnimationFrame(idle);
 })();
+})();
+
+/* 분자·분모의 범위를 글로 띄운다 — 비교 가능 여부를 읽는 사람이 판단하도록 */
+(function(){
+  /* D 는 위쪽 즉시실행함수 안에 갇혀 있다. 여기서 다시 읽는 편이 안전하다. */
+  const DD = JSON.parse(document.getElementById('data').textContent);
+  const M = DD.meta, S = M.scopes || {};
+  const sp = M.report_span || [], pr = M.period || [];
+  const set = (id, t)=>{ const e=document.getElementById(id); if(e) e.textContent = t; };
+  const wk = x => Array.isArray(x) ? `${x[0]}년 ${x[1]}주` : (x||'?');
+  set('sc-num', (S.num||'').replace('{}', wk(sp[0])).replace('{}', wk(sp[1]))
+       .replace('{}', (M.report_issues||[]).length).replace('{}', M.report_total));
+  set('sc-air', (S.air||'').replace('{}', pr[0]||'?').replace('{}', pr[1]||'?'));
+  set('sc-nat', (S.nat||'').replace('{}', pr[0]||'?').replace('{}', pr[1]||'?'));
 })();
 </script>
 </body>

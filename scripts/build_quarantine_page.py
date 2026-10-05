@@ -41,7 +41,21 @@ def build():
     later = [p for p in hist['periods']
              if matrix_date and (p.get('effective') or '') > matrix_date]
 
+    # '현행'은 자료에 적어 두는 말이 아니라 오늘 날짜로 정해지는 것이다.
+    # 시행일이 오늘 이하인 시기 가운데 가장 늦은 것이 현행이다. 그래야 분기가 바뀌어도
+    # 누가 손으로 '현행' 글자를 옮기지 않아 생기는 어긋남이 없다.
+    from datetime import date
+    today = date.today().isoformat()
+    effective_now = [p for p in hist['periods'] if (p.get('effective') or '') <= today]
+    current_period = max(effective_now, key=lambda p: p['effective']) if effective_now else None
+
+    q4_path = os.path.join(DATA, '2026Q4_지정내역.json')
+    q4 = json.load(open(q4_path, encoding='utf-8')) if os.path.exists(q4_path) else None
+
     data = {
+        'today': today,
+        'current_period': current_period,
+        'q4': q4,
         'matrix_asof': q3['기준'],
         'matrix_date': matrix_date,
         'later': later,

@@ -2,15 +2,22 @@
 """현장 대응 카드 → portal/field/
 
 역학조사 현장에서 한 화면에 있어야 하는 것을 모은다.
- - 지금 이 병의 급·신고기한·격리 (⑨ 연대기)
+ - 지금 이 병의 급·신고기한 (⑨ 연대기)
+ - 격리·감염관리와 접촉자 감시 (⑭ 근거 원장 — 출처가 있는 것만)
  - 펴야 할 지침 (⑭ 지침 색인)
  - 잠복기와 그 값이 국제 기준과 맞는지 (⑭ 국제기준 대조)
  - 역학조사서 서식·교재·매뉴얼 (⑭ 교육·매뉴얼)
+
+격리방식을 법정 급수에서 추론하지 않는다. 그렇게 해서 제1급 18종이 모두
+'음압격리'로 나갔고, 공식 지침이 격리 불필요라고 적은 탄저·보툴리눔독소증·야토병까지
+그렇게 표시됐다. 임상·행정 기준은 scripts/evidence.py 를 거쳐서만 들어온다.
 """
 import csv
 import json
 import os
 import re
+
+import evidence as EV   # 근거 원장 문지기
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 D14 = os.path.join(ROOT, '14_역학조사_실무', 'data')
@@ -92,9 +99,13 @@ def build():
                 if ck.startswith(k[:5]) or k.startswith(ck[:5]):
                     xc = cv
                     break
+        # 격리·접촉자 기준은 급수에서 추론하지 않는다. 근거 원장에 출처가 있는 것만 값으로,
+        # 없으면 '공식 근거 확인 필요'와 원문 경로가 들어온다. scripts/evidence.py 참고.
         cards.append({
             'disease': e['disease'], 'icon': e['icon'], 'grade': e['grade'],
-            'surv': ph.get('surv'), 'report': ph.get('report'), 'iso': ph.get('iso'),
+            'surv': ph.get('surv'), 'report': ph.get('report'),
+            'iso': EV.isolation(e['disease']),
+            'ctc': EV.contact(e['disease']),
             'incub': dg.get('잠복기'), 'route': dg.get('감염경로'),
             'tx': dg.get('치료'), 'prev': dg.get('예방'),
             'guides': e['direct'][:4], 'guides_total': e['direct_total'],

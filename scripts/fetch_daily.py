@@ -62,7 +62,7 @@ DISEASE_KW = [
     ('listeria', '리스테리아증'), ('norovirus', '노로바이러스 감염증'), ('campylobacter', '캄필로박터균 감염증'),
     ('cyclospora', '장관감염증'), ('vibrio', '비브리오패혈증'), ('botulism', '보툴리눔독소증'),
     ('shigella', '세균성이질'), ('cryptosporidium', '장관감염증'),
-    ('hantavirus', '신증후군출혈열'), ('sfts', '중증열성혈소판감소증후군'), ('tick-borne encephalitis', '진드기매개뇌염'),
+    ('sfts', '중증열성혈소판감소증후군'), ('tick-borne encephalitis', '진드기매개뇌염'),
     ('brucell', '브루셀라증'), ('legionell', '레지오넬라증'), ('shigell', '세균성이질'),
     ('e. coli', '장출혈성대장균감염증'), ('stec', '장출혈성대장균감염증'), ('botulism', '보툴리눔독소증'),
     ('tularemia', '야토병'), ('varicella', '수두'), ('chickenpox', '수두'), ('mumps', '유행성이하선염'),
@@ -74,6 +74,30 @@ DISEASE_KW = [
     ('creutzfeldt', '크로이츠펠트-야콥병(CJD)·변종CJD'), ('hiv', '후천성면역결핍증'),
     ('hepatitis b', 'B형간염'), ('hepatitis c', 'C형간염'), ('enterovirus', '엔테로바이러스감염증'),
     ('hand, foot', '수족구병'), ('hpv', '사람유두종바이러스(HPV) 감염증'),
+]
+
+# 병원체 '무리' 이름 — 국내 법정 질환을 하나로 확정할 수 없는 말.
+#
+# 전에는 'hantavirus'를 바로 신증후군출혈열로 붙였다. 그래서 WHO 의 안데스바이러스
+# 사건(2026-DON611)이 국내 신증후군출혈열 카드로 이어졌다. 둘은 같은 한타바이러스과지만
+# 임상 질환도 전파 특성도 다르다 — 안데스바이러스는 사람 간 전파가 보고된 유일한
+# 한타바이러스고, 국내 신증후군출혈열(한탄·서울바이러스)은 그렇지 않다.
+# 상위 병원체 이름만으로 국내 질환을 지정하면 서로 다른 병의 대응이 섞인다.
+#
+# 그래서 이 말들은 질환을 '확정'하지 않고 '참고'로만 붙이고, 분류 확인이 필요하다고 적는다.
+PATHOGEN_GROUP_KW = [
+    ('hantavirus', ['신증후군출혈열'],
+     '한타바이러스과의 상위 이름입니다. 종·아형에 따라 임상 질환과 전파 특성이 다릅니다 '
+     '— 안데스바이러스는 사람 간 전파가 보고된 반면 국내 신증후군출혈열(한탄·서울바이러스)은 '
+     '설치류 배설물 노출이 주 경로입니다. 안데스바이러스 감염에는 별도의 국내 대응지침이 있습니다: '
+     '「2026년 한타바이러스 심폐증후군(안데스바이러스 감염) 대응지침」(2026.5.29. 게시). '
+     '원문에서 병원체 종을 먼저 확인하십시오.'),
+    ('orthohantavirus', ['신증후군출혈열', '한타바이러스폐증후군'],
+     '한타바이러스속의 상위 이름입니다. 종·아형을 원문에서 확인하십시오.'),
+    ('arenavirus', [], '아레나바이러스과의 상위 이름입니다. 종을 원문에서 확인하십시오.'),
+    ('filovirus', ['에볼라바이러스병', '마버그열'],
+     '필로바이러스과의 상위 이름입니다. 종을 원문에서 확인하십시오.'),
+    ('coronavirus', [], '코로나바이러스과의 상위 이름입니다. 종을 원문에서 확인하십시오.'),
 ]
 # 한글 낱말 (KDCA 게시판 제목용) — 도감 이름 자체가 제목에 들어가면 그대로 잡힌다.
 # 영어 나라 이름 별칭 → Natural Earth 이름. 지도 파일의 name/name_long/admin 으로 못 잡는 것만.
@@ -255,6 +279,21 @@ def tag(item, name_list, rows, quar, ko_name):
         if d in item['title'] and d not in diseases:
             diseases.append(d)
 
+    # 병원체 무리 이름은 질환을 확정하지 않는다 — '참고'로만 남기고 분류 확인이 필요하다고 적는다.
+    # 이미 종·질환 이름으로 확정된 것이 있으면 굳이 참고를 붙이지 않는다.
+    maybe = []
+    for k, cand, why in PATHOGEN_GROUP_KW:
+        if not re.search(r'(?<![a-z])' + re.escape(k), text):
+            continue
+        # 종·질환 이름으로 이미 확정됐으면 참고를 덧붙이지 않는다.
+        # 후보를 적어 둔 무리는 그 후보가 잡혔는지로, 후보가 없는 무리는 확정이 하나라도
+        # 있는지로 판단한다 — MERS 기사에 'coronavirus 분류 확인 필요'를 달 이유가 없다.
+        if cand and any(c in diseases for c in cand):
+            continue
+        if not cand and diseases:
+            continue
+        maybe.append({'kw': k, 'candidates': cand, 'why': why})
+
     def find_countries(s, min_len, cap):
         # 긴 이름을 먼저 맞추고 그 자리를 지운다 — 'Republic of the Congo'가
         # 'Democratic Republic of the Congo' 안에서 다시 잡히지 않게
@@ -274,6 +313,7 @@ def tag(item, name_list, rows, quar, ko_name):
     if not countries:  # 요약에서 한 번 더 (제목에 나라가 없을 때만)
         countries = find_countries(text, 5, 3)
     item['diseases'] = diseases[:4]
+    item['maybe'] = maybe[:2]        # 분류 확인이 필요한 참고 — 확정 질환이 아니다
     item['countries'] = countries[:4]
     item['multi'] = any(k in title for k in NON_COUNTRY)
     # 결합: (질병, 나라)마다 우리 검역 지정·직항 여객

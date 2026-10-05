@@ -166,6 +166,42 @@
   .ckg{border:1px dashed var(--line-strong);border-radius:11px;padding:11px 13px;margin:0 0 12px;font-size:13px;color:var(--muted)}
   .ckg b{color:var(--ink)}
 
+  /* ── 대응 단계 — 손이 가는 순서대로 번호를 붙인다 ───────────────────── */
+  .step{border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:0 0 10px;background:var(--surface-2)}
+  .sh{font-weight:800;font-size:14px;margin:0 0 9px;display:flex;align-items:center;gap:8px}
+  .sn{display:inline-grid;place-items:center;min-width:24px;height:24px;border-radius:7px;
+    background:var(--accent);color:#fff;font-size:12px;font-weight:800}
+  .step .row{display:grid;grid-template-columns:132px 1fr;gap:10px;padding:5px 0;font-size:13.5px;
+    border-top:1px solid var(--line)}
+  .step .row:first-of-type{border-top:0}
+  .step .row .k{color:var(--muted);font-weight:700}
+  .step .note{font-size:12.5px;color:var(--muted);margin:8px 0 0;line-height:1.5}
+  .step .sub{margin:9px 0 0;font-size:13px}
+  .step .sub b{display:block;margin:0 0 4px}
+  .step .sub ul{margin:0;padding-left:18px}
+  .step .sub li{margin:3px 0;line-height:1.5}
+  .eg{margin:9px 0 0;padding:9px 11px;border-radius:9px;background:var(--ground);font-size:13px;line-height:1.55}
+
+  /* 출처 꼬리표 — 문서·판·쪽·검토상태를 한 줄에 */
+  .cite{margin:10px 0 0;padding:9px 11px;border-radius:9px;background:var(--ground);
+    font-size:12px;line-height:1.7;display:flex;flex-wrap:wrap;gap:7px;align-items:baseline}
+  .cite a{color:var(--accent);font-weight:700}
+  .cite .pg{font-weight:700;color:var(--ink)}
+  .cite .cd{color:var(--faint)}
+  .cite .dl{font-weight:600}
+  .rv{padding:1px 7px;border-radius:999px;font-weight:800;font-size:11px}
+  .rv.ok{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+  .rv.warn{background:color-mix(in srgb,var(--caut) 20%,transparent);color:var(--caut)}
+
+  /* 근거가 없는 자리 — 비워 두고 어디서 확인하는지만 */
+  .gap{border:1px dashed var(--caut);border-radius:12px;padding:12px 14px;margin:0 0 10px;
+    background:color-mix(in srgb,var(--caut) 7%,transparent)}
+  .gh{font-weight:800;font-size:13.5px;color:var(--caut);margin:0 0 6px}
+  .gap p{margin:0;font-size:13px;color:var(--muted);line-height:1.6}
+  .gw{margin:8px 0 0;font-size:12.5px;display:flex;flex-wrap:wrap;gap:10px;align-items:baseline}
+  .gw a{color:var(--accent);font-weight:700}
+  @media (max-width:560px){ .step .row{grid-template-columns:1fr;gap:2px} }
+
   /* 현장모드 */
   .fmode{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:700;
     background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:999px;
@@ -289,9 +325,11 @@ document.getElementById('tiles').innerHTML = [
   [D.counts.forms, '역학조사서<br>표준서식'],
 ].map(([b,l]) => `<div class="tile"><div class="b num">${b}</div><div class="l">${l}</div></div>`).join('');
 
-const VF = {narrower:['f-narrower','⚠ 우리 범위가 좁음'], gap:['f-gap','빈칸'],
+/* 이 대조는 '잠복기 범위'만 본 것이다. 카드 전체가 국제 기준에 맞다는 뜻이 아니라서
+   이름에 무엇을 견주었는지 적는다. */
+const VF = {narrower:['f-narrower','⚠ 잠복기 범위가 좁음'], gap:['f-gap','잠복기 빈칸'],
             differs:['f-none','기준 다름'], wider:['f-none','우리가 더 넓음'],
-            match:['f-none','국제 기준과 일치'], no_international_standard:['f-gap','국제 기준 없음']};
+            match:['f-none','잠복기 범위 일치'], no_international_standard:['f-gap','국제 기준 없음']};
 
 function guideLi(g, kind){
   const ed = g.editions > 1 ? `<span class="ed num" title="같은 계열 지침의 판 수 — 최신판만 표시">최신판 · 판 ${g.editions}</span>` : '';
@@ -300,6 +338,61 @@ function guideLi(g, kind){
   return `<li><span class="tag ${kind==='d'?'t-d':'t-g'}">${kind==='d'?'직접':'계열'}</span>${dk}`
     + `<a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.title)}</a>`
     + `<span class="dt num">${esc(g.date)}</span>${ed}${st}</li>`;
+}
+/* 출처 꼬리표 — 주장 옆에 문서·판·쪽·검토상태를 붙인다.
+   '자동 수집 완료'와 '사람이 원문을 펴서 대조함'은 다른 말이다. 그래서 검토상태를 글자로 적는다. */
+function citeHtml(ci){
+  if (!ci) return '';
+  const rv = ci.review === '원문대조'
+    ? '<span class="rv ok" title="사람이 원문 해당 쪽을 펴서 글자 그대로 대조했습니다">원문 대조함</span>'
+    : `<span class="rv warn">검토 상태 ${esc(ci.review||'미상')}</span>`;
+  const dates = [ci.printed ? `문서 표기 ${esc(ci.printed)}` : '',
+                 ci.posted ? `게시 ${esc(ci.posted)}` : '',
+                 ci.revised && ci.revised !== ci.posted ? `수정 ${esc(ci.revised)}` : '',
+                 ci.effective ? `시행 ${esc(ci.effective)}` : '시행일 표기 없음'
+                ].filter(Boolean).join(' · ');
+  return `<div class="cite">${rv}
+    <a href="${esc(ci.url||'#')}" target="_blank" rel="noopener">${esc(ci.title||'원문')}</a>
+    ${ci.page?`<span class="pg">${esc(ci.page)}</span>`:''}
+    <span class="cd">${dates}</span>
+    ${ci.file?`<a class="dl" href="${esc(ci.file)}" target="_blank" rel="noopener">첨부 내려받기</a>`:''}
+    ${ci.reviewed?`<span class="cd">검토일 ${esc(ci.reviewed)}</span>`:''}</div>`;
+}
+/* 근거가 없을 때 — 값을 지어내지 않고 어디서 확인하는지만 준다 */
+function gapHtml(g, label){
+  return `<div class="gap"><div class="gh">${esc(label)} — 공식 근거 확인 필요</div>
+    <p>${esc(g.why||'')}</p>
+    <div class="gw">확인 경로 ${(g.where||[]).map(w=>`<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.label)}</a>`).join('')}</div></div>`;
+}
+/* ③ 환자 관리·격리·보호구 */
+function isoHtml(c){
+  const o = c.iso;
+  if (!o.ok) return gapHtml(o, '③ 격리·감염관리');
+  const r = (l,v)=> v ? `<div class="row"><span class="k">${l}</span><span>${esc(v)}</span></div>` : '';
+  return `<div class="step"><div class="sh"><span class="sn">③</span> 환자 관리 · 격리 · 감염관리</div>
+    ${r('사례분류', o.case)}${r('입원치료', o.admit)}${r('격리', o.isolation)}
+    ${r('감염관리', o.precautions)}${r('음압격리가 필요한 경우', o.negpress_required)}
+    ${r('병상배정', o.bed)}
+    ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
+    ${citeHtml(o.cite)}</div>
+    <div class="step"><div class="sh"><span class="sn">④</span> 검사 · 검체</div>
+    ${r('검사기관', o.lab)}${r('검체운송', o.transport)}
+    <p class="note">검체 종류·채취 시점·용기·운송조건은 이 카드에 없습니다. 지침 원문에서 확인하십시오.</p>
+    ${citeHtml(o.cite)}</div>`;
+}
+/* ⑤ 접촉자 — 기산점·기간·연장·제한을 각각 적는다 */
+function ctcHtml(c){
+  const o = c.ctc;
+  if (!o.ok) return gapHtml(o, '⑤ 접촉자 감시');
+  const r = (l,v)=> v ? `<div class="row"><span class="k">${l}</span><span>${esc(v)}</span></div>` : '';
+  const ul = (l,a)=> (a&&a.length) ? `<div class="sub"><b>${l}</b><ul>${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  return `<div class="step"><div class="sh"><span class="sn">⑤</span> 접촉자 정의 · 감시 · 예방요법</div>
+    ${r('기산점', o.start)}${r('기본 감시기간', o.period)}${r('연장 조건', o.extend)}
+    ${o.example?`<div class="eg"><b>계산 예시</b> ${esc(o.example)}</div>`:''}
+    ${ul('노출 후 예방요법', o.pep)}
+    ${ul('업무·등교 제한', o.exclusion)}
+    ${r('면역 판정', o.immunity)}${r('관할', o.jurisdiction)}${r('학교 접촉자 접종력 확인', o.school)}
+    ${citeHtml(o.cite)}</div>`;
 }
 function primaryHtml(c){
   const p = c.primary;
@@ -313,7 +406,8 @@ function primaryHtml(c){
 document.getElementById('cards').innerHTML = D.cards.map(c => {
   const g = gnum(c.grade);
   const v = c.cross ? VF[c.cross.verdict] : null;
-  const quick = [c.report, c.iso].filter(Boolean).join(' · ');
+  const quick = [c.report, c.iso.ok ? c.iso.precautions : '격리 근거 확인 필요']
+    .filter(Boolean).join(' · ');
   return `<details class="card" id="${esc(c.disease)}" data-g="${g}" data-w="${c.cross && ['narrower','gap','differs','no_international_standard'].includes(c.cross.verdict) ? 1 : 0}"
       data-s="${esc((c.disease+' '+(c.incub||'')).toLowerCase().replace(/\s/g,''))}">
     <summary>
@@ -330,20 +424,20 @@ document.getElementById('cards').innerHTML = D.cards.map(c => {
         <div class="kb k-report${c.report?'':' miss'}"><div class="kl">신고</div>
           <div class="kv">${c.report?esc(c.report):'자료 없음'}</div>
           <div class="kx">${c.report?'법정 신고 기한':'지침 원문 확인'}</div></div>
-        <div class="kb k-iso${c.iso?'':' miss'}"><div class="kl">격리</div>
-          <div class="kv">${c.iso?esc(c.iso):'자료 없음'}</div>
-          <div class="kx">${c.iso?'':'지침 원문 확인'}</div></div>
+        <div class="kb k-iso${c.iso.ok?'':' miss'}"><div class="kl">격리·감염관리</div>
+          <div class="kv">${c.iso.ok?esc(c.iso.isolation):'공식 근거 확인 필요'}</div>
+          <div class="kx">${c.iso.ok?esc(c.iso.precautions||''):'급수로 정하지 않습니다'}</div></div>
         <div class="kb k-incub${c.incub?'':' miss'}"><div class="kl">잠복기</div>
           <div class="kv">${c.incub?esc(c.incub):'자료 없음'}</div>
-          <div class="kx">접촉자 감시 기간은 최대 잠복기 기준</div></div>
+          <div class="kx">잠복기는 감시 종료일과 다릅니다</div></div>
       </div>
-      <div class="ckg">이 카드에 없는 <b>접촉자 관리 범위 · 검체 종류와 채취 시점 · 격리 해제 기준</b>은
-        지침 원문에서 확인하십시오. 없는 값을 추정해 채우지 않았습니다.</div>
+      ${isoHtml(c)}
+      ${ctcHtml(c)}
       ${c.route ? `<div class="row"><span class="k">감염경로</span><span>${esc(c.route)}</span></div>` : ''}
       ${c.tx ? `<div class="row dim"><span class="k">치료</span><span>${esc(c.tx)}</span></div>` : ''}
       ${c.prev ? `<div class="row dim"><span class="k">예방</span><span>${esc(c.prev)}</span></div>` : ''}
       ${c.cross ? `<div class="box" style="--bc:${c.cross.verdict==='narrower'?'var(--warn)':c.cross.verdict==='match'?'var(--accent)':'var(--caut)'}">
-        <h4>국제 기준 대조 — ${VF[c.cross.verdict][1]}</h4>
+        <h4>국제 기준 대조 — 잠복기 범위만 견주었습니다 · ${VF[c.cross.verdict][1]}</h4>
         <p>${esc(c.cross.why)}</p>
         ${c.cross.intl.map(i => `<div class="intl"><b>${esc(i.agency)}</b> ${esc(i.value)}${i.url?` · <a href="${esc(i.url)}" target="_blank" rel="noopener">원문</a>`:''}</div>`).join('')}
         <p style="margin-top:6px"><b>현장 영향</b> ${esc(c.cross.impact)}</p>

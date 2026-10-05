@@ -317,6 +317,84 @@ def check_plain_words():
     note(f'풀이 {len(TERMS)}개 · 본문에 나온 어려운 말 {len(used)}개 · 풀이 없는 말 {len(nogloss)}개')
 
 
+def check_evidence():
+    """근거 원장이 지켜야 할 것들.
+
+    이 사이트가 틀렸던 방식은 '구조에서 사실을 추론'하는 것이었다.
+    급수로 격리를 정하고, 잠복기로 감시 종료일을 정했다. 그 길을 다시 열지 않도록
+    여기서 막는다 — 원장을 거치지 않은 임상 값이 화면에 나가면 오류다.
+    """
+    import sys as _sys
+    _sys.path.insert(0, os.path.join(ROOT, 'scripts'))
+    import evidence as EV
+
+    st = EV.stats()
+    note(f"근거 원장: 문서 {st['docs']}건 · 격리 {st['isolation']}종 · 접촉자 {st['contact']}종")
+
+    # 1) 출처 없는 임상 값이 나가지 않는가
+    for name in ('탄저', '보툴리눔독소증', '야토병'):
+        r = EV.isolation(name)
+        if not r['ok']:
+            err('근거 원장', f'{name} 격리 근거가 사라졌다')
+        elif '격리가 불필요' not in (r['isolation'] or ''):
+            err('근거 원장', f"{name} 격리 값이 공식 지침과 다르다: {r['isolation']}")
+    for name in ('에볼라바이러스병', '중동호흡기증후군(MERS)'):
+        if EV.isolation(name)['ok']:
+            err('근거 원장', f'{name} 은 근거를 확인하지 못했는데 값이 나간다')
+
+    # 2) 모든 근거에 출처·쪽수·검토상태가 붙어 있는가
+    for sec in ('격리_및_감염관리', '접촉자_관리'):
+        for row in EV.L[sec]['항목']:
+            who = row.get('질병', '?')
+            for f in ('출처', '쪽', '검토상태', '검토일'):
+                if not row.get(f):
+                    err('근거 원장', f'{sec} {who}: {f} 가 비었다')
+            if row.get('출처') not in EV.DOCS:
+                err('근거 원장', f'{sec} {who}: 모르는 문서 {row.get("출처")}')
+
+    # 3) 현장카드가 급수로 격리를 추론하고 있지 않은가
+    fp = os.path.join(ROOT, 'portal', 'field', 'index.html')
+    if os.path.exists(fp):
+        t = open(fp, encoding='utf-8').read()
+        i = t.find('const D = ')
+        if i > 0:
+            D = json.loads(t[i + 10:t.index('\n', i)].rstrip(';').replace('<\\/', '</'))
+            cards = D['cards']
+            bad = [c['disease'] for c in cards
+                   if c['iso'].get('ok') and EV.norm(c['disease']) not in EV.ISO]
+            if bad:
+                err('현장카드', f'원장에 없는데 격리 값이 붙은 카드: {bad}')
+            g1 = [c for c in cards if (c.get('grade') or '') == '제1급']
+            blanket = [c['disease'] for c in g1
+                       if c['iso'].get('ok') and c['iso'].get('isolation') == '음압격리']
+            if blanket:
+                err('현장카드', f'제1급 일괄 음압격리가 되살아났다: {blanket}')
+            note(f"현장카드 {len(cards)}종 — 격리 근거 있음 "
+                 f"{sum(1 for c in cards if c['iso'].get('ok'))}종 · "
+                 f"확인 필요 {sum(1 for c in cards if not c['iso'].get('ok'))}종")
+
+    # 4) 검역 '현행'이 날짜로 정해지는가
+    hp = os.path.join(ROOT, '11_검역관리지역', 'data', '지정이력.json')
+    if os.path.exists(hp):
+        h = json.load(open(hp, encoding='utf-8'))
+        hard = [p['period'] for p in h['periods'] if '현행' in (p.get('note') or '')]
+        if hard:
+            err('검역', f"자료에 '현행'이라 적어 둔 시기가 있다 — 날짜로 정해야 한다: {hard}")
+        today = date.today().isoformat()
+        eff = [p for p in h['periods'] if (p.get('effective') or '') <= today]
+        if eff:
+            cur = max(eff, key=lambda p: p['effective'])
+            note(f"검역 현행: {cur['period']} ({cur['effective']} 시행) · "
+                 f"중점 {cur['priority']['countries']}개국 · 검역 {cur['general']['countries']}개국")
+
+    # 5) 병원체 무리 이름이 국내 질환을 확정하고 있지 않은가
+    import fetch_daily as FD
+    groups = {k for k, _c, _w in FD.PATHOGEN_GROUP_KW}
+    for k, _d in FD.DISEASE_KW:
+        if k in groups:
+            err('상황판', f"'{k}' 가 병원체 무리이면서 질환 확정 목록에도 있다")
+
+
 def main():
     csvs, jsons = check_files()
     check_years(csvs)
@@ -324,6 +402,7 @@ def main():
     check_pages()
     check_data_page()
     check_plain_words()
+    check_evidence()
 
     print('── 자료 점검 ' + '─' * 50)
     for m in NOTES:
