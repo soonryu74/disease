@@ -38,6 +38,32 @@ def parse_incubation(s):
     return {'lo': lo, 'hi': hi, 'typ': round(typ, 1) if typ else None, 'text': s}
 
 
+def covid_case(annual, chron):
+    """코로나19 연도별 신고수와 분류 변천을 모은다.
+
+    두 해(2020·2021)는 '신종감염병증후군' 행에, 두 해(2022·2023)는 '코로나19' 행에 있다.
+    행이 바뀐 자리가 곧 단절점이라 이어 붙이면 안 된다 — 그래서 묶지 않고 따로 넘긴다.
+    """
+    import csv as _csv
+    rows = {}
+    yb = os.path.join(ROOT, '03_백서_정리', 'data', '전수감시_신고수_2016_2025.csv')
+    for r in _csv.DictReader(open(yb, encoding='utf-8-sig')):
+        nm = r['감염병명']
+        if nm in ('신종감염병증후군', '코로나바이러스감염증-19'):
+            ys = {y: int(r[y].replace(',', '')) for y in map(str, range(2016, 2026))
+                  if r.get(y) not in (None, '', '-')}
+            rows[nm] = {'grade': r.get('급'), 'years': ys, 'note': r.get('비고', '')}
+    phases = []
+    for d in chron['diseases']:
+        if '코로나' in d['name']:
+            for ph in d['phases']:
+                phases.append({k: ph.get(k) for k in ('from', 'to', 'status', 'surv', 'report', 'legal', 'note')})
+    return {'rows': rows, 'phases': phases,
+            'source': '③ 백서 정리 · 연보 기반 전수감시 신고수 / ⑨ 감염병 연대기',
+            'missing': '거리두기 단계·마스크 의무 같은 사회적 조치의 날짜는 이 저장소에 수집돼 있지 않다. '
+                       '여기 적힌 것은 신고 분류와 감시체계가 바뀐 기록뿐이다.'}
+
+
 def build():
     P = json.load(open(SRC, encoding='utf-8'))
     dog = dogam_fields()
@@ -75,8 +101,12 @@ def build():
     for d in out:
         k = norm(d['name'])
         d['annual'] = annual.get(k) or next((v for kk, v in annual.items() if kk.startswith(k[:6])), None)
+    # 코로나19 사례 — 이 모형의 한계를 보여 주는 대조용.
+    # 새 사실을 만들지 않는다. 연보 표와 ⑨ 연대기에 이미 있는 것만 모은다.
+    covid = covid_case(annual, chron)
+
     data = {'diseases': out, 'defaults': P['intervention_defaults'], 'about': P['_about'],
-            'check': P.get('_check'),
+            'check': P.get('_check'), 'covid': covid,
             'references': P.get('references', {}), 'scenario_provenance': P.get('scenario_provenance', ''),
             'population': 51_700_000,
             'population_note': '전국 인구 어림값. 정확한 연도별 추계는 이 저장소에 수집돼 있지 않다.',

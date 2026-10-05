@@ -23,7 +23,7 @@
 
   /* 입력이 받아들일 수 있는 범위. 화면·JSON·코드가 모두 이 표 하나를 본다. */
   var LIMITS = {
-    N:      {min: 1000,  max: 50000000, int: true,  label: '인구'},
+    N:      {min: 1000,  max: 100000000, int: true,  label: '인구'},   // 전국 인구(5,170만)로도 돌려야 한다
     I0:     {min: 0,     max: 1000000,  int: true,  label: '첫 감염자'},
     days:   {min: 30,    max: 730,      int: true,  label: '관찰 기간(일)'},
     r0:     {min: 0,     max: 50,       int: false, label: 'R₀'},

@@ -144,6 +144,14 @@ head('보호 인구 + 첫 감염자 > 인구 — 막는다');
 const over = S('홍역', {vacc: 100}, {N: 1000, I0: 999}, {vaccEff: 100});
 ok('S 가 음수가 될 입력을 거부한다', over.ok === false, over.ok ? '통과해 버림' : '');
 
+head('전국 인구 — 역산 실험이 쓰는 크기로도 돈다');
+const nation = S('코로나바이러스감염증-19', {}, {N: 51700000});
+ok('인구 5,170만으로 계산된다', nation.ok, nation.ok ? '' : (nation.errors||[])[0]);
+ok('그 결과도 사람 수가 맞는다', nation.ok &&
+   Math.abs((nation.history[nation.history.length-1].S + nation.history[nation.history.length-1].E
+           + nation.history[nation.history.length-1].I + nation.history[nation.history.length-1].R) - 51700000) / 51700000 < 1e-8);
+ok('인구 상한을 넘으면 여전히 거부', S('홍역', {}, {N: 200000000}).ok === false);
+
 head('관찰 종료와 유행 종료를 가른다');
 const shortRun = S('홍역', {}, {days: 30});
 ok('30일만 보면 아직 진행 중으로 표시', shortRun.totals.stillRunning === true && shortRun.totals.endDay === null);
