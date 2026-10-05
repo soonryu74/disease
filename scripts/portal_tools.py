@@ -245,6 +245,20 @@ nav:not(.gnav){display:none !important}
 NAV_JS = """<script>
 (function(){
   var nav=document.querySelector('nav.gnav'); if(!nav) return;
+
+  /* 쪽 안에서 위에 붙어 다니는 줄(검색·거르개)이 메뉴와 겹치지 않게, 메뉴 높이를 재어 알려 준다.
+     예전에는 쪽마다 47px·52px 처럼 숫자를 박아 두었는데, 그 숫자는 지금은 감춰진
+     '쪽 자체의 메뉴' 높이였다. 그래서 화면 폭에 따라 틈이 생기거나 메뉴 밑으로 숨었다.
+     메뉴가 붙어 다니지 않는 폭에서는 0을 넣는다. */
+  function navh(){
+    var stuck = /sticky|fixed/.test(getComputedStyle(nav).position);
+    var h = stuck ? Math.round(nav.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty('--navh', h + 'px');
+  }
+  navh();
+  addEventListener('resize', navh);
+  addEventListener('load', navh);
+
   var burger=nav.querySelector('.gburger');
   function closeAll(except){ nav.querySelectorAll('.gg.open').forEach(function(g){ if(g!==except){ g.classList.remove('open'); g.querySelector('.gt').setAttribute('aria-expanded','false'); } }); }
   nav.querySelectorAll('.gt').forEach(function(t){

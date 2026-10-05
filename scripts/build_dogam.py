@@ -230,7 +230,7 @@ PAGE_TMPL = '''<!DOCTYPE html>
   h1{font-size:clamp(28px,5.5vw,44px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
   .thesis{font-size:clamp(14px,2.2vw,16.5px);color:var(--muted);max-width:62ch;margin:14px 0 0}
 
-  .tools{position:sticky;top:47px;z-index:10;background:var(--ground);padding:14px 0 10px;border-bottom:1px solid var(--line)}
+  .tools{position:sticky;top:var(--navh,0px);z-index:10;background:var(--ground);padding:14px 0 10px;border-bottom:1px solid var(--line)}
   .search{width:100%;font-size:16px;padding:12px 16px;border-radius:12px;border:1.5px solid var(--line-strong);
     background:var(--surface);color:var(--ink);outline:none}
   .search:focus{border-color:var(--accent)}
