@@ -1302,16 +1302,7 @@ function renderAll(notify){
 
 renderAll(false);
 
-/* 재생 막대를 공통 메뉴 바로 아래에 붙인다. 메뉴 높이는 기기·폭마다 다르므로 재서 넣는다. */
-function fitBar(){
-  const nav = document.querySelector('nav.gnav');
-  const stuck = nav && /sticky|fixed/.test(getComputedStyle(nav).position);
-  const h = stuck ? Math.round(nav.getBoundingClientRect().height) : 0;
-  document.documentElement.style.setProperty('--navh', h + 'px');
-}
-fitBar();
-addEventListener('resize', fitBar);
-addEventListener('load', fitBar);
+/* 재생 막대는 공통 메뉴 아래에 붙는다 — --navh 는 메뉴 주입 스크립트가 재어 넣는다. */
 
 const redraw = ()=>{ if(RES.A) chart(); };
 matchMedia('(prefers-color-scheme: dark)').addEventListener('change', redraw);
