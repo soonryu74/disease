@@ -342,7 +342,13 @@ def check_evidence():
     # (전에는 '에볼라·MERS 는 비어 있어야 한다'고 못 박아 두었는데, 그건 그때의 형편이지
     #  지켜야 할 규칙이 아니었다. 근거를 찾아 채우자 이 점검이 틀렸다고 울었다.
     #  규칙은 '원장에 없으면 값이 안 나간다'이지 '이 질환은 비어 있어야 한다'가 아니다.)
-    for name in ('파라티푸스', '뎅기열', '말라리아'):
+    # 표본을 손으로 적어 두면 근거를 채울 때마다 이 점검이 틀렸다고 운다.
+    # (두 번 그랬다 — 에볼라·MERS 때 한 번, 파라티푸스 때 또 한 번.)
+    # 그래서 '원장에 아직 없는 질환'을 그때그때 골라 본다.
+    chron = json.load(open(os.path.join(ROOT, '09_감염병연대기', 'data', '연대기.json'),
+                           encoding='utf-8'))
+    absent = [d['name'] for d in chron['diseases'] if EV.norm(d['name']) not in EV.ISO][:5]
+    for name in absent:
         r = EV.isolation(name)
         if r['ok']:
             err('근거 원장', f'{name} 은 원장에 없는데 격리 값이 나간다')

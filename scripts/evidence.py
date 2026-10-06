@@ -130,6 +130,10 @@ def isolation(disease):
         'lab_req': row.get('검사의뢰'),
         'report': row.get('보고'),
         'move': row.get('환자이송'),
+        'work': row.get('업무종사_제한'),        # 격리와 업무 제한은 다른 조치다
+        'law': row.get('법적근거'),
+        'preemptive': row.get('선제격리'),
+        'discharge': row.get('퇴원'),
         'note': row.get('주'),
         'cite': _cite(row),
     }
@@ -165,6 +169,7 @@ def contact(disease):
         'form': row.get('서식'),
         'passive_note': row.get('수동감시_안내'),
         'entry': row.get('결과입력'),
+        'outbreak': row.get('집단발생'),
         'note': row.get('주'),
         'cite': _cite(row),
     }

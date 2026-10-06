@@ -374,7 +374,8 @@ function isoHtml(c){
     ${r('사례분류', o.case)}${r('입원치료', o.admit)}
     ${r('전염 가능 기간', o.infectious)}${r('격리(주의) 기간', o.isolation)}
     ${r('감염관리', o.precautions)}${r('음압격리가 필요한 경우', o.negpress_required)}
-    ${r('병상배정', o.bed)}${r('환자 이송', o.move)}${r('보고', o.report)}
+    ${r('병상배정', o.bed)}${r('선제격리', o.preemptive)}${r('환자 이송', o.move)}${r('보고', o.report)}
+    ${r('업무 종사 제한', o.work)}${r('퇴원', o.discharge)}${r('법적 근거', o.law)}
     ${o.infectious?`<p class="note">전염 가능 기간과 격리 기간은 다른 값입니다. 둘을 바꿔 쓰지 마십시오.</p>`:''}
     ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
     ${citeHtml(o.cite)}</div>
@@ -407,7 +408,8 @@ function ctcHtml(c){
     ${r('감시 방법', o.method)}${r('수동감시 안내', o.passive_note)}
     ${r('면역 판정', o.immunity)}${r('항공기 조사', o.flight)}
     ${r('공통 관리', o.common)}${r('관할', o.jurisdiction)}
-    ${r('학교 접촉자 접종력 확인', o.school)}${r('서식', o.form)}${r('결과입력', o.entry)}
+    ${r('학교 접촉자 접종력 확인', o.school)}${r('집단발생 판단', o.outbreak)}
+    ${r('서식', o.form)}${r('결과입력', o.entry)}
     ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
     ${citeHtml(o.cite)}</div>`;
 }
