@@ -386,6 +386,28 @@ def check_evidence():
                  f"{sum(1 for c in cards if c['iso'].get('ok'))}종 · "
                  f"확인 필요 {sum(1 for c in cards if not c['iso'].get('ok'))}종")
 
+    # 3-2) 검체 표가 스스로 검산한 것만 싣는가
+    if EV.SPEC:
+        bad = [k for k, v in EV.SPEC.items()
+               if v.get('채취조건') and not v.get('검체')]
+        if bad:
+            err('검체', f'검체 목록 없이 표만 실린 질환 {len(bad)}종')
+        rows = sum(len(v.get('채취조건') or []) for v in EV.SPEC.values())
+        drop = sum(v.get('검산_버린행') or 0 for v in EV.SPEC.values())
+        clean_dz = sum(1 for v in EV.SPEC.values()
+                       if v.get('채취조건') and not v.get('표_확인필요'))
+        note(f'검체: 질환 {len(EV.SPEC)}종 · 표 {rows}행 실음 · 검산에서 버린 행 {drop}개 · '
+             f'버린 행 없이 깨끗한 질환 {clean_dz}종')
+        # 실은 행의 검체명은 반드시 그 질환의 '검체' 목록 안에 있어야 한다
+        for k, v in EV.SPEC.items():
+            decl = re.sub(r'[,·]', ' ', v.get('검체') or '')
+            for r in (v.get('채취조건') or []):
+                nm = r.get('검체') or ''
+                if nm and nm not in decl and not any(nm in w or w in nm
+                                                     for w in decl.split() if len(w) > 1):
+                    err('검체', f'{k}: 표의 "{nm}" 가 검체 목록에 없다')
+                    break
+
     # 4) 검역 '현행'이 날짜로 정해지는가
     hp = os.path.join(ROOT, '11_검역관리지역', 'data', '지정이력.json')
     if os.path.exists(hp):

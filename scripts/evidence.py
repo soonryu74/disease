@@ -39,6 +39,17 @@ def _index(section, key='질병'):
     return out
 
 
+# 검체는 「법정감염병 진단검사 통합지침」에서 따로 뽑아 둔다.
+# 질환별 대응지침은 검사기관까지만 적고 종류·시기·용기·보관은 이 지침으로 넘기기 때문이다.
+_SPEC_PATH = os.path.join(ROOT, '14_역학조사_실무', 'data', '검체.json')
+if os.path.exists(_SPEC_PATH):
+    with open(_SPEC_PATH, encoding='utf-8') as f:
+        _SPEC = json.load(f)
+    SPEC = {norm(k): v for k, v in _SPEC['질환'].items()}
+    SPEC_SRC = _SPEC['출처']
+else:
+    SPEC, SPEC_SRC = {}, {}
+
 ISO = _index('격리_및_감염관리')
 CONTACT = _index('접촉자_관리')
 NEED = L['확인필요']
@@ -175,6 +186,48 @@ def contact(disease):
     }
 
 
+def specimen(disease):
+    """검체 종류와 채취 조건.
+
+    '2. 검체 :' 한 줄은 원문 그대로라 믿을 만하다. 그 아래 표는 여러 줄로 접히거나
+    괄호 주석이 끼면 행이 어긋나므로, 행의 검체명이 그 줄의 목록에 들어 있는지로
+    스스로 검산하고 걸러 낸 것만 싣는다. 걸러 낸 행이 있으면 그 사실을 함께 돌려준다.
+    """
+    row = SPEC.get(norm(disease))
+    if not row:
+        # 이름이 조금 다를 수 있다 — 앞 네 글자로 한 번 더 찾아본다
+        k = norm(disease)[:4]
+        for kk, vv in SPEC.items():
+            if k and (kk.startswith(k) or k.startswith(kk[:4])):
+                row = vv
+                break
+    if not row:
+        return {'ok': False, 'status': '공식 근거 확인 필요', 'what': '검체',
+                'disease': disease,
+                'why': '이 질환이 「법정감염병 진단검사 통합지침」에서 확인되지 않았다.',
+                'where': [{'label': '법정감염병 진단검사 통합지침(제5판)',
+                           'url': SPEC_SRC.get('게시글', '')}]}
+    return {
+        'ok': True,
+        'disease': disease,
+        'kinds': row.get('검체'),
+        'rows': row.get('채취조건') or [],
+        'partial': bool(row.get('표_확인필요')),
+        'dropped': row.get('검산_버린행') or 0,
+        'notes': row.get('참고사항') or [],
+        'cite': {
+            'doc': 'KDCA-진단검사통합-제5판',
+            'title': SPEC_SRC.get('제목'),
+            'posted': SPEC_SRC.get('게시일'),
+            'page': row.get('쪽'),
+            'review': ('원문 자동 추출 · 검산 통과' if not row.get('표_확인필요')
+                       else '원문 자동 추출 · 일부 행 검산 실패'),
+            'url': SPEC_SRC.get('게시글'),
+            'file': SPEC_SRC.get('첨부'),
+        },
+    }
+
+
 def common_notes(section='격리_및_감염관리'):
     return [dict(x, cite=_cite(x)) for x in L[section].get('공통_주', [])]
 
@@ -188,6 +241,7 @@ def stats():
     return {
         'docs': len(DOCS),
         'isolation': len(ISO),
+        'specimen': len(SPEC),
         'contact': len(CONTACT),
         'isolation_gap': len(NEED.get('격리_및_감염관리', [])),
     }

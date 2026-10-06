@@ -202,6 +202,14 @@
   .gw a{color:var(--accent);font-weight:700}
   @media (max-width:560px){ .step .row{grid-template-columns:1fr;gap:2px} }
 
+
+  /* 검체 채취 조건 표 — 좁은 화면에서는 가로로 밀어 본다 */
+  .spw{margin:10px 0 0;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .spt{border-collapse:collapse;width:100%;min-width:430px;font-size:12.5px}
+  .spt th,.spt td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+  .spt th{background:var(--ground);font-weight:700;white-space:nowrap}
+  .spt td{line-height:1.45}
+
   /* 현장모드 */
   .fmode{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:700;
     background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:999px;
@@ -365,6 +373,40 @@ function gapHtml(g, label){
     <div class="gw">확인 경로 ${(g.where||[]).map(w=>`<a href="${esc(w.url)}" target="_blank" rel="noopener">${esc(w.label)}</a>`).join('')}</div></div>`;
 }
 /* ③ 환자 관리·격리·보호구 */
+
+/* ④ 검사·검체 — 두 자료원을 합친다.
+   질환별 대응지침은 검사기관·운송 주체까지 적고, 검체 종류·채취 시기·용기·보관은
+   「법정감염병 진단검사 통합지침」으로 넘긴다. 그래서 둘을 한 칸에 나란히 놓는다. */
+function specHtml(c, o, lab){
+  const s = c.spc || {};
+  const r = (l,v)=> v ? `<div class="row"><span class="k">${l}</span><span>${esc(v)}</span></div>` : '';
+  if (!lab && !s.ok) {
+    return `<div class="gap"><div class="gh">④ 검사 · 검체 — 공식 근거 확인 필요</div>
+      <p>이 질환의 검체 종류·채취 시점·용기·운송조건·의뢰 경로를 확인하지 못했습니다. 지어내지 않고 비워 둡니다.</p>
+      <div class="gw">확인 경로 <a href="${esc((s.where&&s.where[0]&&s.where[0].url)||'../guides/')}" target="_blank" rel="noopener">법정감염병 진단검사 통합지침</a>
+        <a href="../guides/">지침 서가에서 찾기</a></div></div>`;
+  }
+  let tbl = '';
+  if (s.ok && s.rows && s.rows.length){
+    tbl = `<div class="spw"><table class="spt">
+      <tr><th>검체</th><th>채취 시기</th><th>용기</th><th>채취량</th><th>보관</th></tr>
+      ${s.rows.map(x=>`<tr><td>${esc(x['검체']||'')}</td><td>${esc(x['채취시기']||'—')}</td>
+        <td>${esc(x['용기']||'—')}</td><td>${esc(x['채취량']||'—')}</td>
+        <td>${esc(x['보관온도']||'—')}</td></tr>`).join('')}
+    </table></div>`;
+  }
+  const warn = s.ok && s.partial
+    ? `<p class="note">이 질환의 채취 조건 표는 원문에서 ${s.dropped}행이 검산을 통과하지 못해 싣지 않았습니다.
+       표가 여러 줄로 접히거나 주석이 끼면 행이 어긋납니다 — 아래 쪽번호로 원문을 확인하십시오.</p>` : '';
+  return `<div class="step"><div class="sh"><span class="sn">④</span> 검사 · 검체</div>
+    ${r('검체 종류', s.ok ? s.kinds : o.specimen)}
+    ${r('채취 장소', o.spec_site)}${r('검사 항목', o.spec_test)}
+    ${r('검사기관', o.lab)}${r('검체운송', o.transport)}${r('검사의뢰', o.lab_req)}
+    ${tbl}${warn}
+    ${(s.notes||[]).length?`<div class="sub"><b>참고</b><ul>${s.notes.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`:''}
+    ${lab?citeHtml(o.cite):''}
+    ${s.ok?citeHtml(s.cite):''}</div>`;
+}
 function isoHtml(c){
   const o = c.iso;
   if (!o.ok) return gapHtml(o, '③ 격리·감염관리');
@@ -379,14 +421,7 @@ function isoHtml(c){
     ${o.infectious?`<p class="note">전염 가능 기간과 격리 기간은 다른 값입니다. 둘을 바꿔 쓰지 마십시오.</p>`:''}
     ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
     ${citeHtml(o.cite)}</div>
-    ${lab ? `<div class="step"><div class="sh"><span class="sn">④</span> 검사 · 검체</div>
-    ${r('검체 종류', o.specimen)}${r('채취 장소', o.spec_site)}${r('검사 항목', o.spec_test)}
-    ${r('검사기관', o.lab)}${r('검체운송', o.transport)}${r('검사의뢰', o.lab_req)}
-    <p class="note">채취 시점·용기·재검 조건은 이 카드에 없습니다. 지침 원문에서 확인하십시오.</p>
-    ${citeHtml(o.cite)}</div>` : `<div class="gap"><div class="gh">④ 검사 · 검체 — 공식 근거 확인 필요</div>
-    <p>이 질환의 검체 종류·채취 시점·용기·운송조건·의뢰 경로를 확인하지 못했습니다. 지어내지 않고 비워 둡니다.</p>
-    <div class="gw">확인 경로 <a href="${esc((o.cite&&o.cite.url)||'../guides/')}" target="_blank" rel="noopener">${esc((o.cite&&o.cite.title)||'지침 서가')}</a>
-      <a href="../guides/">지침 서가에서 찾기</a></div></div>`}
+    ${specHtml(c, o, lab)}
     ${o.release?`<div class="step"><div class="sh"><span class="sn">⑦</span> 격리 해제</div>
       <div class="row"><span class="k">해제 기준</span><span>${esc(o.release)}</span></div>
       ${citeHtml(o.cite)}</div>`:''}`;
