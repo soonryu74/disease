@@ -121,6 +121,15 @@ def isolation(disease):
         'lab': row.get('검사기관'),
         'transport': row.get('검체운송'),
         'contacts': row.get('접촉자조사'),
+        'release': row.get('격리해제'),           # ⑦ 해제·종결
+        'infectious': row.get('전염기'),          # 전염 가능 기간 — 격리기간과 다른 값이다
+        'incub_doc': row.get('잠복기_지침값'),
+        'specimen': row.get('검체'),
+        'spec_site': row.get('검체채취_장소'),
+        'spec_test': row.get('검사항목'),
+        'lab_req': row.get('검사의뢰'),
+        'report': row.get('보고'),
+        'move': row.get('환자이송'),
         'note': row.get('주'),
         'cite': _cite(row),
     }
@@ -146,6 +155,17 @@ def contact(disease):
         'immunity': row.get('면역_판정'),
         'jurisdiction': row.get('관할'),
         'school': row.get('학교_접촉자_접종력_확인'),
+        'who': row.get('분류'),                   # 누구를 접촉자로 보는가
+        'suspect': row.get('의사환자_단계'),       # 의사환자 단계와 확진 단계는 조치가 다르다
+        'confirmed': row.get('확진환자_단계') or [],
+        'common': row.get('공통_관리'),
+        'method': row.get('감시_방법'),
+        'scope': row.get('범위설정'),
+        'flight': row.get('항공기_조사'),
+        'form': row.get('서식'),
+        'passive_note': row.get('수동감시_안내'),
+        'entry': row.get('결과입력'),
+        'note': row.get('주'),
         'cite': _cite(row),
     }
 

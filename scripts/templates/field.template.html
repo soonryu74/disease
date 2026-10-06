@@ -369,16 +369,26 @@ function isoHtml(c){
   const o = c.iso;
   if (!o.ok) return gapHtml(o, '③ 격리·감염관리');
   const r = (l,v)=> v ? `<div class="row"><span class="k">${l}</span><span>${esc(v)}</span></div>` : '';
+  const lab = [o.specimen, o.spec_site, o.spec_test, o.lab, o.transport, o.lab_req].some(Boolean);
   return `<div class="step"><div class="sh"><span class="sn">③</span> 환자 관리 · 격리 · 감염관리</div>
-    ${r('사례분류', o.case)}${r('입원치료', o.admit)}${r('격리', o.isolation)}
+    ${r('사례분류', o.case)}${r('입원치료', o.admit)}
+    ${r('전염 가능 기간', o.infectious)}${r('격리(주의) 기간', o.isolation)}
     ${r('감염관리', o.precautions)}${r('음압격리가 필요한 경우', o.negpress_required)}
-    ${r('병상배정', o.bed)}
+    ${r('병상배정', o.bed)}${r('환자 이송', o.move)}${r('보고', o.report)}
+    ${o.infectious?`<p class="note">전염 가능 기간과 격리 기간은 다른 값입니다. 둘을 바꿔 쓰지 마십시오.</p>`:''}
     ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
     ${citeHtml(o.cite)}</div>
-    <div class="step"><div class="sh"><span class="sn">④</span> 검사 · 검체</div>
-    ${r('검사기관', o.lab)}${r('검체운송', o.transport)}
-    <p class="note">검체 종류·채취 시점·용기·운송조건은 이 카드에 없습니다. 지침 원문에서 확인하십시오.</p>
-    ${citeHtml(o.cite)}</div>`;
+    ${lab ? `<div class="step"><div class="sh"><span class="sn">④</span> 검사 · 검체</div>
+    ${r('검체 종류', o.specimen)}${r('채취 장소', o.spec_site)}${r('검사 항목', o.spec_test)}
+    ${r('검사기관', o.lab)}${r('검체운송', o.transport)}${r('검사의뢰', o.lab_req)}
+    <p class="note">채취 시점·용기·재검 조건은 이 카드에 없습니다. 지침 원문에서 확인하십시오.</p>
+    ${citeHtml(o.cite)}</div>` : `<div class="gap"><div class="gh">④ 검사 · 검체 — 공식 근거 확인 필요</div>
+    <p>이 질환의 검체 종류·채취 시점·용기·운송조건·의뢰 경로를 확인하지 못했습니다. 지어내지 않고 비워 둡니다.</p>
+    <div class="gw">확인 경로 <a href="${esc((o.cite&&o.cite.url)||'../guides/')}" target="_blank" rel="noopener">${esc((o.cite&&o.cite.title)||'지침 서가')}</a>
+      <a href="../guides/">지침 서가에서 찾기</a></div></div>`}
+    ${o.release?`<div class="step"><div class="sh"><span class="sn">⑦</span> 격리 해제</div>
+      <div class="row"><span class="k">해제 기준</span><span>${esc(o.release)}</span></div>
+      ${citeHtml(o.cite)}</div>`:''}`;
 }
 /* ⑤ 접촉자 — 기산점·기간·연장·제한을 각각 적는다 */
 function ctcHtml(c){
@@ -387,11 +397,18 @@ function ctcHtml(c){
   const r = (l,v)=> v ? `<div class="row"><span class="k">${l}</span><span>${esc(v)}</span></div>` : '';
   const ul = (l,a)=> (a&&a.length) ? `<div class="sub"><b>${l}</b><ul>${a.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
   return `<div class="step"><div class="sh"><span class="sn">⑤</span> 접촉자 정의 · 감시 · 예방요법</div>
+    ${r('누구를 보는가', o.who)}${r('범위 설정', o.scope)}
     ${r('기산점', o.start)}${r('기본 감시기간', o.period)}${r('연장 조건', o.extend)}
     ${o.example?`<div class="eg"><b>계산 예시</b> ${esc(o.example)}</div>`:''}
+    ${r('의사환자 단계', o.suspect)}
+    ${ul('확진환자 단계', o.confirmed)}
     ${ul('노출 후 예방요법', o.pep)}
     ${ul('업무·등교 제한', o.exclusion)}
-    ${r('면역 판정', o.immunity)}${r('관할', o.jurisdiction)}${r('학교 접촉자 접종력 확인', o.school)}
+    ${r('감시 방법', o.method)}${r('수동감시 안내', o.passive_note)}
+    ${r('면역 판정', o.immunity)}${r('항공기 조사', o.flight)}
+    ${r('공통 관리', o.common)}${r('관할', o.jurisdiction)}
+    ${r('학교 접촉자 접종력 확인', o.school)}${r('서식', o.form)}${r('결과입력', o.entry)}
+    ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
     ${citeHtml(o.cite)}</div>`;
 }
 function primaryHtml(c){

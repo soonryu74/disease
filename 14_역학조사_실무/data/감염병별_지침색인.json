@@ -1,7 +1,7 @@
 {
  "meta": {
   "as_of": "2026-09",
-  "source": "질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, 제목·연도로 통합 2351건",
+  "source": "질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, 제목·연도로 통합 2353건",
   "levels": {
    "direct": "지침 제목에 그 질병명·옛 이름·약어가 들어 있다 — 사실",
    "group": "그 질병이 속한 계열의 묶음 지침 — 찾아볼 후보. 묶음 지침이 실제로 어느 질병을 다루는지는 원문 목차 확인이 필요하다"
@@ -9,13 +9,13 @@
   "editions": "지침은 대개 매년 다시 낸다. 같은 계열은 최신판 하나만 보이고 판 수를 적는다. 최신판이 2024년 이전이면 stale — 신판이 있는지 게시판을 확인할 것.",
   "caution": "제목에 '(4종)'처럼 대상 수가 적힌 묶음 지침이 있다. 대상 목록은 원문에서 확인할 것.",
   "stats": {
-   "direct": 67,
-   "group": 24,
+   "direct": 71,
+   "group": 20,
    "none": 0,
    "stale": 76,
-   "collision": 28,
+   "collision": 29,
    "total": 91,
-   "guidelines": 2351
+   "guidelines": 2353
   }
  },
  "index": [
@@ -23,8 +23,22 @@
    "disease": "남아메리카출혈열",
    "grade": "제1급",
    "icon": "🩸",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
+     "date": "2026.08.28",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
@@ -34,7 +48,7 @@
      "kind": "group",
      "group": "1급_출혈열",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침"
@@ -71,13 +85,13 @@
     "date": "2026.08.28",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "1급_출혈열",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -480,6 +494,19 @@
    "icon": "🗣",
    "direct": [
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "[제2군] 디프테리아",
      "date": "2008.03.02",
      "url": "https://www.kdca.go.kr/bbs/kdca/49/218783/artclView.do",
@@ -493,7 +520,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 1,
+   "direct_total": 2,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -549,17 +576,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -567,6 +594,19 @@
    "grade": "제1급",
    "icon": "🩸",
    "direct": [
+    {
+     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
+     "date": "2026.08.28",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
     {
      "title": "라싸열 대응지침(제1판)",
      "date": "2017.02.22",
@@ -594,7 +634,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 3,
+   "direct_total": 4,
    "group": [
     {
      "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
@@ -604,7 +644,7 @@
      "kind": "group",
      "group": "1급_출혈열",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침"
@@ -667,21 +707,35 @@
     "date": "2026.08.28",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "1급_출혈열",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
    "disease": "리프트밸리열",
    "grade": "제1급",
    "icon": "🩸",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
+     "date": "2026.08.28",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
@@ -691,7 +745,7 @@
      "kind": "group",
      "group": "1급_출혈열",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침"
@@ -728,13 +782,13 @@
     "date": "2026.08.28",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "1급_출혈열",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -742,6 +796,19 @@
    "grade": "제1급",
    "icon": "🩸",
    "direct": [
+    {
+     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
+     "date": "2026.08.28",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
     {
      "title": "[제4군] 마버그열",
      "date": "2008.03.03",
@@ -756,7 +823,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 1,
+   "direct_total": 2,
    "group": [
     {
      "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
@@ -766,7 +833,7 @@
      "kind": "group",
      "group": "1급_출혈열",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침"
@@ -829,13 +896,13 @@
     "date": "2026.08.28",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "1급_출혈열",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -1260,6 +1327,19 @@
    "icon": "🩸",
    "direct": [
     {
+     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
+     "date": "2026.08.28",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "에볼라바이러스병 실무대응 지침(국가지정 입원치료병상 운영 의료기관용)",
      "date": "2022.04.29",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/228017/artclView.do",
@@ -1323,22 +1403,9 @@
      "stale": true,
      "src": "KDCA게시판",
      "board": "공지사항"
-    },
-    {
-     "title": "에볼라바이러스병 환자의 검사실 검체채취, 안전 및 감염관리 지침(국가지정입원치료격리병상용)",
-     "date": "2014.08.21",
-     "url": "https://www.kdca.go.kr/bbs/kdca/50/221002/artclView.do",
-     "year": 2014,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": true,
-     "src": "KDCA게시판",
-     "board": "공지사항"
     }
    ],
-   "direct_total": 14,
+   "direct_total": 15,
    "group": [
     {
      "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
@@ -1348,7 +1415,7 @@
      "kind": "group",
      "group": "1급_출혈열",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침"
@@ -1411,13 +1478,13 @@
     "date": "2026.08.28",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "1급_출혈열",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -1678,8 +1745,22 @@
    "disease": "크리미안콩고출혈열",
    "grade": "제1급",
    "icon": "🩸",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
+     "date": "2026.08.28",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "2026년 제1급감염병(바이러스성출혈열) 대응지침(2026.8월)",
@@ -1689,7 +1770,7 @@
      "kind": "group",
      "group": "1급_출혈열",
      "doc": "지침",
-     "editions": 1,
+     "editions": 2,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침"
@@ -1752,13 +1833,13 @@
     "date": "2026.08.28",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/312398/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "1급_출혈열",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -2377,8 +2458,22 @@
    "disease": "b형헤모필루스인플루엔자",
    "grade": "제2급",
    "icon": "👶",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -2434,17 +2529,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -2772,6 +2867,19 @@
    "icon": "🤧",
    "direct": [
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "백일해 통합관리지침",
      "date": "2016.01.06",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/227464/artclView.do",
@@ -2798,7 +2906,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 3,
+   "direct_total": 4,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -2854,17 +2962,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -3062,6 +3170,19 @@
    "icon": "🔴",
    "direct": [
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "2006 수두관리지침",
      "date": "2006.09.21",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/227197/artclView.do",
@@ -3088,7 +3209,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 2,
+   "direct_total": 3,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -3144,17 +3265,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -3290,6 +3411,19 @@
    "icon": "🤒",
    "direct": [
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "수두, 유행성이하선염의 예방 및 관리",
      "date": "2009.07.15",
      "url": "https://www.kdca.go.kr/bbs/kdca/49/218842/artclView.do",
@@ -3316,7 +3450,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 2,
+   "direct_total": 3,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -3372,17 +3506,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -3544,7 +3678,7 @@
      "board": "지침"
     }
    ],
-   "direct_total": 664,
+   "direct_total": 665,
    "group": [
     {
      "title": "2026년 수인성·식품매개감염병 관리지침 재안내",
@@ -3948,6 +4082,19 @@
    "icon": "🫁",
    "direct": [
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "2016년 노인 폐렴구균 예방접종사업 관리 지침",
      "date": "2016.06.08",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/227487/artclView.do",
@@ -3974,7 +4121,7 @@
      "board": "지침"
     }
    ],
-   "direct_total": 2,
+   "direct_total": 3,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -4030,17 +4177,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -4048,6 +4195,19 @@
    "grade": "제2급",
    "icon": "🦵",
    "direct": [
+    {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
     {
      "title": "폴리오 대응 지침(2024년 개정)",
      "date": "2024.04.24",
@@ -4101,7 +4261,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 4,
+   "direct_total": 5,
    "group": [
     {
      "title": "2026 검역업무지침",
@@ -4170,17 +4330,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -4188,6 +4348,19 @@
    "grade": "제2급",
    "icon": "🔴",
    "direct": [
+    {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
     {
      "title": "[제2군] 풍진",
      "date": "2008.03.03",
@@ -4202,7 +4375,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 1,
+   "direct_total": 2,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -4258,17 +4431,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
@@ -4430,6 +4603,19 @@
      "board": "지침"
     },
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "2019 홍역 대응 지침(최종)",
      "date": "2019.07.04",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/227711/artclView.do",
@@ -4480,22 +4666,9 @@
      "stale": true,
      "src": "KDCA게시판",
      "board": "서식"
-    },
-    {
-     "title": "2006년 홍역감시관리지침",
-     "date": "2006.03.23",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/227184/artclView.do",
-     "year": 2006,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": true,
-     "src": "KDCA게시판+감염병포털",
-     "board": "지침"
     }
    ],
-   "direct_total": 44,
+   "direct_total": 45,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -7274,6 +7447,19 @@
    "icon": "🪤",
    "direct": [
     {
+     "title": "2026년도 예방접종 대상 감염병 관리 지침",
+     "date": "2026.05.11",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": ""
+    },
+    {
      "title": "[제2군] 파상풍",
      "date": "2008.03.03",
      "url": "https://www.kdca.go.kr/bbs/kdca/49/218785/artclView.do",
@@ -7287,7 +7473,7 @@
      "board": "교육자료"
     }
    ],
-   "direct_total": 1,
+   "direct_total": 2,
    "group": [
     {
      "title": "(7.27.수정)2026년 국가예방접종 지침",
@@ -7330,17 +7516,17 @@
     }
    ],
    "primary": {
-    "title": "2025년 예방접종대상감염병 관리지침",
-    "date": "2025.05.20",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228295/artclView.do",
-    "year": 2025,
-    "kind": "group",
-    "group": "예방접종",
+    "title": "2026년도 예방접종 대상 감염병 관리 지침",
+    "date": "2026.05.11",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/311032/artclView.do",
+    "year": 2026,
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
     "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침"
+    "src": "보정",
+    "board": ""
    }
   },
   {
