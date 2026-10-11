@@ -331,6 +331,16 @@ def check_evidence():
     st = EV.stats()
     note(f"근거 원장: 문서 {st['docs']}건 · 격리 {st['isolation']}종 · 접촉자 {st['contact']}종")
 
+    # 0) 원장에 적었는데 화면에 안 나가는 칸이 없는가.
+    #    환자관리·환경관리를 원문에서 옮겨 적어 놓고 evidence.py 가 읽지 않아
+    #    카드에서 조용히 빠져 있던 적이 있다.
+    src = open(os.path.join(ROOT, 'scripts', 'evidence.py'), encoding='utf-8').read()
+    mapped = set(re.findall(r"row\.get\('([^']+)'\)", src)) | {'출처', '쪽', '검토상태', '검토일', '질병'}
+    for sec in ('격리_및_감염관리', '접촉자_관리'):
+        lost = sorted({k for r in EV.L[sec]['항목'] for k in r} - mapped)
+        if lost:
+            err('근거 원장', f"{sec} 의 칸 {', '.join(lost)} 을 evidence.py 가 읽지 않아 화면에 안 나간다")
+
     # 1) 출처 없는 임상 값이 나가지 않는가
     for name in ('탄저', '보툴리눔독소증', '야토병'):
         r = EV.isolation(name)
@@ -398,6 +408,12 @@ def check_evidence():
                        if v.get('채취조건') and not v.get('표_확인필요'))
         note(f'검체: 질환 {len(EV.SPEC)}종 · 표 {rows}행 실음 · 검산에서 버린 행 {drop}개 · '
              f'버린 행 없이 깨끗한 질환 {clean_dz}종')
+        # 검체 목록 줄에 표 머리글이나 쪽머리글이 섞이면 안 된다.
+        # 섞이면 위 검산이 무력해진다 — '처리'·'분리' 같은 토막도 그 긴 목록 안에 들어 있어
+        # 통과해 버렸고, 실제로 그런 행이 화면에 나갔다.
+        for k, v in EV.SPEC.items():
+            if re.search(r'검사법\s*검체\s*채취|질병관리청|www\.kdca', v.get('검체') or ''):
+                err('검체', f'{k}: 검체 목록에 표·쪽머리글이 섞였다')
         # 실은 행의 검체명은 반드시 그 질환의 '검체' 목록 안에 있어야 한다
         for k, v in EV.SPEC.items():
             decl = re.sub(r'[,·]', ' ', v.get('검체') or '')

@@ -91,7 +91,9 @@ def split_diseases(pages):
 
 def parse_specimen(text):
     """'2. 검체 : ...' 한 줄."""
-    m = re.search(r'2\.\s*검체\s*[:：]\s*(.{3,400}?)(?=\n\s*검사법|\n\s*3\.\s|\Z)', text, re.S)
+    # 검체가 두 글자뿐인 질환이 있다(후천성면역결핍증 — '혈액'). 최소 길이를 3으로 두었더니
+    # 경계를 못 찾고 아래 표 전체가 검체 목록에 딸려 들어왔다.
+    m = re.search(r'2\.\s*검체\s*[:：]\s*(.{2,400}?)(?=\n\s*검사법|\n\s*3\.\s|\Z)', text, re.S)
     return clean(m.group(1)) if m else None
 
 

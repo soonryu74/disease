@@ -210,6 +210,16 @@
   .spt th{background:var(--ground);font-weight:700;white-space:nowrap}
   .spt td{line-height:1.45}
 
+
+  /* 지침 사이의 차이 — 고르지 않고 둘 다 보인다 */
+  .cfl{margin:10px 0 0;padding:10px 12px;border-radius:10px;border:1.5px solid var(--warn);
+    background:color-mix(in srgb,var(--warn) 8%,transparent);font-size:12.5px;line-height:1.55}
+  .cfh{font-weight:800;color:var(--warn);margin:0 0 4px}
+  .cfl p{margin:3px 0}
+  .cfd{color:var(--ink);font-weight:600}
+  .cfn{color:var(--muted)}
+  .cfl a{color:var(--accent);font-weight:700}
+
   /* 현장모드 */
   .fmode{display:inline-flex;align-items:center;gap:7px;font:inherit;font-size:13px;font-weight:700;
     background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);border-radius:999px;
@@ -350,6 +360,16 @@ function guideLi(g, kind){
 }
 /* 출처 꼬리표 — 주장 옆에 문서·판·쪽·검토상태를 붙인다.
    '자동 수집 완료'와 '사람이 원문을 펴서 대조함'은 다른 말이다. 그래서 검토상태를 글자로 적는다. */
+/* 두 현행 지침이 다르게 적을 때 — 어느 쪽이 맞는지 이 사이트가 정하지 않는다 */
+function conflictHtml(list){
+  if (!list || !list.length) return '';
+  return list.map(c=>`<div class="cfl"><div class="cfh">⚠ 다른 현행 지침은 다르게 적습니다</div>
+    <p><b>${esc(c.title||'')}</b> ${c.page?`· ${esc(c.page)}`:''}</p>
+    <p>${esc(c.text||'')}</p>
+    <p class="cfd">${esc(c.diff||'')}</p>
+    <p class="cfn">어느 쪽을 따를지는 이 사이트가 정하지 않습니다. 담당 부서에 확인하십시오.
+      ${c.url?`<a href="${esc(c.url)}" target="_blank" rel="noopener">원문</a>`:''}</p></div>`).join('');
+}
 function citeHtml(ci){
   if (!ci) return '';
   const rv = ci.review === '원문대조'
@@ -416,11 +436,12 @@ function isoHtml(c){
   return `<div class="step"><div class="sh"><span class="sn">③</span> 환자 관리 · 격리 · 감염관리</div>
     ${r('사례분류', o.case)}${r('입원치료', o.admit)}
     ${r('전염 가능 기간', o.infectious)}${r('격리(주의) 기간', o.isolation)}
-    ${r('감염관리', o.precautions)}${r('음압격리가 필요한 경우', o.negpress_required)}
+    ${r('환자 관리', o.care)}${r('감염관리', o.precautions)}${r('환경 관리', o.env)}${r('음압격리가 필요한 경우', o.negpress_required)}
     ${r('병상배정', o.bed)}${r('선제격리', o.preemptive)}${r('환자 이송', o.move)}${r('보고', o.report)}
-    ${r('업무 종사 제한', o.work)}${r('퇴원', o.discharge)}${r('법적 근거', o.law)}
+    ${r('업무 종사 제한', o.work)}${r('퇴원', o.discharge)}${r('사망자 관리', o.dead)}${r('법적 근거', o.law)}
     ${o.infectious?`<p class="note">전염 가능 기간과 격리 기간은 다른 값입니다. 둘을 바꿔 쓰지 마십시오.</p>`:''}
     ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
+    ${conflictHtml(o.conflicts)}
     ${citeHtml(o.cite)}</div>
     ${specHtml(c, o, lab)}
     ${o.release?`<div class="step"><div class="sh"><span class="sn">⑦</span> 격리 해제</div>
@@ -447,6 +468,7 @@ function ctcHtml(c){
     ${r('학교 접촉자 접종력 확인', o.school)}${r('집단발생 판단', o.outbreak)}
     ${r('서식', o.form)}${r('결과입력', o.entry)}
     ${o.note?`<p class="note">${esc(o.note)}</p>`:''}
+    ${conflictHtml(o.conflicts)}
     ${citeHtml(o.cite)}</div>`;
 }
 function primaryHtml(c){

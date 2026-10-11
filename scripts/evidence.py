@@ -96,8 +96,20 @@ def _cite(row):
     }
 
 
+def _known_absent(disease):
+    """원문을 열어 보고 '없다'를 확인한 경우. 일반 안내 대신 그 사실을 그대로 보여 준다.
+    (확인필요에 적어 두고도 카드에는 늘 같은 일반 문구만 나가던 것을 고쳤다.)"""
+    n = norm(disease)
+    for sec in ('지침에_해당_절_없음', '지침없음'):
+        for k, v in (NEED.get(sec) or {}).items():
+            if norm(k) == n:
+                return v
+    return None
+
+
 def _gap(what, disease, why=None):
     """값 대신 내보내는 '빈 자리'. 무엇이 없는지와 어디서 확인하는지를 같이 준다."""
+    why = _known_absent(disease) or why
     return {
         'ok': False,
         'status': '공식 근거 확인 필요',
@@ -111,6 +123,17 @@ def _gap(what, disease, why=None):
             {'label': '이 사이트의 지침 서가에서 해당 질환 찾기', 'url': '../guides/'},
         ],
     }
+
+
+def _diffs(row):
+    """두 현행 지침이 다르게 적을 때 — 한쪽을 골라 조용히 싣지 않고 둘 다 보여 준다."""
+    out = []
+    for d in row.get('지침간_차이') or []:
+        doc_ = DOCS.get(d.get('문서'), {})
+        out.append({'title': doc_.get('제목'), 'url': doc_.get('게시글'),
+                    'posted': doc_.get('게시일'), 'revised': doc_.get('최종수정일'),
+                    'page': d.get('쪽'), 'text': d.get('내용'), 'diff': d.get('차이')})
+    return out
 
 
 def isolation(disease):
@@ -145,6 +168,10 @@ def isolation(disease):
         'law': row.get('법적근거'),
         'preemptive': row.get('선제격리'),
         'discharge': row.get('퇴원'),
+        'care': row.get('환자관리'),
+        'env': row.get('환경관리'),
+        'dead': row.get('사망자_관리'),
+        'conflicts': _diffs(row),
         'note': row.get('주'),
         'cite': _cite(row),
     }
@@ -181,6 +208,7 @@ def contact(disease):
         'passive_note': row.get('수동감시_안내'),
         'entry': row.get('결과입력'),
         'outbreak': row.get('집단발생'),
+        'conflicts': _diffs(row),
         'note': row.get('주'),
         'cite': _cite(row),
     }
