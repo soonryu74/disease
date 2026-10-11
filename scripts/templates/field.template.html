@@ -341,7 +341,8 @@ const VF = {narrower:['f-narrower','⚠ 잠복기 범위가 좁음'], gap:['f-ga
 
 function guideLi(g, kind){
   const ed = g.editions > 1 ? `<span class="ed num" title="같은 계열 지침의 판 수 — 최신판만 표시">최신판 · 판 ${g.editions}</span>` : '';
-  const st = g.stale ? `<span class="stale" title="최신판이 재작년 이전 — 누리집 게시판에 신판이 있는지 확인">⚠ ${g.year}년판이 최신</span>` : '';
+  const sup = g.superseded ? `<span class="stale" title="${esc(g.superseded.why||'')}">통합·대체됨 → ${esc(g.superseded.by)} (${g.superseded.since}~)</span>` : '';
+  const st = sup || (g.stale ? `<span class="stale" title="수집된 판 가운데 가장 최근이 재작년 이전 — 누리집 게시판에 신판이 있는지 확인">⚠ 수집된 최근판 ${g.year}년</span>` : '');
   const dk = g.doc && g.doc !== '지침' ? `<span class="dk">${esc(g.doc)}</span>` : '';
   return `<li><span class="tag ${kind==='d'?'t-d':'t-g'}">${kind==='d'?'직접':'계열'}</span>${dk}`
     + `<a href="${esc(g.url)}" target="_blank" rel="noopener">${esc(g.title)}</a>`

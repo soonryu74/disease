@@ -16,6 +16,7 @@ import csv
 import json
 import os
 import re
+import time
 from collections import defaultdict
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -118,7 +119,9 @@ def load_aliases():
 
 
 def norm(s):
-    return re.sub(r'[\s()·・\-]', '', s or '')
+    # 대괄호도 털어 낸다. 「중증급성호흡기증후군[SARS]」처럼 대괄호를 쓰는 제목이 있는데,
+    # 이걸 남겨 두면 '더 긴 다른 병 이름' 자물쇠가 그 이름을 알아보지 못한다.
+    return re.sub(r'[\s()（）\[\]【】·・\-]', '', s or '')
 
 
 def keys_for(dz, aliases):
@@ -191,6 +194,22 @@ def latest_per_series(rows_, limit):
     return out[:limit]
 
 
+def load_supersede():
+    """개정·통합·대체 관계. 제목·연도로는 알 수 없는 것이라 손으로 적은 표를 읽는다."""
+    p = os.path.join(ROOT, '02_지침_정리', 'data', '지침_대체.csv')
+    if not os.path.exists(p):
+        return []
+    out = []
+    for r in csv.DictReader(open(p, encoding='utf-8-sig')):
+        k = (r.get('구지침_제목에_들어있는_말') or '').strip()
+        if not k or k.startswith('#'):
+            continue
+        out.append({'key': norm(k), 'by': (r.get('대체한_문서') or '').strip(),
+                    'since': int((r.get('대체_시작') or '0').strip() or 0),
+                    'why': (r.get('근거') or '').strip()})
+    return out
+
+
 def load_corrections():
     """손으로 적는 보정. 제목만으로 못 잡는 소속·게시판 밖 지침을 여기에 적는다.
     지침_보정.csv: 지침명, 다루는병(;로 구분), 계열, URL, 등록일, 비고"""
@@ -202,13 +221,13 @@ def load_corrections():
         title = (r.get('지침명') or '').strip()
         if not title:
             continue
+        covers = [d.strip() for d in re.split(r'[;,]', r.get('다루는병') or '') if d.strip()]
         row = {'제목': title, '등록일': (r.get('등록일') or '').strip(),
-               'URL': (r.get('URL') or '').strip(), '출처': '보정', '비고': (r.get('비고') or '').strip()}
+               'URL': (r.get('URL') or '').strip(), '출처': '보정', '비고': (r.get('비고') or '').strip(),
+               'span': len(covers) or 50}
         extra_rows.append(row)
-        for dz in re.split(r'[;,]', r.get('다루는병') or ''):
-            dz = dz.strip()
-            if dz:
-                extra_map[dz].append(row)
+        for dz in covers:
+            extra_map[dz].append(row)
     return extra_rows, extra_map
 
 
@@ -228,6 +247,15 @@ def build():
             if re.search(pat, r['제목']):
                 grouped[g].append(r)
 
+    SUP = load_supersede()
+
+    def superseded_by(title, year):
+        t = norm(title)
+        for r in SUP:
+            if r['key'] in t and (not year or not r['since'] or year < r['since']):
+                return {'by': r['by'], 'since': r['since'], 'why': r['why']}
+        return None
+
     index, stats = [], {'direct': 0, 'group': 0, 'none': 0, 'stale': 0,
                         'collision': 0}
 
@@ -238,6 +266,8 @@ def build():
     # 급이 다르고 대상이 다른 지침이 현장 담당자에게 '지금 펴야 할 지침'으로 보였다.
     #
     # 그래서 어떤 열쇠가 제목에 맞았더라도, 그 자리가 '더 긴 다른 질병 이름' 안이면 버린다.
+    DZ_NAMES = [{norm(n) for n in ([d['name']] + list(d['names'])) if len(norm(n)) >= 2}
+                for d in diseases]
     ALL_NAMES = sorted({norm(n) for d in diseases for n in ([d['name']] + list(d['names']))
                         if len(norm(n)) >= 4}, key=len, reverse=True)
 
@@ -247,15 +277,40 @@ def build():
     # 급과 열거 대상으로 막는 쪽이 오타에도 견딘다.
     GRADE_RE = re.compile(r'제\s*([1-4])\s*급\s*감염병\s*[\(（]([^)）]{4,})[\)）]')
 
+    BARE_GRADE = re.compile(r'제\s*([1-4])\s*급')
+
     def wrong_grade(title, dz, own_names):
         m = GRADE_RE.search(title)
         if not m:
-            return False
+            # '2023년제1급중동호흡기증후군[MERS]…대응지침'처럼 괄호 목록 없이 급만 붙은 제목.
+            # 급이 다르고, 이 병의 이름(4자 이상)이 제목에 통째로 없으면 이 병의 지침이 아니다.
+            b = BARE_GRADE.search(title)
+            if not b or (dz.get('grade') or '') == '제' + b.group(1) + '급':
+                return False
+            t = norm(title)
+            return not any(len(n) >= 4 and n in t for n in own_names)
         grade = '제' + m.group(1) + '급'
         if (dz.get('grade') or '') == grade:
             return False                      # 급이 같으면 열거에서 빠졌어도 함부로 버리지 않는다
         listed = norm(m.group(2))
         return not any(n and n in listed for n in own_names)
+
+    # 계열 지침이 제목에서 대상을 괄호로 못 박았으면, 거기 없는 병에는 붙이지 않는다.
+    # 「인수공통감염병(브루셀라증, 공수병, 큐열, 유비저) 관리지침」이 같은 계열이라는 이유로
+    # 동물인플루엔자 인체감염증의 1순위 지침이 되어 있었다. 제목이 다룰 병을 스스로 밝혔는데
+    # 그 목록에 없는 병에 걸어 두면 현장 담당자는 엉뚱한 문서를 편다(보고서 F11과 같은 모양).
+    LIST_RE = re.compile(r'[\(（]([^()（）]{4,}?[,·ㆍ、][^()（）]{2,}?)[\)）]')
+
+    def not_listed(title, own_names):
+        m = LIST_RE.search(title)
+        if not m:
+            return False
+        parts = [norm(x) for x in re.split(r'[,·ㆍ、]', m.group(1)) if norm(x)]
+        if len(parts) < 2:
+            return False
+        listed = ''.join(parts)
+        return not any(n and (n in listed or any(n.startswith(pp) or pp.startswith(n) for pp in parts))
+                       for n in own_names)
 
     def buried(key, title_norm, own_names):
         """key 가 맞은 자리가 '다른 질병의 더 긴 이름' 안에 들어 있는가."""
@@ -295,6 +350,9 @@ def build():
         gcand = []
         for g in gnames:
             for r in latest_per_series(grouped.get(g, []), 2):
+                if not_listed(r['제목'], own):
+                    stats['collision'] += 1
+                    continue
                 gcand.append({'group': g, **r})
         # 전 질병 공통(진단검사·신고기준)
         for r in latest_per_series(grouped.get('진단검사', []), 1):
@@ -305,7 +363,9 @@ def build():
                     'year': year_of(r), 'kind': kind, 'group': group,
                     'doc': r.get('kind', doc_kind(r['제목'])),
                     'editions': r.get('editions', 1), 'stale': bool(r.get('stale')),
-                    'src': r.get('출처', ''), 'board': r.get('게시판', '')}
+                    'src': r.get('출처', ''), 'board': r.get('게시판', ''),
+                    'span': r.get('span'),
+                    'superseded': superseded_by(r['제목'], year_of(r))}
 
         entry = {
             'disease': dz['name'], 'grade': dz['grade'], 'icon': dz['icon'],
@@ -323,15 +383,48 @@ def build():
         SPAN['진단검사'] = 999   # 전 질병 공통이라 가장 넓다
 
         def title_tier(t):
+            # 독자가 좁은 문서 — '(사업장용)', '(…운영 의료기관용)', '의료인을 위한 …' — 은
+            # 병의 범위가 좁더라도 현장 대응의 기본 문서가 아니다. 사업지침과 같은 칸으로 보낸다.
+            if re.search(r'용\s*[)）]|운영\s*의료기관|의료인을\s*위한|사업장', t):
+                return 2
             if re.search(r'관리\s*지침|대응\s*지침|방역\s*지침|관리지침|대응지침', t):
                 return 0
             if re.search(r'사업\s*지침|운영\s*지침|실시\s*기준|네트워크', t):
                 return 2
             return 1
 
+        # '재작년 이전 판'이라고 해서 대상이 다른 새 문서 아래로 밀면 안 된다.
+        # 동물인플루엔자 인체감염증의 전용 대응지침(2024.10.)이 '재작년 이전'으로 강등되자
+        # 「인수공통감염병(브루셀라증·공수병·큐열·유비저)」, 그다음엔 「호흡기감염병」 지침이
+        # 1순위로 올라왔다. 둘 다 이 병을 다루지 않는다.
+        # 그래서 강등은 5년 이상 묵은 판에만 건다(콜레라의 2002년 직접 지침 같은 경우).
+        # 2~4년 된 전용 지침은 순위를 지키고, 카드에 '신판 확인' 경고만 붙는다.
+        THIS_YEAR = int(time.strftime('%Y'))
+
+        def scope(x):
+            """이 문서가 몇 개 병을 다루나. 좁을수록 그 병에 맞는 문서다.
+            보정 행에 적힌 '다루는병' 수와 제목에 나오는 병 이름 수 가운데 큰 값을 쓴다.
+            (보정 행에만 수를 붙였더니 범위를 모르는 전용 지침이 10종 통합 지침에 졌다.)"""
+            t = norm(x['title'])
+            # 이름 '변형'이 아니라 서로 다른 '병'을 센다. 변형을 세면 같은 병을 여러 번 세고,
+            # 제목에 오타가 있어 변형이 덜 맞는 구판(2025년 MERS 지침의 '중동급성호흡기증후군')이
+            # 범위가 좁은 문서로 잘못 보여 신판을 이긴다.
+            named = sum(1 for names in DZ_NAMES if any(nm in t for nm in names))
+            if x.get('group'):
+                return max(named, SPAN.get(x.get('group'), 50))
+            return max(named, x.get('span') or 0, 1)
+
+        def bucket(n):
+            # 범위는 거친 칸으로만 견준다 — 전용(1~2종)·계열(3~9종)·통합(10종 이상).
+            # 정확한 수로 견주면 제목 오타 한 글자에 판이 뒤집힌다(2025년 MERS 지침은 SARS 이름이
+            # '중동급성호흡기증후군'으로 잘못 적혀 1종짜리 문서처럼 보였고, 그래서 2026년판을 이겼다).
+            return 0 if n <= 2 else (1 if n <= 9 else 2)
+
         def rank(x):
-            return (1 if x['stale'] else 0, 0 if x['kind'] == 'direct' else 1,
-                    title_tier(x['title']), SPAN.get(x.get('group'), 50), -x['year'])
+            very_old = 1 if (x['year'] and x['year'] <= THIS_YEAR - 5) or x.get('superseded') else 0
+            span = scope(x)
+            return (very_old, 0 if x['kind'] == 'direct' else 1,
+                    title_tier(x['title']), bucket(span), -x['year'], span)
         cands = sorted([x for x in entry['direct'] + entry['group'] if x['doc'] == '지침'], key=rank)
         entry['primary'] = cands[0] if cands else None
         if any(x['stale'] for x in entry['direct'] + entry['group']):

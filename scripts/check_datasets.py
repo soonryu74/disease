@@ -422,6 +422,24 @@ def check_evidence():
             note(f"검역 현행: {cur['period']} ({cur['effective']} 시행) · "
                  f"중점 {cur['priority']['countries']}개국 · 검역 {cur['general']['countries']}개국")
 
+    # 4-2) '지금 펴야 할 지침'이 다른 병의 문서가 아닌가
+    #  - 제목이 '제N급감염병(가·나·다)'로 대상을 못 박았는데 이 병이 없고 급도 다르면 오류
+    #  - 제목이 괄호로 대상 목록을 적었는데 이 병이 없으면 오류
+    gi = os.path.join(ROOT, '14_역학조사_실무', 'data', '감염병별_지침색인.json')
+    if os.path.exists(gi):
+        idx = json.load(open(gi, encoding='utf-8'))
+        bad = []
+        for e in idx['index']:
+            p = e.get('primary') or {}
+            t = p.get('title') or ''
+            m = re.search(r'제\s*([1-4])\s*급\s*감염병\s*[(（]([^)）]{4,})[)）]', t)
+            if m and ('제' + m.group(1) + '급') != (e.get('grade') or '') \
+               and EV.norm(e['disease'])[:4] not in EV.norm(m.group(2)):
+                bad.append(f"{e['disease']} ← {t[:40]}")
+        if bad:
+            err('지침 연결', f'급과 대상이 다른 지침이 1순위인 질환 {len(bad)}종: {bad[:3]}')
+        note(f"지침 연결: 질환 {len(idx['index'])}종의 1순위 지침 점검")
+
     # 5) 병원체 무리 이름이 국내 질환을 확정하고 있지 않은가
     import fetch_daily as FD
     groups = {k for k, _c, _w in FD.PATHOGEN_GROUP_KW}
