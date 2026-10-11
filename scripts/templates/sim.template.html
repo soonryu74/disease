@@ -759,7 +759,8 @@ function drawGoto(){
 function renderDz(){
   const d = dz();
   $('dzinfo').innerHTML=`
-    <dt>지위</dt><dd>${d.grade?`<span class="gb">${esc(d.grade)}</span>`:''}${esc(d.iso||'')} · 신고 ${esc(d.report||'—')}</dd>
+    <dt>법정 지위 (연대기)</dt><dd>${d.grade?`<span class="gb">${esc(d.grade)}</span>`:''}${esc(d.iso||'')} · 신고 ${esc(d.report||'—')}
+      <span class="src">급수 분류에 딸린 표현이지 이 병의 격리 기준이 아닙니다 — 실제 기준은 <a href="../field/?disease=${encodeURIComponent(d.name)}">현장카드</a>의 공식 지침 값</span></dd>
     <dt>잠복기 (도감)</dt><dd>${esc(d.incubation.text)} <span class="src">→ 대표값 ${d.incubation.typ}일</span></dd>
     <dt>전파경로 (도감)</dt><dd style="font-weight:600">${esc(d.route||'—')}</dd>
     <dt>R₀ (문헌)</dt><dd>${d.r0[0]}–${d.r0[1]} <span class="src">${esc(d.src)}</span></dd>

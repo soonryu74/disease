@@ -165,6 +165,23 @@ def merge(kd):
     return allrows
 
 
+def keep_previous(kd):
+    """이번에 못 본 행도 지우지 않는다.
+
+    게시판은 새 글이 앞에 붙으며 쪽 경계가 밀린다. 쪽을 여섯씩 동시에 받는 동안 경계가 밀리면
+    몇 건을 건너뛴다(2026-10-11 재수집에서 2001~2016년 글 39건이 빠졌다 — 게시판에는 그대로 있었다).
+    한 번 수집된 글은 남기고, 이번에 다시 본 글만 제목을 새로 고친다.
+    """
+    if not os.path.exists(OUT_KDCA):
+        return kd
+    seen = {(r['게시판'], r['artclId']) for r in kd}
+    old = [r for r in csv.DictReader(open(OUT_KDCA, encoding='utf-8-sig'))
+           if (r['게시판'], r['artclId']) not in seen]
+    if old:
+        print(f'  이번 수집에서 못 본 기존 글 {len(old)}건은 그대로 둔다', flush=True)
+    return kd + old
+
+
 def main():
     print('누리집 게시판 수집 —', ', '.join(f'{l}(#{b})' for b, l, _ in BOARDS))
     kd = []
@@ -177,6 +194,7 @@ def main():
         kd += rows_
     if len(kd) < 500:
         sys.exit(f'수집이 너무 적다({len(kd)}건). 게시판 구조가 바뀌었거나 망이 막혔다. 기존 파일을 지우지 않는다.')
+    kd = keep_previous(kd)
     kd.sort(key=lambda r: r['등록일'], reverse=True)
     with open(OUT_KDCA, 'w', encoding='utf-8', newline='') as f:
         w = csv.DictWriter(f, ['게시판', 'artclId', '제목', '등록일', 'URL'])

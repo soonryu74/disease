@@ -109,13 +109,15 @@ def _known_absent(disease):
 
 def _gap(what, disease, why=None):
     """값 대신 내보내는 '빈 자리'. 무엇이 없는지와 어디서 확인하는지를 같이 준다."""
-    why = _known_absent(disease) or why
+    known = _known_absent(disease)
     return {
         'ok': False,
-        'status': '공식 근거 확인 필요',
+        # 원문을 펴 보고 '없다'를 확인한 것과 아직 못 본 것은 다르다. 머리말부터 갈라 쓴다.
+        'status': '지침에 해당 내용 없음 — 원문 확인함' if known else '공식 근거 확인 필요',
+        'absent': bool(known),
         'what': what,
         'disease': disease,
-        'why': why or NEED.get(what + '_주') or NEED.get(what),
+        'why': known or why or NEED.get(what + '_주') or NEED.get(what),
         'where': [
             {'label': '질병관리청 감염병 지침 게시판',
              'url': 'https://www.kdca.go.kr/bbs/kdca/55/artclList.do'},

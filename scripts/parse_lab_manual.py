@@ -60,7 +60,9 @@ def split_diseases(pages):
     '꼬리표 바로 뒤에 한글 병명이 오는' 쪽만 시작으로 친다."""
     blocks, cur = [], None
     for n, raw in pages:
-        t = raw or ''
+        # 크로이츠펠트­야콥병 쪽은 붙임표 대신 보이지 않는 soft hyphen(U+00AD)을 쓴다.
+        # 병명 패턴이 그 글자에서 끊겨 CJD 덩어리가 앞 질환(후천성면역결핍증)에 딸려 들어갔다.
+        t = (raw or '').replace('\u00ad', '-')
         m = TAG.search(t)
         starts = False
         name = None
@@ -75,7 +77,8 @@ def split_diseases(pages):
             mm = re.match(r'([가-힣][가-힣A-Za-z0-9()·\-\s]{1,39}?)'
                           r'\s*(?:[A-Z][a-z]|Ⅰ\s*\.|$)', after)
             if mm and re.search(r'[가-힣]{2}', mm.group(1)):
-                starts, name = True, clean(mm.group(1))
+                # 괄호 안 영문명 앞에서 끊기면 '크로이츠펠트-야콥병(' 처럼 여는 괄호만 남는다
+                starts, name = True, re.sub(r'\(\s*$', '', clean(mm.group(1))).strip()
         if starts:
             if cur:
                 blocks.append(cur)
@@ -93,7 +96,8 @@ def parse_specimen(text):
     """'2. 검체 : ...' 한 줄."""
     # 검체가 두 글자뿐인 질환이 있다(후천성면역결핍증 — '혈액'). 최소 길이를 3으로 두었더니
     # 경계를 못 찾고 아래 표 전체가 검체 목록에 딸려 들어왔다.
-    m = re.search(r'2\.\s*검체\s*[:：]\s*(.{2,400}?)(?=\n\s*검사법|\n\s*3\.\s|\Z)', text, re.S)
+    # 표에 '검사법' 열이 없는 질환(CJD)은 '검체 채취시기'가 머리글 첫 칸이다.
+    m = re.search(r'2\.\s*검체\s*[:：]\s*(.{2,400}?)(?=\n\s*검사법|\n\s*검체\s*채취\s*시기|\n\s*3\.\s|\Z)', text, re.S)
     return clean(m.group(1)) if m else None
 
 

@@ -1,7 +1,7 @@
 {
  "meta": {
   "as_of": "2026-09",
-  "source": "질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, 제목·연도로 통합 2359건",
+  "source": "질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량 + 감염병포털 게시판 358건, 제목·연도로 통합 2392건",
   "levels": {
    "direct": "지침 제목에 그 질병명·옛 이름·약어가 들어 있다 — 사실",
    "group": "그 질병이 속한 계열의 묶음 지침 — 찾아볼 후보. 묶음 지침이 실제로 어느 질병을 다루는지는 원문 목차 확인이 필요하다"
@@ -9,13 +9,13 @@
   "editions": "지침은 대개 매년 다시 낸다. 같은 계열은 최신판 하나만 보이고 판 수를 적는다. 최신판이 2024년 이전이면 stale — 신판이 있는지 게시판을 확인할 것.",
   "caution": "제목에 '(4종)'처럼 대상 수가 적힌 묶음 지침이 있다. 대상 목록은 원문에서 확인할 것.",
   "stats": {
-   "direct": 71,
-   "group": 20,
+   "direct": 74,
+   "group": 17,
    "none": 0,
    "stale": 76,
    "collision": 65,
    "total": 91,
-   "guidelines": 2359
+   "guidelines": 2392
   }
  },
  "index": [
@@ -608,7 +608,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -2652,7 +2652,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -2897,7 +2897,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -3054,7 +3054,7 @@
      "superseded": null
     }
    ],
-   "direct_total": 70,
+   "direct_total": 73,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -3117,7 +3117,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -3422,7 +3422,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -3831,7 +3831,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -4140,7 +4140,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -4397,7 +4397,7 @@
      "superseded": null
     }
    ],
-   "direct_total": 645,
+   "direct_total": 653,
    "group": [
     {
      "title": "2026년 수인성·식품매개감염병 관리지침 재안내",
@@ -4980,7 +4980,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -5155,7 +5155,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -5285,7 +5285,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -5665,7 +5665,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -5855,7 +5855,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -6355,9 +6355,24 @@
      "board": "지침",
      "span": null,
      "superseded": null
+    },
+    {
+     "title": "진드기 매개 감염병(라임병, 진드기매개뇌염, 진드기 제거법) 소책자",
+     "date": "2024.09.25",
+     "url": "https://www.kdca.go.kr/bbs/kdca/49/219117/artclView.do",
+     "year": 2024,
+     "kind": "direct",
+     "group": null,
+     "doc": "교육홍보",
+     "editions": 1,
+     "stale": true,
+     "src": "KDCA게시판",
+     "board": "교육자료",
+     "span": null,
+     "superseded": null
     }
    ],
-   "direct_total": 1,
+   "direct_total": 2,
    "group": [
     {
      "title": "2026년도 진드기·설치류매개감염병 관리지침",
@@ -6891,7 +6906,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -7812,7 +7827,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -8242,8 +8257,24 @@
    "disease": "진드기매개뇌염",
    "grade": "제3급",
    "icon": "🕷",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "진드기 매개 감염병(라임병, 진드기매개뇌염, 진드기 제거법) 소책자",
+     "date": "2024.09.25",
+     "url": "https://www.kdca.go.kr/bbs/kdca/49/219117/artclView.do",
+     "year": 2024,
+     "kind": "direct",
+     "group": null,
+     "doc": "교육홍보",
+     "editions": 1,
+     "stale": true,
+     "src": "KDCA게시판",
+     "board": "교육자료",
+     "span": null,
+     "superseded": null
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "2026년도 진드기·설치류매개감염병 관리지침",
@@ -8658,6 +8689,36 @@
    "icon": "🧠",
    "direct": [
     {
+     "title": "수술·시술·내시경 전 CJD 관련 감염위험 선별 안내서",
+     "date": "2026.10.07",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312873/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "KDCA게시판",
+     "board": "지침",
+     "span": null,
+     "superseded": null
+    },
+    {
+     "title": "2026년 크로이츠펠트-야콥병(CJD) 안내서",
+     "date": "2026.10.07",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312872/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 3,
+     "stale": false,
+     "src": "KDCA게시판",
+     "board": "지침",
+     "span": null,
+     "superseded": null
+    },
+    {
      "title": "유전형 CJD 가족 검사 안내서",
      "date": "2023.02.15",
      "url": "https://www.kdca.go.kr/bbs/kdca/57/228489/artclView.do",
@@ -8669,21 +8730,6 @@
      "stale": true,
      "src": "KDCA게시판",
      "board": "서식",
-     "span": null,
-     "superseded": null
-    },
-    {
-     "title": "크로이츠펠트-야콥병(CJD) 안내서",
-     "date": "2023.02.08",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228094/artclView.do",
-     "year": 2023,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 2,
-     "stale": true,
-     "src": "KDCA게시판",
-     "board": "지침",
      "span": null,
      "superseded": null
     },
@@ -8731,24 +8777,9 @@
      "board": "지침",
      "span": null,
      "superseded": null
-    },
-    {
-     "title": "2008년 CJD표본감시관리지침",
-     "date": "2018.07.10",
-     "url": "https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180710793292402&q_clsfNo=0",
-     "year": 2008,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 2,
-     "stale": true,
-     "src": "감염병포털",
-     "board": "",
-     "span": null,
-     "superseded": null
     }
    ],
-   "direct_total": 14,
+   "direct_total": 16,
    "group": [
     {
      "title": "법정감염병 진단검사 통합지침(제5판)",
@@ -8767,17 +8798,17 @@
     }
    ],
    "primary": {
-    "title": "유전형 CJD 가족 검사 안내서",
-    "date": "2023.02.15",
-    "url": "https://www.kdca.go.kr/bbs/kdca/57/228489/artclView.do",
-    "year": 2023,
+    "title": "2026년 크로이츠펠트-야콥병(CJD) 안내서",
+    "date": "2026.10.07",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/312872/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
-    "editions": 1,
-    "stale": true,
+    "editions": 3,
+    "stale": false,
     "src": "KDCA게시판",
-    "board": "서식",
+    "board": "지침",
     "span": null,
     "superseded": null
    }
@@ -8821,7 +8852,7 @@
    "direct_total": 2,
    "group": [
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -9148,7 +9179,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -9700,8 +9731,24 @@
    "disease": "사람유두종바이러스 감염증",
    "grade": "제4급",
    "icon": "🫧",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": "",
+     "span": 2,
+     "superseded": null
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "법정감염병 진단검사 통합지침(제5판)",
@@ -9720,18 +9767,18 @@
     }
    ],
    "primary": {
-    "title": "법정감염병 진단검사 통합지침(제5판)",
-    "date": "2026.07.23",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/311901/artclView.do",
+    "title": "2026년 성매개감염병 관리지침",
+    "date": "2026.03.03",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "진단검사",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
-    "editions": 7,
+    "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침",
-    "span": null,
+    "src": "보정",
+    "board": "",
+    "span": 2,
     "superseded": null
    }
   },
@@ -9739,8 +9786,24 @@
    "disease": "성기단순포진",
    "grade": "제4급",
    "icon": "🫧",
-   "direct": [],
-   "direct_total": 0,
+   "direct": [
+    {
+     "title": "2026년 성매개감염병 관리지침",
+     "date": "2026.03.03",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "보정",
+     "board": "",
+     "span": 2,
+     "superseded": null
+    }
+   ],
+   "direct_total": 1,
    "group": [
     {
      "title": "2026년 성매개감염병 관리지침",
@@ -9750,7 +9813,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -9793,14 +9856,14 @@
     "date": "2026.03.03",
     "url": "https://www.kdca.go.kr/bbs/kdca/55/310321/artclView.do",
     "year": 2026,
-    "kind": "group",
-    "group": "성매개",
+    "kind": "direct",
+    "group": null,
     "doc": "지침",
-    "editions": 12,
+    "editions": 1,
     "stale": false,
-    "src": "KDCA게시판+감염병포털",
-    "board": "지침",
-    "span": null,
+    "src": "보정",
+    "board": "",
+    "span": 2,
     "superseded": null
    }
   },
@@ -9900,7 +9963,7 @@
      "superseded": null
     }
    ],
-   "direct_total": 23,
+   "direct_total": 24,
    "group": [
     {
      "title": "법정감염병 진단검사 통합지침(제5판)",
@@ -10079,7 +10142,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -10125,7 +10188,7 @@
     "kind": "group",
     "group": "성매개",
     "doc": "지침",
-    "editions": 12,
+    "editions": 13,
     "stale": false,
     "src": "KDCA게시판+감염병포털",
     "board": "지침",
@@ -10193,6 +10256,36 @@
    "icon": "🤧",
    "direct": [
     {
+     "title": "2026 시설별 인플루엔자 관리지침(사업장용)",
+     "date": "2026.10.01",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312821/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "KDCA게시판",
+     "board": "지침",
+     "span": null,
+     "superseded": null
+    },
+    {
+     "title": "2026-2027 절기 인플루엔자 관리지침",
+     "date": "2026.10.01",
+     "url": "https://www.kdca.go.kr/bbs/kdca/55/312818/artclView.do",
+     "year": 2026,
+     "kind": "direct",
+     "group": null,
+     "doc": "지침",
+     "editions": 1,
+     "stale": false,
+     "src": "KDCA게시판",
+     "board": "지침",
+     "span": null,
+     "superseded": null
+    },
+    {
      "title": "의원급 의료기관 인플루엔자 의사환자 감시 가이드라인(의료기관용)",
      "date": "2025.12.10",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/228322/artclView.do",
@@ -10251,39 +10344,9 @@
      "board": "지침",
      "span": null,
      "superseded": null
-    },
-    {
-     "title": "2024 시설별 인플루엔자 관리지침(사업장용)",
-     "date": "2024.11.18",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228247/artclView.do",
-     "year": 2024,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": true,
-     "src": "KDCA게시판",
-     "board": "지침",
-     "span": null,
-     "superseded": null
-    },
-    {
-     "title": "2024-2025절기 인플루엔자 국가예방접종 지원사업 관리지침(보건소용, 의료기관용)",
-     "date": "2024.07.08",
-     "url": "https://www.kdca.go.kr/bbs/kdca/55/228227/artclView.do",
-     "year": 2024,
-     "kind": "direct",
-     "group": null,
-     "doc": "지침",
-     "editions": 1,
-     "stale": true,
-     "src": "KDCA게시판",
-     "board": "지침",
-     "span": null,
-     "superseded": null
     }
    ],
-   "direct_total": 73,
+   "direct_total": 75,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -10316,7 +10379,7 @@
      "superseded": null
     },
     {
-     "title": "(7.27.수정)2026년 국가예방접종 지침",
+     "title": "(10.2.수정) 2026년 국가예방접종 지침",
      "date": "2026.01.09",
      "url": "https://www.kdca.go.kr/bbs/kdca/55/309683/artclView.do",
      "year": 2026,
@@ -10362,10 +10425,10 @@
     }
    ],
    "primary": {
-    "title": "2025-2026 절기 인플루엔자 관리지침",
-    "date": "2025.09.26",
-    "url": "https://www.kdca.go.kr/bbs/kdca/55/228308/artclView.do",
-    "year": 2025,
+    "title": "2026-2027 절기 인플루엔자 관리지침",
+    "date": "2026.10.01",
+    "url": "https://www.kdca.go.kr/bbs/kdca/55/312818/artclView.do",
+    "year": 2026,
     "kind": "direct",
     "group": null,
     "doc": "지침",
@@ -10392,7 +10455,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -10438,7 +10501,7 @@
     "kind": "group",
     "group": "성매개",
     "doc": "지침",
-    "editions": 12,
+    "editions": 13,
     "stale": false,
     "src": "KDCA게시판+감염병포털",
     "board": "지침",
@@ -10675,7 +10738,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -10721,7 +10784,7 @@
     "kind": "group",
     "group": "성매개",
     "doc": "지침",
-    "editions": 12,
+    "editions": 13,
     "stale": false,
     "src": "KDCA게시판+감염병포털",
     "board": "지침",
@@ -10910,7 +10973,7 @@
      "superseded": null
     }
    ],
-   "direct_total": 211,
+   "direct_total": 213,
    "group": [
     {
      "title": "2026년도 호흡기감염병 관리지침(일부개정판)",
@@ -10989,7 +11052,7 @@
      "kind": "group",
      "group": "성매개",
      "doc": "지침",
-     "editions": 12,
+     "editions": 13,
      "stale": false,
      "src": "KDCA게시판+감염병포털",
      "board": "지침",
@@ -11035,7 +11098,7 @@
     "kind": "group",
     "group": "성매개",
     "doc": "지침",
-    "editions": 12,
+    "editions": 13,
     "stale": false,
     "src": "KDCA게시판+감염병포털",
     "board": "지침",
