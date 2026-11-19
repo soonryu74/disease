@@ -125,6 +125,19 @@
   .agg>*{min-width:0}
   @media (max-width:640px){.agg{grid-template-columns:1fr}}
   .rank{list-style:none;margin:0;padding:0}
+  /* 지도로 보기 */
+  .wmap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+  .wmap svg{display:block;width:100%;height:auto}
+  .wmap .land{fill:var(--surface-2);stroke:var(--line-strong);stroke-width:.35}
+  .wmap .hit{fill:var(--accent);stroke:var(--accent-ink);stroke-width:.4;cursor:pointer}
+  .wmap .hit:hover,.wmap .hit.sel{stroke:var(--ink);stroke-width:1.1}
+  .wmap .fresh{stroke:var(--s2);stroke-width:1.3}
+  .wmap circle.land{stroke-width:.3}
+  .mleg{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12.5px;color:var(--muted);margin:10px 2px 0}
+  .mleg i{display:inline-block;width:14px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:4px}
+  .cofilter{display:none;margin:0 0 10px;font-size:13px}
+  .cofilter.on{display:flex;gap:8px;align-items:center}
+  .cofilter button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:2px 10px;font:inherit;cursor:pointer}
   .rank li{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
   .rank li:last-child{border-bottom:0}
   .rank .nm2{font-weight:700;color:var(--ink);flex:none;max-width:46%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
@@ -229,6 +242,14 @@
   </div>
 </section>
 
+<section id="map">
+  <h2>지도로 보기</h2>
+  <p class="sdesc">보관 중인 자료가 언급한 나라를 색으로 칠했습니다. <b>색이 진할수록 그 나라를 다룬 문서가 많다는 뜻</b>이며,
+    환자 수나 위험도가 아닙니다. 나라를 누르면 아래 목록이 그 나라 자료로 좁혀집니다.</p>
+  <div class="wmap" id="wmap"><p class="small muted" style="margin:8px">지도를 불러오는 중…</p></div>
+  <div class="mleg" id="mleg"></div>
+</section>
+
 <section id="feed">
   <h2>전체 수집 자료 <span class="cnt" id="allcnt"></span></h2>
   <div class="lbar">
@@ -242,6 +263,7 @@
       <button type="button" id="vComp" aria-pressed="false">간단히</button>
     </div>
   </div>
+  <div class="cofilter" id="cofilter"></div>
   <div class="chips" id="chips"></div>
   <div class="dayfilter" id="dayf"></div>
   <div class="howko"><b>한글 요약은 번역이 아니다.</b> 원문에서 병명·나라·숫자·기준일·위험 평가·여행 제한 권고를 뽑아 틀에 맞춰 적은 것이다.
@@ -326,7 +348,7 @@ document.getElementById('run').innerHTML =
   }).join('');
 
 /* 필터 */
-let f='all', limit=40, seenDay='all';
+let f='all', limit=40, seenDay='all', co=null;
 
 /* 수집일 — 아카이브에 실제로 적힌 날만 모은다.
    처음 본 날(first_seen)과 고쳐진 날(updated)을 함께 센다.
@@ -374,6 +396,7 @@ function pass(it){
   /* 수집일 거르개. 없는 과거를 만들어 내지 않으려고, 아카이브에 실제로 적힌
      날짜만 단추로 세운다. 그래서 날이 쌓이는 만큼만 늘어난다. */
   if(seenDay !== 'all' && it.first_seen !== seenDay && it.updated !== seenDay) return false;
+  if(co && (it.countries||[]).indexOf(co) < 0) return false;
   if(f==='all') return true;
   if(f==='new') return it.first_seen===D.today && !D.first_run;
   if(f==='desig') return (it.joins||[]).some(j=>j.designated===true);
@@ -577,7 +600,7 @@ function render(){
       + (seenDay !== 'all' ? ` 수집일을 <b>${esc(seenDay)}</b>로 좁힌 상태입니다.` : '')
       + ` <button class="more" id="reset" style="margin-top:10px">조건 지우고 전체 보기</button></div>`;
     const rb=document.getElementById('reset');
-    if(rb) rb.onclick=()=>{ q=''; f='all'; seenDay='all'; document.getElementById('lq').value='';
+    if(rb) rb.onclick=()=>{ q=''; f='all'; seenDay='all'; setCo(null, true); document.getElementById('lq').value='';
       document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on', x.dataset.f==='all'));
       document.querySelectorAll('#dayf button').forEach(x=>x.classList.toggle('on', x.dataset.d==='all'));
       limit=40; render(); };
@@ -616,6 +639,58 @@ function sortItems(a){
     return by(x,y);
   });
 }
+/* 지도로 보기 — 원장의 ISO3 나라 태그를 세어 칠한다. 문서 수일 뿐 발생 규모가 아니다. */
+const CO_KO = {};
+D.items.forEach(it=>(it.joins||[]).forEach(j=>{ if(j.iso && j.ko) CO_KO[j.iso]=j.ko; }));
+function setCo(iso, quiet){
+  co = iso; limit = 40;
+  const cf = document.getElementById('cofilter');
+  if(cf){
+    cf.classList.toggle('on', !!iso);
+    cf.innerHTML = iso ? `<span>나라: <b>${esc(CO_KO[iso]||iso)}</b> 자료만 보는 중</span><button type="button" id="coclear">✕ 풀기</button>` : '';
+    const b = document.getElementById('coclear'); if(b) b.onclick = () => setCo(null);
+  }
+  document.querySelectorAll('#wmap .hit').forEach(x => x.classList.toggle('sel', x.dataset.iso === iso));
+  if(!quiet) render();
+}
+(function(){
+  const box = document.getElementById('wmap'); if(!box || !window.fetch) return;
+  const cnt = {}, fresh = {};
+  const isNew = it => it.first_seen === D.today && !D.first_run;
+  D.items.forEach(it => (it.countries||[]).forEach(c => { cnt[c] = (cnt[c]||0) + 1; if(isNew(it)) fresh[c] = 1; }));
+  const max = Math.max(1, ...Object.values(cnt));
+  const op = n => (0.28 + 0.72 * Math.sqrt(n / max)).toFixed(2);
+  const X = lon => ((lon + 180) * 2).toFixed(1), Y = lat => ((90 - lat) * 2).toFixed(1);
+  const attrs = (iso, ko) => {
+    const n = cnt[iso];
+    if(!n) return `class="land"><title>${esc(ko)}</title>`;
+    return `class="hit${fresh[iso]?' fresh':''}" data-iso="${iso}" fill-opacity="${op(n)}" tabindex="0" role="button" aria-label="${esc(ko)} ${n}건"><title>${esc(ko)} · 문서 ${n}건${fresh[iso]?' · 오늘 새 항목':''}</title>`;
+  };
+  fetch('data/world.json').then(r => r.json()).then(W => {
+    W.c.forEach(([iso, ko]) => { if(!CO_KO[iso]) CO_KO[iso] = ko; });
+    W.p.forEach(([iso, ko]) => { if(!CO_KO[iso]) CO_KO[iso] = ko; });
+    const shapes = W.c.map(([iso, ko, rings]) =>
+      `<path d="${rings.map(r => 'M' + r.map(([a,b]) => X(a) + ',' + Y(b)).join('L') + 'Z').join('')}" ${attrs(iso, ko)}</path>`).join('');
+    const dots = W.p.map(([iso, ko, lon, lat]) =>
+      `<circle cx="${X(lon)}" cy="${Y(lat)}" r="${cnt[iso]?3.2:1.6}" ${attrs(iso, ko)}</circle>`).join('');
+    box.innerHTML = `<svg viewBox="0 12 720 284" role="img" aria-label="자료가 언급한 나라 지도">${shapes}${dots}</svg>`;
+    const pick = e => {
+      const t = e.target.closest('.hit'); if(!t) return;
+      if(e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      setCo(co === t.dataset.iso ? null : t.dataset.iso);
+      document.getElementById('feed').scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    box.onclick = pick; box.onkeydown = pick;
+    const top = Object.entries(cnt).sort((a,b) => b[1]-a[1]).slice(0, 3)
+      .map(([c,n]) => `${esc(CO_KO[c]||c)} ${n}`).join(' · ');
+    document.getElementById('mleg').innerHTML =
+      `<span><i style="background:var(--accent);opacity:.3"></i>문서 적음</span>` +
+      `<span><i style="background:var(--accent)"></i>문서 많음</span>` +
+      `<span><i style="border:2px solid var(--s2)"></i>오늘 새 항목</span>` +
+      `<span>나라 ${Object.keys(cnt).length}곳${top ? ' · 많은 순 ' + top : ''}</span>`;
+  }).catch(() => { document.getElementById('map').style.display = 'none'; });
+})();
 render();
 
 /* 구독 */

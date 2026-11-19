@@ -467,6 +467,21 @@ def render(items, status, today, run_at):
     # 이제는 portal_tools 한 곳에 적힌 차례를 그대로 쓴다.
     inject_page(out, 1, 'daily')
     print(f'→ portal/daily/index.html  {os.path.getsize(out):,}B')
+    write_world()
+
+
+def write_world():
+    """상황판 지도용 세계지도. ⑮ 해외유입 지도의 간략 지도를 그대로 줄여 쓴다.
+    배포는 portal/ 만 올라가므로 여기 사본을 둔다. 원본이 없으면 지도 칸만 숨는다."""
+    src = os.path.join(ROOT, '15_해외유입_지도', 'data', '세계지도.json')
+    if not os.path.exists(src):
+        return
+    w = json.load(open(src, encoding='utf-8'))
+    out = {'c': [[c['iso'], c['ko'], c['rings']] for c in w.get('countries', [])],
+           'p': [[p['iso'], p['ko'], p['c'][0], p['c'][1]] for p in w.get('points', [])]}
+    os.makedirs(DATA_DIR, exist_ok=True)
+    json.dump(out, open(os.path.join(DATA_DIR, 'world.json'), 'w', encoding='utf-8'),
+              ensure_ascii=False, separators=(',', ':'))
 
 
 def write_feed(items):
