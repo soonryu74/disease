@@ -1,0 +1,1017 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>연대기 전시관</title>
+<meta name="description" content="1954년부터 지금까지 해마다 무엇이 달라졌는지 전시물로 걸어 두었습니다. 연도별 시간축으로 훑어봅니다.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<style>
+  :root{
+    /* 고요한 화이트큐브 — 색을 빼고 빛과 여백으로만 짓는다 */
+    --ground:#FAFAF8; --surface:#FFFFFF; --surface-2:#F3F2EE;
+    --ink:#1A1A1A; --muted:#6B6A66; --faint:#9C9A94;
+    --line:#E7E5DE; --line-strong:#D8D5CC;
+    --accent:#0E6E63; --accent-soft:#EDF3F1; --accent-ink:#0A4A43;
+    --shadow:none;
+    --warn:#B23A3A;
+    --hall-wall:#FFFFFF; --hall-side:#F4F2EE; --hall-floor:#EBE8E1; --hall-ceil:#FCFBF9;
+    --hall-deep:#E4E1DA; --hall-ink:#1A1A1A;
+  }
+  @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+    --ground:#121211; --surface:#191918; --surface-2:#211F1D;
+    --ink:#ECEAE5; --muted:#A5A29B; --faint:#78756E;
+    --line:#2A2825; --line-strong:#3A3733;
+    --accent:#54B7AA; --accent-soft:#1D2422; --accent-ink:#9FE0D7;
+    --shadow:none;
+    --warn:#E07A7A;
+    --hall-wall:#1C1B19; --hall-side:#171614; --hall-floor:#131211; --hall-ceil:#201F1C;
+    --hall-deep:#0C0C0B; --hall-ink:#ECEAE5;
+  }}
+  :root[data-theme="dark"]{
+    --ground:#121211; --surface:#191918; --surface-2:#211F1D;
+    --ink:#ECEAE5; --muted:#A5A29B; --faint:#78756E;
+    --line:#2A2825; --line-strong:#3A3733;
+    --accent:#54B7AA; --accent-soft:#1D2422; --accent-ink:#9FE0D7;
+    --shadow:none;
+    --warn:#E07A7A;
+    --hall-wall:#1C1B19; --hall-side:#171614; --hall-floor:#131211; --hall-ceil:#201F1C;
+    --hall-deep:#0C0C0B; --hall-ink:#ECEAE5;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--ink);line-height:1.6;letter-spacing:-.01em;
+    word-break:keep-all;overflow-x:hidden;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,-apple-system,sans-serif;}
+  .num{font-variant-numeric:tabular-nums}
+  a{color:var(--accent-ink);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+  header{padding:30px 0 4px}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:700;margin:0 0 10px}
+  h1{font-size:clamp(26px,5vw,40px);line-height:1.06;margin:0;font-weight:800;letter-spacing:-.03em}
+  .thesis{font-size:clamp(14px,2.2vw,16px);color:var(--muted);max-width:66ch;margin:12px 0 0}
+
+  /* ── 연표 ────────────────────────────────────────────────── */
+  .strip{margin:18px 0 0;background:var(--surface);border:1px solid var(--line);border-radius:14px;
+    padding:12px 14px 10px;box-shadow:var(--shadow)}
+  .stw{overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px}
+  .st{display:flex;gap:3px;align-items:flex-end;min-width:min-content;height:70px}
+  .sy{flex:0 0 auto;width:26px;cursor:pointer;display:flex;flex-direction:column;
+    align-items:center;justify-content:flex-end;gap:3px;border-radius:6px;padding:2px 0;border:none;background:none;font:inherit}
+  .sy:hover{background:var(--surface-2)}
+  .sy .bar{width:16px;border-radius:3px 3px 0 0;display:flex;flex-direction:column-reverse;overflow:hidden;transition:width .2s}
+  .sy .bar i{display:block;width:100%}
+  .sy .yl{font-size:9.5px;color:var(--faint);writing-mode:vertical-rl}
+  .sy.on .bar{width:22px;outline:2px solid var(--accent);outline-offset:1px}
+  .sy.on .yl{color:var(--accent-ink);font-weight:800}
+  .slg{display:flex;gap:10px;flex-wrap:wrap;font-size:11.5px;color:var(--muted);margin-top:8px}
+  .slg b{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+
+  /* ── 전시실 ──────────────────────────────────────────────── */
+  .stage{position:relative;margin:14px 0 0;height:min(72vh,600px);min-height:400px;
+    border-radius:16px;overflow:hidden;clip-path:inset(0 round 16px);background:var(--hall-deep);
+    perspective:1500px;perspective-origin:50% 50%;border:1px solid var(--line);outline:none}
+  .shell,.track{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
+  .track{pointer-events:auto}
+  .pl{position:absolute;left:50%;top:50%}
+  .p-floor{background:linear-gradient(var(--hall-floor),var(--hall-side))}
+  .p-ceil{background:linear-gradient(var(--hall-ceil),var(--hall-side))}
+  .p-side{background:var(--hall-side)}
+  /* 화이트큐브에는 극적인 조명이 없다. 가장자리만 아주 옅게 눌러 준다. */
+  .vig{position:absolute;inset:0;pointer-events:none;z-index:3;
+    background:radial-gradient(ellipse 82% 76% at 50% 48%,rgba(0,0,0,0) 62%,rgba(0,0,0,.07) 100%)}
+
+  .wall{position:absolute;left:50%;top:50%;background:var(--hall-wall);
+    border:1px solid var(--line);border-radius:0;padding:0;overflow:hidden;
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1),opacity 1.6s cubic-bezier(.4,0,.2,1);
+    display:flex;flex-direction:column}
+  .whead{display:flex;align-items:baseline;gap:calc(var(--fs)*1.2);
+    padding:calc(var(--fs)*2) calc(var(--fs)*2.2) calc(var(--fs)*1.1);flex:none}
+  .whead .wy{font-size:calc(var(--fs)*2.8);font-weight:300;letter-spacing:.06em;line-height:1;color:var(--ink)}
+  .whead .wc{font-size:calc(var(--fs)*.9);color:var(--faint);font-weight:400;letter-spacing:.12em}
+  .whead .wd{margin-left:auto;font-size:calc(var(--fs)*.85);color:var(--faint);font-weight:400;letter-spacing:.1em}
+  /* 여백을 두 배로. 작품 사이가 비어 있어야 한 점씩 보인다. */
+  .wgrid{flex:1;min-height:0;display:grid;gap:calc(var(--fs)*1.5);
+    padding:0 calc(var(--fs)*2.2) calc(var(--fs)*2.2);
+    grid-template-columns:repeat(var(--cols),minmax(0,1fr));grid-auto-rows:minmax(0,1fr)}
+
+  .art{position:relative;min-width:0;cursor:pointer;font:inherit;text-align:left;overflow:hidden;
+    background:var(--surface);border:1px solid var(--line);border-radius:0;
+    padding:calc(var(--fs)*.9) calc(var(--fs)*.95);display:flex;flex-direction:column;
+    gap:calc(var(--fs)*.42);backface-visibility:hidden;
+    transition:opacity 1.6s cubic-bezier(.4,0,.2,1),transform 1.6s cubic-bezier(.4,0,.2,1),
+               border-color .5s ease}
+  .art:hover,.art:focus-visible{border-color:var(--ink);outline:none}
+  .art .rk{position:absolute;right:calc(var(--fs)*.85);bottom:calc(var(--fs)*.7);
+    font-size:calc(var(--fs)*.8);font-weight:300;color:var(--faint);letter-spacing:.05em}
+  /* 갈래는 색 띠가 아니라 작은 점 하나로 — 벽에서 색이 튀지 않게 */
+  .art .tg{font-size:calc(var(--fs)*.7);font-weight:500;color:var(--muted);letter-spacing:.13em;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.5em}
+  .art .tg::before{content:"";flex:none;width:.42em;height:.42em;border-radius:50%;background:var(--tc)}
+  .art .tt{font-size:calc(var(--fs)*1.06);font-weight:500;line-height:1.42;letter-spacing:.005em;
+    display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+  .art.pic{padding:0}
+  .art.pic img{width:100%;flex:1;object-fit:cover;display:block;min-height:0}
+  .art.pic .cap{padding:calc(var(--fs)*.75) calc(var(--fs)*.9);background:var(--surface);flex:none;
+    border-top:1px solid var(--line)}
+  .art.pic .cap .tt{-webkit-line-clamp:2}
+  .art.off{opacity:.2;pointer-events:none;box-shadow:none}
+  /* 한 점이 앞으로 나오면 나머지는 좌우로 흩어져 물러난다 */
+  /* 한 점이 앞으로 나오면 나머지는 좌우로 물러나며 조용히 옅어진다(회전 없음) */
+  .wall.scatter .art{transform:translateX(calc(var(--sx) * .55));opacity:.12;
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1),opacity 1.6s cubic-bezier(.4,0,.2,1)}
+  .wall.scatter .art.taken{opacity:0}
+  .wall.here .art{animation:hang 1.6s cubic-bezier(.4,0,.2,1) backwards;
+    animation-delay:calc(var(--k)*90ms + 200ms)}
+  @keyframes hang{from{opacity:0}}
+
+  /* ── 작품 앞으로(확대 + 미술관 라벨) ─────────────────────── */
+  .zoom{position:absolute;inset:0;z-index:10;display:none}
+  .zoom.on{display:flex}
+  /* 어둡게 덮지 않는다. 벽을 하얗게 지워 작품만 남긴다. */
+  .zbd{position:absolute;inset:0;background:color-mix(in srgb,var(--hall-wall) 88%,transparent);
+    animation:fade 1.6s cubic-bezier(.4,0,.2,1) both;transition:opacity 1.2s cubic-bezier(.4,0,.2,1)}
+  @keyframes fade{from{opacity:0}}
+  /* 물러날 때는 배경이 먼저 옅어지고 작품이 겹쳐 사라진다 */
+  .zoom.closing .zbd{opacity:0}
+  .zoom.closing .zlabel{opacity:0}
+  .zin{position:relative;margin:auto;display:flex;gap:clamp(18px,3.2vw,42px);align-items:stretch;
+    width:min(92%,940px);max-height:92%;padding:clamp(10px,2vw,18px) clamp(10px,2vw,18px) 58px}
+  /* 튀어나오지 않는다. 살짝 돌면서 흐림이 걷히고 겹쳐 들어온다(크로스 디졸브). */
+  .zart{flex:0 0 clamp(160px,27%,260px);background:var(--surface);border-radius:0;
+    border:1px solid var(--line);overflow:hidden;
+    display:flex;flex-direction:column;
+    transform-origin:50% 50%;backface-visibility:hidden;
+    transition:transform 1.6s cubic-bezier(.4,0,.2,1),
+               opacity 1.6s cubic-bezier(.4,0,.2,1)}
+  .zart .zpad{padding:22px 22px 18px;display:flex;flex-direction:column;gap:10px;flex:1;min-height:0}
+  .zart .ztg{font-size:10.5px;font-weight:500;color:var(--muted);letter-spacing:.16em;
+    display:flex;align-items:center;gap:.6em}
+  .zart .ztg::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--tc)}
+  .zart .ztt{font-size:17px;font-weight:400;line-height:1.45;letter-spacing:.01em}
+  /* 그림이 없는 전시물은 연도를 크게 눌러 찍어 판(plate)처럼 보이게 한다 */
+  .zart .zyr{margin-top:auto;font-size:46px;font-weight:200;letter-spacing:.04em;line-height:.9;
+    color:var(--ink);opacity:.10;align-self:flex-end}
+  .zart .zcap{flex:none;border-top:1px solid var(--line);padding:11px 22px;
+    font-size:10.5px;font-weight:400;color:var(--faint);letter-spacing:.1em}
+  .zart img{width:100%;flex:1;object-fit:cover;min-height:0;display:block}
+  .zlabel{flex:1;min-width:0;background:var(--surface);border-radius:0;border:1px solid var(--line);
+    padding:clamp(20px,2.8vw,34px) clamp(22px,3vw,38px);overflow:auto;
+    animation:lab 1.6s .35s cubic-bezier(.4,0,.2,1) backwards;
+    transition:opacity 1.1s cubic-bezier(.4,0,.2,1)}
+  @keyframes lab{from{opacity:0}}
+  /* 미술관 라벨투 — 얇은 괘선과 넉넉한 여백 */
+  .zlabel .lt{font-size:10.5px;font-weight:500;letter-spacing:.2em;color:var(--muted);
+    display:flex;align-items:center;gap:.7em}
+  .zlabel .lt::before{content:"";flex:none;width:5px;height:5px;border-radius:50%;background:var(--tc)}
+  .zlabel h3{font-size:clamp(20px,3vw,29px);margin:16px 0 6px;font-weight:300;
+    letter-spacing:.012em;line-height:1.38}
+  .zlabel .lm{font-size:11.5px;color:var(--faint);font-weight:400;letter-spacing:.1em;
+    padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:20px}
+  .zlabel p{font-size:14.5px;color:var(--ink);margin:0 0 18px;white-space:pre-line;
+    line-height:1.85;font-weight:400}
+  .zlabel .why{border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:18px 0;margin:0 0 20px}
+  .zlabel .why b{display:block;font-size:10.5px;font-weight:500;letter-spacing:.2em;color:var(--faint);
+    margin-bottom:10px}
+  .zlabel .why p{font-size:13.5px;color:var(--muted);margin:0;line-height:1.8}
+  .zlabel .see{font-size:12.5px;color:var(--faint);margin:0 0 14px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .zlabel .see a{border:1px solid var(--line);border-radius:0;padding:6px 12px;font-weight:400;
+    font-size:12.5px;color:var(--ink);letter-spacing:.03em}
+  .zlabel .see a:hover{border-color:var(--ink)}
+  .zlabel .go{display:inline-flex;gap:8px;align-items:center;font-size:13px;font-weight:400;
+    color:var(--ink);background:none;border:1px solid var(--ink);border-radius:0;padding:11px 20px;
+    letter-spacing:.06em}
+  .zlabel .go:hover{background:var(--ink);color:var(--surface)}
+  .zclose{position:absolute;right:14px;top:14px;z-index:4;font:inherit;font-size:12px;font-weight:400;
+    cursor:pointer;background:var(--surface);color:var(--ink);border:1px solid var(--line-strong);
+    border-radius:0;padding:7px 14px;letter-spacing:.08em}
+  .zclose:hover{border-color:var(--ink)}
+  .znav{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:4;display:flex;gap:8px;align-items:center}
+  .znav button{font:inherit;font-size:12px;font-weight:400;cursor:pointer;background:var(--surface);
+    color:var(--ink);border:1px solid var(--line-strong);border-radius:0;padding:7px 14px;letter-spacing:.06em}
+  .znav button:hover{border-color:var(--ink)}
+  .znav .zc{font-size:11.5px;color:var(--muted);font-weight:400;letter-spacing:.12em;padding:6px 10px}
+
+  /* ── 조작 ────────────────────────────────────────────────── */
+  .ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:12px 0 0}
+  .ctl button{font:inherit;font-size:12.5px;font-weight:400;cursor:pointer;border-radius:0;padding:9px 15px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);letter-spacing:.06em}
+  .ctl button:hover{border-color:var(--ink)}
+  .ctl button.pri{background:var(--ink);border-color:var(--ink);color:var(--surface)}
+  .ctl .now{font-size:16px;font-weight:300;letter-spacing:.06em;min-width:124px}
+  .ctl .now small{font-size:12px;font-weight:600;color:var(--muted);margin-left:5px}
+  .ctl .sp{flex:1}
+  .chips{display:flex;gap:5px;flex-wrap:wrap;margin:10px 0 0}
+  .chip{font:inherit;font-size:12px;font-weight:700;cursor:pointer;border-radius:999px;padding:4px 10px;
+    border:1px solid var(--line-strong);background:var(--surface);color:var(--muted)}
+  .chip.on{color:#fff;border-color:transparent}
+  .hint{font-size:12.5px;color:var(--faint);margin:8px 0 0}
+
+  .rail{margin:18px 0 0}
+  .rail h2{font-size:17px;margin:0 0 3px;font-weight:800;letter-spacing:-.02em}
+  .rail .rs{font-size:13px;color:var(--muted);margin:0 0 10px}
+  .lst{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:9px}
+  .lst>*{min-width:0}
+  .it{text-align:left;font:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--line);
+    border-left:3px solid var(--tc);border-radius:11px;padding:11px 13px;display:flex;gap:10px;align-items:flex-start}
+  .it:hover{background:var(--surface-2)}
+  .it .rk{font-size:12px;font-weight:800;color:var(--tc);flex:none;margin-top:1px;width:17px}
+  .it .bd{flex:1;min-width:0}
+  .it .tg{font-size:10.5px;font-weight:800;color:var(--tc)}
+  .it .tt{font-size:13.5px;font-weight:700;line-height:1.35;overflow-wrap:anywhere}
+
+  .note{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:14px 17px;font-size:13.5px;margin:22px 0}
+  footer{padding:24px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:24px}
+  footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
+  @media (max-width:760px){
+    .wrap{padding:0 14px}
+    .stage{height:min(62vh,470px);min-height:360px;perspective:1000px}
+    .ctl .now{min-width:96px;font-size:14px}
+    .zin{flex-direction:column;width:96%;gap:10px;padding:46px 8px 40px;max-height:100%}
+    .zart{flex:0 0 auto;flex-direction:row;align-items:stretch}
+    .zart img{width:66px;flex:none;height:auto}
+    .zart .zpad{padding:9px 12px;gap:1px}
+    .zart .ztt{font-size:14px}
+    .zart .zyr{display:none}
+    .zart .zcap{border-top:none;border-left:1px solid var(--line);display:flex;align-items:center;
+      white-space:nowrap;padding:8px 11px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .wall,.zart,.zlabel,.art{transition:none;animation:none}
+  }
+
+/* ── 인쇄 ─────────────────────────────────────────────────────────── */
+.printonly{display:none}
+@page{margin:14mm 12mm}
+@media print{
+  /* 화면 전용 요소 감추기 */
+  nav, .pagetools, .search, .chips, .tools, button, .foot-links,
+  details.tbl > summary, .empty{display:none !important}
+  /* 어두운 테마여도 종이에는 흰 바탕·검은 글씨로 */
+  :root, :root[data-theme="dark"], :root:not([data-theme="light"]){
+    --ground:#fff !important; --surface:#fff !important; --surface-2:#f2f2f2 !important;
+    --ink:#111 !important; --muted:#333 !important; --faint:#555 !important;
+    --line:#ccc !important; --line-strong:#999 !important;
+    --grid:#ddd !important; --shadow:none !important;
+    color-scheme: light !important;
+  }
+  body{background:#fff !important;color:#111 !important;font-size:10.5pt;line-height:1.45}
+  .wrap{max-width:100% !important;padding:0 !important}
+  header{padding:0 0 6mm !important}
+  h1{font-size:20pt !important}
+  h2{font-size:13pt !important}
+  section{padding:4mm 0 0 !important}
+  .card,.panel,.rk,.brk,.find,.dz,.dis,.f,.tile{
+    box-shadow:none !important;break-inside:avoid;page-break-inside:avoid}
+  h1,h2,h3{break-after:avoid;page-break-after:avoid}
+  tr,img,svg{break-inside:avoid;page-break-inside:avoid}
+  thead{display:table-header-group}
+  /* 접힌 자료를 펼쳐서 종이에 담기 */
+  details.tbl,details{border:none !important}
+  details.tbl .tw{padding:0 !important;overflow:visible !important}
+  .tw{overflow:visible !important}
+  table{font-size:8.5pt !important;width:100% !important}
+  th,td{padding:2px 4px !important}
+  th:first-child,td:first-child{position:static !important}
+  a{color:#111 !important;text-decoration:none}
+  .printonly{display:block !important}
+  .printhead{border-bottom:1.5px solid #999;padding-bottom:3mm;margin-bottom:5mm;
+    font-size:9pt;color:#333}
+  .printhead b{color:#111}
+  .printfoot{border-top:1px solid #ccc;padding-top:3mm;margin-top:6mm;font-size:8.5pt;color:#555}
+}
+/* ── 화면용 도구 막대 ─────────────────────────────────────────────── */
+.pagetools{position:fixed;right:16px;bottom:16px;z-index:60;display:flex;gap:8px;flex-wrap:wrap}
+.pagetools a,.pagetools button{
+  font:inherit;font-size:13px;font-weight:700;cursor:pointer;
+  background:var(--surface);color:var(--accent-ink);
+  border:1px solid var(--line-strong);border-radius:999px;padding:9px 15px;
+  box-shadow:0 2px 10px rgba(0,0,0,.12);display:inline-flex;align-items:center;gap:6px}
+.pagetools a:hover,.pagetools button:hover{background:var(--surface-2)}
+@media(max-width:520px){.pagetools{right:10px;bottom:10px}
+  .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
+
+
+/* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
+   쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
+   선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
+footer.site-credit, .site-credit{margin:28px 0 0;padding:0 16px 76px;text-align:center;
+  font-size:.76rem;line-height:1.6;color:#8a94a0;word-break:keep-all;overflow-wrap:anywhere}
+/* 인쇄·자료받기 단추가 오른쪽 아래에 떠 있어서, 끝까지 내리면 크레딧을 가렸다.
+   단추 높이만큼 아래를 비워 둔다. 종이에는 단추가 없으니 그 여백을 되돌린다. */
+@media print{footer.site-credit, .site-credit{padding-bottom:0}}
+footer.site-credit a, .site-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media print{footer.site-credit, .site-credit{display:block !important;color:#6b7480;margin-top:6mm}}
+
+/* ── 쉬운 말 풀이 — 어려운 낱말이 처음 나온 자리에 뜻을 단다 ────────── */
+.plainterm{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
+  border-bottom:1px dashed currentColor;opacity:.98}
+.plainterm::after{content:'뜻';font-size:.62em;vertical-align:.5em;margin-left:1px;opacity:.75;
+  font-weight:700;letter-spacing:0}
+.plainterm[aria-expanded="true"]{background:var(--accent-soft,#D7ECE8)}
+.glpop{position:absolute;z-index:90;max-width:min(320px,calc(100vw - 28px));
+  background:var(--surface,#fff);color:var(--ink,#16211D);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);
+  font-size:13.5px;line-height:1.65;font-weight:400;text-align:left;word-break:keep-all}
+.glpop b{display:block;font-size:14px;margin-bottom:4px}
+.glpop .more{display:block;margin-top:6px;font-size:12.5px;color:var(--muted,#5B6B65)}
+details.glbox{margin:22px 0 0;border:1px solid var(--line,#DCE4E1);border-radius:12px;
+  background:var(--surface-2,#EEF2F0)}
+details.glbox>summary{cursor:pointer;list-style:none;padding:12px 15px;font-size:13.5px;font-weight:700;
+  min-height:44px;display:flex;align-items:center;gap:6px}
+details.glbox>summary::-webkit-details-marker{display:none}
+details.glbox>summary::after{content:'▾';font-size:10px;opacity:.7}
+details.glbox[open]>summary::after{content:'▴'}
+details.glbox dl{margin:0;padding:0 15px 14px}
+details.glbox dt{font-size:13.5px;font-weight:700;margin-top:10px}
+details.glbox dd{margin:2px 0 0;font-size:13px;line-height:1.7;color:var(--muted,#5B6B65);word-break:keep-all}
+details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5px;opacity:.85}
+@media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
+  details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
+
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
+/* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
+nav:not(.gnav){display:none !important}
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
+  font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
+.gnav *{box-sizing:border-box}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:6px 14px;display:flex;align-items:center;gap:6px;position:relative}
+.gnav .gbrand{font-weight:800;font-size:14px;color:var(--ink,#16211D);white-space:nowrap;margin-right:8px;text-decoration:none;flex:none;padding:6px 0}
+.gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
+.gnav .gskip{position:absolute;left:-9999px;top:0;background:var(--accent,#0E6E63);color:#fff;padding:8px 12px;border-radius:8px;z-index:80}
+.gnav .gskip:focus{left:14px;top:6px}
+.gnav .gmenu{display:flex;align-items:center;gap:2px;flex:1;min-width:0;flex-wrap:wrap}
+.gnav .gg{position:relative}
+.gnav .gt{font:inherit;font-size:13px;font-weight:700;color:var(--muted,#5B6B65);background:none;border:0;border-radius:8px;
+  padding:7px 10px;cursor:pointer;white-space:nowrap;line-height:1.4;min-height:36px}
+.gnav .gt:hover,.gnav .gg.open .gt{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav .gt.on{color:var(--accent-ink,#0A4A43);box-shadow:inset 0 -2px 0 var(--accent,#0E6E63);border-radius:8px 8px 0 0}
+.gnav .gt .car{font-size:10px;opacity:.6;margin-left:3px}
+.gnav .gd{display:none;position:absolute;left:0;top:calc(100% + 4px);min-width:250px;background:var(--surface,#fff);
+  border:1px solid var(--line,#DCE4E1);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(16,33,29,.14);z-index:75}
+.gnav .gg.open .gd{display:block}
+.gnav a.gi{display:block;font-size:13.5px;color:var(--ink,#16211D);padding:8px 10px;border-radius:8px;font-weight:600;
+  text-decoration:none;line-height:1.35;min-height:44px}
+.gnav a.gi small{display:block;font-size:11.5px;color:var(--muted,#5B6B65);font-weight:500;margin-top:1px}
+.gnav a.gi:hover,.gnav a.gi:focus-visible{background:var(--surface-2,#EEF2F0)}
+.gnav a.gi.on{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.gnav a.gi.on small{color:var(--accent-ink,#0A4A43)}
+.gnav .gsearch{margin-left:auto;font-size:13px;font-weight:800;color:#fff;background:var(--accent,#0E6E63);border-radius:999px;
+  padding:7px 14px;text-decoration:none;white-space:nowrap;flex:none;min-height:36px;display:inline-flex;align-items:center;gap:6px}
+.gnav .gsearch:hover{filter:brightness(1.08)}
+.gnav .gburger{display:none;font:inherit;font-size:13px;font-weight:700;background:var(--surface,#fff);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--ink,#16211D);min-height:40px;margin-left:auto}
+.gnav :focus-visible{outline:2px solid var(--accent,#0E6E63);outline-offset:2px}
+@media (hover:hover) and (min-width:901px){
+  .gnav .gg:hover .gd,.gnav .gg:focus-within .gd{display:block}
+}
+@media (max-width:900px){
+  /* 좁은 화면: 상표 + 검색 + ☰. 묶음은 아코디언으로 펼친다. 자료를 가리지 않도록 따라다니지 않는다. */
+  .gnav{position:static}
+  .gnav .gin{flex-wrap:wrap;padding:6px 12px}
+  .gnav .gbrand{font-size:13px;margin-right:auto}
+  .gnav .gsearch{margin-left:0;padding:6px 12px;font-size:12.5px;min-height:38px}
+  .gnav .gburger{display:inline-block;margin-left:0}
+  .gnav .gmenu{display:none;flex-direction:column;align-items:stretch;flex-basis:100%;padding:6px 0 4px;gap:4px}
+  .gnav.open .gmenu{display:flex}
+  .gnav .gg{border:1px solid var(--line,#DCE4E1);border-radius:10px;background:var(--surface,#fff)}
+  .gnav .gt{width:100%;text-align:left;font-size:14px;min-height:44px;border-radius:10px}
+  .gnav .gt.on{box-shadow:none;background:var(--accent-soft,#D7ECE8)}
+  .gnav .gd{display:none;position:static;min-width:0;border:0;border-top:1px solid var(--line,#DCE4E1);border-radius:0 0 10px 10px;box-shadow:none;padding:4px}
+  .gnav .gg.open .gd{display:block}
+}
+@media (prefers-reduced-motion:reduce){.gnav *{transition:none !important}}
+
+/* ── 출처 성격 배지 — 공식 원문인지, 우리가 엮은 것인지, 계산한 것인지 ──────── */
+.bdg{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap;letter-spacing:-.01em}
+.bdg.official{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.bdg.archive{background:var(--info-soft,#DCEDF1);color:var(--info-ink,#1B5561)}
+.bdg.analysis{background:var(--model-soft,#E7E0F2);color:var(--model-ink,#4A3368)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bdg.archive{background:#17333A;color:#9FD8E2}
+  :root:not([data-theme="light"]) .bdg.analysis{background:#2A2338;color:#CDBBEC}}
+
+</style>
+</head>
+<body>
+<div class="printonly printhead" id="printhead"><b>연대기 전시관</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi on" href="../hall/" aria-current="page">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi" href="../data/">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi" href="../data/#use">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
+(function(){
+  var nav=document.querySelector('nav.gnav'); if(!nav) return;
+
+  /* 쪽 안에서 위에 붙어 다니는 줄(검색·거르개)이 메뉴와 겹치지 않게, 메뉴 높이를 재어 알려 준다.
+     예전에는 쪽마다 47px·52px 처럼 숫자를 박아 두었는데, 그 숫자는 지금은 감춰진
+     '쪽 자체의 메뉴' 높이였다. 그래서 화면 폭에 따라 틈이 생기거나 메뉴 밑으로 숨었다.
+     메뉴가 붙어 다니지 않는 폭에서는 0을 넣는다. */
+  function navh(){
+    var stuck = /sticky|fixed/.test(getComputedStyle(nav).position);
+    var h = stuck ? Math.round(nav.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty('--navh', h + 'px');
+  }
+  navh();
+  addEventListener('resize', navh);
+  addEventListener('load', navh);
+
+  var burger=nav.querySelector('.gburger');
+  function closeAll(except){ nav.querySelectorAll('.gg.open').forEach(function(g){ if(g!==except){ g.classList.remove('open'); g.querySelector('.gt').setAttribute('aria-expanded','false'); } }); }
+  nav.querySelectorAll('.gt').forEach(function(t){
+    t.addEventListener('click',function(){ var g=t.parentNode, open=!g.classList.contains('open'); closeAll(g); g.classList.toggle('open',open); t.setAttribute('aria-expanded',open?'true':'false'); });
+  });
+  if(burger){ burger.addEventListener('click',function(){ var open=!nav.classList.contains('open'); nav.classList.toggle('open',open); burger.setAttribute('aria-expanded',open?'true':'false'); burger.textContent=open?'✕ 닫기':'☰ 메뉴'; if(open){ var on=nav.querySelector('.gt.on'); if(on){ on.parentNode.classList.add('open'); on.setAttribute('aria-expanded','true'); } } }); }
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) closeAll(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeAll(); if(nav.classList.contains('open')&&burger) burger.click(); } });
+})();
+</script>
+
+<div class="wrap">
+<header id="main">
+  <p class="eyebrow">⑨ 연대기 전시관</p>
+  <h1>해마다 무엇이 달라졌나</h1>
+  <p class="thesis">지침 2,347건과 백서 19판을 쌓아 두는 것이 목적이 아니었다.
+  그 안에서 <b>그 해에 무슨 일이 있었는지</b>를 끄집어내 전시물로 걸었다.
+  한 방에 그 해의 <b>10대 뉴스가 한눈에</b> 들어오고, 작품을 누르면 <b>앞으로 나와 크게 보이며</b>
+  미술관 라벨처럼 설명이 붙는다.</p>
+</header>
+<div class="plainsum"><b>쉽게 말하면</b><p>1954년부터 오늘까지 해마다 감염병 제도에 무슨 일이 있었는지를 전시물처럼 걸어 두었습니다.</p><p>연도를 고르면 그해에 있었던 일이 나옵니다.</p></div>
+
+<div class="strip">
+  <div class="stw"><div class="st" id="strip"></div></div>
+  <div class="slg" id="slg"></div>
+</div>
+
+<div class="stage" id="stage" tabindex="0" aria-label="연대기 전시관 — 좌우 방향키로 연도를 옮긴다">
+  <div class="shell" id="shell"></div>
+  <div class="track" id="track"></div>
+  <div class="vig"></div>
+  <div class="zoom" id="zoom">
+    <div class="zbd" id="zbd"></div>
+    <div class="zin" id="zin"></div>
+    <button class="zclose" id="zclose">닫기 ✕</button>
+    <div class="znav"><button id="zprev">← 앞 작품</button><span class="zc num" id="zc"></span><button id="znext">다음 작품 →</button></div>
+  </div>
+</div>
+
+<div class="ctl">
+  <button id="prev" aria-label="앞 연도">←</button>
+  <span class="now num" id="now"></span>
+  <button id="next" aria-label="뒤 연도">→</button>
+  <button id="play" class="pri">▶ 도슨트 순회</button>
+  <span class="sp"></span>
+  <button id="jumpBig">가장 큰 해로</button>
+</div>
+<div class="chips" id="chips"></div>
+<p class="hint"><b>도슨트 순회</b>를 누르면 작품이 하나씩 앞으로 나와 설명이 붙고 나머지는 양옆으로 흩어진다 —
+올해에서 1954년까지 걸어간다. 아무 데나 누르면 그 자리에 멈춘다.
+방향키 ←→ 로 연도를, 작품을 연 뒤에는 ←→ 로 작품을 옮긴다. Esc 로 물러난다.</p>
+
+<div class="rail">
+  <h2 id="rtit"></h2>
+  <p class="rs" id="rsub"></p>
+  <div class="lst" id="list"></div>
+</div>
+
+<div class="note" id="method"></div>
+
+<footer>
+  <div id="fsrc"></div>
+</footer>
+</div>
+
+<script>
+const D = {"as_of":"2026-09","span":[1954,2026],"total":183,"themes":[{"k":"law","name":"제도","color":"#6A4C93","desc":"법률·고시·급수와 감시체계가 바뀐 날","n":42},{"k":"outbreak","name":"유행","color":"#B23A3A","desc":"그 해 두드러지게 늘어난 감염병","n":17},{"k":"guide","name":"지침","color":"#0E6E63","desc":"그 해 처음 나온 관리·대응지침","n":82},{"k":"record","name":"기록","color":"#B8942A","desc":"질병관리청 백서 — 그 해를 정리한 공식 기록","n":19},{"k":"vacc","name":"접종","color":"#2F7D8C","desc":"국가예방접종에 무엇이 더해졌나","n":11},{"k":"border","name":"검역","color":"#C7712B","desc":"국경에서의 규칙이 바뀐 날","n":12}],"note":"전시물은 저장소의 원장(법령 연혁·급수변동·지침 목록·백서 목록·연보 신고수·검역 지정이력·예방접종률)에서 기계로 뽑았다. 순위는 갈래별 가중치이며 중요도의 객관적 척도가 아니다 — 무엇을 큰일로 볼지는 보는 사람이 정한다.","years":[{"y":1954,"n":1,"rest":0,"top":[{"date":"1954-02","theme":"law","tag":"시대 구분","title":"전염병예방법 제정","body":"종(種) 체계 — 제1·2·3종","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 먼저 묻는 이유가 여기에 있다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]}]},{"y":1998,"n":1,"rest":0,"top":[{"date":"2019-03-13","theme":"guide","tag":"24판 이어짐","title":"1998년 말라리아 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 1998년부터 2026년까지 24판.","link":"https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20190313579431368&q_clsfNo=0","rank":1,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2000,"n":4,"rest":0,"top":[{"date":"2000-01","theme":"law","tag":"시대 구분","title":"전부개정","body":"군(群) 체계 도입","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 먼저 묻는 이유가 여기에 있다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2000-02-10","theme":"guide","tag":"10판 이어짐","title":"성병관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2000년부터 2010년까지 10판.","link":"https://www.kdca.go.kr/bbs/kdca/50/219161/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2000-02-10","theme":"guide","tag":"4판 이어짐","title":"에이즈관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2000년부터 2016년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/50/219160/artclView.do","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2000","theme":"guide","tag":"발간량","title":"2000년 지침·자료 39건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2001,"n":2,"rest":0,"top":[{"date":"2001-04-03","theme":"guide","tag":"4판 이어짐","title":"[예방접종]예방접종후이상반응 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2001년부터 2026년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/50/219305/artclView.do","rank":1,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2001","theme":"guide","tag":"발간량","title":"2001년 지침·자료 41건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2002,"n":3,"rest":0,"top":[{"date":"2002-03-04","theme":"guide","tag":"15판 이어짐","title":"2002년 HIV/AIDS관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2002년부터 2026년까지 15판.","link":"https://www.kdca.go.kr/bbs/kdca/50/219510/artclView.do","rank":1,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2002-03-04","theme":"guide","tag":"8판 이어짐","title":"2002년도 결핵관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2002년부터 2023년까지 8판.","link":"https://www.kdca.go.kr/bbs/kdca/50/219509/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2002","theme":"guide","tag":"발간량","title":"2002년 지침·자료 64건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2003,"n":2,"rest":0,"top":[{"date":"2003-01-23","theme":"guide","tag":"3판 이어짐","title":"수막구균성수막염 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2003년부터 2018년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227143/artclView.do","rank":1,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2003","theme":"guide","tag":"발간량","title":"2003년 지침·자료 79건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2004,"n":4,"rest":0,"top":[{"date":"2004","theme":"record","tag":"원문 유실","title":"2004년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2004(kor).jpg","rank":1,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2004-02-16","theme":"guide","tag":"6판 이어짐","title":"조류인플루엔자인체감염예방및관리지침(PDF파일)","body":"이 계열이 게시판에 처음 나타난 해다. 2004년부터 2017년까지 6판.","link":"https://www.kdca.go.kr/bbs/kdca/50/219909/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2004-09-16","theme":"guide","tag":"3판 이어짐","title":"2004년 인플루엔자 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2004년부터 2020년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227159/artclView.do","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2004","theme":"guide","tag":"발간량","title":"2004년 지침·자료 53건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2005,"n":3,"rest":0,"top":[{"date":"2005","theme":"record","tag":"원문 유실","title":"2005년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2005(kor).jpg","rank":1,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2005-03-04","theme":"guide","tag":"3판 이어짐","title":"2005년 크로이츠펠트-야콥병 표본감시 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2005년부터 2008년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227160/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2005","theme":"guide","tag":"발간량","title":"2005년 지침·자료 83건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2006,"n":2,"rest":0,"top":[{"date":"2006","theme":"record","tag":"원문 유실","title":"2006년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2006(kor).jpg","rank":1,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2006","theme":"guide","tag":"발간량","title":"2006년 지침·자료 84건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2007,"n":3,"rest":0,"top":[{"date":"2007","theme":"record","tag":"원문 유실","title":"2007년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2007(kor).jpg","rank":1,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2007-09-05","theme":"guide","tag":"3판 이어짐","title":"브루셀라증 예방,관리 지침","body":"이 계열이 게시판에 처음 나타난 해다. 2007년부터 2012년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227215/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2007","theme":"guide","tag":"발간량","title":"2007년 지침·자료 93건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2008,"n":2,"rest":0,"top":[{"date":"2008","theme":"record","tag":"원문 유실","title":"2008년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2008(kor).jpg","rank":1,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2008","theme":"guide","tag":"발간량","title":"2008년 지침·자료 104건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2009,"n":4,"rest":0,"top":[{"date":"2009-12-29","theme":"law","tag":"전부개정","title":"감염병의 예방 및 관리에 관한 법률 전부개정","body":"공포 2009.12.29 · 시행 2010.12.30 · 법률 제9847호","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2010-02-16","theme":"guide","tag":"11판 이어짐","title":"2009년 크로이츠펠트-야콥병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2009년부터 2026년까지 11판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227291/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2009","theme":"record","tag":"원문 유실","title":"2009년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2009(kor).jpg","rank":3,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2009","theme":"guide","tag":"발간량","title":"2009년 지침·자료 65건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2010,"n":3,"rest":0,"top":[{"date":"2010-12","theme":"law","tag":"시대 구분","title":"「감염병의 예방 및 관리에 관한 법률」 시행","body":"'전염병'→'감염병', 제1~5군+지정","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 먼저 묻는 이유가 여기에 있다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2010","theme":"record","tag":"원문 유실","title":"2010년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2010(kor).jpg","rank":2,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2010","theme":"guide","tag":"발간량","title":"2010년 지침·자료 48건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2011,"n":5,"rest":0,"top":[{"date":"2011-01-01","theme":"law","tag":"감시체계 전환","title":"매독 — 감시체계 전환","body":"지정 → 제3군 · 표본감시 → 전수감시 · 3종(1기·2기·선천성)\n매독은 표본→전수→표본(2020)→전수(2024)로 왕복. '한 번 강화'가 아님","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2011-03-16","theme":"guide","tag":"12판 이어짐","title":"2011년 성매개감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2011년부터 2026년까지 12판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227320/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2011","theme":"record","tag":"원문 유실","title":"2011년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2011(kor).jpg","rank":3,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2011-06-23","theme":"guide","tag":"3판 이어짐","title":"2011년 주요 감염병 매개 모기 방제 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2011년부터 2014년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227335/artclView.do","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2011","theme":"guide","tag":"발간량","title":"2011년 지침·자료 61건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":5,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2012,"n":5,"rest":0,"top":[{"date":"2012-10-01","theme":"law","tag":"단절점","title":"내성균 4종(VRE·MRSA·MRPA·MRAB) — 지표 변경 — 신고수 → 분리율(%)","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2012-04-09","theme":"guide","tag":"8판 이어짐","title":"2012년 레지오넬라증 관리 지침","body":"이 계열이 게시판에 처음 나타난 해다. 2012년부터 2026년까지 8판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227349/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2012 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2012년 질병관리백서","body":"2012년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2012+질병관리백서.pdf","art":"../whitepaper/covers/whitepaper2012(kor).jpg","rank":3,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2012-09-28","theme":"guide","tag":"7판 이어짐","title":"2012년도 국가결핵관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2012년부터 2020년까지 7판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227353/artclView.do","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2012","theme":"guide","tag":"발간량","title":"2012년 지침·자료 50건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":5,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2013,"n":3,"rest":0,"top":[{"date":"2013-01-01","theme":"law","tag":"단절점","title":"인플루엔자 — 표본감시기관 854→200개소 대개편","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2013 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2013년 질병관리백서","body":"2013년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2013+질병관리백서.pdf","art":"../whitepaper/covers/whitepaper2013(kor).jpg","rank":2,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2013","theme":"guide","tag":"발간량","title":"2013년 지침·자료 55건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2014,"n":3,"rest":0,"top":[{"date":"2014","theme":"record","tag":"원문 유실","title":"2014~2015년 백서 — 표지만 남았다","body":"게시판 소스에 항목이 주석으로 감싸여 화면에 보이지 않고, 내려받기 주소도 비어 있다. 표지 이미지는 서버에 살아 있어 발간 사실만 확인된다.","link":"../whitepaper/","art":"../whitepaper/covers/whitepaper2014~2015(kor).jpg","rank":1,"why":"이 액자에는 표지만 걸려 있다. 본문이 없기 때문이다. 유실된 아홉 판은 신종플루(2009)·결핵 정점(2011)·메르스(2015)를 통째로 덮는다. 기록이 사라진 자리를 비워 두는 것도 전시의 일이다 — 없는 것을 있는 것처럼 채우지 않는다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2014-08-12","theme":"guide","tag":"3판 이어짐","title":"2014년 에이즈관련 민간경상보조사업 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2014년부터 2018년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227420/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2014","theme":"guide","tag":"발간량","title":"2014년 지침·자료 78건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2015,"n":3,"rest":0,"top":[{"date":"2015-05-19","theme":"guide","tag":"7판 이어짐","title":"2015년도 진드기 및 설치류 매개 감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2015년부터 2026년까지 7판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227441/artclView.do","rank":1,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2015-03-31","theme":"guide","tag":"3판 이어짐","title":"에볼라바이러스병 대응지침(국가격리병상용)","body":"이 계열이 게시판에 처음 나타난 해다. 2015년부터 2017년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/50/221045/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2015","theme":"guide","tag":"발간량","title":"2015년 지침·자료 44건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2016,"n":14,"rest":4,"top":[{"date":"2016-01-07","theme":"law","tag":"신고범위 변경","title":"B형간염 — 신고범위 변경","body":"신고범위 축소 — 급성 B형간염만 집계\n2016년 이전/이후 시계열 직접 비교 불가. 연보 각주에 명시","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2016-06-16","theme":"guide","tag":"11판 이어짐","title":"2016년도 바이러스성 모기매개 감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2026년까지 11판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227492/artclView.do","rank":2,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018-07-16","theme":"guide","tag":"10판 이어짐","title":"2016년 의료관련감염병관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2026년까지 10판.","link":"https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716556741161&q_clsfNo=0","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2016-06-23","theme":"guide","tag":"9판 이어짐","title":"2016년도 인수공통감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2026년까지 9판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227496/artclView.do","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2016 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2016년 질병관리백서","body":"2016년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2016+질병관리백서.pdf","art":"../whitepaper/covers/whitepaper2016(kor).jpg","rank":5,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2016","theme":"outbreak","tag":"최다 발생","title":"수두 54,060명","body":"2016년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":6,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2016-10-20","theme":"guide","tag":"5판 이어짐","title":"2016년 C형간염 관리지침_배포용","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2022년까지 5판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227522/artclView.do","rank":7,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018-07-16","theme":"guide","tag":"4판 이어짐","title":"2016년 진드기매개 감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2019년까지 4판.","link":"https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716554874241&q_clsfNo=0","rank":8,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018-07-16","theme":"guide","tag":"4판 이어짐","title":"2016년 설치류매개감염병관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2019년까지 4판.","link":"https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716240374578&q_clsfNo=0","rank":9,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018-07-16","theme":"guide","tag":"4판 이어짐","title":"2016년 메르스(MERS) 대응 지침","body":"이 계열이 게시판에 처음 나타난 해다. 2016년부터 2019년까지 4판.","link":"https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1001&q_bbsDocNo=20180716315640614&q_clsfNo=0","rank":10,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2017,"n":15,"rest":5,"top":[{"date":"2017-06-03","theme":"law","tag":"감시체계 전환","title":"C형간염 — 감시체계 전환","body":"제3군(당시) → 제3군 · 표본감시 → 전수감시 · 표본기관 → 모든 의료기관 신고\n주사기 재사용 집단발생(2015-16) 계기","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2017-06-03","theme":"law","tag":"감시체계 전환","title":"VRSA·CRE — 감시체계 전환","body":"제3군(당시) → 제3군 · 표본감시 → 전수감시 · 전수 신고 개시\n의료관련 내성균 선제 대응","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":2,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2017-06-03","theme":"law","tag":"단절점","title":"반코마이신내성황색포도알균(VRSA) 감염증 — 표본감시 → 전수감시","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":3,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2017-06-03","theme":"law","tag":"단절점","title":"카바페넴내성장내세균목(CRE) 감염증 — 표본감시 → 전수감시","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":4,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2017-07-30","theme":"law","tag":"단절점","title":"장관감염증(계) — 표본감시기관 지정기준 변경 — 기관 수 약 2배 확대","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":5,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2017-07-27","theme":"guide","tag":"9판 이어짐","title":"2017년도 수인성 및 식품매개감염병관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2017년부터 2026년까지 9판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227583/artclView.do","rank":6,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2017-05-23","theme":"guide","tag":"8판 이어짐","title":"2017년도 엔테로바이러스 감염증, 수족구병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2017년부터 2026년까지 8판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227569/artclView.do","rank":7,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2017 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2017년 질병관리백서","body":"2017년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2017+질병관리백서.pdf","art":"../whitepaper/covers/whitepaper2017(kor).jpg","rank":8,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2017","theme":"outbreak","tag":"최다 발생","title":"수두 80,092명","body":"2017년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":9,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2017-02-14","theme":"guide","tag":"5판 이어짐","title":"국가지정입원치료병상 운영과 관리 지침","body":"이 계열이 게시판에 처음 나타난 해다. 2017년부터 2026년까지 5판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227542/artclView.do","rank":10,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2018,"n":9,"rest":0,"top":[{"date":"2018","theme":"vacc","tag":"완전접종 기준 확대","title":"완전접종에 HepA 추가","body":"2018년부터 10종을 모두 마쳐야 완전접종이다. 기준이 무거워졌으므로 앞 해의 접종률과 그냥 견주면 안 된다.","link":"../vaccine/","rank":1,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2018","theme":"outbreak","tag":"급증","title":"백일해 3.1배","body":"2017년 318명 → 2018년 980명(제2급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":2,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2018-02-21","theme":"guide","tag":"8판 이어짐","title":"2018년도 예방접종 대상 감염병 관리 지침","body":"이 계열이 게시판에 처음 나타난 해다. 2018년부터 2026년까지 8판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227625/artclView.do","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2018년 질병관리백서","body":"2018년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2018+질병관리백서_최종.pdf","art":"../whitepaper/covers/whitepaper2018(kor).jpg","rank":4,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2018","theme":"outbreak","tag":"최다 발생","title":"수두 96,467명","body":"2018년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":5,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2018-09-21","theme":"guide","tag":"4판 이어짐","title":"2018년도 크로이츠펠트-야콥병(CJD) 안내서","body":"이 계열이 게시판에 처음 나타난 해다. 2018년부터 2025년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227670/artclView.do","rank":6,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018-01-22","theme":"guide","tag":"3판 이어짐","title":"2018년도 국가예방접종사업 관리지침(의료기관용)","body":"이 계열이 게시판에 처음 나타난 해다. 2018년부터 2025년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227617/artclView.do","rank":7,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2018","theme":"vacc","tag":"완전접종률","title":"6세 완전접종률 88.3%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":8,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2018","theme":"guide","tag":"발간량","title":"2018년 지침·자료 80건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":9,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2019,"n":11,"rest":1,"top":[{"date":"2019","theme":"outbreak","tag":"급증","title":"홍역 12.9배","body":"2018년 15명 → 2019년 194명(제2급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":1,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2019","theme":"outbreak","tag":"급증","title":"A형간염 7.2배","body":"2018년 2,437명 → 2019년 17,598명(제2급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":2,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2019-04-30","theme":"law","tag":"신고범위 변경","title":"반코마이신내성황색포도알균(VRSA) — 신고범위 변경","body":"신고범위 확대 — VISA(중등도내성) 포함\n이후 신고 전건이 사실상 VISA. VRSA 자체는 국내 보고 사례 없음","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":3,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2019-05-24","theme":"guide","tag":"8판 이어짐","title":"2019년도 기생충감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2019년부터 2026년까지 8판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227702/artclView.do","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2019-06-28","theme":"guide","tag":"8판 이어짐","title":"2019년 한센병사업 관리 지침","body":"이 계열이 게시판에 처음 나타난 해다. 2019년부터 2026년까지 8판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227708/artclView.do","rank":5,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2019 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2019년 질병관리백서","body":"2019년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2019+질병관리백서(최종).pdf","art":"../whitepaper/covers/whitepaper2019(kor).jpg","rank":6,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2019","theme":"outbreak","tag":"최다 발생","title":"수두 82,868명","body":"2019년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":7,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2019-04-23","theme":"guide","tag":"4판 이어짐","title":"원인 불명 질병 집단감염 대응지침[제1판]","body":"이 계열이 게시판에 처음 나타난 해다. 2019년부터 2025년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227694/artclView.do","rank":8,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2020-07-08","theme":"guide","tag":"4판 이어짐","title":"「풍수해(태풍·호우·대설)」 감염병 대응 매뉴얼(2019년판)","body":"이 계열이 게시판에 처음 나타난 해다. 2019년부터 2023년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227788/artclView.do","rank":9,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2019","theme":"vacc","tag":"완전접종률","title":"6세 완전접종률 84.8%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":10,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]}]},{"y":2020,"n":19,"rest":9,"top":[{"date":"2020-01","theme":"law","tag":"시대 구분","title":"급(級) 체계","body":"제1~4급 — 신고시기·격리수준 기준. 80종→86종","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 먼저 묻는 이유가 여기에 있다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2020-09","theme":"law","tag":"시대 구분","title":"질병관리청 승격","body":"질병관리본부 → 질병관리청","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":2,"why":"체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 먼저 묻는 이유가 여기에 있다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2020-01-20","theme":"law","tag":"신규 지정","title":"코로나19 — 신규 지정","body":"비법정 → 제1급 · —감시 → 전수감시 · 즉시 신고\n법률 미열거 신종 → 국회 없이 고시로 1급 편입(래칫 경로의 실례)","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":3,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2020-07-01","theme":"law","tag":"신규 지정","title":"E형간염 — 신규 지정","body":"비법정 → 제2급 · —감시 → 전수감시 · 24h 신고\n법정감염병 신규 편입","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":4,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2020-02-11","theme":"guide","tag":"7판 이어짐","title":"2020년도 호흡기감염병 관리지침","body":"이 계열이 게시판에 처음 나타난 해다. 2020년부터 2026년까지 7판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227756/artclView.do","rank":5,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2020~2021 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2020~2021년 질병관리청 백서","body":"2020~2021년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2020-2021질병관리백서(최종).pdf","art":"../whitepaper/covers/whitepaper2020~2021(kor).jpg","rank":6,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2020","theme":"outbreak","tag":"최다 발생","title":"신종감염병증후군 60,722명","body":"2020년 전수감시 신고가 가장 많았던 감염병(제1급).","link":"../cross/","rank":7,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2020-03-03","theme":"guide","tag":"4판 이어짐","title":"[EBOOK]제1급감염병 두창, 페스트, 탄저, 보툴리눔독소증, 야토병 대응지침","body":"이 계열이 게시판에 처음 나타난 해다. 2020년부터 2023년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227767/artclView.do","rank":8,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2020-03-03","theme":"guide","tag":"4판 이어짐","title":"[EBOOK]제1급감염병 동물인플루엔자 인체감염증 대응지침","body":"이 계열이 게시판에 처음 나타난 해다. 2020년부터 2023년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227766/artclView.do","rank":9,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2020","theme":"vacc","tag":"완전접종률","title":"6세 완전접종률 83.5%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":10,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]}]},{"y":2021,"n":6,"rest":0,"top":[{"date":"2021","theme":"outbreak","tag":"급증","title":"신종감염병증후군 9.4배","body":"2020년 60,722명 → 2021년 569,943명(제1급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":1,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2021","theme":"outbreak","tag":"최다 발생","title":"카바페넴내성장내세균목(CRE) 감염증 23,310명","body":"2021년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":2,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2021-11-09","theme":"guide","tag":"3판 이어짐","title":"코로나바이러스감염증-19 재택치료 안내서(제4판) 개정 안내","body":"이 계열이 게시판에 처음 나타난 해다. 2021년부터 2025년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227918/artclView.do","rank":3,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2021-11-25","theme":"guide","tag":"3판 이어짐","title":"마스크 착용 방역지침 준수 명령 및 과태료 부과 업무 안내서(제4-1판)","body":"이 계열이 게시판에 처음 나타난 해다. 2021년부터 2023년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/227924/artclView.do","rank":4,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2021","theme":"vacc","tag":"완전접종률","title":"6세 완전접종률 86.15%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":5,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2021","theme":"guide","tag":"발간량","title":"2021년 지침·자료 127건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":6,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2022,"n":11,"rest":1,"top":[{"date":"2022-06-08","theme":"law","tag":"신규 지정","title":"엠폭스 — 신규 지정","body":"비법정 → 제2급 · —감시 → 전수감시 · 24h 신고\n국내 유입 前 선제 지정","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2022-04-25","theme":"law","tag":"급 하향","title":"코로나19 — 급 하향","body":"제1급 → 제2급 · 즉시 → 24h\n유행 안정화","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":2,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2022-04-05","theme":"law","tag":"단절점","title":"신종감염병증후군 — 코로나19가 제2급으로 이관","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":3,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2022-04-05","theme":"law","tag":"단절점","title":"코로나바이러스감염증-19 — 신고 항목 이동 — 신종감염병증후군 → 제2급 코로나19","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":4,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2022 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2022년 질병관리청 백서","body":"2022년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2022+질병관리청+백서_합본(최종)_펼침.pdf","art":"../whitepaper/covers/whitepaper2022(kor).jpg","rank":5,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2022","theme":"outbreak","tag":"최다 발생","title":"코로나바이러스감염증-19 28,424,349명","body":"2022년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":6,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2022-11-25","theme":"guide","tag":"4판 이어짐","title":"[중앙방역대책본부]  코로나바이러스감염증-19 치료제 사용 안내서(제10판)","body":"이 계열이 게시판에 처음 나타난 해다. 2022년부터 2025년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/245/204594/artclView.do","rank":7,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2022-12-22","theme":"guide","tag":"3판 이어짐","title":"[중앙방역대책본부]  코로나바이러스감염증-19 검역대응 지침(제14-2판)","body":"이 계열이 게시판에 처음 나타난 해다. 2022년부터 2024년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/245/204596/artclView.do","rank":8,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2022","theme":"vacc","tag":"완전접종률","title":"6세 완전접종률 88.6%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":9,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2022","theme":"guide","tag":"발간량","title":"2022년 지침·자료 152건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":10,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2023,"n":9,"rest":0,"top":[{"date":"2023-08-31","theme":"law","tag":"급 하향","title":"코로나19 — 급 하향","body":"제2급 → 제4급 · 전수감시 → 표본(양성자)감시 · 24h → 주간 표본\n보상 절벽: 8.30 격리자와 9.1 격리자 간 생활지원 단절","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2023","theme":"outbreak","tag":"급증","title":"백일해 9.4배","body":"2022년 31명 → 2023년 292명(제2급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":2,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2023-01-13","theme":"law","tag":"고시","title":"질병관리청장이 지정하는 감염병의 종류 고시 (2023-1호)","body":"질병관리청장이 지정하는 감염병의 종류 — 법률 열거 밖의 감염병은 이 고시로 정해진다.","link":"../law/","rank":3,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2023 수록 · 발간일 미확인","theme":"record","tag":"백서","title":"2023년 질병관리청 백서","body":"2023년의 활동을 질병관리청이 스스로 정리한 공식 기록. 발간일은 원문 표지에서 확인해야 한다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2023+질병관리청+백서_펼침.pdf","art":"../whitepaper/covers/whitepaper2023(kor).jpg","rank":4,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2023","theme":"outbreak","tag":"최다 발생","title":"코로나바이러스감염증-19 5,517,540명","body":"2023년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":5,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2023-04-21","theme":"guide","tag":"4판 이어짐","title":"2023년 제1급감염병(동물인플루엔자 인체감염증) 대응지침","body":"이 계열이 게시판에 처음 나타난 해다. 2023년부터 2026년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/228124/artclView.do","rank":6,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2023-05-09","theme":"guide","tag":"4판 이어짐","title":"2023년도 바이러스 간염 관리지침(A형·B형·C형·E형간염) 제정 안내","body":"이 계열이 게시판에 처음 나타난 해다. 2023년부터 2026년까지 4판.","link":"https://www.kdca.go.kr/bbs/kdca/55/228130/artclView.do","rank":7,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]},{"date":"2023","theme":"vacc","tag":"완전접종률","title":"3세 완전접종률 89.2%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":8,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2023","theme":"guide","tag":"발간량","title":"2023년 지침·자료 127건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":9,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2024,"n":16,"rest":6,"top":[{"date":"2024","theme":"outbreak","tag":"급증","title":"백일해 164.5배","body":"2023년 292명 → 2024년 48,048명(제2급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":1,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2024-01-01","theme":"law","tag":"급 하향","title":"엠폭스 — 급 하향","body":"제2급 → 제3급 · 격리의무 해제\n일반의료체계 전환","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":2,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2024-01-01","theme":"law","tag":"급 상향","title":"매독 — 급 상향","body":"제4급 → 제3급 · 표본감시 → 전수감시 · 표본 주간 → 모든 의료기관 24h·사례정의 3종→5종\n신고주체·사례정의 동시 변경 → 2023↔2024 직접 비교 불가","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":3,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2024-09-01","theme":"border","tag":"검역 제도","title":"중점검역관리지역 제도 신설","body":"이전에는 '검역관리지역' 단일 체계였다. 이 날부터 상위 등급인 중점검역관리지역(3종 21개국)이 생겼고, 검역감염병도 14종→18종으로 확대됐다(엠폭스·라싸열·크리미안콩고출혈열 신규).","link":"../quarantine/","rank":4,"why":"2024.9. 이전과 이후의 '검역관리지역 국가 수'는 같은 뜻이 아니다. 시계열로 이으면 안 된다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2024","theme":"outbreak","tag":"급증","title":"성홍열 8.1배","body":"2023년 815명 → 2024년 6,642명(제2급). 그 해 가장 크게 늘어난 감염병이다.","link":"../cross/","rank":5,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2024","theme":"vacc","tag":"완전접종 기준 확대","title":"완전접종에 RV 추가","body":"2024년부터 11종을 모두 마쳐야 완전접종이다. 기준이 무거워졌으므로 앞 해의 접종률과 그냥 견주면 안 된다.","link":"../vaccine/","rank":6,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2024-01-01","theme":"law","tag":"단절점","title":"인플루엔자 — 표본감시기관 196→299개소 확대","body":"이 날 앞뒤로 숫자의 뜻이 달라진다. 그냥 이으면 유행을 잘못 읽는다.","link":"../checker/","rank":7,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2024 수록 · 발간 2025년 8월","theme":"record","tag":"백서","title":"2024년 질병관리청 백서 — 2025년 8월 발간","body":"2024년의 활동을 질병관리청이 스스로 정리한 공식 기록. 2025년 8월에 나왔다. 백서는 그 해가 끝난 뒤에 쓰이므로 이름의 연도와 발간 연도가 다르다.","link":"https://www.kdca.go.kr/sites/kdca/download/2024+질병관리청+백서_합본(최종)_펼침.pdf","art":"../whitepaper/covers/whitepaper2024(kor).png","rank":8,"why":"이 액자의 연도는 백서 이름의 연도, 즉 무엇을 기록했는가의 연도다. 실제로 세상에 나온 것은 이듬해다(2024년판 → 2025년 8월). 그래서 올해 방에는 백서가 걸릴 수 없다 — 2026년의 백서는 2027년에 나온다. 백서의 \"향후 추진계획\"은 다음 해 제도 변화의 예고편이기도 하다.","see":[["백서 서가","../whitepaper/"],["연대기","../chronicle/"]]},{"date":"2024","theme":"outbreak","tag":"최다 발생","title":"카바페넴내성장내세균목(CRE) 감염증 42,346명","body":"2024년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":9,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2024-08-16","theme":"guide","tag":"3판 이어짐","title":"2024년도 코로나바이러스감염증-19 관리지침 개정(2024.8.16)","body":"이 계열이 게시판에 처음 나타난 해다. 2024년부터 2026년까지 3판.","link":"https://www.kdca.go.kr/bbs/kdca/55/228233/artclView.do","rank":10,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2025,"n":11,"rest":1,"top":[{"date":"2025-09-08","theme":"law","tag":"신규 지정","title":"니파바이러스감염증 — 신규 지정","body":"비법정 → 제1급 · —감시 → 전수감시 · 전수·즉시 신고(음압격리)\n비법정 → 제1급. 2024 백서가 '향후 추진계획'으로 예고했던 지정이 2025.9.8 실제 발령됨. WHO 우선순위 병원체·백신/치료제 없음·BSL-4. 이 지정으로 제1급이 17종→18종이 되어 법정감염병 총수가 89종→90종(이후 칸디다오리스로 91종)","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2025-01-01","theme":"border","tag":"검역 제도","title":"반기 지정 → 분기 지정 전환","body":"질병관리청 보도자료: \"올해부터는 기존 반기마다 지정하던 중점·검역관리지역을 분기마다 지정하여 해외 감염병 발생 상황을 더욱 신속하게 반영\". 첫 분기 지정 시행일이 2025.1.1.","link":"../quarantine/","rank":2,"why":"2024년까지는 연 2회, 2025년부터 연 4회. 갱신 주기가 바뀌었으므로 '변경 횟수'를 연도 간 비교하면 안 된다.\n같은 발표(2024.12.17.)를 Q-CODE 게시판은 '2025년 상반기'로 올렸다가 2월 개정 때 파일명이 '2025년 1분기'로 바뀌었다. 정정 경위를 밝힌 질병관리청 원문은 확인하지 못했다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2025","theme":"vacc","tag":"완전접종 기준 확대","title":"완전접종에 Tdap 추가","body":"2025년부터 12종을 모두 마쳐야 완전접종이다. 기준이 무거워졌으므로 앞 해의 접종률과 그냥 견주면 안 된다.","link":"../vaccine/","rank":3,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2025-01-01","theme":"law","tag":"신고범위 변경","title":"쯔쯔가무시증 — 신고범위 변경","body":"신고기준에 가피(eschar) 형성 여부 포함 → 판정 엄격화\n6,268(2024) → 3,405(2025), △45.7%. 연보가 감소 요인으로 직접 지목 — 유행 감소가 아니라 판정규칙 변경","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":4,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2025-09-08","theme":"law","tag":"고시","title":"질병관리청장이 지정하는 감염병의 종류 고시 (2025-10호)","body":"질병관리청장이 지정하는 감염병의 종류 — 법률 열거 밖의 감염병은 이 고시로 정해진다.","link":"../law/","rank":5,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2025","theme":"outbreak","tag":"최다 발생","title":"카바페넴내성장내세균목(CRE) 감염증 49,053명","body":"2025년 전수감시 신고가 가장 많았던 감염병(제2급).","link":"../cross/","rank":6,"why":"배수는 분모가 작을 때 크게 나온다. 전년에 거의 없던 감염병일수록 배수가 커 보이므로 규모는 실제 건수로 확인해야 한다. 또 그 해에 신고 기준이나 감시체계가 바뀌었다면 늘어난 것이 발생인지 집계인지부터 갈라야 한다.","see":[["교차검증","../cross/"],["유행 시뮬레이터","../sim/"],["단절점 검사기","../checker/"]]},{"date":"2025-01-01","theme":"border","tag":"지정 갱신","title":"2025-Q1 검역관리지역 159개국","body":"첫 분기 단위 지정. 동물인플루엔자에서 영국 제외, 페스트 중점 5→2개국.","link":"../quarantine/","rank":7,"why":"검역관리지역은 “어디서 오는 사람을 더 볼 것인가”의 목록이다. 국가 수만 연도별로 비교하면 제도 자체가 바뀐 해를 놓친다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2025-02-26","theme":"border","tag":"지정 갱신","title":"2025-Q1-rev 검역관리지역 지정","body":"에볼라바이러스병 관련 개정.","link":"../quarantine/","rank":8,"why":"검역관리지역은 “어디서 오는 사람을 더 볼 것인가”의 목록이다. 국가 수만 연도별로 비교하면 제도 자체가 바뀐 해를 놓친다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2025","theme":"vacc","tag":"완전접종률","title":"13세 완전접종률 84.1%","body":"그 해 조사 연령 가운데 가장 낮은 값. 나이가 올라 맞을 것이 늘수록 값은 내려간다.","link":"../vaccine/","rank":9,"why":"완전접종률은 접종률이 아니다. 그 나이까지 맞아야 할 백신을 하나도 빠짐없이 마쳐야 완전접종이므로, 세는 백신이 늘면 접종을 똑같이 해도 값은 내려간다.","see":[["예방접종","../vaccine/"],["유행 시뮬레이터","../sim/"]]},{"date":"2025","theme":"guide","tag":"발간량","title":"2025년 지침·자료 88건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":10,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]},{"y":2026,"n":9,"rest":0,"top":[{"date":"2026-06","theme":"law","tag":"시대 구분","title":"현행 91종","body":"전수 67 + 표본 24 (고시 제2026-9호)","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":1,"why":"체계가 바뀐 해다. 감염병의 이름과 급, 세는 방법이 한꺼번에 다시 짜였으므로 이 선을 넘어 숫자를 이으면 거의 언제나 틀린다. 연대기가 “언제의 사실인가”를 먼저 묻는 이유가 여기에 있다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2026-03-29","theme":"law","tag":"신규 지정","title":"칸디다오리스감염증 — 신규 지정","body":"비법정 → 제4급 · —감시 → 표본감시 · 표본 368기관·7일\n진균 최초 법정감염병·의료관련감염병 동시 지정","link":"https://www.law.go.kr/법령/감염병의예방및관리에관한법률","rank":2,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2026-01-01","theme":"border","tag":"검역 제도","title":"엠폭스 검역감염병 해제","body":"WHO의 엠폭스 국제공중보건위기상황(PHEIC) 공식 종료를 반영. 2024.10.21. 검역관리지역에 추가됐던 엠폭스가 대상에서 빠졌다.","link":"../quarantine/","rank":3,"why":"검역감염병 종수 변화(15종 유지)와 국가 수 감소(184→176개국)의 상당 부분이 이 해제 때문이다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2026-05-19","theme":"border","tag":"검역 제도","title":"에볼라 PHEIC → 분기 중 수시 개정","body":"WHO의 에볼라 PHEIC 선언에 따라 2분기 도중 에볼라 중점검역관리지역 5개국(남수단·르완다·에티오피아·우간다·콩고민주공화국)이 추가돼 21→25개국이 됐다.","link":"../quarantine/","rank":4,"why":"분기 시작일(4.1.) 자료만 보면 이 5개국을 놓친다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2026-03-29","theme":"law","tag":"고시","title":"질병관리청장이 지정하는 감염병의 종류 고시 (2026-3호)","body":"질병관리청장이 지정하는 감염병의 종류 — 법률 열거 밖의 감염병은 이 고시로 정해진다.","link":"../law/","rank":5,"why":"급이 바뀌면 신고 시기·격리 수준·통계를 세는 분모가 함께 바뀐다. 그래서 이 날 앞뒤의 숫자는 같은 것을 세지 않는다. “이 감염병은 몇 급인가”가 아니라 “언제의 몇 급인가”를 물어야 한다.","see":[["단절점 검사기","../checker/"],["법령 연혁","../law/"],["연대기","../chronicle/"]]},{"date":"2026-01-01","theme":"border","tag":"지정 갱신","title":"2026-Q1 검역관리지역 176개국","body":"에티오피아 마버그열 중점 신규. 엠폭스 검역감염병 해제.","link":"../quarantine/","rank":6,"why":"검역관리지역은 “어디서 오는 사람을 더 볼 것인가”의 목록이다. 국가 수만 연도별로 비교하면 제도 자체가 바뀐 해를 놓친다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2026-02-12","theme":"border","tag":"지정 갱신","title":"2026-Q1-rev 검역관리지역 지정","body":"니파바이러스감염증 중점 신규 지정(인도·방글라데시).","link":"../quarantine/","rank":7,"why":"검역관리지역은 “어디서 오는 사람을 더 볼 것인가”의 목록이다. 국가 수만 연도별로 비교하면 제도 자체가 바뀐 해를 놓친다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2026-09-07","theme":"border","tag":"지정 갱신","title":"2026-Q3-rev 검역관리지역 172개국","body":"현행. 에볼라 중점 6개국 추가(부룬디·앙골라·잠비아·중앙아프리카공화국·콩고공화국·탄자니아), 검역관리지역에서 케냐 해제. 매트릭스 원문 대조는 미완료.","link":"../quarantine/","rank":8,"why":"검역관리지역은 “어디서 오는 사람을 더 볼 것인가”의 목록이다. 국가 수만 연도별로 비교하면 제도 자체가 바뀐 해를 놓친다.","see":[["검역","../quarantine/"],["해외유입 지도","../inflow/"],["정책 실험실","../policy/"]]},{"date":"2026","theme":"guide","tag":"발간량","title":"2026년 지침·자료 87건","body":"그 해 질병관리청 게시판에 오른 감염병 지침·서식·교육자료의 수다.","link":"../guides/","rank":9,"why":"지침이 처음 나온 해는 그 감염병이 “관리 대상”이 된 해다. 다만 이 목록은 게시판에 남아 있는 것 기준이라, 게시판이 시작되기 전에 나온 지침은 보이지 않는다. ‘처음’은 발간의 처음이 아니라 기록의 처음일 수 있다.","see":[["지침 서가","../guides/"],["현장카드","../field/"]]}]}]};
+const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const TH = Object.fromEntries(D.themes.map(t => [t.k, t]));
+const YEARS = D.years;
+const maxN = Math.max(...YEARS.map(y => y.top.length));
+let cur = YEARS.length - 1, filt = new Set(), timer = null;
+let flat = [], zi = -1, zsrc = null, closeT = null;
+const REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const stage = document.getElementById('stage');
+const track = document.getElementById('track');
+const shell = document.getElementById('shell');
+
+/* ── 전시실 치수 ─────────────────────────────────────────
+   방을 화면 크기에 맞춰 잡는다. 전시벽은 정면을 보게 두어
+   열 점이 모두 화면 안에 들어오고 글자가 기울지 않게 한다. */
+let WW, WH, WD, COLS, FS;
+function sizes(){
+  const sw = stage.clientWidth || 900, sh = stage.clientHeight || 520;
+  WW = Math.round(Math.min(sw * 0.80, 860));
+  WH = Math.round(Math.min(sh * 0.82, 500));
+  WD = Math.round(Math.min(sw, sh) * 0.55);
+  COLS = WW >= 760 ? 5 : WW >= 540 ? 4 : 3;
+  FS = Math.max(8.5, Math.min(13, WW / COLS / 15));
+}
+
+/* ── 연표 ────────────────────────────────────────────────── */
+document.getElementById('strip').innerHTML = YEARS.map((y, i) => {
+  const by = {};
+  y.top.forEach(e => by[e.theme] = (by[e.theme] || 0) + 1);
+  const h = 8 + 38 * (y.top.length / maxN);
+  const seg = Object.entries(by).map(([k, n]) =>
+    `<i style="height:${(h * n / y.top.length).toFixed(1)}px;background:${TH[k].color}"></i>`).join('');
+  return `<button class="sy" data-i="${i}" title="${y.y}년 · 전시물 ${y.n}점">
+    <span class="bar" style="height:${h.toFixed(1)}px">${seg}</span>
+    <span class="yl num">${y.y}</span></button>`;
+}).join('');
+document.getElementById('strip').onclick = e => {
+  const b = e.target.closest('.sy'); if (!b) return;
+  stop(); closeZ(); go(+b.dataset.i);
+};
+document.getElementById('slg').innerHTML = D.themes.map(t =>
+  `<span><b style="background:${t.color}"></b>${esc(t.name)} ${t.n}</span>`).join('') +
+  `<span style="color:var(--faint)">막대 높이 = 그 해 전시물 수</span>`;
+
+/* ── 방 껍데기 — 벽 뒤로 물러나는 바닥·천장·옆벽 ─────────── */
+function buildShell(){
+  const f = (cls, w, h, tf) => `<div class="pl ${cls}" style="width:${w}px;height:${h}px;
+    transform:translate(-50%,-50%) ${tf}">${''}</div>`;
+  shell.innerHTML =
+    f('p-floor', WW, WD, `translateY(${WH / 2}px) translateZ(${-WD / 2}px) rotateX(90deg)`) +
+    f('p-ceil', WW, WD, `translateY(${-WH / 2}px) translateZ(${-WD / 2}px) rotateX(-90deg)`) +
+    f('p-side', WD, WH, `translateX(${-WW / 2}px) translateZ(${-WD / 2}px) rotateY(90deg)`) +
+    f('p-side', WD, WH, `translateX(${WW / 2}px) translateZ(${-WD / 2}px) rotateY(-90deg)`);
+}
+
+/* ── 전시벽 ──────────────────────────────────────────────── */
+/* 격자에서 왼쪽 칸은 왼쪽으로, 오른쪽 칸은 오른쪽으로 물러난다 */
+const sx = k => Math.round(((k % COLS) - (COLS - 1) / 2) * WW * 0.115);
+
+function artHTML(e, k){
+  const t = TH[e.theme];
+  if (e.art) {
+    return `<button class="art pic" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px">
+      <img src="${esc(e.art)}" alt="" loading="lazy" onerror="this.remove()">
+      <span class="cap"><span class="tg">${esc(t.name)} · ${esc(e.tag)}</span>
+        <span class="tt" style="display:block">${esc(e.title)}</span></span>
+      <span class="rk num">${e.rank}</span></button>`;
+  }
+  return `<button class="art" data-ex="${e._i}" style="--tc:${t.color};--k:${k};--sx:${sx(k)}px">
+    <span class="rk num">${e.rank}</span>
+    <span class="tg">${esc(t.name)} · ${esc(e.tag)}</span>
+    <span class="tt">${esc(e.title)}</span></button>`;
+}
+function wallHTML(y, i){
+  return `<div class="wall" data-i="${i}" style="width:${WW}px;height:${WH}px;--fs:${FS}px;--cols:${COLS}">
+    <div class="whead"><span class="wy num">${y.y}</span>
+      <span class="wc">그 해의 ${y.top.length}대 뉴스</span>
+      <span class="wd num">전시물 ${y.n}점</span></div>
+    <div class="wgrid">${y.top.map((e, k) => artHTML(e, k)).join('')}</div>
+  </div>`;
+}
+function render(){
+  sizes();
+  flat = [];
+  YEARS.forEach(y => y.top.forEach(e => { e._i = flat.length; flat.push(e); }));
+  buildShell();
+  track.innerHTML = YEARS.map((y, i) => wallHTML(y, i)).join('');
+  applyFilter();
+  move();
+}
+function move(){
+  [...track.children].forEach((w, i) => {
+    const d = i - cur;                      // 음수 = 더 과거, 양수 = 더 최근
+    const on = Math.abs(d) <= 2;
+    w.style.display = on ? '' : 'none';
+    w.classList.toggle('here', d === 0);
+    if (!on) return;
+    // 회전 없이, 옆으로 물러나며 조용히 옅어진다
+    w.style.transform = `translate(-50%,-50%) translateX(${d * WW * 1.2}px)` +
+      ` translateZ(${-WD + (d ? -Math.abs(d) * WD * 0.55 : 0)}px)`;
+    w.style.opacity = d ? (Math.abs(d) === 1 ? .2 : .06) : 1;
+    w.style.pointerEvents = d ? 'none' : '';
+  });
+  document.getElementById('now').innerHTML = `${YEARS[cur].y}년 <small>${YEARS[cur].n}점</small>`;
+  [...document.querySelectorAll('.sy')].forEach((b, i) => b.classList.toggle('on', i === cur));
+  const s = document.querySelector('.sy.on');
+  if (s) s.scrollIntoView({block: 'nearest', inline: 'center', behavior: 'smooth'});
+  rail();
+}
+function go(i){ cur = Math.max(0, Math.min(YEARS.length - 1, i)); move(); }
+
+/* ── 갈래 거르개 ─────────────────────────────────────────── */
+document.getElementById('chips').innerHTML =
+  `<button class="chip on" data-k="">전체 ${D.total}</button>` +
+  D.themes.map(t => `<button class="chip" data-k="${t.k}">${esc(t.name)} ${t.n}</button>`).join('');
+document.getElementById('chips').onclick = e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  const k = b.dataset.k;
+  if (!k) filt.clear(); else filt.has(k) ? filt.delete(k) : filt.add(k);
+  [...document.querySelectorAll('.chip')].forEach(c => {
+    const on = c.dataset.k ? filt.has(c.dataset.k) : filt.size === 0;
+    c.classList.toggle('on', on);
+    c.style.background = on && c.dataset.k ? TH[c.dataset.k].color : '';
+  });
+  applyFilter(); rail();
+};
+const shown = e => filt.size === 0 || filt.has(e.theme);
+function applyFilter(){
+  track.querySelectorAll('.art').forEach(a => a.classList.toggle('off', !shown(flat[+a.dataset.ex])));
+}
+
+/* ── 이 방의 전시물 ──────────────────────────────────────── */
+function rail(){
+  const y = YEARS[cur];
+  const items = y.top.filter(shown);
+  document.getElementById('rtit').textContent = `${y.y}년 — 그 해의 ${y.top.length}대 뉴스`;
+  document.getElementById('rsub').textContent =
+    `전시물 ${y.n}점 중 ${y.top.length}점을 걸었다` + (y.rest ? ` (나머지 ${y.rest}점은 걸지 않았다).` : '.') +
+    (items.length !== y.top.length ? ` 거르개로 ${items.length}점만 보인다.` : '') +
+    (y.n < 3 ? ' 이 해는 저장소에 남은 자료가 얇다 — 아무 일도 없었다는 뜻이 아니다.' : '');
+  document.getElementById('list').innerHTML = items.map(e => `
+    <button class="it" data-ex="${e._i}" style="--tc:${TH[e.theme].color}">
+      <span class="rk num">${e.rank}</span>
+      <span class="bd"><span class="tg">${esc(TH[e.theme].name)} · ${esc(e.tag)}</span>
+        <span class="tt" style="display:block">${esc(e.title)}</span></span>
+    </button>`).join('') || '<p class="rs">이 갈래의 전시물이 이 해에는 없다.</p>';
+}
+
+/* ── 작품 앞으로 ─────────────────────────────────────────
+   누른 작품이 걸려 있던 자리에서 화면 가운데로 날아와 커지고,
+   그 옆에 미술관 라벨(제목·시기·설명·보는 법·함께 볼 것)이 붙는다. */
+const zoom = document.getElementById('zoom'), zin = document.getElementById('zin');
+function openZ(i, srcEl){
+  const e = flat[i]; if (!e) return;
+  if (closeT){ clearTimeout(closeT); closeT = null; }
+  zoom.classList.remove('closing');
+  zi = i; zsrc = srcEl || null;
+  const t = TH[e.theme];
+  const ext = /^https?:/.test(e.link || '');
+  zin.innerHTML = `
+    <div class="zart" id="zart" style="--tc:${t.color}">
+      ${e.art ? `<img src="${esc(e.art)}" alt="" onerror="this.remove()">` : ''}
+      <div class="zpad"><div class="ztg">${esc(t.name)} · ${esc(e.tag)}</div>
+        <div class="ztt">${esc(e.title)}</div>
+        ${e.art ? '' : `<div class="zyr num">${YEARS[cur].y}</div>`}</div>
+      <div class="zcap num">${YEARS[cur].y} · 그 해 ${e.rank}번째 전시물</div>
+    </div>
+    <div class="zlabel" style="--tc:${t.color}">
+      <div class="lt">${esc(t.name)}</div>
+      <h3>${esc(e.title)}</h3>
+      <div class="lm num">${esc(e.date)} · ${esc(e.tag)} · 그 해 ${e.rank}번째 전시물</div>
+      <p>${esc(e.body)}</p>
+      ${e.why ? `<div class="why"><b>이 작품을 보는 법</b><p>${esc(e.why)}</p></div>` : ''}
+      ${(e.see && e.see.length) ? `<div class="see">함께 볼 것 ${e.see.map(s =>
+        `<a href="${esc(s[1])}">${esc(s[0])}</a>`).join('')}</div>` : ''}
+      ${e.link ? `<a class="go" href="${esc(e.link)}"${ext ? ' target="_blank" rel="noopener"' : ''}>
+        ${ext ? '원문 열기 ↗' : '관련 쪽으로 →'}</a>` : ''}
+    </div>`;
+  zoom.classList.add('on');
+  const wall = track.querySelector('.wall.here');
+  if (wall){
+    wall.classList.add('scatter');
+    wall.querySelectorAll('.art').forEach(a => a.classList.toggle('taken', a === zsrc));
+  }
+  const items = YEARS[cur].top;
+  const k = items.indexOf(e);
+  document.getElementById('zc').textContent = k >= 0 ? `${k + 1} / ${items.length}` : '';
+  // 걸려 있던 자리에서 겹쳐 나오게 — 시작 상태로 되돌린 뒤 놓아 준다.
+  // 자리·크기만 바꾸면 튄다. 살짝 돌리고 흐리게 시작해 두 화면이 겹치며 넘어가게 한다.
+  const za = document.getElementById('zart');
+  if (zsrc && !REDUCE){
+    const g = geom(za, zsrc);
+    if (g){
+      za.style.transition = 'none';
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s})`;
+      za.style.opacity = '0';
+      za.getBoundingClientRect();          // 여기서 시작 상태를 굳힌다
+      za.style.transition = '';
+      za.style.transform = '';
+      za.style.opacity = '';
+    }
+  }
+}
+/* 확대된 작품과 벽에 걸린 자리 사이의 거리·배율 */
+function geom(za, src){
+  const a = za.getBoundingClientRect(), b = src.getBoundingClientRect();
+  if (!(a.width > 4 && b.width > 4)) return null;
+  return {s: Math.max(0.12, Math.min(1, b.width / a.width)),
+          dx: (b.left + b.width / 2) - (a.left + a.width / 2),
+          dy: (b.top + b.height / 2) - (a.top + a.height / 2)};
+}
+function closeZ(){
+  if (!zoom.classList.contains('on')) return;
+  if (closeT){ clearTimeout(closeT); closeT = null; }
+  const za = document.getElementById('zart');
+  zoom.classList.add('closing');       // 배경과 라벨이 먼저 옅어진다
+  if (za && zsrc && !REDUCE){
+    const g = geom(za, zsrc);
+    if (g){
+      za.style.transform = `translate(${g.dx}px,${g.dy}px) scale(${g.s})`;
+      za.style.opacity = '0';
+    }
+  } else if (za){ za.style.opacity = '0'; }
+  const wall = track.querySelector('.wall.here');
+  if (wall){
+    wall.classList.remove('scatter');
+    wall.querySelectorAll('.art').forEach(a => a.classList.remove('taken'));
+  }
+  closeT = setTimeout(() => {
+    zoom.classList.remove('on', 'closing');
+    zin.innerHTML = '';
+    closeT = null;
+  }, REDUCE ? 0 : 1500);
+  zi = -1; zsrc = null;
+}
+function stepZ(d){
+  const items = YEARS[cur].top.filter(shown);
+  if (zi < 0 || !items.length) return;
+  const k = items.findIndex(x => x._i === zi);
+  const n = items[(k + d + items.length) % items.length];
+  const el = track.querySelector(`.art[data-ex="${n._i}"]`);
+  openZ(n._i, el);
+}
+// 순회 중에 관람객이 손을 대면 순회를 멈추고 그 자리에 선다
+document.getElementById('zbd').onclick = () => { stop(); closeZ(); };
+document.getElementById('zclose').onclick = () => { stop(); closeZ(); };
+document.getElementById('zprev').onclick = () => stepZ(-1);
+document.getElementById('znext').onclick = () => stepZ(1);
+document.addEventListener('click', ev => {
+  const b = ev.target.closest('.art,.it'); if (!b) return;
+  stop();
+  if (b.classList.contains('it')) stage.scrollIntoView({block: 'nearest', behavior: 'smooth'});
+  const src = b.classList.contains('it')
+    ? track.querySelector(`.art[data-ex="${b.dataset.ex}"]`) || b : b;
+  openZ(+b.dataset.ex, src);
+});
+
+/* ── 조작 ────────────────────────────────────────────────── */
+document.getElementById('prev').onclick = () => { stop(); closeZ(); go(cur - 1); };
+document.getElementById('next').onclick = () => { stop(); closeZ(); go(cur + 1); };
+document.getElementById('jumpBig').onclick = () => {
+  stop(); closeZ();
+  let best = 0; YEARS.forEach((y, i) => { if (y.n > YEARS[best].n) best = i; });
+  go(best);
+};
+/* ── 도슨트 순회 ─────────────────────────────────────────
+   해를 옮기고 끝이 아니라, 그 방의 작품을 하나씩 앞으로 불러
+   설명을 읽어 주고 제자리로 돌려보낸다. 올해에서 시작해 1954년까지 걸어간다. */
+const play = document.getElementById('play');
+let tourId = 0;
+function stop(){
+  tourId++;
+  if (timer){ clearTimeout(timer); timer = null; }
+  play.textContent = '▶ 도슨트 순회';
+}
+const sleep = (ms, id) => new Promise(r => { timer = setTimeout(() => { if (id === tourId) r(); }, ms); });
+async function tour(){
+  const id = ++tourId;
+  play.textContent = '❚❚ 멈춤';
+  closeZ();
+  for (let yi = cur; yi >= 0; yi--){
+    if (id !== tourId) return;
+    go(yi);
+    await sleep(2300, id);             // 벽이 겹쳐 넘어오는 시간
+    if (id !== tourId) return;
+    for (const e of YEARS[yi].top.filter(shown)){
+      if (id !== tourId) return;
+      const el = track.querySelector(`.art[data-ex="${e._i}"]`);
+      if (!el) continue;
+      openZ(e._i, el);
+      await sleep(4200, id);
+      if (id !== tourId) return;
+      closeZ();
+      await sleep(1700, id);           // 겹쳐 사라지는 동안 기다린다
+    }
+  }
+  if (id === tourId) stop();
+}
+play.onclick = () => { if (timer || play.textContent[0] === '❚') stop(); else tour(); };
+addEventListener('keydown', e => {
+  if (e.key === 'Escape') return closeZ();
+  if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+  const d = e.key === 'ArrowRight' ? 1 : -1;
+  stop();
+  if (zi >= 0) stepZ(d); else go(cur + d);
+});
+let tx = null;
+stage.addEventListener('touchstart', e => { tx = e.touches[0].clientX; }, {passive: true});
+stage.addEventListener('touchend', e => {
+  if (tx == null) return;
+  const d = e.changedTouches[0].clientX - tx;
+  if (Math.abs(d) > 44){ stop(); if (zi >= 0) stepZ(d < 0 ? 1 : -1); else go(cur + (d < 0 ? 1 : -1)); }
+  tx = null;
+}, {passive: true});
+
+document.getElementById('method').innerHTML =
+  `<b>이 전시물은 어디서 왔나</b><br>${esc(D.note)}<br>
+   갈래별로 <b>${D.themes.map(t => t.name + ' ' + t.n).join(' · ')}</b> 점.
+   방마다 갈래가 한쪽으로 쏠리지 않게 골랐다 — 지침은 해마다 수십 건이라 가중치만으로 뽑으면 열 자리를 다 먹는다.`;
+document.getElementById('fsrc').innerHTML =
+  `자료: 감염병예방법 연혁·질병관리청 고시(법제처) · 급수변동 원장 · 지침 통합목록 · 백서 목록 · ` +
+  `「감염병 신고 현황 연보」 · 검역관리지역 지정이력 · 「전국 어린이 예방접종률 현황」 — ` +
+  `<a href="../data/">모두 자료실에서 받을 수 있다</a>`;
+
+render();
+let rt = null;
+addEventListener('resize', () => { clearTimeout(rt); rt = setTimeout(() => {
+  const w0 = WW; sizes();
+  if (Math.abs(w0 - WW) > 8){ const keep = cur; closeZ(); render(); cur = keep; move(); }
+}, 220); });
+</script>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 질병관리청 공식 누리집이 아닌 공공자료 정리·분석 프로젝트의 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 최신 공식 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<script>
+/* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
+(function(){
+  var opened = [];
+  function expand(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){
+      if (!d.open){ opened.push(d); d.open = true; }
+    });
+  }
+  function restore(){ opened.forEach(function(d){ d.open = false; }); opened = []; }
+  window.addEventListener('beforeprint', expand);
+  window.addEventListener('afterprint', restore);
+  var btn = document.getElementById('btnPrint');
+  if (btn) btn.addEventListener('click', function(){ expand(); window.print(); });
+  var ph = document.getElementById('printhead');
+  if (ph){
+    var d = new Date();
+    var pad = function(n){ return String(n).padStart(2, '0'); };
+    ph.querySelector('.pdate').textContent =
+      d.getFullYear() + '.' + pad(d.getMonth()+1) + '.' + pad(d.getDate()) + ' 인쇄';
+    ph.querySelector('.purl').textContent = location.href.replace(/^https?:\/\//, '');
+  }
+})();
+</script>
+<script>
+/* 쉬운 말 풀이 — scripts/plain_glossary.py 한 곳에서 관리한다 */
+(function(){
+  var T = [["중점검역관리지역", "검역관리지역 가운데 특히 위험해서, 증상이 없어도 다녀온 사람 모두가 알려야 하는 지역.", ""], ["유효 재생산수", "지금 이 순간, 면역과 방역이 있는 상태에서 환자 한 명이 평균 몇 명에게 옮기는지.", "방역의 목표는 이 수를 1 아래로 내리는 것이다."], ["검역관리지역", "그 나라에 검역감염병이 돌고 있어, 다녀온 사람 가운데 증상이 있으면 알리게 한 지역.", "증상이 없으면 알릴 의무가 없다."], ["기초재생산수", "아무도 면역이 없을 때, 환자 한 명이 평균 몇 명에게 옮기는지를 나타낸 수.", "1보다 크면 번지고 1보다 작으면 사그라든다. R₀라고 쓴다."], ["법정감염병", "법으로 “생기면 반드시 신고하라”고 정해 둔 병.", "지금 91가지다. 목록은 계속 늘거나 줄어 왔다."], ["검역감염병", "국경에서 특별히 살피도록 검역법이 정해 둔 병.", "지금 15가지다."], ["지표 환자", "그 유행에서 처음으로 확인된 환자.", "가장 먼저 걸린 사람이라는 뜻은 아니다 — 처음 발견된 사람이다."], ["전수감시", "환자가 생길 때마다 한 사람도 빠짐없이 모두 신고받는 방식.", "그래서 이 방식의 숫자는 “그해 신고된 환자 수”에 가깝다."], ["표본감시", "전국에서 미리 정해 둔 병원 몇 곳만 골라 그곳 환자만 세는 방식.", "전체 환자 수가 아니다. 참여 병원이 늘거나 줄면 숫자도 같이 움직인다."], ["감시체계", "환자를 어떻게 찾아내고 어떻게 세는지에 대한 규칙 전체.", "전수감시와 표본감시가 그 종류다."], ["사례정의", "“어떤 사람을 이 병의 환자로 셀 것인가”를 적어 둔 기준.", "이 기준이 바뀌면 병이 그대로여도 세어지는 사람 수가 달라진다."], ["의사환자", "증상으로 보아 그 병이 의심되지만 검사로는 아직 확인되지 않은 사람.", "“의사”는 의심된다는 뜻이지 의사 선생님이 아니다."], ["인수공통", "동물과 사람이 서로 옮길 수 있는 병.", ""], ["수직감염", "어머니에게서 배 속의 아기나 갓 태어난 아기에게 옮는 것.", ""], ["음압격리", "방 안 공기가 밖으로 새어 나가지 않도록 기압을 낮춰 둔 병실에 환자를 두는 것.", "공기로 옮는 병에 쓴다."], ["역학조사", "누가 언제 어디서 어떻게 걸렸는지 되짚어 감염 경로를 찾는 조사.", ""], ["집단면역", "면역을 가진 사람이 인구에 충분히 많아져 유행이 저절로 사그라드는 상태.", ""], ["계통고찰", "한 주제를 다룬 연구를 빠짐없이 모아 정리한 논문.", "하나의 연구보다 믿을 만한 근거로 친다."], ["신뢰구간", "참값이 그 안에 있을 것으로 보는 범위.", "범위가 넓다면 그만큼 덜 확실하다는 뜻이다."], ["시행규칙", "시행령보다 더 세부를 정하는 규정. 장관이 정한다.", ""], ["에어로졸", "침방울보다 더 작아 공기 중에 한동안 떠 있는 알갱이.", "비말보다 멀리, 오래 간다."], ["카타르기", "백일해에서 감기처럼 보이는 초기 시기.", "기침이 심해지기 전인데 이때 가장 잘 옮는다."], ["단절점", "세는 규칙이 바뀌어서, 그 앞과 뒤의 숫자를 그대로 이어 보면 안 되는 지점.", "이 사이트가 가장 중요하게 여기는 개념이다. 단절점 검사기에서 확인할 수 있다."], ["병원체", "병을 일으키는 아주 작은 생물이나 물질.", "세균, 바이러스, 곰팡이, 기생충 따위가 있다."], ["잠복기", "병원체가 몸에 들어온 뒤 증상이 나타나기까지 걸리는 기간.", ""], ["무증상", "병원체가 몸에 들어왔지만 증상이 나타나지 않은 상태.", "증상이 없어도 남에게 옮길 수 있는 병이 있다."], ["전구기", "본격적인 증상이 나기 전에 먼저 나타나는 가벼운 증상 기간.", "홍역이라면 발진 전의 열과 기침이 이때다."], ["치명률", "그 병에 걸린 사람 가운데 숨진 사람의 비율.", ""], ["발생률", "일정 기간 동안 새로 병에 걸린 사람의 비율.", ""], ["유병률", "어느 시점에 그 병을 앓고 있는 사람의 비율.", "새로 걸린 사람만 세는 발생률과 다르다."], ["매개체", "병원체를 사람에게 옮겨 주는 생물.", "모기와 진드기가 대표적이다."], ["병원소", "병원체가 평소에 머물러 사는 곳.", "박쥐나 낙타 같은 동물이 그 자리일 때가 많다."], ["시행령", "법률이 큰 줄기를 정하면 그 세부를 정하는 규정. 대통령이 정한다.", ""], ["발병률", "그 병에 노출된 사람 가운데 실제로 병이 난 사람의 비율.", ""], ["코호트", "같은 조건에 놓인 사람들을 하나로 묶은 집단.", "“코호트 격리”는 같은 병에 노출된 사람들을 한 곳에 묶어 함께 격리하는 것이다."], ["표준화", "나이 구성처럼 서로 다른 조건을 같게 맞춰 놓고 비교하는 것.", "이렇게 해야 노인이 많은 지역과 적은 지역의 숫자를 견줄 수 있다."], ["임계치", "그 값을 넘으면 결과가 달라지는 경계가 되는 값.", ""], ["불현성", "감염됐지만 겉으로 드러나는 증상이 없는 상태.", ""], ["항체가", "피 속에 그 병에 맞서는 항체가 얼마나 있는지를 나타낸 값.", ""], ["혈청형", "같은 종의 세균이나 바이러스를 항체 반응으로 더 잘게 나눈 갈래.", ""], ["급수", "법정감염병을 얼마나 급히 알려야 하는지에 따라 네 묶음으로 나눈 것.", "제1급이 가장 급해서 곧바로 알려야 하고, 제4급은 일주일에 한 번 모아서 알린다."], ["신고", "의사나 병원이 환자를 발견했을 때 보건당국에 알리는 일.", "법정감염병은 신고가 의무다."], ["분모", "비율을 낼 때 아래에 놓는 수. “몇 명 가운데”에 해당하는 수다.", "분모가 달라지면 같은 환자 수라도 비율이 달라 보인다."], ["확진", "검사를 해서 그 병이 맞다고 확인된 것.", ""], ["비말", "기침이나 재채기, 말할 때 튀는 침방울.", ""], ["아형", "같은 바이러스 안에서 조금씩 다른 갈래.", "인플루엔자의 H1N1, H3N2 같은 것이 아형이다."], ["격리", "환자를 다른 사람과 떼어 놓아 병을 옮기지 못하게 하는 것.", ""], ["검역", "병이 나라 안으로 들어오지 못하게 공항과 항만에서 확인하는 일.", ""], ["문턱", "유행이 저절로 멈추려면 인구의 몇 퍼센트가 면역을 가져야 하는지, 그 경계가 되는 값.", "이 사이트에서 “집단면역 문턱”이라고 쓸 때의 뜻이다."], ["역산", "결과를 먼저 알고, 거꾸로 원인이 될 값을 구하는 것.", ""], ["고시", "행정기관이 정해서 공식적으로 알리는 문서.", "법률보다 아래에 있지만 지켜야 하는 힘이 있다. 감염병 지정이 이것으로 바뀐다."]];
+  var SKIP = {SCRIPT:1, STYLE:1, TEXTAREA:1, INPUT:1, SELECT:1, OPTION:1, CODE:1, PRE:1,
+              SVG:1, CANVAS:1, MATH:1};
+  var left = {}, found = [], DEF = {}, lastSig = null;
+  T.forEach(function(x){ left[x[0]] = x; DEF[x[0]] = [x[1], x[2]]; });
+
+  function skippable(n){
+    for (var a = n.parentNode; a && a !== document.body; a = a.parentNode){
+      if (a.nodeType !== 1) continue;
+      /* SVG 안쪽은 건드리지 않는다. 차트 글자에 단추를 넣으면 그려지지 않는다.
+         SVG 요소의 tagName 은 소문자라(svg, text, g) 대문자로 맞춰 본다. */
+      if (SKIP[String(a.tagName).toUpperCase()]) return true;
+      var c = a.className;
+      if (typeof c === 'string' && /\b(plainterm|glpop|glbox|gnav|printonly|pagetools|site-credit)\b/.test(c)) return true;
+      if (a.tagName === 'BUTTON' || a.hasAttribute('aria-hidden')) return true;
+    }
+    return false;
+  }
+
+  function wrap(node, term, def, more){
+    var i = node.nodeValue.indexOf(term);
+    if (i < 0) return false;
+    var after = node.splitText(i);
+    after.nodeValue = after.nodeValue.slice(term.length);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'plainterm'; btn.textContent = term;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', term + ' — 뜻 보기');
+    btn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); show(btn, term, def, more); };
+    node.parentNode.insertBefore(btn, after);
+    found.push([term, def, more]);
+    return true;
+  }
+
+  var pop = null;
+  function close(){ if (pop){ pop.remove(); pop = null; }
+    document.querySelectorAll('.plainterm[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded','false'); }); }
+  function show(btn, term, def, more){
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    close(); if (open) return;
+    btn.setAttribute('aria-expanded', 'true');
+    pop = document.createElement('span');
+    pop.className = 'glpop'; pop.setAttribute('role', 'tooltip');
+    pop.innerHTML = '<b></b><span></span>' + (more ? '<span class="more"></span>' : '');
+    pop.querySelector('b').textContent = term;
+    pop.querySelectorAll('span')[0].textContent = def;
+    if (more) pop.querySelector('.more').textContent = more;
+    document.body.appendChild(pop);
+    var r = btn.getBoundingClientRect(), w = pop.offsetWidth;
+    var x = Math.min(Math.max(8, r.left + scrollX), scrollX + innerWidth - w - 8);
+    pop.style.left = x + 'px';
+    pop.style.top = (r.bottom + scrollY + 6) + 'px';
+  }
+  document.addEventListener('click', function(e){ if (!e.target.closest('.plainterm,.glpop')) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  addEventListener('resize', close);
+
+  /* 쪽이 제 내용을 다 그린 뒤에 단다. 먼저 달면 나중 렌더링이 주석을 지워,
+     본문에는 없는 말이 아래 목록에만 남는 일이 생긴다(유입 지도에서 그랬다). */
+  function pass(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim() && !skippable(n)) nodes.push(n);
+    for (var i = 0; i < nodes.length; i++){
+      for (var k = 0; k < T.length; k++){
+        var t = T[k][0];
+        if (!left[t]) continue;
+        if (wrap(nodes[i], t, T[k][1], T[k][2])){ delete left[t]; }
+      }
+    }
+  }
+  function live(){
+    var m = {};
+    document.querySelectorAll('.plainterm').forEach(function(b){ m[b.textContent] = 1; });
+    return m;
+  }
+  function go(){
+    /* 아직 안 달린 말만 다시 찾는다. 쪽이 제 내용을 다시 그리면서 주석을 지워도
+       다음 차례에 되살아난다. */
+    var on = live();
+    left = {};
+    T.forEach(function(x){ if (!on[x[0]]) left[x[0]] = x; });
+    pass();
+    build();
+  }
+  /* 쪽이 제 내용을 다시 그릴 때마다 주석이 지워질 수 있다(유입 지도의 범례가 그렇다).
+     DOM 이 바뀌면 잠깐 기다렸다가 다시 단다. 달 것이 없으면 아무 일도 하지 않으므로 곧 잠잠해진다. */
+  var timer = null;
+  function start(){
+    go();
+    var runs = 0, mo = new MutationObserver(function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        go();
+        /* 늘 다시 그리는 쪽(지구본)에서 끝없이 돌지 않게 횟수를 막아 둔다.
+           목록이 그대로면 build 가 아무것도 안 하므로 보통은 금방 잠잠해진다. */
+        if (++runs >= 30) mo.disconnect();
+      }, 400);
+    });
+    mo.observe(document.body, {childList: true, subtree: true});
+  }
+  if (document.readyState === 'complete') setTimeout(start, 0);
+  else addEventListener('load', function(){ setTimeout(start, 0); });
+
+  function build(){
+  /* 목록은 화면에 실제로 달려 있는 주석에서 바로 만든다.
+     따로 모아 둔 배열을 쓰면, 쪽이 다시 그려져 주석이 지워졌을 때
+     본문에는 없는 말이 목록에만 남는다. */
+  var seen = {};
+  found = [];
+  document.querySelectorAll('.plainterm').forEach(function(b){
+    var t = b.textContent;
+    if (seen[t] || !DEF[t]) return;
+    seen[t] = 1; found.push([t, DEF[t][0], DEF[t][1]]);
+  });
+  /* 목록이 그대로면 손대지 않는다. 손댈 때마다 DOM 이 바뀌어 관찰이 다시 돌면 끝이 없다. */
+  var sig = found.map(function(f){ return f[0]; }).sort().join('|');
+  if (sig === lastSig) return;
+  lastSig = sig;
+  var old = document.querySelector('details.glbox');
+  var wasOpen = old && old.open;
+  if (old) old.remove();
+  if (!found.length) return;
+  found.sort(function(a, b){ return a[0].localeCompare(b[0], 'ko'); });
+  var box = document.createElement('details');
+  box.className = 'glbox';
+  var dl = found.map(function(f){
+    return '<dt></dt><dd data-m="' + (f[2] ? '1' : '') + '"></dd>';
+  }).join('');
+  box.innerHTML = '<summary>📘 이 쪽에 나온 어려운 말 ' + found.length + '개</summary><dl>' + dl + '</dl>';
+  if (wasOpen) box.open = true;
+  var dts = box.querySelectorAll('dt'), dds = box.querySelectorAll('dd');
+  found.forEach(function(f, j){
+    dts[j].textContent = f[0];
+    dds[j].textContent = f[1];
+    if (f[2]){ var i2 = document.createElement('i'); i2.textContent = f[2]; dds[j].appendChild(i2); }
+  });
+  /* 펼치는 순간 다시 센다. 쪽이 제 내용을 다시 그려 주석 하나가 사라져도,
+     읽는 사람이 보는 목록은 늘 본문과 같다. */
+  box.addEventListener('toggle', function(){
+    if (!box.open) return;
+    var now = {}, list = [];
+    document.querySelectorAll('.plainterm').forEach(function(b){
+      var t = b.textContent;
+      if (now[t] || !DEF[t]) return;
+      now[t] = 1; list.push([t, DEF[t][0], DEF[t][1]]);
+    });
+    list.sort(function(a, b2){ return a[0].localeCompare(b2[0], 'ko'); });
+    if (list.length === box.querySelectorAll('dt').length) return;
+    box.querySelector('summary').textContent = '📘 이 쪽에 나온 어려운 말 ' + list.length + '개';
+    var dl2 = box.querySelector('dl');
+    dl2.innerHTML = '';
+    list.forEach(function(f){
+      var dt = document.createElement('dt'); dt.textContent = f[0];
+      var dd = document.createElement('dd'); dd.textContent = f[1];
+      if (f[2]){ var i3 = document.createElement('i'); i3.textContent = f[2]; dd.appendChild(i3); }
+      dl2.appendChild(dt); dl2.appendChild(dd);
+    });
+    lastSig = list.map(function(f){ return f[0]; }).sort().join('|');
+  });
+  var cr = document.querySelector('.site-credit');
+  if (cr) cr.parentNode.insertBefore(box, cr); else document.body.appendChild(box);
+  }
+})();
+</script>
+<footer class="site-credit">기획·제작 지음웍스 · <a href="https://jieumworks.com" target="_blank" rel="noopener">jieumworks.com</a> · 2026년 9월</footer>
+</body>
+</html>

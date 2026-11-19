@@ -3,7 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>자료 내려받기</title>
+<title>감염병 데이터센터 | 감염병 자료 아카이브</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27%3E%3Ctext y=%27.9em%27 font-size=%2790%27%3E%F0%9F%A6%A0%3C/text%3E%3C/svg%3E">
+<meta name="description" content="감염병 신고통계·법령·지침·검역·해외유입 등 공개 데이터를 CSV·JSON으로 확인하고 내려받습니다. 기간·출처·업데이트·단절점을 함께 봅니다.">
 <style>
   :root{
     --ground:#F5F7F6; --surface:#FFFFFF; --surface-2:#EEF2F0;
@@ -60,11 +62,12 @@
   .f .kind{font-size:10.5px;font-weight:800;border-radius:5px;padding:2px 7px;flex:none;margin-top:3px}
   .k-CSV{background:var(--accent);color:#fff}
   .k-JSON{background:var(--surface-2);color:var(--muted);border:1px solid var(--line-strong)}
-  .f .body{flex:1;min-width:220px}
+  .f .body{flex:1;min-width:0}
   .f .nm{font-weight:700;font-size:14px;word-break:break-all}
   .f .no{font-size:12.5px;color:var(--muted);margin-top:2px}
   .f .ca{font-size:12.5px;color:var(--warn);margin-top:5px}
-  .f .sz{font-size:12px;color:var(--faint);white-space:nowrap;margin-top:3px}
+  /* 저장소 경로가 길어 nowrap 이면 좁은 화면에서 쪽 전체를 옆으로 민다 */
+  .f .sz{font-size:12px;color:var(--faint);margin-top:3px;overflow-wrap:anywhere}
   .dl{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:var(--accent-ink);
     border:1px solid var(--line-strong);padding:7px 13px;border-radius:9px;background:var(--surface);flex:none}
   .dl:hover{background:var(--surface-2)}
@@ -75,6 +78,59 @@
   footer{padding:28px 0 56px;color:var(--faint);font-size:13px;border-top:1px solid var(--line);margin-top:26px}
   footer .maker{margin:0 0 10px;font-size:14px;color:var(--ink)}
   footer .maker a{color:var(--accent-ink)}
+
+  /* ── 자료 카드 ─────────────────────────────────────────────────────── */
+  .dtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 16px}
+  .dtools input[type=search]{flex:1;min-width:200px;font:inherit;font-size:16px;padding:12px 15px;
+    border:2px solid var(--line-strong);border-radius:12px;background:var(--surface);color:var(--ink)}
+  .dtools input:focus{outline:none;border-color:var(--accent)}
+  .dcats{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px}
+  .dcats button{font:inherit;font-size:12.5px;font-weight:700;color:var(--muted);background:var(--surface);
+    border:1px solid var(--line-strong);border-radius:999px;padding:7px 13px;cursor:pointer;min-height:38px}
+  .dcats button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ds{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px 18px;margin:0 0 10px}
+  .ds h3{margin:0;font-size:16.5px;font-weight:800;letter-spacing:-.02em}
+  .ds .no{font-size:13.5px;color:var(--muted);margin:5px 0 0;line-height:1.6}
+  .ds .mt{display:grid;grid-template-columns:repeat(auto-fit,minmax(104px,1fr));gap:7px;margin:12px 0 0}
+  .ds .mt div{background:var(--surface-2);border-radius:9px;padding:8px 10px}
+  .ds .mt b{display:block;font-size:14.5px;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.25}
+  .ds .mt span{display:block;font-size:11px;color:var(--muted);margin-top:3px}
+  /* 미리보기 — 파일 앞 몇 줄, 그리고 연도별로 값이 있는 행 */
+  .ds details.pv{margin:8px 0 0}
+  .ds details.pv>summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);
+    list-style:none;display:inline-flex;align-items:center;gap:5px;background:var(--surface-2);
+    border-radius:999px;padding:7px 13px;min-height:36px}
+  .ds details.pv>summary::-webkit-details-marker{display:none}
+  .ds details.pv>summary::after{content:'▾';font-size:10px;opacity:.7}
+  .ds details.pv[open]>summary::after{content:'▴'}
+  .pvw{overflow-x:auto;margin:10px 0 0;-webkit-overflow-scrolling:touch}
+  .pvw table{border-collapse:collapse;font-size:12px;white-space:nowrap}
+  .pvw th,.pvw td{border:1px solid var(--line);padding:5px 9px;text-align:left}
+  .pvw th{background:var(--surface-2);font-weight:700;position:sticky;top:0}
+  .pvw td{font-variant-numeric:tabular-nums;color:var(--muted)}
+  .cov{display:flex;align-items:flex-end;gap:5px;flex-wrap:wrap;margin:12px 0 0}
+  .cov .cb{display:flex;flex-direction:column;align-items:center;gap:2px;min-width:26px}
+  .cov .cb i{display:block;width:16px;background:var(--accent,#0E6E63);border-radius:3px 3px 0 0}
+  .cov .cb b{font-size:10.5px;font-weight:700;font-variant-numeric:tabular-nums}
+  .cov .cb span{font-size:10px;color:var(--faint)}
+  .ds .ca{font-size:12.5px;color:var(--warn,#B23A3A);background:var(--warn-soft,#F6E3E3);
+    border-radius:9px;padding:8px 11px;margin:10px 0 0;line-height:1.55}
+  .ds .acts{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 0}
+  .ds .acts a,.ds .acts button{font:inherit;font-size:13px;font-weight:700;color:var(--accent-ink);
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:9px;padding:9px 13px;
+    cursor:pointer;min-height:42px;display:inline-flex;align-items:center;gap:5px;text-decoration:none}
+  .ds .acts a.pri{background:var(--accent);border-color:var(--accent);color:#fff}
+  .ds .acts a:hover,.ds .acts button:hover{filter:brightness(.97)}
+  .ds .acts a.brk{border-color:var(--warn,#B23A3A);color:var(--warn,#B23A3A)}
+  .ds details{margin:10px 0 0;border:0;padding:0}
+  .ds details summary{cursor:pointer;font-size:13px;font-weight:700;color:var(--muted);padding:6px 0;list-style:none}
+  .ds details summary::-webkit-details-marker{display:none}
+  .ds details summary::after{content:' ▾'}
+  .ds details[open] summary::after{content:' ▴'}
+  .cols{display:flex;gap:5px;flex-wrap:wrap;margin:6px 0 0}
+  .cols code{font-size:11.5px}
+  .dnone{background:var(--surface);border:1px dashed var(--line-strong);border-radius:12px;padding:20px;
+    text-align:center;color:var(--muted);font-size:14px}
 
 /* ── 인쇄 ─────────────────────────────────────────────────────────── */
 .printonly{display:none}
@@ -127,35 +183,152 @@
 @media(max-width:520px){.pagetools{right:10px;bottom:10px}
   .pagetools a,.pagetools button{padding:8px 12px;font-size:12.5px}}
 
+/* ── 제작 크레딧 — 모든 쪽 맨 아래 공용. 문구는 site-config.json 한 곳에서 관리한다 ──
+   쪽마다 제 footer 규칙이 있어서 footer.site-credit 로도 함께 적는다.
+   선택자 하나만 두면 그 쪽의 footer{font-size:…} 에 밀린다. */
+footer.site-credit, .site-credit{margin:28px 0 0;padding:0 16px 76px;text-align:center;
+  font-size:.76rem;line-height:1.6;color:#8a94a0;word-break:keep-all;overflow-wrap:anywhere}
+/* 인쇄·자료받기 단추가 오른쪽 아래에 떠 있어서, 끝까지 내리면 크레딧을 가렸다.
+   단추 높이만큼 아래를 비워 둔다. 종이에는 단추가 없으니 그 여백을 되돌린다. */
+@media print{footer.site-credit, .site-credit{padding-bottom:0}}
+footer.site-credit a, .site-credit a{color:inherit;text-decoration:underline;text-underline-offset:2px}
+@media print{footer.site-credit, .site-credit{display:block !important;color:#6b7480;margin-top:6mm}}
+
+/* ── 쉬운 말 풀이 — 어려운 낱말이 처음 나온 자리에 뜻을 단다 ────────── */
+.plainterm{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:help;
+  border-bottom:1px dashed currentColor;opacity:.98}
+.plainterm::after{content:'뜻';font-size:.62em;vertical-align:.5em;margin-left:1px;opacity:.75;
+  font-weight:700;letter-spacing:0}
+.plainterm[aria-expanded="true"]{background:var(--accent-soft,#D7ECE8)}
+.glpop{position:absolute;z-index:90;max-width:min(320px,calc(100vw - 28px));
+  background:var(--surface,#fff);color:var(--ink,#16211D);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:12px;padding:12px 14px;box-shadow:0 8px 28px rgba(0,0,0,.18);
+  font-size:13.5px;line-height:1.65;font-weight:400;text-align:left;word-break:keep-all}
+.glpop b{display:block;font-size:14px;margin-bottom:4px}
+.glpop .more{display:block;margin-top:6px;font-size:12.5px;color:var(--muted,#5B6B65)}
+details.glbox{margin:22px 0 0;border:1px solid var(--line,#DCE4E1);border-radius:12px;
+  background:var(--surface-2,#EEF2F0)}
+details.glbox>summary{cursor:pointer;list-style:none;padding:12px 15px;font-size:13.5px;font-weight:700;
+  min-height:44px;display:flex;align-items:center;gap:6px}
+details.glbox>summary::-webkit-details-marker{display:none}
+details.glbox>summary::after{content:'▾';font-size:10px;opacity:.7}
+details.glbox[open]>summary::after{content:'▴'}
+details.glbox dl{margin:0;padding:0 15px 14px}
+details.glbox dt{font-size:13.5px;font-weight:700;margin-top:10px}
+details.glbox dd{margin:2px 0 0;font-size:13px;line-height:1.7;color:var(--muted,#5B6B65);word-break:keep-all}
+details.glbox dd i{font-style:normal;display:block;margin-top:2px;font-size:12.5px;opacity:.85}
+@media print{.plainterm{border-bottom:0}.plainterm::after{display:none}.glpop{display:none}
+  details.glbox{break-inside:avoid}details.glbox dl{display:block !important}}
+
+/* ── 쉽게 말하면 — 쪽 첫머리에 두는 두세 문장 ─────────────────────── */
+.plainsum{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43);
+  border-radius:14px;padding:14px 17px;margin:18px 0 0;font-size:14.5px;line-height:1.75;
+  word-break:keep-all;overflow-wrap:anywhere}
+.plainsum b{display:block;font-size:12px;letter-spacing:.06em;opacity:.8;margin-bottom:5px}
+.plainsum p{margin:0}
+.plainsum p+p{margin-top:3px}
+@media print{.plainsum{background:#f2f2f2 !important;color:#111 !important;break-inside:avoid}}
+
 
 /* ── 공통 메뉴 ─────────────────────────────────────────────────────── */
 nav:not(.gnav){display:none !important}
-.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 90%,transparent);
+.gnav{position:sticky;top:0;z-index:70;background:color-mix(in srgb,var(--ground,#F5F7F6) 92%,transparent);
   backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line,#DCE4E1);
   font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;letter-spacing:-.01em}
-.gnav .gin{max-width:1100px;margin:0 auto;padding:9px 16px;display:flex;align-items:center;gap:2px;
-  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.gnav .gin::-webkit-scrollbar{display:none}
-.gnav .gbrand{font-weight:800;font-size:13.5px;color:var(--ink,#16211D);white-space:nowrap;margin-right:10px;text-decoration:none;flex:none}
+.gnav *{box-sizing:border-box}
+.gnav .gin{max-width:1100px;margin:0 auto;padding:6px 14px;display:flex;align-items:center;gap:6px;position:relative}
+.gnav .gbrand{font-weight:800;font-size:14px;color:var(--ink,#16211D);white-space:nowrap;margin-right:8px;text-decoration:none;flex:none;padding:6px 0}
 .gnav .gbrand i{color:var(--accent,#0E6E63);font-style:normal}
-.gnav a.gi{font-size:12.5px;color:var(--muted,#5B6B65);padding:5px 8px;border-radius:8px;font-weight:600;
-  white-space:nowrap;text-decoration:none;flex:none;line-height:1.4}
-.gnav a.gi:hover{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
-.gnav a.gi.on{background:var(--accent,#0E6E63);color:#fff}
-@media (min-width:1000px){.gnav .gin{flex-wrap:wrap;overflow:visible}}
+.gnav .gskip{position:absolute;left:-9999px;top:0;background:var(--accent,#0E6E63);color:#fff;padding:8px 12px;border-radius:8px;z-index:80}
+.gnav .gskip:focus{left:14px;top:6px}
+.gnav .gmenu{display:flex;align-items:center;gap:2px;flex:1;min-width:0;flex-wrap:wrap}
+.gnav .gg{position:relative}
+.gnav .gt{font:inherit;font-size:13px;font-weight:700;color:var(--muted,#5B6B65);background:none;border:0;border-radius:8px;
+  padding:7px 10px;cursor:pointer;white-space:nowrap;line-height:1.4;min-height:36px}
+.gnav .gt:hover,.gnav .gg.open .gt{background:var(--surface-2,#EEF2F0);color:var(--ink,#16211D)}
+.gnav .gt.on{color:var(--accent-ink,#0A4A43);box-shadow:inset 0 -2px 0 var(--accent,#0E6E63);border-radius:8px 8px 0 0}
+.gnav .gt .car{font-size:10px;opacity:.6;margin-left:3px}
+.gnav .gd{display:none;position:absolute;left:0;top:calc(100% + 4px);min-width:250px;background:var(--surface,#fff);
+  border:1px solid var(--line,#DCE4E1);border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(16,33,29,.14);z-index:75}
+.gnav .gg.open .gd{display:block}
+.gnav a.gi{display:block;font-size:13.5px;color:var(--ink,#16211D);padding:8px 10px;border-radius:8px;font-weight:600;
+  text-decoration:none;line-height:1.35;min-height:44px}
+.gnav a.gi small{display:block;font-size:11.5px;color:var(--muted,#5B6B65);font-weight:500;margin-top:1px}
+.gnav a.gi:hover,.gnav a.gi:focus-visible{background:var(--surface-2,#EEF2F0)}
+.gnav a.gi.on{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.gnav a.gi.on small{color:var(--accent-ink,#0A4A43)}
+.gnav .gsearch{margin-left:auto;font-size:13px;font-weight:800;color:#fff;background:var(--accent,#0E6E63);border-radius:999px;
+  padding:7px 14px;text-decoration:none;white-space:nowrap;flex:none;min-height:36px;display:inline-flex;align-items:center;gap:6px}
+.gnav .gsearch:hover{filter:brightness(1.08)}
+.gnav .gburger{display:none;font:inherit;font-size:13px;font-weight:700;background:var(--surface,#fff);border:1px solid var(--line-strong,#C4D0CB);
+  border-radius:8px;padding:7px 11px;cursor:pointer;color:var(--ink,#16211D);min-height:40px;margin-left:auto}
+.gnav :focus-visible{outline:2px solid var(--accent,#0E6E63);outline-offset:2px}
+@media (hover:hover) and (min-width:901px){
+  .gnav .gg:hover .gd,.gnav .gg:focus-within .gd{display:block}
+}
+@media (max-width:900px){
+  /* 좁은 화면: 상표 + 검색 + ☰. 묶음은 아코디언으로 펼친다. 자료를 가리지 않도록 따라다니지 않는다. */
+  .gnav{position:static}
+  .gnav .gin{flex-wrap:wrap;padding:6px 12px}
+  .gnav .gbrand{font-size:13px;margin-right:auto}
+  .gnav .gsearch{margin-left:0;padding:6px 12px;font-size:12.5px;min-height:38px}
+  .gnav .gburger{display:inline-block;margin-left:0}
+  .gnav .gmenu{display:none;flex-direction:column;align-items:stretch;flex-basis:100%;padding:6px 0 4px;gap:4px}
+  .gnav.open .gmenu{display:flex}
+  .gnav .gg{border:1px solid var(--line,#DCE4E1);border-radius:10px;background:var(--surface,#fff)}
+  .gnav .gt{width:100%;text-align:left;font-size:14px;min-height:44px;border-radius:10px}
+  .gnav .gt.on{box-shadow:none;background:var(--accent-soft,#D7ECE8)}
+  .gnav .gd{display:none;position:static;min-width:0;border:0;border-top:1px solid var(--line,#DCE4E1);border-radius:0 0 10px 10px;box-shadow:none;padding:4px}
+  .gnav .gg.open .gd{display:block}
+}
+@media (prefers-reduced-motion:reduce){.gnav *{transition:none !important}}
+
+/* ── 출처 성격 배지 — 공식 원문인지, 우리가 엮은 것인지, 계산한 것인지 ──────── */
+.bdg{display:inline-block;font-size:11px;font-weight:800;border-radius:999px;padding:2px 8px;white-space:nowrap;letter-spacing:-.01em}
+.bdg.official{background:var(--accent-soft,#D7ECE8);color:var(--accent-ink,#0A4A43)}
+.bdg.archive{background:var(--info-soft,#DCEDF1);color:var(--info-ink,#1B5561)}
+.bdg.analysis{background:var(--model-soft,#E7E0F2);color:var(--model-ink,#4A3368)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .bdg.archive{background:#17333A;color:#9FD8E2}
+  :root:not([data-theme="light"]) .bdg.analysis{background:#2A2338;color:#CDBBEC}}
 
 </style>
 </head>
 <body>
-<div class="printonly printhead" id="printhead"><b>자료 내려받기</b> — 감염병 자료 아카이브 · 제작 지움웍스(jieumworks.com)<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
-<nav class="gnav"><div class="gin"><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gi" href=".././">🏠 허브</a><a class="gi" href="../dogam/">📖 도감</a><a class="gi" href="../pathogen/">🧫 병원체</a><a class="gi" href="../chronicle/">📜 연대기</a><a class="gi" href="../checker/">🩺 검사기</a><a class="gi" href="../field/">🚑 현장카드</a><a class="gi" href="../inflow/">🌐 유입지도</a><a class="gi" href="../cross/">🧪 교차검증</a><a class="gi" href="../lab/">🔬 진단검사</a><a class="gi" href="../quarantine/">🛂 검역</a><a class="gi" href="../policy/">🎛 정책실험</a><a class="gi" href="../sim/">📈 유행모형</a><a class="gi" href="../daily/">📡 상황판</a><a class="gi" href="../flu/">🦠 인플루엔자</a><a class="gi" href="../law/">⚖ 법령</a><a class="gi on" href="../data/">⬇ 자료실</a></div></nav><script>(function(){var a=document.querySelector(".gnav a.on");if(a){var p=a.parentNode;p.scrollLeft=a.offsetLeft-p.clientWidth/2+a.offsetWidth/2;}})();</script>
+<div class="printonly printhead" id="printhead"><b>감염병 데이터센터 | 감염병 자료 아카이브</b> — 감염병 자료 아카이브 · 제작 jieumworks.com<br><span class="purl"></span> · <span class="pdate"></span> · 원자료: 질병관리청 · 법제처</div>
+<nav class="gnav" aria-label="전체 메뉴"><div class="gin"><a class="gskip" href="#main">본문으로 건너뛰기</a><a class="gbrand" href=".././">🦠 감염병 자료 아카이브<i>.</i></a><a class="gsearch" href="../search/" title="감염병명·국가·연도·지침·법령 검색">🔍 검색</a><button class="gburger" type="button" aria-expanded="false" aria-controls="gmenu">☰ 메뉴</button><div class="gmenu" id="gmenu"><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">📡 오늘의 상황<span class="car">▾</span></button><div class="gd"><a class="gi" href="../daily/">감염병 상황판<small>WHO·CDC·질병관리청 새 소식</small></a><a class="gi" href="../flu/">인플루엔자 감시<small>아형·백신 정합성·주간 검출</small></a><a class="gi" href="../inflow/">해외유입 지도<small>지정국에서 실제로 얼마나 들어오나</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지금 Q-CODE를 내야 하는 나라</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🚑 질병·현장대응<span class="car">▾</span></button><div class="gd"><a class="gi" href="../dogam/">감염병 도감<small>91종 법정감염병 정보</small></a><a class="gi" href="../field/">현장 대응카드<small>신고·격리·잠복기·지침 한 화면</small></a><a class="gi" href="../guides/">관리지침<small>1,727 계열 · 2,347건</small></a><a class="gi" href="../vaccine/">예방접종<small>접종률과 집단면역 임계치</small></a><a class="gi" href="../lab/">진단검사<small>병원체 검출 감시</small></a><a class="gi" href="../pathogen/">병원체 도감<small>형태·분류</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">⚖ 제도·근거<span class="car">▾</span></button><div class="gd"><a class="gi" href="../chronicle/">감염병 연대기<small>급수·감시체계 변천 타임머신</small></a><a class="gi" href="../law/">감염병예방법 70년<small>법령 연혁 192건</small></a><a class="gi" href="../whitepaper/">백서<small>질병관리청 백서 19판</small></a><a class="gi" href="../guides/">지침 아카이브<small>연도별 지침·서식</small></a><a class="gi" href="../hall/">연도별 전시관<small>해마다 무엇이 달라졌나</small></a><a class="gi" href="../brief/">검토 보고<small>위험평가 도구 검토</small></a></div></div><div class="gg"><button class="gt" type="button" aria-expanded="false" aria-haspopup="true">🧪 분석·실험<span class="car">▾</span></button><div class="gd"><a class="gi" href="../checker/">단절점 검사기<small>두 연도를 비교해도 되나</small></a><a class="gi" href="../cross/">교차검증<small>신고 수와 검출 수 맞대기</small></a><a class="gi" href="../quarantine/">검역관리지역<small>지정 이력과 단절점</small></a><a class="gi" href="../inflow/">해외유입 분석<small>직항·입국자·유입 신고</small></a><a class="gi" href="../policy/">검역 정책실험실<small>나라를 넣고 빼면 무엇이 새나</small></a><a class="gi" href="../sim/">유행 시뮬레이터<small>R₀·격리·접종 손잡이</small></a></div></div><div class="gg"><button class="gt on" type="button" aria-expanded="false" aria-haspopup="true">⬇ 데이터<span class="car">▾</span></button><div class="gd"><a class="gi on" href="../data/" aria-current="page">데이터 다운로드<small>CSV · JSON 27개 파일</small></a><a class="gi on" href="../data/#use" aria-current="page">데이터 출처·이용 안내<small>어디서 왔고 어떻게 써야 하나</small></a><a class="gi" href="https://github.com/soonryu74/disease" target="_blank" rel="noopener">원자료 저장소 (GitHub)<small>수집 코드와 원본</small></a><a class="gi" href="https://github.com/soonryu74/disease/commits" target="_blank" rel="noopener">오류·수정 기록<small>변경 이력</small></a></div></div></div></div></nav><script>
+(function(){
+  var nav=document.querySelector('nav.gnav'); if(!nav) return;
+
+  /* 쪽 안에서 위에 붙어 다니는 줄(검색·거르개)이 메뉴와 겹치지 않게, 메뉴 높이를 재어 알려 준다.
+     예전에는 쪽마다 47px·52px 처럼 숫자를 박아 두었는데, 그 숫자는 지금은 감춰진
+     '쪽 자체의 메뉴' 높이였다. 그래서 화면 폭에 따라 틈이 생기거나 메뉴 밑으로 숨었다.
+     메뉴가 붙어 다니지 않는 폭에서는 0을 넣는다. */
+  function navh(){
+    var stuck = /sticky|fixed/.test(getComputedStyle(nav).position);
+    var h = stuck ? Math.round(nav.getBoundingClientRect().height) : 0;
+    document.documentElement.style.setProperty('--navh', h + 'px');
+  }
+  navh();
+  addEventListener('resize', navh);
+  addEventListener('load', navh);
+
+  var burger=nav.querySelector('.gburger');
+  function closeAll(except){ nav.querySelectorAll('.gg.open').forEach(function(g){ if(g!==except){ g.classList.remove('open'); g.querySelector('.gt').setAttribute('aria-expanded','false'); } }); }
+  nav.querySelectorAll('.gt').forEach(function(t){
+    t.addEventListener('click',function(){ var g=t.parentNode, open=!g.classList.contains('open'); closeAll(g); g.classList.toggle('open',open); t.setAttribute('aria-expanded',open?'true':'false'); });
+  });
+  if(burger){ burger.addEventListener('click',function(){ var open=!nav.classList.contains('open'); nav.classList.toggle('open',open); burger.setAttribute('aria-expanded',open?'true':'false'); burger.textContent=open?'✕ 닫기':'☰ 메뉴'; if(open){ var on=nav.querySelector('.gt.on'); if(on){ on.parentNode.classList.add('open'); on.setAttribute('aria-expanded','true'); } } }); }
+  document.addEventListener('click',function(e){ if(!nav.contains(e.target)) closeAll(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape'){ closeAll(); if(nav.classList.contains('open')&&burger) burger.click(); } });
+})();
+</script>
 <nav><div class="in">
   <span class="brand">🦠 감염병 자료 아카이브<span class="dot">.</span></span>
   <a href="../">🏠 허브</a><a href="../chronicle/">📜 연대기</a><a href="../cross/">🧪 교차검증</a><a href="../lab/">🔬 진단검사</a><a href="../quarantine/">🛂 검역</a>
 </div></nav>
 
 <div class="wrap">
-<header>
+<header id="main">
   <p class="eyebrow">Open Data</p>
   <h1>자료 내려받기</h1>
   <p class="thesis">이 사이트가 쓰는 데이터를 그대로 공개한다. 질병관리청은 PDF로 내지만
@@ -163,6 +336,7 @@ nav:not(.gnav){display:none !important}
   모든 표에 <b>출처호</b> 열이 있어 어느 권 몇 호에서 온 수치인지 되짚을 수 있다.</p>
   <p class="meta num" id="meta"></p>
 </header>
+<div class="plainsum"><b>쉽게 말하면</b><p>이 사이트가 쓰는 자료 파일을 그대로 내려받는 곳입니다.</p><p>엑셀이나 통계 프로그램에 바로 넣을 수 있습니다.</p><p>받기 전에 앞 몇 줄을 미리 볼 수 있습니다.</p></div>
 
 <div class="note">
   <b>받기 전에 — 이 자료를 잘못 쓰는 가장 흔한 방법</b>
@@ -173,6 +347,11 @@ nav:not(.gnav){display:none !important}
   </ul>
 </div>
 
+<div class="dtools">
+  <label for="dq" style="position:absolute;left:-9999px">데이터셋 검색</label>
+  <input id="dq" type="search" placeholder="데이터셋을 검색하세요 — 예: 신고통계, 검역, 예방접종, 법령" autocomplete="off">
+</div>
+<div class="dcats" id="dcats" role="group" aria-label="분야 거르개"></div>
 <div id="groups"></div>
 
 <div class="note" style="background:var(--surface-2);color:var(--ink)">
@@ -185,35 +364,122 @@ nav:not(.gnav){display:none !important}
 </div>
 
 <footer>
-  <div class="maker">제작: <a href="https://jieumworks.com" target="_blank" rel="noopener"><b>지움웍스</b> jieumworks.com</a> · 2026년 9월</div>
   <div>원자료: 질병관리청(주간 건강과 질병·감염병포털·검역관리지역 안내) · 법제처 국가법령정보 —
     <a href="https://github.com/soonryu74/disease/tree/claude/infectious-disease-resources-org-kbjcfz" target="_blank" rel="noopener">저장소 전체(GitHub)</a></div>
 </footer>
 </div>
 
 <script>
-const D = {"groups":[{"title":"⑮ 해외유입 지도","page":"../inflow/","desc":"검역 지정 · 항공 도착 · 국적별 입국 · 유입 신고를 나라 하나로 묶은 표.","items":[{"file":"국가별_유입_종합.csv","note":"219개국 — 직항 도착여객(환승 제외)·국적별 입국자·검역 지정 종수·유입 신고·백만 명당 건수.","caution":"분모가 둘이다. 국적(여권)과 노선(항공권)은 서로 다른 사람을 센다. 신고 3건 미만의 비율은 순위로 쓰지 말 것.","size":"14 KB","rows":220,"kind":"CSV","repo":"15_해외유입_지도/data/국가별_유입_종합.csv"},{"file":"국토부_국가별_도착여객.csv","note":"국토교통부 지역·국가별 항공통계 — 2024·2025·2026(1~7월) 도착 여객기 전체·환승.","caution":"직항 노선이 있는 나라만 있다. 경유 입국은 경유지 나라로 잡힌다.","size":"7 KB","rows":178,"kind":"CSV","repo":"15_해외유입_지도/data/국토부_국가별_도착여객.csv"},{"file":"법무부_국적별_입국자.csv","note":"법무부 통계월보 — 2022-01~2026-07 월별·국적별 외국인 입국자 (공공데이터포털 15099989 원본).","caution":"외국인만 있다. 우리 국민 귀국자는 없다.","size":"272 KB","rows":10829,"kind":"CSV","repo":"15_해외유입_지도/data/법무부_국적별_입국자.csv"}]},{"title":"⑬ 교차검증","page":"../cross/","desc":"신고 축과 검출 축을 겹쳐 놓은 판정 결과.","items":[{"file":"교차검증.json","note":"대조쌍 7 · 이례 26 · 유입국 44 · 원문 발견 4건. 페이지가 그대로 쓰는 원본.","caution":"판정은 이 저장소의 계산이며 질병관리청의 공식 해석이 아니다.","size":"136 KB","rows":null,"kind":"JSON","repo":"13_교차검증/data/교차검증.json"}]},{"title":"⑫ 신고 감시","page":"../lab/","desc":"「주간 건강과 질병」 환자감시(신고) 표. 4주 간격 36개 주차.","items":[{"file":"전수감시_주간신고.csv","note":"62종 × 36주 — 금주 신고수·연 누계·5년 주별 평균·예년대비배수.","caution":"'열부분추출=Y'는 원문에서 5년평균 칸이 비어 열 수가 달랐던 행이다(매독·엠폭스). 앞 두 칸만 신뢰할 것.","size":"96 KB","rows":1675,"kind":"CSV","repo":"12_신고_감시/data/전수감시_주간신고.csv"},{"file":"해외유입_신고국가.csv","note":"유입 신고 193건 — 감염병 × 국가 × 신고수.","caution":"2024년 43주 뎅기열의 '온두리스'는 원문 오기다(온두라스).","size":"8 KB","rows":193,"kind":"CSV","repo":"12_신고_감시/data/해외유입_신고국가.csv"},{"file":"표본감시_의사환자분율.csv","note":"인플루엔자 ILI·수족구·안과감염병 (외래 1,000명당) + 표본기관 수.","caution":"","size":"2 KB","rows":36,"kind":"CSV","repo":"12_신고_감시/data/표본감시_의사환자분율.csv"},{"file":"연도별_확정신고수.csv","note":"감염병 × 연도 확정 통계.","caution":"","size":"15 KB","rows":433,"kind":"CSV","repo":"12_신고_감시/data/연도별_확정신고수.csv"},{"file":"성매개감염병_기관당신고.csv","note":"5종 보고기관당 신고수.","caution":"","size":"6 KB","rows":180,"kind":"CSV","repo":"12_신고_감시/data/성매개감염병_기관당신고.csv"},{"file":"수인성식품매개_집단발생.csv","note":"주간 집단발생 건수·환자수.","caution":"","size":"987 B","rows":36,"kind":"CSV","repo":"12_신고_감시/data/수인성식품매개_집단발생.csv"},{"file":"표기_원장.json","note":"원문 표기 흔들림과 통합 규칙.","caution":"CRE는 3년 사이 표기가 세 번 바뀌었다.","size":"971 B","rows":null,"kind":"JSON","repo":"12_신고_감시/data/표기_원장.json"}]},{"title":"⑩ 진단검사 감시","page":"../lab/","desc":"병원체감시(검출률) 표. 2023년 48주 ~ 2026년 35주.","items":[{"file":"호흡기바이러스_주간검출률.csv","note":"총검출률 + 9종 주별 검출률(%). 139주.","caution":"한 검체에서 둘 이상 검출될 수 있어 개별 병원체의 합은 총검출률과 다르다.","size":"8 KB","rows":139,"kind":"CSV","repo":"10_진단검사_감시/data/호흡기바이러스_주간검출률.csv"},{"file":"급성설사세균_주간분리.csv","note":"검체 수 + 9종 건수·분리율. 138주.","caution":"","size":"12 KB","rows":138,"kind":"CSV","repo":"10_진단검사_감시/data/급성설사세균_주간분리.csv"},{"file":"급성설사바이러스_주간검출.csv","note":"검체 수 + 5종 건수·검출률. 139주.","caution":"5세 이하 아동 검체만 대상이다.","size":"8 KB","rows":139,"kind":"CSV","repo":"10_진단검사_감시/data/급성설사바이러스_주간검출.csv"},{"file":"인플루엔자_양성률.csv","note":"양성률 + 아형(H1N1pdm09·H3N2·B) + 표본의료기관 수.","caution":"주간 시계열이 필요하면 호흡기바이러스 표의 인플루엔자 열을 쓰는 게 낫다.","size":"2 KB","rows":37,"kind":"CSV","repo":"10_진단검사_감시/data/인플루엔자_양성률.csv"},{"file":"엔테로바이러스_주간검출.csv","note":"검출률 + 임상증후군별(무균성수막염·수족구병·합병증 동반·기타).","caution":"","size":"2 KB","rows":37,"kind":"CSV","repo":"10_진단검사_감시/data/엔테로바이러스_주간검출.csv"},{"file":"수집원장.json","note":"어느 호에서 어떤 표를 몇 주치 얻었는지.","caution":"","size":"8 KB","rows":null,"kind":"JSON","repo":"10_진단검사_감시/data/수집원장.json"}]},{"title":"⑪ 검역관리지역","page":"../quarantine/","desc":"검역법 제5조 지정. 원문 매트릭스를 복원하고 공표 국가 수와 대조 검산했다.","items":[{"file":"2026Q3_중점검역관리지역.csv","note":"25개국 × 5종 매트릭스 (2026.7.1. 기준).","caution":"2026.9.7. 개정으로 현행은 31개국이다. 이 표는 대조 검산을 마친 시점의 것이다.","size":"670 B","rows":25,"kind":"CSV","repo":"11_검역관리지역/data/2026Q3_중점검역관리지역.csv"},{"file":"2026Q3_검역관리지역.csv","note":"173개국 × 15종 매트릭스 (2026.7.1. 기준).","caution":"","size":"6 KB","rows":173,"kind":"CSV","repo":"11_검역관리지역/data/2026Q3_검역관리지역.csv"},{"file":"지정이력.json","note":"2024년 상반기~2026년 3분기 시기별 요약 · 단절점 4건 · 세계 상황 매칭.","caution":"분기 도중 개정이 잦다. 분기 시작일 자료만 보면 틀린다.","size":"10 KB","rows":null,"kind":"JSON","repo":"11_검역관리지역/data/지정이력.json"},{"file":"2026Q3_지정내역.json","note":"감염병별 국가 목록과 검산 결과.","caution":"","size":"2 KB","rows":null,"kind":"JSON","repo":"11_검역관리지역/data/2026Q3_지정내역.json"}]},{"title":"⑨ 연대기 · ⑧ 검사기","page":"../chronicle/","desc":"시점 인지형 국면과 비교 가능성 규칙.","items":[{"file":"연대기.json","note":"법정감염병 91종 × 국면(지위·감시·신고·격리·범위·분모) + 단절점 32건 + 오류 원장.","caution":"⭐ 전 구간 원문 대조 12종 외 79종은 매핑표 기반 자동 생성이다.","size":"105 KB","rows":null,"kind":"JSON","repo":"09_감염병연대기/data/연대기.json"},{"file":"비교가능성_규칙.json","note":"81항목 비교 가능성 규칙 — 단절점·결측 구간·부분연도.","caution":"","size":"36 KB","rows":null,"kind":"JSON","repo":"08_비교가능성_검사기/data/비교가능성_규칙.json"},{"file":"별칭사전.json","note":"옛 이름·별칭 사전(나병→한센병, 원숭이두창→엠폭스 등)과 시점별 유효 구간.","caution":"","size":"5 KB","rows":null,"kind":"JSON","repo":"05_감염병_질병정보/별칭사전.json"}]},{"title":"① 법령 · ② 지침 · ③ 백서","page":"../law/","desc":"제도 축.","items":[{"file":"감염병예방법_연혁_전체.csv","note":"감염병예방법 시행 버전 연혁(1954~).","caution":"","size":"22 KB","rows":192,"kind":"CSV","repo":"01_감염병예방법_연혁/data/감염병예방법_연혁_전체.csv"},{"file":"급수변동_이력.json","note":"급수·감시체계 변경 이력 16건.","caution":"","size":"9 KB","rows":null,"kind":"JSON","repo":"01_감염병예방법_연혁/data/급수변동_이력.json"},{"file":"감염병지정고시_연혁.json","note":"고시 지정 연혁.","caution":"","size":"2 KB","rows":null,"kind":"JSON","repo":"01_감염병예방법_연혁/data/감염병지정고시_연혁.json"},{"file":"지침_통합목록.csv","note":"관리지침 통합 목록 — 누리집 지침 게시판 전량 + 감염병포털 358건, 제목·연도로 중복 제거. 계열별 최신판·판 수 표기.","caution":"감염병포털 게시판만 보면 2023년 이후 신판(바이러스 간염 통합지침 등)이 빠진다. 현행은 누리집 게시판이 정본.","size":"492 KB","rows":2347,"kind":"CSV","repo":"02_지침_정리/data/지침_통합목록.csv"},{"file":"지침_전체목록_KDCA게시판.csv","note":"질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량.","caution":"","size":"343 KB","rows":2469,"kind":"CSV","repo":"02_지침_정리/data/지침_전체목록_KDCA게시판.csv"},{"file":"지침_전체목록_감염병포털.csv","note":"감염병포털 게시판 358건(2002~2026).","caution":"2022년 이후 갱신이 드문 게시판이다.","size":"66 KB","rows":358,"kind":"CSV","repo":"02_지침_정리/data/지침_전체목록_감염병포털.csv"},{"file":"전수감시_신고수_2016_2025.csv","note":"연보 기반 전수감시 신고수(2016~2025).","caution":"","size":"5 KB","rows":73,"kind":"CSV","repo":"03_백서_정리/data/전수감시_신고수_2016_2025.csv"},{"file":"표본감시_기관수_2001_2025.csv","note":"표본감시 참여기관 수(2001~2025) — 분모 변화 원장.","caution":"기관 수가 바뀐 해는 앞뒤 비교가 불가능하다.","size":"2 KB","rows":9,"kind":"CSV","repo":"03_백서_정리/data/표본감시_기관수_2001_2025.csv"}]}],"total_files":32,"total_size":"1703 KB"};
+const D = {"groups":[{"title":"⑱ 예방접종","page":"../vaccine/","desc":"「전국 어린이 예방접종률 현황」과 집단면역 문턱 계산에 쓴 값.","items":[{"name":"어린이_예방접종률","note":"연도 × 연령 × 백신 접종률·접종자수(2017~2025). 예방접종도우미 게시글 본문 표에서 그대로 뽑았다.","caution":"'완전'의 뜻이 해마다 바뀐다 — 2017년 9종에서 2025년 13종으로 늘었다. 연도를 그냥 이으면 안 된다. 원문 이상값은 '이상' 열에 표시만 하고 지우지 않았다.","rows":664,"cols":7,"head":["연도","연령","출생연도","백신","항목","값","이상"],"y0":2017,"y1":2025,"updated":"2026-09-12","sample":[["2025","13세","2012","BCG","접종자","472272.0",""],["2025","13세","2012","BCG","접종률","97.0",""],["2025","13세","2012","HepB","접종자","470391.0",""],["2025","13세","2012","HepB","접종률","96.6",""]],"cover":null,"repo":"18_예방접종/data/어린이_예방접종률.csv","files":[{"f":"어린이_예방접종률.csv","k":"CSV","z":"26 KB"},{"f":"어린이_예방접종률.json","k":"JSON","z":"95 KB"}],"src":"질병관리청 예방접종도우미","brk":true},{"name":"백신_감염병_연결","note":"백신 ↔ 법정감염병 ↔ 백신 효과(VE). 집단면역 문턱 Vc = (1 − 1/R₀)/VE 계산의 입력이다.","caution":"VE는 문헌의 대표값이며 접종 횟수·경과 기간·유행 균주에 따라 크게 달라진다. 사실의 진술이 아니라 계산의 입력이다.","rows":12,"cols":null,"head":["_about","as_of","threshold_note","vaccines","disease_ve_override"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"18_예방접종/data/백신_감염병_연결.json","files":[{"f":"백신_감염병_연결.json","k":"JSON","z":"4 KB"}],"src":"질병관리청 예방접종도우미","brk":false}]},{"title":"⑮ 해외유입 지도","page":"../inflow/","desc":"검역 지정 · 항공 도착 · 국적별 입국 · 유입 신고를 나라 하나로 묶은 표.","items":[{"name":"국가별_유입_종합","note":"219개국 — 직항 도착여객(환승 제외)·국적별 입국자·검역 지정 종수·유입 신고·백만 명당 건수.","caution":"분모가 둘이다. 국적(여권)과 노선(항공권)은 서로 다른 사람을 센다. 신고 3건 미만의 비율은 순위로 쓰지 말 것.","rows":220,"cols":14,"head":["ISO3","국가","지역","직항도착여객(환승제외)","환승여객","도착편수","외국인입국자(국적)","검역관리지역_종수","중점_종수","유입신고_건수","유입신고_질병","건수_백만직항여객당","건수_백만입국자당","국적/노선비"],"y0":null,"y1":null,"updated":"2026-10-05","sample":[["ABW","아루바","아메리카","","","","","1"],["AFG","아프가니스탄","아시아","","","","921","5"],["AGO","앙골라","아프리카","","","","800","6"],["AIA","앵귈라","아메리카","","","","","1"]],"cover":null,"repo":"15_해외유입_지도/data/국가별_유입_종합.csv","files":[{"f":"국가별_유입_종합.csv","k":"CSV","z":"14 KB"}],"src":"질병관리청 · 국토교통부 · 법무부","brk":false},{"name":"국토부_국가별_도착여객","note":"국토교통부 지역·국가별 항공통계 — 2024·2025·2026(1~7월) 도착 여객기 전체·환승.","caution":"직항 노선이 있는 나라만 있다. 경유 입국은 경유지 나라로 잡힌다.","rows":178,"cols":6,"head":["연도","지역","국가","도착편수","도착여객_전체","도착여객_환승"],"y0":2024,"y1":2026,"updated":"2026-09-12","sample":[["2024","대양주","괌","2245","418204","10043"],["2024","유럽","그리스","26","6359","1"],["2024","대양주","나우루","1","5","5"],["2024","유럽","네덜란드","545","152788","10891"]],"cover":null,"repo":"15_해외유입_지도/data/국토부_국가별_도착여객.csv","files":[{"f":"국토부_국가별_도착여객.csv","k":"CSV","z":"7 KB"}],"src":"질병관리청 · 국토교통부 · 법무부","brk":false},{"name":"법무부_국적별_입국자","note":"법무부 통계월보 — 2022-01~2026-07 월별·국적별 외국인 입국자 (공공데이터포털 15099989 원본).","caution":"외국인만 있다. 우리 국민 귀국자는 없다.","rows":10829,"cols":4,"head":["년","월","국적지역","입국자수"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[["2022","01","미국","20123"],["2022","01","필리핀","9478"],["2022","01","중국","8408"],["2022","01","미얀마","5228"]],"cover":null,"repo":"15_해외유입_지도/data/법무부_국적별_입국자.csv","files":[{"f":"법무부_국적별_입국자.csv","k":"CSV","z":"272 KB"}],"src":"질병관리청 · 국토교통부 · 법무부","brk":false}]},{"title":"⑬ 교차검증","page":"../cross/","desc":"신고 축과 검출 축을 겹쳐 놓은 판정 결과.","items":[{"name":"교차검증","note":"대조쌍 7 · 이례 26 · 유입국 44 · 원문 발견 4건. 페이지가 그대로 쓰는 원본.","caution":"판정은 이 저장소의 계산이며 질병관리청의 공식 해석이 아니다.","rows":44,"cols":null,"head":["built_from","pairs","anomalies","inflow","findings","min_pairs","min_base"],"y0":null,"y1":null,"updated":"2026-09-24","sample":[],"cover":null,"repo":"13_교차검증/data/교차검증.json","files":[{"f":"교차검증.json","k":"JSON","z":"136 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":false}]},{"title":"⑫ 신고 감시","page":"../lab/","desc":"「주간 건강과 질병」 환자감시(신고) 표. 4주 간격 36개 주차.","items":[{"name":"전수감시_주간신고","note":"62종 × 36주 — 금주 신고수·연 누계·5년 주별 평균·예년대비배수.","caution":"'열부분추출=Y'는 원문에서 5년평균 칸이 비어 열 수가 달랐던 행이다(매독·엠폭스). 앞 두 칸만 신뢰할 것.","rows":1675,"cols":11,"head":["연도","주차","기준일","급","감염병","금주신고수","연누계","5년주별평균","예년대비배수","열부분추출","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","52","2023-12-30","2","결핵","305","15920","291.0"],["2023","52","2023-12-30","2","수두","656","26801","1376.0"],["2023","52","2023-12-30","2","홍역","0","8","0.0"],["2023","52","2023-12-30","2","콜레라","0","0","0.0"]],"cover":null,"repo":"12_신고_감시/data/전수감시_주간신고.csv","files":[{"f":"전수감시_주간신고.csv","k":"CSV","z":"96 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"해외유입_신고국가","note":"유입 신고 193건 — 감염병 × 국가 × 신고수.","caution":"2024년 43주 뎅기열의 '온두리스'는 원문 오기다(온두라스).","rows":193,"cols":6,"head":["연도","주차","감염병","유입국가","신고수","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","52","말라리아","인도네시아","1","17-1"],["2023","52","뎅기열","대만","1","17-1"],["2024","1","말라리아","부르키나파소","1","17-2"],["2024","1","뎅기열","베트남","1","17-2"]],"cover":null,"repo":"12_신고_감시/data/해외유입_신고국가.csv","files":[{"f":"해외유입_신고국가.csv","k":"CSV","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"표본감시_의사환자분율","note":"인플루엔자 ILI·수족구·안과감염병 (외래 1,000명당) + 표본기관 수.","caution":"","rows":36,"cols":11,"head":["인플루엔자_주차","인플루엔자_기준일","ILI_1000명당","ILI_표본기관수","ILI_유행기준","수족구_주차","수족구_1000명당","수족구_표본기관수","유행성각결막염_1000명당","급성출혈성결막염_1000명당","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["51","2023-12-23","43.3","195","","52","0.8","109"],["52","2023-12-30","49.9","195","","1","1.1","109"],["5","2024-02-03","27.2","198","","6","1.0","110"],["9","2024-03-02","14.8","198","","10","0.7","109"]],"cover":null,"repo":"12_신고_감시/data/표본감시_의사환자분율.csv","files":[{"f":"표본감시_의사환자분율.csv","k":"CSV","z":"2 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"연도별_확정신고수","note":"감염병 × 연도 확정 통계.","caution":"","rows":433,"cols":4,"head":["감염병","연도","신고수","출처호"],"y0":2018,"y1":2025,"updated":"2026-09-12","sample":[["A형간염","2018","2437","17-1"],["A형간염","2019","17598","17-50"],["A형간염","2020","3989","18-50"],["A형간염","2021","6583","19-34"]],"cover":null,"repo":"12_신고_감시/data/연도별_확정신고수.csv","files":[{"f":"연도별_확정신고수.csv","k":"CSV","z":"15 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"성매개감염병_기관당신고","note":"5종 보고기관당 신고수.","caution":"","rows":180,"cols":4,"head":["주차","감염병","보고기관당_신고수","출처호"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[["52","사람유두종바이러스 감염증","4.7","17-1"],["52","성기단순포진","2.3","17-1"],["52","첨규콘딜롬","1.6","17-1"],["52","클라미디아 감염증","1.5","17-1"]],"cover":null,"repo":"12_신고_감시/data/성매개감염병_기관당신고.csv","files":[{"f":"성매개감염병_기관당신고.csv","k":"CSV","z":"6 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"수인성식품매개_집단발생","note":"주간 집단발생 건수·환자수.","caution":"","rows":36,"cols":6,"head":["주차","금주_건수","금주_환자수","누적_건수","누적_환자수","출처호"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[["52","19","392","603","12005","17-1"],["1","13","138","13","138","17-2"],["6","9","213","72","942","17-6"],["10","11","216","106","1496","17-10"]],"cover":null,"repo":"12_신고_감시/data/수인성식품매개_집단발생.csv","files":[{"f":"수인성식품매개_집단발생.csv","k":"CSV","z":"987 B"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"표기_원장","note":"원문 표기 흔들림과 통합 규칙.","caution":"CRE는 3년 사이 표기가 세 번 바뀌었다.","rows":4,"cols":null,"head":["표기_통합","표기_변경"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"12_신고_감시/data/표기_원장.json","files":[{"f":"표기_원장.json","k":"JSON","z":"971 B"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":false}]},{"title":"⑩ 진단검사 감시","page":"../lab/","desc":"병원체감시(검출률) 표. 2023년 48주 ~ 2026년 35주.","items":[{"name":"호흡기바이러스_주간검출률","note":"총검출률 + 9종 주별 검출률(%). 139주.","caution":"한 검체에서 둘 이상 검출될 수 있어 개별 병원체의 합은 총검출률과 다르다.","rows":139,"cols":13,"head":["연도","주차","총검출률","아데노","보카","파라인플루엔자","RSV","리노","메타뉴모","코로나","인플루엔자","코로나19","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","49","93.0","9.0","2.0","2.0","5.9","13.4"],["2023","50","98.2","9.0","2.4","0.7","8.8","10.8"],["2023","51","95.3","12.5","3.1","0.5","8.8","11.2"],["2023","52","94.8","7.4","1.5","0.9","12.0","8.3"]],"cover":null,"repo":"10_진단검사_감시/data/호흡기바이러스_주간검출률.csv","files":[{"f":"호흡기바이러스_주간검출률.csv","k":"CSV","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"급성설사세균_주간분리","note":"검체 수 + 9종 건수·분리율. 138주.","caution":"","rows":138,"cols":24,"head":["연도","주차","검체수","살모넬라_건수","살모넬라_분리율","병원성대장균_건수","병원성대장균_분리율","세균성이질_건수","세균성이질_분리율","장염비브리오_건수","장염비브리오_분리율","비브리오콜레라_건수","비브리오콜레라_분리율","캄필로박터_건수"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","48","202","7","3.5","6","3.0","0"],["2023","49","208","3","1.4","7","3.7","0"],["2023","50","233","0","0.0","7","3.0","0"],["2023","51","221","4","1.8","2","0.9","0"]],"cover":null,"repo":"10_진단검사_감시/data/급성설사세균_주간분리.csv","files":[{"f":"급성설사세균_주간분리.csv","k":"CSV","z":"12 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"급성설사바이러스_주간검출","note":"검체 수 + 5종 건수·검출률. 139주.","caution":"5세 이하 아동 검체만 대상이다.","rows":139,"cols":16,"head":["연도","주차","검체수","노로_건수","노로_검출률","그룹A로타_건수","그룹A로타_검출률","장내아데노_건수","장내아데노_검출률","아스트로_건수","아스트로_검출률","사포_건수","사포_검출률","합계_건수"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","48","48","10","20.8","1","2.1","0"],["2023","49","44","13","29.5","1","2.3","2"],["2023","50","52","21","40.4","3","5.8","0"],["2023","51","52","22","42.3","1","1.9","0"]],"cover":null,"repo":"10_진단검사_감시/data/급성설사바이러스_주간검출.csv","files":[{"f":"급성설사바이러스_주간검출.csv","k":"CSV","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"인플루엔자_양성률","note":"양성률 + 아형(H1N1pdm09·H3N2·B) + 표본의료기관 수.","caution":"주간 시계열이 필요하면 호흡기바이러스 표의 인플루엔자 열을 쓰는 게 낫다.","rows":37,"cols":9,"head":["연도","주차","기준일","양성률","A_H1N1pdm09","A_H3N2","B","표본의료기관수","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","52","2023-12-30","39.5","","","",""],["2024","1","2024-01-06","40.9","","","",""],["2024","6","2024-02-10","16.2","","","",""],["2024","10","2024-03-09","5.7","","","",""]],"cover":null,"repo":"10_진단검사_감시/data/인플루엔자_양성률.csv","files":[{"f":"인플루엔자_양성률.csv","k":"CSV","z":"2 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"엔테로바이러스_주간검출","note":"검출률 + 임상증후군별(무균성수막염·수족구병·합병증 동반·기타).","caution":"","rows":37,"cols":11,"head":["연도","주차","기준일","검출률","양성건수","검체수","무균성수막염","수족구병_포진성구협염","합병증동반수족구병","기타","출처호"],"y0":2023,"y1":2026,"updated":"2026-09-12","sample":[["2023","51","2023-12-23","12.5","1","8","0","1"],["2023","52","2023-12-30","14.3","1","7","0","0"],["2024","5","2024-02-03","0.0","0","2","0","0"],["2024","9","2024-03-02","0.0","0","4","0","0"]],"cover":null,"repo":"10_진단검사_감시/data/엔테로바이러스_주간검출.csv","files":[{"f":"엔테로바이러스_주간검출.csv","k":"CSV","z":"2 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":true},{"name":"수집원장","note":"어느 호에서 어떤 표를 몇 주치 얻었는지.","caution":"","rows":37,"cols":null,"head":["수집호수","원장"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"10_진단검사_감시/data/수집원장.json","files":[{"f":"수집원장.json","k":"JSON","z":"8 KB"}],"src":"질병관리청 주간 건강과 질병(PHWR)","brk":false}]},{"title":"⑪ 검역관리지역","page":"../quarantine/","desc":"검역법 제5조 지정. 원문 매트릭스를 복원하고 공표 국가 수와 대조 검산했다.","items":[{"name":"2026Q3_중점검역관리지역","note":"25개국 × 5종 매트릭스 (2026.7.1. 기준).","caution":"2026.9.7. 개정으로 현행은 31개국이다. 이 표는 대조 검산을 마친 시점의 것이다.","rows":25,"cols":6,"head":["국가(지역)","페스트","동물인플루엔자인체감염증","중동호흡기증후군","니파바이러스감염증","에볼라바이러스병"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[["남수단","","","","","●"],["레바논","","","●","",""],["르완다","","","","","●"],["마다가스카르","●","","","",""]],"cover":null,"repo":"11_검역관리지역/data/2026Q3_중점검역관리지역.csv","files":[{"f":"2026Q3_중점검역관리지역.csv","k":"CSV","z":"670 B"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false},{"name":"2026Q3_검역관리지역","note":"173개국 × 15종 매트릭스 (2026.7.1. 기준).","caution":"","rows":173,"cols":16,"head":["국가(지역)","동물인플루엔자인체감염증","에볼라바이러스병","중동호흡기증후군","페스트","콜레라","황열","마버그열","라싸열","크리미안콩고출혈열","폴리오","홍역","뎅기열","치쿤구니야열"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[["가나","","","","","●","●",""],["가봉","","","","","","●",""],["가이아나","","","","","","●",""],["감비아","","","","","","●",""]],"cover":null,"repo":"11_검역관리지역/data/2026Q3_검역관리지역.csv","files":[{"f":"2026Q3_검역관리지역.csv","k":"CSV","z":"6 KB"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false},{"name":"지정이력","note":"2024년 상반기~2026년 3분기 시기별 요약 · 단절점 4건 · 세계 상황 매칭.","caution":"분기 도중 개정이 잦다. 분기 시작일 자료만 보면 틀린다.","rows":16,"cols":null,"head":["schema","as_of","principle","legal_basis","definitions","structural_breaks","periods","matched_context","unverified"],"y0":null,"y1":null,"updated":"2026-10-05","sample":[],"cover":null,"repo":"11_검역관리지역/data/지정이력.json","files":[{"f":"지정이력.json","k":"JSON","z":"12 KB"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false},{"name":"2026Q3_지정내역","note":"감염병별 국가 목록과 검산 결과.","caution":"","rows":15,"cols":null,"head":["기준","출처","근거","과태료","검산","중점_감염병별_국가","검역_감염병별_국가수","중점_지역세부"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"11_검역관리지역/data/2026Q3_지정내역.json","files":[{"f":"2026Q3_지정내역.json","k":"JSON","z":"2 KB"}],"src":"질병관리청 검역 공지 · Q-CODE","brk":false}]},{"title":"⑨ 연대기 · ⑧ 검사기","page":"../chronicle/","desc":"시점 인지형 국면과 비교 가능성 규칙.","items":[{"name":"전시물","note":"연대기 전시관에 걸린 전시물 원장 — 법령 연혁·급수변동·지침 목록·백서 목록·연보 신고수·검역 지정이력·예방접종률에서 기계로 뽑아 연도별로 묶었다.","caution":"순위는 갈래별 가중치이며 중요도의 객관적 척도가 아니다. 무엇을 큰일로 볼지는 보는 사람이 정한다.","rows":29,"cols":null,"head":["as_of","span","total","themes","years","note"],"y0":null,"y1":null,"updated":"2026-09-15","sample":[],"cover":null,"repo":"09_감염병연대기/data/전시물.json","files":[{"f":"전시물.json","k":"JSON","z":"137 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false},{"name":"연대기","note":"법정감염병 91종 × 국면(지위·감시·신고·격리·범위·분모) + 단절점 32건 + 오류 원장.","caution":"⭐ 전 구간 원문 대조 12종 외 79종은 매핑표 기반 자동 생성이다.","rows":91,"cols":null,"head":["as_of","principle","diseases","epochs","errors","source","breaks","coverage"],"y0":null,"y1":null,"updated":"2026-09-24","sample":[],"cover":null,"repo":"09_감염병연대기/data/연대기.json","files":[{"f":"연대기.json","k":"JSON","z":"105 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false},{"name":"비교가능성_규칙","note":"81항목 비교 가능성 규칙 — 단절점·결측 구간·부분연도.","caution":"","rows":81,"cols":null,"head":["as_of","years","global","diseases","source"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"08_비교가능성_검사기/data/비교가능성_규칙.json","files":[{"f":"비교가능성_규칙.json","k":"JSON","z":"36 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false},{"name":"별칭사전","note":"옛 이름·별칭 사전(나병→한센병, 원숭이두창→엠폭스 등)과 시점별 유효 구간.","caution":"","rows":18,"cols":null,"head":["schema","as_of","principle","test_cases","entries"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"05_감염병_질병정보/별칭사전.json","files":[{"f":"별칭사전.json","k":"JSON","z":"5 KB"}],"src":"법제처 국가법령정보 · 질병관리청","brk":false}]},{"title":"① 법령 · ② 지침 · ③ 백서","page":"../law/","desc":"제도 축.","items":[{"name":"감염병예방법_연혁_전체","note":"감염병예방법 시행 버전 연혁(1954~).","caution":"","rows":192,"cols":9,"head":["법령구분","법령명","법령ID","법령일련번호(MST)","제개정구분","공포일자","공포번호","시행일자","연혁코드"],"y0":1954,"y1":2026,"updated":"2026-09-12","sample":[["국토교통부령","감염병의 예방 및 관리에 관한 법률 시행규칙","008083","156806","타법개정","20140708","00106","20140708"],["대통령령","전염병예방법시행령","004750","27809","제정","19570228","01257","19570228"],["대통령령","전염병예방법시행령","004750","27810","전부개정","19691117","04267","19691117"],["대통령령","전염병예방법시행령","004750","27811","일부개정","19770324","08515","19770701"]],"cover":null,"repo":"01_감염병예방법_연혁/data/감염병예방법_연혁_전체.csv","files":[{"f":"감염병예방법_연혁_전체.csv","k":"CSV","z":"22 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"급수변동_이력","note":"급수·감시체계 변경 이력 16건.","caution":"","rows":16,"cols":null,"head":["schema","as_of","caveat","events","totals_check"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"01_감염병예방법_연혁/data/급수변동_이력.json","files":[{"f":"급수변동_이력.json","k":"JSON","z":"9 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"감염병지정고시_연혁","note":"고시 지정 연혁.","caution":"","rows":10,"cols":null,"head":["as_of","source","note","gosi"],"y0":null,"y1":null,"updated":"2026-09-12","sample":[],"cover":null,"repo":"01_감염병예방법_연혁/data/감염병지정고시_연혁.json","files":[{"f":"감염병지정고시_연혁.json","k":"JSON","z":"2 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"지침_통합목록","note":"관리지침 통합 목록 — 누리집 게시판 5곳 전량 + 감염병포털, 제목·연도로 중복 제거. 계열키·판 수·최신판과 분야(감염병 / 그 밖) 표기. → 지침 서가에서 그대로 볼 수 있다.","caution":"감염병포털 게시판만 보면 2023년 이후 신판(바이러스 간염 통합지침 등)이 빠진다. 현행은 누리집 게시판이 정본. 지침 게시판에는 만성질환·건강증진 사업 지침도 섞여 오므로 '분야' 열로 걸러 쓸 것.","rows":2379,"cols":11,"head":["제목","등록일","연도","분야","출처","게시판","최신판","판수","URL","URL2","계열키"],"y0":1998,"y1":2026,"updated":"2026-10-11","sample":[["2026년 ｢결핵 및 잠복결핵감염관리 표준상담 사례집｣","2026.10.08","2026","감염병","KDCA게시판","교육자료","Y","3"],["수술·시술·내시경 전 CJD 관련 감염위험 선별 안내서","2026.10.07","2026","감염병","KDCA게시판","지침","Y","1"],["2026년 크로이츠펠트-야콥병(CJD) 안내서","2026.10.07","2026","감염병","KDCA게시판","지침","Y","5"],["2026 시설별 인플루엔자 관리지침(사업장용)","2026.10.01","2026","감염병","KDCA게시판","지침","Y","1"]],"cover":null,"repo":"02_지침_정리/data/지침_통합목록.csv","files":[{"f":"지침_통합목록.csv","k":"CSV","z":"521 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"지침_전체목록_KDCA게시판","note":"질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량.","caution":"","rows":2504,"cols":5,"head":["게시판","artclId","제목","등록일","URL"],"y0":2000,"y1":2026,"updated":"2026-10-11","sample":[["교육자료","312883","2026년 ｢결핵 및 잠복결핵감염관리 표준상담 사례집｣","2026.10.08","https://www.kdca.go.kr/bbs/kdca/49/312883/artclView.do"],["지침","312873","수술·시술·내시경 전 CJD 관련 감염위험 선별 안내서","2026.10.07","https://www.kdca.go.kr/bbs/kdca/55/312873/artclView.do"],["지침","312872","2026년 크로이츠펠트-야콥병(CJD) 안내서","2026.10.07","https://www.kdca.go.kr/bbs/kdca/55/312872/artclView.do"],["지침","312821","2026 시설별 인플루엔자 관리지침(사업장용)","2026.10.01","https://www.kdca.go.kr/bbs/kdca/55/312821/artclView.do"]],"cover":null,"repo":"02_지침_정리/data/지침_전체목록_KDCA게시판.csv","files":[{"f":"지침_전체목록_KDCA게시판.csv","k":"CSV","z":"348 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"지침_전체목록_감염병포털","note":"감염병포털 게시판 358건(2002~2026).","caution":"2022년 이후 갱신이 드문 게시판이다.","rows":358,"cols":6,"head":["번호","제목","등록일","조회","문서번호","URL"],"y0":2018,"y1":2026,"updated":"2026-09-12","sample":[["398","법정감염병 진단검사 통합지침(제5판)","2026.07.23","385","20260723171016500","https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1"],["397","엠폭스 관리지침(제3-1판)","2026.06.01","304","20260601083147987","https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1"],["396","2026년 성매개감염병 관리지침","2026.03.03","1058","20260303173721749","https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1"],["395","2026년도 한센병사업 관리지침","2026.02.24","593","20260224093345460","https://dportal.kdca.go.kr/pot/bbs/BD_selectBbs.do?q_bbsSn=1"]],"cover":null,"repo":"02_지침_정리/data/지침_전체목록_감염병포털.csv","files":[{"f":"지침_전체목록_감염병포털.csv","k":"CSV","z":"66 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"백서_목록","note":"질병관리청 백서 발간 이력 — 게시판 소스 실측. 화면에 안 보이는(주석 처리된) 항목과 표지 이미지 생존 여부를 함께 담았다.","caution":"2004~2011·2014~2015년판은 본문 PDF가 없다. 표지만 남아 있어 발간 사실만 확인된다.","rows":23,"cols":null,"head":["as_of","source","items","hidden","downloadable","mislinked"],"y0":null,"y1":null,"updated":"2026-09-15","sample":[],"cover":null,"repo":"03_백서_정리/data/백서_목록.json","files":[{"f":"백서_목록.json","k":"JSON","z":"7 KB"}],"src":"법제처 국가법령정보 Open API","brk":false},{"name":"전수감시_신고수_2016_2025","note":"연보 기반 전수감시 신고수(2016~2025).","caution":"","rows":73,"cols":13,"head":["급","감염병명","2016","2017","2018","2019","2020","2021","2022","2023","2024","2025","비고"],"y0":2016,"y1":2025,"updated":"2026-09-12","sample":[["제1급","에볼라바이러스병","-","-","-","-","0","0"],["제1급","마버그열","-","-","-","-","0","0"],["제1급","라싸열","-","-","-","-","0","0"],["제1급","크리미안콩고출혈열","-","-","-","-","0","0"]],"cover":[[2016,57],[2017,60],[2018,60],[2019,60],[2020,64],[2021,64],[2022,66],[2023,66],[2024,70],[2025,71]],"repo":"03_백서_정리/data/전수감시_신고수_2016_2025.csv","files":[{"f":"전수감시_신고수_2016_2025.csv","k":"CSV","z":"5 KB"}],"src":"법제처 국가법령정보 Open API","brk":true},{"name":"표본감시_기관수_2001_2025","note":"표본감시 참여기관 수(2001~2025) — 분모 변화 원장.","caution":"기관 수가 바뀐 해는 앞뒤 비교가 불가능하다.","rows":9,"cols":28,"head":["감시군","2000","2001","2002","2003","2004","2005","2006","2007","2008","2009","2010","2011","2012"],"y0":2000,"y1":2025,"updated":"2026-09-12","sample":[["인플루엔자(ILI)","70","541","578","624","679","678","701"],["기생충감염병","","","","","","",""],["합병증을 동반한 수족구병","","","","","","",""],["성매개감염병","","486","518","530","549","551","558"]],"cover":[[2000,1],[2001,3],[2002,3],[2003,3],[2004,3],[2005,3],[2006,3],[2007,3],[2008,3],[2009,4],[2010,4],[2011,9],[2012,9],[2013,9],[2014,9],[2015,9],[2016,9],[2017,9],[2018,9],[2019,9],[2020,9],[2021,9],[2022,9],[2023,9],[2024,9],[2025,9]],"repo":"03_백서_정리/data/표본감시_기관수_2001_2025.csv","files":[{"f":"표본감시_기관수_2001_2025.csv","k":"CSV","z":"2 KB"}],"src":"법제처 국가법령정보 Open API","brk":true}]}],"total_files":37,"total_size":"2007 KB"};
 const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 document.getElementById('meta').textContent =
   `파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
-document.getElementById('groups').innerHTML = D.groups.map(g => `
-  <div class="grp">
-    <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
-    <p class="gdesc">${esc(g.desc)}</p>
-    ${g.items.map(i => `
-      <div class="f">
-        <span class="kind k-${i.kind}">${i.kind}</span>
-        <div class="body">
-          <div class="nm">${esc(i.file)}</div>
-          <div class="no">${esc(i.note)}</div>
-          ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
-          <div class="sz num">${i.rows != null ? i.rows.toLocaleString() + '행 · ' : ''}${esc(i.size)} · 저장소 경로 ${esc(i.repo)}</div>
-        </div>
-        <a class="dl" href="files/${encodeURIComponent(i.file)}" download>⬇ 내려받기</a>
-      </div>`).join('')}
-  </div>`).join('');
+let dq='', dcat='전체';
+
+function human(n){ return n==null ? '—' : n.toLocaleString('ko-KR'); }
+function period(i){ return (i.y0 && i.y1) ? (i.y0===i.y1 ? String(i.y0) : i.y0+'–'+i.y1) : '—'; }
+
+function dsHtml(g, i){
+  const csv = i.files.find(f=>f.k==='CSV'), js = i.files.find(f=>f.k==='JSON');
+  const cite = `${i.name}. 감염병 자료 아카이브. 원자료: ${i.src}. 기준일: ${i.updated}. `
+             + `https://soonryu74.github.io/disease/data/`;
+  return `<div class="ds" id="ds-${esc(i.name)}">
+    <h3>${esc(i.name)} <span class="bdg archive">아카이브 재구성</span></h3>
+    <p class="no">${esc(i.note)}</p>
+    <div class="mt">
+      <div><b>${esc(period(i))}</b><span>수록 기간</span></div>
+      <div><b>${human(i.rows)}</b><span>행</span></div>
+      <div><b>${i.cols ? human(i.cols) : '—'}</b><span>열(변수)</span></div>
+      <div><b>${esc(i.updated)}</b><span>아카이브 갱신</span></div>
+      <div><b>${esc(i.files.map(f=>f.k).join(' · '))}</b><span>${esc(i.files.map(f=>f.z).join(' · '))}</span></div>
+      <div><b style="font-size:12.5px">${esc(i.src)}</b><span>원자료 출처</span></div>
+    </div>
+    ${i.caution ? `<div class="ca">⚠️ ${esc(i.caution)}</div>` : ''}
+    ${i.brk ? `<div class="ca">⚠️ 연도를 이어 읽는 자료입니다. 감시체계·사례정의가 바뀐 해가 있을 수 있으니
+      <b>비교 전에 단절점을 확인</b>하십시오.</div>` : ''}
+    <div class="acts">
+      ${csv ? `<a class="pri" href="files/${encodeURIComponent(csv.f)}" download>⬇ CSV (${esc(csv.z)})</a>` : ''}
+      ${js ? `<a class="${csv?'':'pri'}" href="files/${encodeURIComponent(js.f)}" download>⬇ JSON (${esc(js.z)})</a>` : ''}
+      ${js ? `<a href="files/${encodeURIComponent(js.f)}" target="_blank" rel="noopener">JSON 열기 ↗</a>` : ''}
+      ${i.brk ? `<a class="brk" href="../checker/">🩺 단절점 검사</a>` : ''}
+      <a href="${esc(g.page)}">이 자료를 쓰는 화면 →</a>
+      <button type="button" class="cite" data-c="${esc(cite)}">📋 인용문 복사</button>
+    </div>
+    ${(i.head||[]).length ? `<details><summary>변수 ${i.cols ? i.cols+'개' : ''} 보기</summary>
+      <div class="cols">${i.head.map(h=>`<code>${esc(h)}</code>`).join('')}</div>
+      <p class="no" style="margin-top:6px">저장소 경로 <code>${esc(i.repo)}</code></p></details>` : ''}
+    ${preview(i)}
+    ${coverHtml(i)}
+  </div>`;
+}
+
+/* 내려받기 전에 무엇이 들었는지 — 파일 앞 몇 줄을 그대로 보여 준다.
+   요약하거나 고치지 않는다. 화면이 좁으니 옆으로 밀어 보게 한다. */
+function preview(i){
+  const rows = i.sample || [];
+  if(!rows.length) return '';
+  const head = (i.head || []).slice(0, 8);
+  return `<details class="pv"><summary>앞 ${rows.length}줄 미리보기</summary>
+    <div class="pvw"><table>
+      ${head.length ? `<tr>${head.map(h=>`<th>${esc(h)}</th>`).join('')}</tr>` : ''}
+      ${rows.map(r=>`<tr>${r.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}
+    </table></div>
+    <p class="no" style="margin-top:6px">파일에 적힌 그대로다. 열이 많으면 앞 여덟 개만 보인다 —
+      전체는 내려받아 보라.</p></details>`;
+}
+
+/* 연도별로 '값이 채워진 행'이 몇인지. 환자 수가 아니라 자료가 어디까지 있는지다.
+   그래서 선으로 잇지 않고 칸마다 따로 세운다 — 이어 읽으면 안 되는 자료이기도 하다. */
+function coverHtml(i){
+  const c = i.cover || [];
+  if(c.length < 2) return '';
+  const mx = Math.max(...c.map(x=>x[1])) || 1;
+  return `<details class="pv"><summary>연도별로 값이 있는 행</summary>
+    <div class="cov">${c.map(([y,n])=>
+      `<div class="cb" title="${y}년 ${n}행"><i style="height:${Math.max(3, Math.round(n/mx*56))}px"></i>
+        <b>${n}</b><span>${String(y).slice(2)}</span></div>`).join('')}</div>
+    <p class="no" style="margin-top:8px">값이 <b>채워진 행의 수</b>이지 환자 수가 아니다.
+      항목이 늘거나 줄면 이 수도 움직인다. 연도끼리 이어 읽기 전에
+      <a href="../checker/">단절점 검사</a>를 먼저 볼 것.</p></details>`;
+}
+
+function renderData(){
+  const cats = ['전체', ...D.groups.map(g=>g.title)];
+  document.getElementById('dcats').innerHTML = cats.map(c=>
+    `<button type="button" class="${c===dcat?'on':''}" data-c="${esc(c)}">${esc(c)}</button>`).join('');
+  document.getElementById('dcats').querySelectorAll('button').forEach(b=>
+    b.onclick = () => { dcat = b.dataset.c; renderData(); });
+
+  let shown = 0;
+  const html = D.groups.filter(g => dcat==='전체' || g.title===dcat).map(g => {
+    const items = g.items.filter(i => !dq ||
+      (i.name + ' ' + i.note + ' ' + (i.caution||'') + ' ' + i.src + ' ' + g.title).toLowerCase().includes(dq));
+    if(!items.length) return '';
+    shown += items.length;
+    return `<div class="grp">
+      <div class="ghead"><h2>${esc(g.title)}</h2><a href="${esc(g.page)}">해당 페이지 열기 →</a></div>
+      <p class="gdesc">${esc(g.desc)}</p>
+      ${items.map(i=>dsHtml(g,i)).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('groups').innerHTML = html ||
+    `<div class="dnone"><b>조건에 맞는 데이터가 없습니다.</b><br>다른 낱말로 찾거나 분야를 ‘전체’로 되돌려 보세요.</div>`;
+  document.getElementById('groups').querySelectorAll('.cite').forEach(b=>{
+    b.onclick = () => { const t=b.textContent;
+      const done=()=>{ b.textContent='✓ 복사됨'; setTimeout(()=>b.textContent=t,1600); };
+      if(navigator.clipboard) navigator.clipboard.writeText(b.dataset.c).then(done,()=>{});
+      else prompt('인용문', b.dataset.c); };
+  });
+  document.getElementById('meta').textContent =
+    `자료 ${shown}종 · 파일 ${D.total_files}개 · 합계 ${D.total_size} · 모두 UTF-8 · CSV는 쉼표 구분`;
+}
+document.getElementById('dq').addEventListener('input', e=>{ dq=e.target.value.trim().toLowerCase(); renderData(); });
+renderData();
+/* ?dataset=이름 으로 들어오면 그 자료로 내려간다 */
+(function(){ const d=new URLSearchParams(location.search).get('dataset');
+  if(!d) return; const el=document.getElementById('ds-'+d); if(el) el.scrollIntoView({block:'start'}); })();
 </script>
-<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
+<div class="pagetools"><button id="btnPrint" type="button" title="이 페이지를 인쇄하거나 PDF로 저장">🖨 인쇄</button><a href="../data/" title="이 사이트가 쓰는 원자료 내려받기">⬇ 자료받기</a></div><div class="printonly printfoot">⚠️ 질병관리청 공식 누리집이 아닌 공공자료 정리·분석 프로젝트의 참고용 정리물이다. 잠정통계가 포함돼 있으며, 법적·의학적 판단은 최신 공식 원문과 전문가 확인을 거쳐야 한다. 연도를 이어 비교하기 전에 단절점을 확인할 것.</div>
 <script>
 /* 인쇄 전에 접힌 자료를 펼치고, 인쇄 후 원래대로 되돌린다 */
 (function(){
@@ -239,6 +505,174 @@ document.getElementById('groups').innerHTML = D.groups.map(g => `
   }
 })();
 </script>
+<script>
+/* 쉬운 말 풀이 — scripts/plain_glossary.py 한 곳에서 관리한다 */
+(function(){
+  var T = [["중점검역관리지역", "검역관리지역 가운데 특히 위험해서, 증상이 없어도 다녀온 사람 모두가 알려야 하는 지역.", ""], ["유효 재생산수", "지금 이 순간, 면역과 방역이 있는 상태에서 환자 한 명이 평균 몇 명에게 옮기는지.", "방역의 목표는 이 수를 1 아래로 내리는 것이다."], ["검역관리지역", "그 나라에 검역감염병이 돌고 있어, 다녀온 사람 가운데 증상이 있으면 알리게 한 지역.", "증상이 없으면 알릴 의무가 없다."], ["기초재생산수", "아무도 면역이 없을 때, 환자 한 명이 평균 몇 명에게 옮기는지를 나타낸 수.", "1보다 크면 번지고 1보다 작으면 사그라든다. R₀라고 쓴다."], ["법정감염병", "법으로 “생기면 반드시 신고하라”고 정해 둔 병.", "지금 91가지다. 목록은 계속 늘거나 줄어 왔다."], ["검역감염병", "국경에서 특별히 살피도록 검역법이 정해 둔 병.", "지금 15가지다."], ["지표 환자", "그 유행에서 처음으로 확인된 환자.", "가장 먼저 걸린 사람이라는 뜻은 아니다 — 처음 발견된 사람이다."], ["전수감시", "환자가 생길 때마다 한 사람도 빠짐없이 모두 신고받는 방식.", "그래서 이 방식의 숫자는 “그해 신고된 환자 수”에 가깝다."], ["표본감시", "전국에서 미리 정해 둔 병원 몇 곳만 골라 그곳 환자만 세는 방식.", "전체 환자 수가 아니다. 참여 병원이 늘거나 줄면 숫자도 같이 움직인다."], ["감시체계", "환자를 어떻게 찾아내고 어떻게 세는지에 대한 규칙 전체.", "전수감시와 표본감시가 그 종류다."], ["사례정의", "“어떤 사람을 이 병의 환자로 셀 것인가”를 적어 둔 기준.", "이 기준이 바뀌면 병이 그대로여도 세어지는 사람 수가 달라진다."], ["의사환자", "증상으로 보아 그 병이 의심되지만 검사로는 아직 확인되지 않은 사람.", "“의사”는 의심된다는 뜻이지 의사 선생님이 아니다."], ["인수공통", "동물과 사람이 서로 옮길 수 있는 병.", ""], ["수직감염", "어머니에게서 배 속의 아기나 갓 태어난 아기에게 옮는 것.", ""], ["음압격리", "방 안 공기가 밖으로 새어 나가지 않도록 기압을 낮춰 둔 병실에 환자를 두는 것.", "공기로 옮는 병에 쓴다."], ["역학조사", "누가 언제 어디서 어떻게 걸렸는지 되짚어 감염 경로를 찾는 조사.", ""], ["집단면역", "면역을 가진 사람이 인구에 충분히 많아져 유행이 저절로 사그라드는 상태.", ""], ["계통고찰", "한 주제를 다룬 연구를 빠짐없이 모아 정리한 논문.", "하나의 연구보다 믿을 만한 근거로 친다."], ["신뢰구간", "참값이 그 안에 있을 것으로 보는 범위.", "범위가 넓다면 그만큼 덜 확실하다는 뜻이다."], ["시행규칙", "시행령보다 더 세부를 정하는 규정. 장관이 정한다.", ""], ["에어로졸", "침방울보다 더 작아 공기 중에 한동안 떠 있는 알갱이.", "비말보다 멀리, 오래 간다."], ["카타르기", "백일해에서 감기처럼 보이는 초기 시기.", "기침이 심해지기 전인데 이때 가장 잘 옮는다."], ["단절점", "세는 규칙이 바뀌어서, 그 앞과 뒤의 숫자를 그대로 이어 보면 안 되는 지점.", "이 사이트가 가장 중요하게 여기는 개념이다. 단절점 검사기에서 확인할 수 있다."], ["병원체", "병을 일으키는 아주 작은 생물이나 물질.", "세균, 바이러스, 곰팡이, 기생충 따위가 있다."], ["잠복기", "병원체가 몸에 들어온 뒤 증상이 나타나기까지 걸리는 기간.", ""], ["무증상", "병원체가 몸에 들어왔지만 증상이 나타나지 않은 상태.", "증상이 없어도 남에게 옮길 수 있는 병이 있다."], ["전구기", "본격적인 증상이 나기 전에 먼저 나타나는 가벼운 증상 기간.", "홍역이라면 발진 전의 열과 기침이 이때다."], ["치명률", "그 병에 걸린 사람 가운데 숨진 사람의 비율.", ""], ["발생률", "일정 기간 동안 새로 병에 걸린 사람의 비율.", ""], ["유병률", "어느 시점에 그 병을 앓고 있는 사람의 비율.", "새로 걸린 사람만 세는 발생률과 다르다."], ["매개체", "병원체를 사람에게 옮겨 주는 생물.", "모기와 진드기가 대표적이다."], ["병원소", "병원체가 평소에 머물러 사는 곳.", "박쥐나 낙타 같은 동물이 그 자리일 때가 많다."], ["시행령", "법률이 큰 줄기를 정하면 그 세부를 정하는 규정. 대통령이 정한다.", ""], ["발병률", "그 병에 노출된 사람 가운데 실제로 병이 난 사람의 비율.", ""], ["코호트", "같은 조건에 놓인 사람들을 하나로 묶은 집단.", "“코호트 격리”는 같은 병에 노출된 사람들을 한 곳에 묶어 함께 격리하는 것이다."], ["표준화", "나이 구성처럼 서로 다른 조건을 같게 맞춰 놓고 비교하는 것.", "이렇게 해야 노인이 많은 지역과 적은 지역의 숫자를 견줄 수 있다."], ["임계치", "그 값을 넘으면 결과가 달라지는 경계가 되는 값.", ""], ["불현성", "감염됐지만 겉으로 드러나는 증상이 없는 상태.", ""], ["항체가", "피 속에 그 병에 맞서는 항체가 얼마나 있는지를 나타낸 값.", ""], ["혈청형", "같은 종의 세균이나 바이러스를 항체 반응으로 더 잘게 나눈 갈래.", ""], ["급수", "법정감염병을 얼마나 급히 알려야 하는지에 따라 네 묶음으로 나눈 것.", "제1급이 가장 급해서 곧바로 알려야 하고, 제4급은 일주일에 한 번 모아서 알린다."], ["신고", "의사나 병원이 환자를 발견했을 때 보건당국에 알리는 일.", "법정감염병은 신고가 의무다."], ["분모", "비율을 낼 때 아래에 놓는 수. “몇 명 가운데”에 해당하는 수다.", "분모가 달라지면 같은 환자 수라도 비율이 달라 보인다."], ["확진", "검사를 해서 그 병이 맞다고 확인된 것.", ""], ["비말", "기침이나 재채기, 말할 때 튀는 침방울.", ""], ["아형", "같은 바이러스 안에서 조금씩 다른 갈래.", "인플루엔자의 H1N1, H3N2 같은 것이 아형이다."], ["격리", "환자를 다른 사람과 떼어 놓아 병을 옮기지 못하게 하는 것.", ""], ["검역", "병이 나라 안으로 들어오지 못하게 공항과 항만에서 확인하는 일.", ""], ["문턱", "유행이 저절로 멈추려면 인구의 몇 퍼센트가 면역을 가져야 하는지, 그 경계가 되는 값.", "이 사이트에서 “집단면역 문턱”이라고 쓸 때의 뜻이다."], ["역산", "결과를 먼저 알고, 거꾸로 원인이 될 값을 구하는 것.", ""], ["고시", "행정기관이 정해서 공식적으로 알리는 문서.", "법률보다 아래에 있지만 지켜야 하는 힘이 있다. 감염병 지정이 이것으로 바뀐다."]];
+  var SKIP = {SCRIPT:1, STYLE:1, TEXTAREA:1, INPUT:1, SELECT:1, OPTION:1, CODE:1, PRE:1,
+              SVG:1, CANVAS:1, MATH:1};
+  var left = {}, found = [], DEF = {}, lastSig = null;
+  T.forEach(function(x){ left[x[0]] = x; DEF[x[0]] = [x[1], x[2]]; });
 
+  function skippable(n){
+    for (var a = n.parentNode; a && a !== document.body; a = a.parentNode){
+      if (a.nodeType !== 1) continue;
+      /* SVG 안쪽은 건드리지 않는다. 차트 글자에 단추를 넣으면 그려지지 않는다.
+         SVG 요소의 tagName 은 소문자라(svg, text, g) 대문자로 맞춰 본다. */
+      if (SKIP[String(a.tagName).toUpperCase()]) return true;
+      var c = a.className;
+      if (typeof c === 'string' && /\b(plainterm|glpop|glbox|gnav|printonly|pagetools|site-credit)\b/.test(c)) return true;
+      if (a.tagName === 'BUTTON' || a.hasAttribute('aria-hidden')) return true;
+    }
+    return false;
+  }
+
+  function wrap(node, term, def, more){
+    var i = node.nodeValue.indexOf(term);
+    if (i < 0) return false;
+    var after = node.splitText(i);
+    after.nodeValue = after.nodeValue.slice(term.length);
+    var btn = document.createElement('button');
+    btn.type = 'button'; btn.className = 'plainterm'; btn.textContent = term;
+    btn.setAttribute('aria-expanded', 'false');
+    btn.setAttribute('aria-label', term + ' — 뜻 보기');
+    btn.onclick = function(e){ e.preventDefault(); e.stopPropagation(); show(btn, term, def, more); };
+    node.parentNode.insertBefore(btn, after);
+    found.push([term, def, more]);
+    return true;
+  }
+
+  var pop = null;
+  function close(){ if (pop){ pop.remove(); pop = null; }
+    document.querySelectorAll('.plainterm[aria-expanded="true"]').forEach(function(b){ b.setAttribute('aria-expanded','false'); }); }
+  function show(btn, term, def, more){
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    close(); if (open) return;
+    btn.setAttribute('aria-expanded', 'true');
+    pop = document.createElement('span');
+    pop.className = 'glpop'; pop.setAttribute('role', 'tooltip');
+    pop.innerHTML = '<b></b><span></span>' + (more ? '<span class="more"></span>' : '');
+    pop.querySelector('b').textContent = term;
+    pop.querySelectorAll('span')[0].textContent = def;
+    if (more) pop.querySelector('.more').textContent = more;
+    document.body.appendChild(pop);
+    var r = btn.getBoundingClientRect(), w = pop.offsetWidth;
+    var x = Math.min(Math.max(8, r.left + scrollX), scrollX + innerWidth - w - 8);
+    pop.style.left = x + 'px';
+    pop.style.top = (r.bottom + scrollY + 6) + 'px';
+  }
+  document.addEventListener('click', function(e){ if (!e.target.closest('.plainterm,.glpop')) close(); });
+  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') close(); });
+  addEventListener('resize', close);
+
+  /* 쪽이 제 내용을 다 그린 뒤에 단다. 먼저 달면 나중 렌더링이 주석을 지워,
+     본문에는 없는 말이 아래 목록에만 남는 일이 생긴다(유입 지도에서 그랬다). */
+  function pass(){
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [], n;
+    while ((n = walker.nextNode())) if (n.nodeValue.trim() && !skippable(n)) nodes.push(n);
+    for (var i = 0; i < nodes.length; i++){
+      for (var k = 0; k < T.length; k++){
+        var t = T[k][0];
+        if (!left[t]) continue;
+        if (wrap(nodes[i], t, T[k][1], T[k][2])){ delete left[t]; }
+      }
+    }
+  }
+  function live(){
+    var m = {};
+    document.querySelectorAll('.plainterm').forEach(function(b){ m[b.textContent] = 1; });
+    return m;
+  }
+  function go(){
+    /* 아직 안 달린 말만 다시 찾는다. 쪽이 제 내용을 다시 그리면서 주석을 지워도
+       다음 차례에 되살아난다. */
+    var on = live();
+    left = {};
+    T.forEach(function(x){ if (!on[x[0]]) left[x[0]] = x; });
+    pass();
+    build();
+  }
+  /* 쪽이 제 내용을 다시 그릴 때마다 주석이 지워질 수 있다(유입 지도의 범례가 그렇다).
+     DOM 이 바뀌면 잠깐 기다렸다가 다시 단다. 달 것이 없으면 아무 일도 하지 않으므로 곧 잠잠해진다. */
+  var timer = null;
+  function start(){
+    go();
+    var runs = 0, mo = new MutationObserver(function(){
+      clearTimeout(timer);
+      timer = setTimeout(function(){
+        go();
+        /* 늘 다시 그리는 쪽(지구본)에서 끝없이 돌지 않게 횟수를 막아 둔다.
+           목록이 그대로면 build 가 아무것도 안 하므로 보통은 금방 잠잠해진다. */
+        if (++runs >= 30) mo.disconnect();
+      }, 400);
+    });
+    mo.observe(document.body, {childList: true, subtree: true});
+  }
+  if (document.readyState === 'complete') setTimeout(start, 0);
+  else addEventListener('load', function(){ setTimeout(start, 0); });
+
+  function build(){
+  /* 목록은 화면에 실제로 달려 있는 주석에서 바로 만든다.
+     따로 모아 둔 배열을 쓰면, 쪽이 다시 그려져 주석이 지워졌을 때
+     본문에는 없는 말이 목록에만 남는다. */
+  var seen = {};
+  found = [];
+  document.querySelectorAll('.plainterm').forEach(function(b){
+    var t = b.textContent;
+    if (seen[t] || !DEF[t]) return;
+    seen[t] = 1; found.push([t, DEF[t][0], DEF[t][1]]);
+  });
+  /* 목록이 그대로면 손대지 않는다. 손댈 때마다 DOM 이 바뀌어 관찰이 다시 돌면 끝이 없다. */
+  var sig = found.map(function(f){ return f[0]; }).sort().join('|');
+  if (sig === lastSig) return;
+  lastSig = sig;
+  var old = document.querySelector('details.glbox');
+  var wasOpen = old && old.open;
+  if (old) old.remove();
+  if (!found.length) return;
+  found.sort(function(a, b){ return a[0].localeCompare(b[0], 'ko'); });
+  var box = document.createElement('details');
+  box.className = 'glbox';
+  var dl = found.map(function(f){
+    return '<dt></dt><dd data-m="' + (f[2] ? '1' : '') + '"></dd>';
+  }).join('');
+  box.innerHTML = '<summary>📘 이 쪽에 나온 어려운 말 ' + found.length + '개</summary><dl>' + dl + '</dl>';
+  if (wasOpen) box.open = true;
+  var dts = box.querySelectorAll('dt'), dds = box.querySelectorAll('dd');
+  found.forEach(function(f, j){
+    dts[j].textContent = f[0];
+    dds[j].textContent = f[1];
+    if (f[2]){ var i2 = document.createElement('i'); i2.textContent = f[2]; dds[j].appendChild(i2); }
+  });
+  /* 펼치는 순간 다시 센다. 쪽이 제 내용을 다시 그려 주석 하나가 사라져도,
+     읽는 사람이 보는 목록은 늘 본문과 같다. */
+  box.addEventListener('toggle', function(){
+    if (!box.open) return;
+    var now = {}, list = [];
+    document.querySelectorAll('.plainterm').forEach(function(b){
+      var t = b.textContent;
+      if (now[t] || !DEF[t]) return;
+      now[t] = 1; list.push([t, DEF[t][0], DEF[t][1]]);
+    });
+    list.sort(function(a, b2){ return a[0].localeCompare(b2[0], 'ko'); });
+    if (list.length === box.querySelectorAll('dt').length) return;
+    box.querySelector('summary').textContent = '📘 이 쪽에 나온 어려운 말 ' + list.length + '개';
+    var dl2 = box.querySelector('dl');
+    dl2.innerHTML = '';
+    list.forEach(function(f){
+      var dt = document.createElement('dt'); dt.textContent = f[0];
+      var dd = document.createElement('dd'); dd.textContent = f[1];
+      if (f[2]){ var i3 = document.createElement('i'); i3.textContent = f[2]; dd.appendChild(i3); }
+      dl2.appendChild(dt); dl2.appendChild(dd);
+    });
+    lastSig = list.map(function(f){ return f[0]; }).sort().join('|');
+  });
+  var cr = document.querySelector('.site-credit');
+  if (cr) cr.parentNode.insertBefore(box, cr); else document.body.appendChild(box);
+  }
+})();
+</script>
+<footer class="site-credit">기획·제작 지음웍스 · <a href="https://jieumworks.com" target="_blank" rel="noopener">jieumworks.com</a> · 2026년 9월</footer>
 </body>
 </html>

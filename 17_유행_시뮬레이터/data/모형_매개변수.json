@@ -1,267 +1,315 @@
 {
-  "_about": "사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.",
-  "diseases": [
-    {
-      "name": "홍역",
-      "r0": [
-        12,
-        18
-      ],
-      "d_inf": 8,
-      "presym": 2,
-      "note": "발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.",
-      "src": "Anderson & May 1991 · CDC Pink Book"
-    },
-    {
-      "name": "백일해",
-      "r0": [
-        12,
-        17
-      ],
-      "d_inf": 21,
-      "presym": 0,
-      "note": "카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.",
-      "src": "Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)"
-    },
-    {
-      "name": "수두",
-      "r0": [
-        8,
-        10
-      ],
-      "d_inf": 7,
-      "presym": 2,
-      "note": "발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.",
-      "src": "CDC Pink Book"
-    },
-    {
-      "name": "유행성이하선염",
-      "r0": [
-        4,
-        7
-      ],
-      "d_inf": 7,
-      "presym": 2,
-      "note": "이하선 부종 2일 전~5일 후.",
-      "src": "Anderson & May 1991 · CDC"
-    },
-    {
-      "name": "풍진",
-      "r0": [
-        6,
-        7
-      ],
-      "d_inf": 11,
-      "presym": 7,
-      "note": "발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.",
-      "src": "Anderson & May 1991 · CDC Pink Book"
-    },
-    {
-      "name": "디프테리아",
-      "r0": [
-        6,
-        7
-      ],
-      "d_inf": 14,
-      "presym": 0,
-      "note": "치료 없으면 2~4주 균 배출. 항생제로 단축.",
-      "src": "Anderson & May 1991 (고전 추정, 백신 전 시대)"
-    },
-    {
-      "name": "폴리오",
-      "r0": [
-        5,
-        7
-      ],
-      "d_inf": 14,
-      "presym": 7,
-      "note": "발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.",
-      "src": "Anderson & May 1991 · CDC Pink Book"
-    },
-    {
-      "name": "인플루엔자",
-      "r0": [
-        1.2,
-        1.8
-      ],
-      "d_inf": 5,
-      "presym": 1,
-      "note": "계절 인플루엔자. 증상 1일 전~5일 후.",
-      "src": "Biggerstaff 2014 (계통고찰)"
-    },
-    {
-      "name": "신종인플루엔자",
-      "r0": [
-        1.4,
-        1.6
-      ],
-      "d_inf": 5,
-      "presym": 1,
-      "note": "2009 A(H1N1)pdm09 기준.",
-      "src": "Biggerstaff 2014 · Fraser 2009"
-    },
-    {
-      "name": "코로나바이러스감염증-19",
-      "r0": [
-        2.5,
-        3.5
-      ],
-      "d_inf": 8,
-      "presym": 2,
-      "note": "2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.",
-      "src": "Liu 2020 (계통고찰) · WHO",
-      "incubation_fallback": "1~14일(보통 5~7일)",
-      "incubation_fallback_src": "도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"
-    },
-    {
-      "name": "중증급성호흡기증후군",
-      "r0": [
-        2,
-        4
-      ],
-      "d_inf": 10,
-      "presym": 0,
-      "note": "증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.",
-      "src": "Lipsitch 2003 · WHO",
-      "incubation_fallback": "2~10일(보통 4~6일)",
-      "incubation_fallback_src": "도감: KDCA 미명시(문헌상 2~10일) → WHO 값"
-    },
-    {
-      "name": "중동호흡기증후군",
-      "r0": [
-        0.5,
-        0.9
-      ],
-      "d_inf": 10,
-      "presym": 0,
-      "note": "지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.",
-      "src": "Breban 2013 · Cauchemez 2014",
-      "incubation_fallback": "2~14일(보통 5~6일)",
-      "incubation_fallback_src": "도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"
-    },
-    {
-      "name": "에볼라바이러스병",
-      "r0": [
-        1.5,
-        2.5
-      ],
-      "d_inf": 10,
-      "presym": 0,
-      "note": "증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.",
-      "src": "WHO Ebola Response Team 2014 · Althaus 2014"
-    },
-    {
-      "name": "엠폭스",
-      "r0": [
-        1.1,
-        2.4
-      ],
-      "d_inf": 21,
-      "presym": 1,
-      "note": "2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.",
-      "src": "WHO mpox 2022"
-    },
-    {
-      "name": "니파바이러스감염증",
-      "r0": [
-        0.2,
-        0.5
-      ],
-      "d_inf": 10,
-      "presym": 0,
-      "note": "사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.",
-      "src": "Luby 2009 · Nikolay 2019",
-      "incubation_fallback": "4~14일(최대 45일 보고)",
-      "incubation_fallback_src": "도감이 잠복기를 병원체 항목에 병기 → 같은 값"
-    }
-  ],
-  "intervention_defaults": {
-    "iso_delay": 2,
-    "iso_eff": 0.8,
-    "trace": 0.0,
-    "trace_eff": 0.9,
-    "vacc": 0.0,
-    "vacc_eff": 0.9,
-    "N": 100000,
-    "I0": 10,
-    "days": 365
+ "_about": "사람 사이 직접 전파되는 감염병만 담는다. R0 범위는 교과서(Anderson & May)·WHO·CDC·주요 문헌의 고전 추정치이며 인구·접촉 구조·시대에 따라 크게 다르다. 전염기간·증상 전 전염일수는 대표값이다. 잠복기·전파경로는 ⑤ 도감에서 가져온다. 이 값들은 모형의 입력이지 사실의 진술이 아니다 — 슬라이더로 바꿔 보라고 있는 값이다.",
+ "diseases": [
+  {
+   "name": "홍역",
+   "r0": [
+    12,
+    18
+   ],
+   "d_inf": 8,
+   "presym": 2,
+   "note": "발진 4일 전~4일 후 전염. 전구기(발열·기침)는 발진 2~4일 전에 시작하므로 '증상 후 격리'로도 앞 이틀은 놓친다.",
+   "src": "Anderson & May 1991 · CDC Pink Book"
   },
-  "references": {
-    "Anderson & May 1991": {
-      "cite": "Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.",
-      "what": "R₀ 고전 추정표(백신 도입 전 인구)",
-      "confidence": "표준 교과서"
-    },
-    "CDC Pink Book": {
-      "cite": "CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.",
-      "what": "전염 기간·잠복기·증상 전 전염",
-      "confidence": "표준"
-    },
-    "Heymann CCDM": {
-      "cite": "Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.",
-      "what": "전염 기간·증상 전 전염 일수의 일반 출처",
-      "confidence": "표준"
-    },
-    "Biggerstaff 2014": {
-      "cite": "Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.",
-      "what": "인플루엔자 R₀ 계통고찰",
-      "confidence": "표준"
-    },
-    "Fraser 2009": {
-      "cite": "Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.",
-      "what": "2009 신종인플루엔자 R₀",
-      "confidence": "표준"
-    },
-    "Liu 2020": {
-      "cite": "Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.",
-      "what": "코로나19 원형주 R₀ 계통고찰",
-      "confidence": "표준"
-    },
-    "Lipsitch 2003": {
-      "cite": "Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.",
-      "what": "SARS R₀·격리 효과",
-      "confidence": "표준"
-    },
-    "Breban 2013": {
-      "cite": "Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.",
-      "what": "MERS R₀ < 1",
-      "confidence": "표준"
-    },
-    "Cauchemez 2014": {
-      "cite": "Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.",
-      "what": "MERS R₀",
-      "confidence": "표준"
-    },
-    "WHO Ebola Response Team 2014": {
-      "cite": "WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.",
-      "what": "에볼라 R₀·잠복기",
-      "confidence": "표준"
-    },
-    "Althaus 2014": {
-      "cite": "Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.",
-      "what": "에볼라 R₀",
-      "confidence": "표준"
-    },
-    "WHO mpox 2022": {
-      "cite": "WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.",
-      "what": "엠폭스(clade IIb) R₀ 1.1–2.4",
-      "confidence": "확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"
-    },
-    "Luby 2009": {
-      "cite": "Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.",
-      "what": "니파 사람 간 전파",
-      "confidence": "표준"
-    },
-    "Nikolay 2019": {
-      "cite": "Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.",
-      "what": "니파 R₀ 0.33",
-      "confidence": "표준"
-    },
-    "Keeling & Rohani 2008": {
-      "cite": "Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.",
-      "what": "SEIR 모형 자체",
-      "confidence": "표준"
-    }
+  {
+   "name": "백일해",
+   "r0": [
+    12,
+    17
+   ],
+   "d_inf": 21,
+   "presym": 0,
+   "note": "카타르기(감기 비슷) 2주가 가장 전염성이 높다. 항생제 5일이면 전파력이 사라진다.",
+   "src": "Anderson & May 1991 · CDC Pink Book (최근 연구는 5.5)"
   },
-  "scenario_provenance": "시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다."
+  {
+   "name": "수두",
+   "r0": [
+    8,
+    10
+   ],
+   "d_inf": 7,
+   "presym": 2,
+   "note": "발진 1~2일 전부터 모든 수포가 딱지 앉을 때까지.",
+   "src": "CDC Pink Book"
+  },
+  {
+   "name": "유행성이하선염",
+   "r0": [
+    4,
+    7
+   ],
+   "d_inf": 7,
+   "presym": 2,
+   "note": "이하선 부종 2일 전~5일 후.",
+   "src": "Anderson & May 1991 · CDC"
+  },
+  {
+   "name": "풍진",
+   "r0": [
+    6,
+    7
+   ],
+   "d_inf": 11,
+   "presym": 7,
+   "note": "발진 7일 전~7일 후. 발진 전 일주일이 전염기라 격리가 늦다.",
+   "src": "Anderson & May 1991 · CDC Pink Book"
+  },
+  {
+   "name": "디프테리아",
+   "r0": [
+    6,
+    7
+   ],
+   "d_inf": 14,
+   "presym": 0,
+   "note": "치료 없으면 2~4주 균 배출. 항생제로 단축.",
+   "src": "Anderson & May 1991 (고전 추정, 백신 전 시대)"
+  },
+  {
+   "name": "폴리오",
+   "r0": [
+    5,
+    7
+   ],
+   "d_inf": 14,
+   "presym": 7,
+   "note": "발병 7~10일 전부터 분변으로 배출. 감염의 대다수가 무증상이라 격리 모형이 잘 맞지 않는다.",
+   "src": "Anderson & May 1991 · CDC Pink Book"
+  },
+  {
+   "name": "인플루엔자",
+   "r0": [
+    1.2,
+    1.8
+   ],
+   "d_inf": 5,
+   "presym": 1,
+   "note": "계절 인플루엔자. 증상 1일 전~5일 후.",
+   "src": "Biggerstaff 2014 (계통고찰)"
+  },
+  {
+   "name": "신종인플루엔자",
+   "r0": [
+    1.4,
+    1.6
+   ],
+   "d_inf": 5,
+   "presym": 1,
+   "note": "2009 A(H1N1)pdm09 기준.",
+   "src": "Biggerstaff 2014 · Fraser 2009"
+  },
+  {
+   "name": "코로나바이러스감염증-19",
+   "r0": [
+    2.5,
+    3.5
+   ],
+   "d_inf": 8,
+   "presym": 2,
+   "note": "2020년 원형주 기준. 오미크론은 8~10. 증상 2일 전부터 전염 — 격리만으로 못 막은 이유.",
+   "src": "Liu 2020 (계통고찰) · WHO",
+   "incubation_fallback": "1~14일(보통 5~7일)",
+   "incubation_fallback_src": "도감에 잠복기 항목 없음 → WHO·KDCA 대응지침 값"
+  },
+  {
+   "name": "중증급성호흡기증후군",
+   "r0": [
+    2,
+    4
+   ],
+   "d_inf": 10,
+   "presym": 0,
+   "note": "증상 후, 특히 2주째에 전염력이 커서 격리가 잘 들었다. 2003년 종식이 가능했던 이유.",
+   "src": "Lipsitch 2003 · WHO",
+   "incubation_fallback": "2~10일(보통 4~6일)",
+   "incubation_fallback_src": "도감: KDCA 미명시(문헌상 2~10일) → WHO 값"
+  },
+  {
+   "name": "중동호흡기증후군",
+   "r0": [
+    0.5,
+    0.9
+   ],
+   "d_inf": 10,
+   "presym": 0,
+   "note": "지역사회 R0는 1 미만. 2015년 국내 유행은 병원 안 슈퍼전파.",
+   "src": "Breban 2013 · Cauchemez 2014",
+   "incubation_fallback": "2~14일(보통 5~6일)",
+   "incubation_fallback_src": "도감은 '최대 약 14일'만 적어 대표값을 못 잡음 → WHO 값"
+  },
+  {
+   "name": "에볼라바이러스병",
+   "r0": [
+    1.5,
+    2.5
+   ],
+   "d_inf": 10,
+   "presym": 0,
+   "note": "증상 후 체액 접촉으로만 전파. 사망자 접촉(장례)이 큰 몫.",
+   "src": "WHO Ebola Response Team 2014 · Althaus 2014"
+  },
+  {
+   "name": "엠폭스",
+   "r0": [
+    1.1,
+    2.4
+   ],
+   "d_inf": 21,
+   "presym": 1,
+   "note": "2022년 clade IIb 유행 기준. 병변이 다 아물 때까지.",
+   "src": "WHO mpox 2022"
+  },
+  {
+   "name": "니파바이러스감염증",
+   "r0": [
+    0.2,
+    0.5
+   ],
+   "d_inf": 10,
+   "presym": 0,
+   "note": "사람 간 전파는 드물다(방글라데시 계통). 지속 유행이 되지 않는 이유.",
+   "src": "Luby 2009 · Nikolay 2019",
+   "incubation_fallback": "4~14일(최대 45일 보고)",
+   "incubation_fallback_src": "도감이 잠복기를 병원체 항목에 병기 → 같은 값"
+  }
+ ],
+ "intervention_defaults": {
+  "iso_delay": 2,
+  "iso_eff": 0.8,
+  "trace": 0.0,
+  "trace_eff": 0.9,
+  "vacc": 0.0,
+  "vacc_eff": 0.9,
+  "N": 100000,
+  "I0": 10,
+  "days": 365
+ },
+ "references": {
+  "Anderson & May 1991": {
+   "cite": "Anderson RM, May RM. Infectious Diseases of Humans: Dynamics and Control. Oxford University Press, 1991.",
+   "what": "R₀ 고전 추정표(백신 도입 전 인구)",
+   "confidence": "표준 교과서"
+  },
+  "CDC Pink Book": {
+   "cite": "CDC. Epidemiology and Prevention of Vaccine-Preventable Diseases (\"Pink Book\"), 14th ed., 2021.",
+   "what": "전염 기간·잠복기·증상 전 전염",
+   "confidence": "표준"
+  },
+  "Heymann CCDM": {
+   "cite": "Heymann DL (ed.). Control of Communicable Diseases Manual, 21st ed. APHA, 2022.",
+   "what": "전염 기간·증상 전 전염 일수의 일반 출처",
+   "confidence": "표준"
+  },
+  "Biggerstaff 2014": {
+   "cite": "Biggerstaff M, Cauchemez S, Reed C, Gambhir M, Finelli L. Estimates of the reproduction number for seasonal, pandemic, and zoonotic influenza: a systematic review of the literature. BMC Infect Dis 2014;14:480.",
+   "what": "인플루엔자 R₀ 계통고찰",
+   "confidence": "표준"
+  },
+  "Fraser 2009": {
+   "cite": "Fraser C, et al. Pandemic potential of a strain of influenza A (H1N1): early findings. Science 2009;324:1557–1561.",
+   "what": "2009 신종인플루엔자 R₀",
+   "confidence": "표준"
+  },
+  "Liu 2020": {
+   "cite": "Liu Y, Gayle AA, Wilder-Smith A, Rocklöv J. The reproductive number of COVID-19 is higher compared to SARS coronavirus. J Travel Med 2020;27(2):taaa021.",
+   "what": "코로나19 원형주 R₀ 계통고찰",
+   "confidence": "표준"
+  },
+  "Lipsitch 2003": {
+   "cite": "Lipsitch M, et al. Transmission dynamics and control of severe acute respiratory syndrome. Science 2003;300:1966–1970.",
+   "what": "SARS R₀·격리 효과",
+   "confidence": "표준"
+  },
+  "Breban 2013": {
+   "cite": "Breban R, Riou J, Fontanet A. Interhuman transmissibility of Middle East respiratory syndrome coronavirus: estimation of pandemic risk. Lancet 2013;382:694–699.",
+   "what": "MERS R₀ < 1",
+   "confidence": "표준"
+  },
+  "Cauchemez 2014": {
+   "cite": "Cauchemez S, et al. Middle East respiratory syndrome coronavirus: quantification of the extent of the epidemic, surveillance biases, and transmissibility. Lancet Infect Dis 2014;14:50–56.",
+   "what": "MERS R₀",
+   "confidence": "표준"
+  },
+  "WHO Ebola Response Team 2014": {
+   "cite": "WHO Ebola Response Team. Ebola virus disease in West Africa — the first 9 months of the epidemic and forward projections. N Engl J Med 2014;371:1481–1495.",
+   "what": "에볼라 R₀·잠복기",
+   "confidence": "표준"
+  },
+  "Althaus 2014": {
+   "cite": "Althaus CL. Estimating the reproduction number of Ebola virus (EBOV) during the 2014 outbreak in West Africa. PLoS Currents Outbreaks 2014.",
+   "what": "에볼라 R₀",
+   "confidence": "표준"
+  },
+  "WHO mpox 2022": {
+   "cite": "WHO. Multi-country outbreak of mpox — external situation reports, 2022–2023; 문헌 종합.",
+   "what": "엠폭스(clade IIb) R₀ 1.1–2.4",
+   "confidence": "확인 필요 — 개별 논문을 특정하지 못했다. 범위는 2022년 유럽·미주 추정치들의 대략적 폭이다"
+  },
+  "Luby 2009": {
+   "cite": "Luby SP, et al. Recurrent zoonotic transmission of Nipah virus into humans, Bangladesh, 2001–2007. Emerg Infect Dis 2009;15:1229–1235.",
+   "what": "니파 사람 간 전파",
+   "confidence": "표준"
+  },
+  "Nikolay 2019": {
+   "cite": "Nikolay B, et al. Transmission of Nipah virus — 14 years of investigations in Bangladesh. N Engl J Med 2019;380:1804–1814.",
+   "what": "니파 R₀ 0.33",
+   "confidence": "표준"
+  },
+  "Keeling & Rohani 2008": {
+   "cite": "Keeling MJ, Rohani P. Modeling Infectious Diseases in Humans and Animals. Princeton University Press, 2008.",
+   "what": "SEIR 모형 자체",
+   "confidence": "표준"
+  }
+ },
+ "scenario_provenance": "시나리오 A·B의 손잡이 기본값(증상→격리 2일, 격리 효과 80%, 접촉자 추적 0%, 접종률 0%, 인구 10만, 첫 감염자 10명)은 출처가 없다. 이 저장소가 정한 출발점이며, 사용자가 바꾸라고 있는 값이다. 접종률 0%는 '면역이 전혀 없는 인구'라는 뜻이라 실제 한국과 다르다 — 실제와 비교하려면 접종률을 실제 접종률로 올려야 한다.",
+ "_check": {
+  "as_of": "2026-10-05",
+  "principle": "여기 적힌 것은 코드와 설명을 맞대어 본 결과다. 원문을 새로 확인해 값을 바꾼 것이 아니다. 근거를 확인하지 못한 항목은 값을 그대로 두고 아래에 남긴다.",
+  "items": [
+   {
+    "target": "풍진 d_inf",
+    "status": "확인 필요",
+    "found": "전염 기간을 11일로 넣어 두었는데 같은 항목의 설명은 '발진 7일 전~7일 후'다. 설명대로면 14~15일이라 서로 맞지 않는다.",
+    "action": "값을 바꾸지 않았다. 어느 쪽이 맞는지 공식 출처의 전염 기간 정의를 확인해야 한다."
+   },
+   {
+    "target": "vacc_eff · trace_eff 0.9",
+    "status": "교육용 가정",
+    "found": "두 값이 코드 안에 상수로 숨어 있어 화면에서 보이지 않았다. 질환별 근거가 붙어 있지 않다.",
+    "action": "값은 그대로 두되 화면의 고급 설정으로 꺼냈다. 역산 실험도 같은 값을 쓴다."
+   },
+   {
+    "target": "접종률 손잡이",
+    "status": "확인 필요",
+    "found": "15종 모두에 접종률 손잡이가 있지만, 각 병에 실제로 쓸 백신이 있는지·대상이 누구인지·감염을 얼마나 막는지는 이 저장소에서 확인하지 않았다.",
+    "action": "손잡이 이름을 \"보호 비율(접종 가정)\"으로 바꾸고, 실제 접종 이야기는 ⑱ 예방접종으로 보내도록 적었다."
+   },
+   {
+    "target": "증상 전 전파 비중 presym/d_inf",
+    "status": "표현 수정",
+    "found": "'전염의 몇 %'로 적혀 있었다. 실제로는 하루하루 전염력이 같다고 보고 기간을 나눈 비율이다.",
+    "action": "'격리가 손대지 못하는 전염 기간의 몫'으로 고치고 가정을 함께 적었다. 값은 그대로다."
+   },
+   {
+    "target": "초기 유효재생산수",
+    "status": "정의 수정",
+    "found": "첫 감염자를 빼기 전 S0 를 쓰고 있었다.",
+    "action": "실제 초기 S(0)=N−보호−I0 로 바꿨다. 기본값에서 차이는 0.01%다."
+   },
+   {
+    "target": "적분 방식",
+    "status": "계산 수정",
+    "found": "전진 오일러 dt=0.25 였다. 홍역처럼 전파가 빠른 병에서 칸 크기에 따라 정점이 0.3%쯤 움직였다.",
+    "action": "4차 룽게–쿠타로 바꿨다. dt 0.25와 0.01의 결과가 소수 셋째 자리까지 같다. 대표 시나리오의 누적 감염 차이는 기존 대비 최대 0.34%다."
+   },
+   {
+    "target": "신고수 역산",
+    "status": "해석 수정",
+    "found": "'한 값으로 10년이 맞는다', '유효 면역 수준' 같은 표현이 외부에서 확인한 추정치처럼 읽혔다.",
+    "action": "모형 안에서만 뜻이 있는 수라고 적고, 실제 접종률이나 면역 수준으로 부르지 않도록 고쳤다."
+   }
+  ]
+ }
 }

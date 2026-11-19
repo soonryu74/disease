@@ -65,3 +65,15 @@ if __name__ == '__main__':
     n = inject_all(os.path.join(ROOT, 'portal'))
     print(f'🖨  인쇄·자료받기 도구 {n}쪽에 주입')
     check_no_root_abs()
+
+    # 자료 점검은 조립이 끝난 뒤 본다. 여기서 막지는 않는다 —
+    # 쪽은 이미 다 써 놓았고, 자료 문제는 사람이 보고 정할 것이라서다.
+    # 딱 잘라 판정이 필요하면 scripts/check_datasets.py 를 따로 돌리면 된다(오류면 1).
+    try:
+        import check_datasets
+        print()
+        rc = check_datasets.main()
+        if rc:
+            print('⚠️  자료에 고쳐야 할 것이 있다 — scripts/check_datasets.py 를 따로 돌려 확인할 것')
+    except Exception as e:                                # noqa: BLE001
+        print(f'⚠️  자료 점검을 돌리지 못했다 — {e}')

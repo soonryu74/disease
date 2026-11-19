@@ -6,7 +6,7 @@ GitHub Actions(.github/workflows/daily.yml)가 매일 06:00 KST에 실행한다.
 출처 (모두 공개, 키 없음)
  - WHO 질병 발생 뉴스(DON)      who.int OData API
  - CDC 여행 건강 알림            wwwnc.cdc.gov RSS
- - WHO 뉴스                     who.int RSS — 감염병 낱말이 든 것만
+ - CDC 발생조사 알림             tools.cdc.gov RSS — 병원체가 분명한 발생 조사
  - KDCA 지침·매뉴얼 게시판        kdca.go.kr/bbs/kdca/55 — 새 지침이 오르면 ② 갱신 신호
 
 이 페이지가 남과 다른 점은 수집이 아니라 결합이다. 항목마다 질병명·나라를 알아내어
@@ -14,7 +14,9 @@ GitHub Actions(.github/workflows/daily.yml)가 매일 06:00 KST에 실행한다.
  - 나라 → 유입지도 (검역관리지역 지정 여부 · 직항 도착 여객)
 를 한 줄로 붙인다. "WHO가 오늘 보고한 그 나라, 우리는 지정돼 있나, 직항은 있나."
 
-출처가 죽어도 페이지는 죽지 않는다. 출처별로 성공/실패와 마지막 성공 시각을 적는다.
+출처가 죽어도 페이지는 죽지 않는다. 출처별로 성공/실패와 마지막 성공 시각을 적고,
+'가장 최근 발행이 며칠 전인지'도 함께 적는다 — 조용한 출처를 고장으로 오해하지 않도록.
+(WHO 질병 발생 뉴스는 한 달에 두세 건이라 열흘 넘게 조용한 것이 정상이다.)
 """
 import html
 import json
@@ -26,7 +28,8 @@ from datetime import datetime, timedelta, timezone
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, os.path.join(ROOT, 'scripts'))
-from portal_tools import inject, inject_nav  # noqa: E402
+from portal_tools import inject_page  # noqa: E402
+from daily_enrich import ENRICH_V, enrich  # noqa: E402
 
 OUT_DIR = os.path.join(ROOT, 'portal', 'daily')
 DATA_DIR = os.path.join(OUT_DIR, 'data')
@@ -55,7 +58,11 @@ DISEASE_KW = [
     ('paratyphoid', '파라티푸스'), ('rabies', '공수병'), ('west nile', '웨스트나일열'),
     ('japanese encephalitis', '일본뇌염'), ('leptospirosis', '렙토스피라증'), ('tuberculosis', '결핵'),
     ('covid', '코로나바이러스감염증-19'), ('sars-cov-2', '코로나바이러스감염증-19'),
-    ('hantavirus', '신증후군출혈열'), ('sfts', '중증열성혈소판감소증후군'), ('tick-borne encephalitis', '진드기매개뇌염'),
+    ('salmonella', '살모넬라균 감염증'), ('e. coli', '장출혈성대장균감염증'), ('stec', '장출혈성대장균감염증'),
+    ('listeria', '리스테리아증'), ('norovirus', '노로바이러스 감염증'), ('campylobacter', '캄필로박터균 감염증'),
+    ('cyclospora', '장관감염증'), ('vibrio', '비브리오패혈증'), ('botulism', '보툴리눔독소증'),
+    ('shigella', '세균성이질'), ('cryptosporidium', '장관감염증'),
+    ('sfts', '중증열성혈소판감소증후군'), ('tick-borne encephalitis', '진드기매개뇌염'),
     ('brucell', '브루셀라증'), ('legionell', '레지오넬라증'), ('shigell', '세균성이질'),
     ('e. coli', '장출혈성대장균감염증'), ('stec', '장출혈성대장균감염증'), ('botulism', '보툴리눔독소증'),
     ('tularemia', '야토병'), ('varicella', '수두'), ('chickenpox', '수두'), ('mumps', '유행성이하선염'),
@@ -67,6 +74,30 @@ DISEASE_KW = [
     ('creutzfeldt', '크로이츠펠트-야콥병(CJD)·변종CJD'), ('hiv', '후천성면역결핍증'),
     ('hepatitis b', 'B형간염'), ('hepatitis c', 'C형간염'), ('enterovirus', '엔테로바이러스감염증'),
     ('hand, foot', '수족구병'), ('hpv', '사람유두종바이러스(HPV) 감염증'),
+]
+
+# 병원체 '무리' 이름 — 국내 법정 질환을 하나로 확정할 수 없는 말.
+#
+# 전에는 'hantavirus'를 바로 신증후군출혈열로 붙였다. 그래서 WHO 의 안데스바이러스
+# 사건(2026-DON611)이 국내 신증후군출혈열 카드로 이어졌다. 둘은 같은 한타바이러스과지만
+# 임상 질환도 전파 특성도 다르다 — 안데스바이러스는 사람 간 전파가 보고된 유일한
+# 한타바이러스고, 국내 신증후군출혈열(한탄·서울바이러스)은 그렇지 않다.
+# 상위 병원체 이름만으로 국내 질환을 지정하면 서로 다른 병의 대응이 섞인다.
+#
+# 그래서 이 말들은 질환을 '확정'하지 않고 '참고'로만 붙이고, 분류 확인이 필요하다고 적는다.
+PATHOGEN_GROUP_KW = [
+    ('hantavirus', ['신증후군출혈열'],
+     '한타바이러스과의 상위 이름입니다. 종·아형에 따라 임상 질환과 전파 특성이 다릅니다 '
+     '— 안데스바이러스는 사람 간 전파가 보고된 반면 국내 신증후군출혈열(한탄·서울바이러스)은 '
+     '설치류 배설물 노출이 주 경로입니다. 안데스바이러스 감염에는 별도의 국내 대응지침이 있습니다: '
+     '「2026년 한타바이러스 심폐증후군(안데스바이러스 감염) 대응지침」(2026.5.29. 게시). '
+     '원문에서 병원체 종을 먼저 확인하십시오.'),
+    ('orthohantavirus', ['신증후군출혈열', '한타바이러스폐증후군'],
+     '한타바이러스속의 상위 이름입니다. 종·아형을 원문에서 확인하십시오.'),
+    ('arenavirus', [], '아레나바이러스과의 상위 이름입니다. 종을 원문에서 확인하십시오.'),
+    ('filovirus', ['에볼라바이러스병', '마버그열'],
+     '필로바이러스과의 상위 이름입니다. 종을 원문에서 확인하십시오.'),
+    ('coronavirus', [], '코로나바이러스과의 상위 이름입니다. 종을 원문에서 확인하십시오.'),
 ]
 # 한글 낱말 (KDCA 게시판 제목용) — 도감 이름 자체가 제목에 들어가면 그대로 잡힌다.
 # 영어 나라 이름 별칭 → Natural Earth 이름. 지도 파일의 name/name_long/admin 으로 못 잡는 것만.
@@ -116,7 +147,8 @@ def curl(url, tries=5, timeout=60):
 
 
 def strip(s):
-    return html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', s or ''))).strip()
+    s = html.unescape(re.sub(r'<[^>]+>', ' ', s or ''))
+    return html.unescape(re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', ' ', s))).strip()
 
 
 # ── 출처 ─────────────────────────────────────────────────────────────
@@ -129,7 +161,8 @@ def src_who_don():
         out.append({'id': 'who:' + v['UrlName'], 'source': 'WHO DON', 'title': strip(v.get('Title')),
                     'link': 'https://www.who.int/emergencies/disease-outbreak-news/item/' + v['UrlName'],
                     'date': (v.get('PublicationDate') or '')[:10],
-                    'summary': strip(v.get('Summary') or v.get('Overview') or '')[:320]})
+                    'summary': strip(v.get('Summary') or v.get('Overview') or '')[:320],
+                    '_raw': {k: v.get(k) for k in ('Summary', 'Overview', 'Epidemiology', 'Assessment', 'Advice', 'Response')}})
     return out
 
 
@@ -167,16 +200,17 @@ def src_cdc_travel():
     return out
 
 
-def src_who_news():
-    raw = curl('https://www.who.int/rss-feeds/news-english.xml')
+def src_cdc_outbreaks():
+    """CDC 발생 조사 알림. WHO 일반 뉴스를 대신한다 —
+    그 피드는 기관 소식(사무총장 방문 등)이 대부분이라 25건 중 감염병은 2건뿐이었다."""
+    raw = curl('https://tools.cdc.gov/api/v2/resources/media/285676.rss')
     if not raw:
         raise RuntimeError('접속 실패')
     out = []
     for it in parse_rss(raw):
-        low = (it['title'] + ' ' + it['summary']).lower()
-        if not any(k in low for k, _ in DISEASE_KW) and 'outbreak' not in low:
-            continue  # 감염병 낱말이 없는 뉴스는 버린다
-        out.append({'id': 'whonews:' + it['link'].rstrip('/').split('/')[-1], 'source': 'WHO 뉴스',
+        if not it['title']:
+            continue
+        out.append({'id': 'cdcout:' + it['link'].rstrip('/').split('/')[-1], 'source': 'CDC 발생조사',
                     'title': it['title'], 'link': it['link'], 'date': it['date'], 'summary': it['summary']})
     return out
 
@@ -198,8 +232,14 @@ def src_kdca_guides():
     return out
 
 
-SOURCES = [('who_don', 'WHO 질병 발생 뉴스', src_who_don), ('cdc_travel', 'CDC 여행 건강 알림', src_cdc_travel),
-           ('who_news', 'WHO 뉴스(감염병)', src_who_news), ('kdca_guides', 'KDCA 지침·매뉴얼 게시판', src_kdca_guides)]
+# (id, 이름, 수집함수, 대략적 발행 간격(일) — 이보다 훨씬 오래 조용하면 '확인 필요'로 표시)
+SRC_PREFIX = {'who_don': 'who:', 'cdc_travel': 'cdc:', 'cdc_outbreak': 'cdcout:', 'kdca_guides': 'kdca55:'}
+SOURCES = [
+    ('who_don', 'WHO 질병 발생 뉴스', src_who_don, 20),
+    ('cdc_travel', 'CDC 여행 건강 알림', src_cdc_travel, 20),
+    ('cdc_outbreak', 'CDC 발생조사', src_cdc_outbreaks, 45),
+    ('kdca_guides', 'KDCA 지침·매뉴얼 게시판', src_kdca_guides, 30),
+]
 
 
 # ── 결합 ─────────────────────────────────────────────────────────────
@@ -239,6 +279,21 @@ def tag(item, name_list, rows, quar, ko_name):
         if d in item['title'] and d not in diseases:
             diseases.append(d)
 
+    # 병원체 무리 이름은 질환을 확정하지 않는다 — '참고'로만 남기고 분류 확인이 필요하다고 적는다.
+    # 이미 종·질환 이름으로 확정된 것이 있으면 굳이 참고를 붙이지 않는다.
+    maybe = []
+    for k, cand, why in PATHOGEN_GROUP_KW:
+        if not re.search(r'(?<![a-z])' + re.escape(k), text):
+            continue
+        # 종·질환 이름으로 이미 확정됐으면 참고를 덧붙이지 않는다.
+        # 후보를 적어 둔 무리는 그 후보가 잡혔는지로, 후보가 없는 무리는 확정이 하나라도
+        # 있는지로 판단한다 — MERS 기사에 'coronavirus 분류 확인 필요'를 달 이유가 없다.
+        if cand and any(c in diseases for c in cand):
+            continue
+        if not cand and diseases:
+            continue
+        maybe.append({'kw': k, 'candidates': cand, 'why': why})
+
     def find_countries(s, min_len, cap):
         # 긴 이름을 먼저 맞추고 그 자리를 지운다 — 'Republic of the Congo'가
         # 'Democratic Republic of the Congo' 안에서 다시 잡히지 않게
@@ -258,6 +313,7 @@ def tag(item, name_list, rows, quar, ko_name):
     if not countries:  # 요약에서 한 번 더 (제목에 나라가 없을 때만)
         countries = find_countries(text, 5, 3)
     item['diseases'] = diseases[:4]
+    item['maybe'] = maybe[:2]        # 분류 확인이 필요한 참고 — 확정 질환이 아니다
     item['countries'] = countries[:4]
     item['multi'] = any(k in title for k in NON_COUNTRY)
     # 결합: (질병, 나라)마다 우리 검역 지정·직항 여객
@@ -303,35 +359,91 @@ def main():
     load_ko_names()
     name_list, rows, quar, ko = load_join()
 
-    fetched = []
-    for sid, label, fn in SOURCES:
+    fetched, by_source = [], {}
+    for sid, label, fn, cadence in SOURCES:
         st = status.get(sid, {})
         try:
             items = fn()
-            st.update({'label': label, 'ok': True, 'last_ok': run_at, 'count': len(items), 'error': ''})
+            st.update({'label': label, 'ok': True, 'last_ok': run_at, 'count': len(items), 'error': '',
+                       'cadence': cadence})
             fetched += items
+            by_source[sid] = items
             print(f'  ✓ {label}: {len(items)}건')
         except Exception as e:  # noqa: BLE001
-            st.update({'label': label, 'ok': False, 'error': str(e)[:120], 'last_try': run_at})
+            st.update({'label': label, 'ok': False, 'error': str(e)[:120], 'last_try': run_at,
+                       'cadence': cadence})
             st.setdefault('last_ok', '')
             print(f'  ✗ {label}: {e}')
         status[sid] = st
-    new_count = 0
+    # 같은 글이 조용히 고쳐지는 일이 있다. 제목·게시일·경보단계가 바뀌면 그것만 '고쳐짐'으로 남긴다.
+    # 원문에서 사라진 것은 '철회'인지 '목록에서 밀려난 것'인지 구분할 수 없어 표시하지 않는다.
+    WATCH = ('title', 'date', 'level')
+    LABEL = {'title': '제목', 'date': '게시일', 'level': '경보 단계'}
+    new_count, upd_count = 0, 0
     for it in fetched:
         if it['id'] in by_id:
-            by_id[it['id']].update({k: v for k, v in it.items() if k in ('title', 'summary', 'date', 'level')})
+            cur = by_id[it['id']]
+            changed = [LABEL[k] for k in WATCH
+                       if it.get(k) not in (None, '') and cur.get(k) not in (None, '') and it[k] != cur[k]]
+            cur.update({k: v for k, v in it.items() if k in ('title', 'summary', 'date', 'level', '_raw')})
+            cur['last_seen'] = today
+            if changed:
+                cur['updated'] = today
+                cur['changes'] = changed
+                upd_count += 1
         else:
             it['first_seen'] = today
+            it['last_seen'] = today
             by_id[it['id']] = it
             new_count += 1
     items = list(by_id.values())
     for it in items:
         tag(it, name_list, rows, quar, ko)
-    items.sort(key=lambda x: (x.get('first_seen', ''), x.get('date', '')), reverse=True)
+    # 링크만 있던 항목에 한글 요약·사실·그림·원문 핵심을 단다. 한 번 단 것은 다시 하지 않는다.
+    ko_country = {name.lower(): rows[iso]['ko'] for name, iso in name_list if iso in rows and rows[iso].get('ko')}
+    todo = [it for it in items if it.get('enrich_v', 0) < ENRICH_V]
+    fetched_pages = 0
+    for it in todo:
+        page = ''
+        if it['source'] in ('CDC 여행알림', 'KDCA 지침') and fetched_pages < 60:
+            raw = curl(it['link'], tries=2, timeout=40)
+            fetched_pages += 1
+            page = raw.decode('utf-8', 'replace') if raw else ''
+            if not page and it.get('ko'):
+                # 쪽을 못 받았는데 이미 달아 둔 요약이 있으면 빈 것으로 덮지 않고 다음 날 다시 시도한다
+                continue
+        enrich(it, {'don': it.get('_raw'), 'page': page}, ko_country)
+    if todo:
+        print(f'  살 붙임 {len(todo)}건 (쪽 받음 {fetched_pages})')
+    for it in items:
+        it.pop('_raw', None)
+    # 발행일 내림차순이 먼저다. 화면도 발행일로 묶으므로 순서가 어긋나면 안 된다.
+    items.sort(key=lambda x: (x.get('date') or '', x.get('first_seen', '')), reverse=True)
     items = items[:KEEP]
-    json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, indent=0)
-    status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'total': len(items)}
+    # 출처마다 '가장 최근 발행일'과 그 뒤로 며칠이 지났는지 — 조용한 것과 고장난 것을 가른다.
+    # 수집이 성공해도 발행이 오래 없으면 화면에 그렇게 적어야 사용자가 의심하지 않는다.
+    td = datetime.strptime(today, '%Y-%m-%d').date()
+    for sid, label, _fn, cadence in SOURCES:
+        pref = SRC_PREFIX[sid]
+        ds = sorted({x['date'] for x in items if x['id'].startswith(pref) and x.get('date')}, reverse=True)
+        st = status[sid]
+        if ds:
+            age = (td - datetime.strptime(ds[0], '%Y-%m-%d').date()).days
+            st['latest'] = ds[0]
+            st['age_days'] = age
+            st['quiet'] = age > cadence * 2   # 평소 간격의 두 배를 넘게 조용하면 확인 필요
+        else:
+            st['latest'] = ''
+            st['age_days'] = None
+            st['quiet'] = True
+    # 더 이상 쓰지 않는 출처는 원장에서 지운다. 남겨 두면 화면에 죽은 딱지가 붙는다.
+    for k in [k for k in status if k != '_run' and k not in SRC_PREFIX]:
+        del status[k]
+    status['_run'] = {'run_at': run_at, 'today': today, 'new': new_count, 'updated': upd_count,
+                      'total': len(items)}
     json.dump(status, open(STATUS, 'w', encoding='utf-8'), ensure_ascii=False, indent=1)
+    # 항목 원장을 남긴다. 이것이 없으면 다음 날 모든 항목이 다시 '새 항목'이 된다.
+    json.dump(items, open(ITEMS, 'w', encoding='utf-8'), ensure_ascii=False, separators=(',', ':'))
     open(os.path.join(DATA_DIR, 'new_count.txt'), 'w').write(str(new_count))
     print(f'  오늘 새 항목 {new_count} · 보관 {len(items)}')
 
@@ -342,14 +454,34 @@ def main():
 
 def render(items, status, today, run_at):
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'daily.template.html'), encoding='utf-8').read()
+    # 첫 수집인가 — 보관분이 전부 오늘 처음 잡혔으면 '새 항목'이라는 말이 뜻을 잃는다.
+    first_run = bool(items) and all(x.get('first_seen') == today for x in items)
     data = {'items': items, 'status': status, 'today': today, 'run_at': run_at, 'site': SITE,
-            'subscribe_form': SUBSCRIBE_FORM_URL}
+            'first_run': first_run, 'subscribe_form': SUBSCRIBE_FORM_URL}
     js = json.dumps(data, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
     out = os.path.join(OUT_DIR, 'index.html')
     open(out, 'w', encoding='utf-8').write(tmpl.replace('__DATA__', js))
-    inject(out, 1)
-    inject_nav(out, 1, 'daily')
+    # 매일 새로 찍는 쪽이라 다른 쪽과 같은 손질을 여기서도 해야 한다.
+    # 예전에는 그 차례를 여기에 손으로 베껴 적었는데, 공통 손질이 늘 때마다
+    # 이 쪽만 빠뜨렸다 — 파비콘이 그랬고, '쉽게 말하면'과 쉬운 말 풀이가 또 그랬다.
+    # 이제는 portal_tools 한 곳에 적힌 차례를 그대로 쓴다.
+    inject_page(out, 1, 'daily')
     print(f'→ portal/daily/index.html  {os.path.getsize(out):,}B')
+    write_world()
+
+
+def write_world():
+    """상황판 지도용 세계지도. ⑮ 해외유입 지도의 간략 지도를 그대로 줄여 쓴다.
+    배포는 portal/ 만 올라가므로 여기 사본을 둔다. 원본이 없으면 지도 칸만 숨는다."""
+    src = os.path.join(ROOT, '15_해외유입_지도', 'data', '세계지도.json')
+    if not os.path.exists(src):
+        return
+    w = json.load(open(src, encoding='utf-8'))
+    out = {'c': [[c['iso'], c['ko'], c['rings']] for c in w.get('countries', [])],
+           'p': [[p['iso'], p['ko'], p['c'][0], p['c'][1]] for p in w.get('points', [])]}
+    os.makedirs(DATA_DIR, exist_ok=True)
+    json.dump(out, open(os.path.join(DATA_DIR, 'world.json'), 'w', encoding='utf-8'),
+              ensure_ascii=False, separators=(',', ':'))
 
 
 def write_feed(items):
@@ -360,7 +492,7 @@ def write_feed(items):
         tags = ' · '.join(it.get('diseases', []) + [j['ko'] for j in it.get('joins', []) if j.get('ko')][:3])
         joins = '; '.join(f"{j['ko']} {'중점' if j['priority'] else ('검역관리지역' if j['designated'] else '미지정')}"
                           + (f"({j['disease']})" if j.get('disease') else '') for j in it.get('joins', []))
-        desc = esc(it.get('summary', '')) + (f' — 태그: {esc(tags)}' if tags else '') + (f' — 우리 검역: {esc(joins)}' if joins else '')
+        desc = esc(it.get('ko') or it.get('summary', '')) + (f' — 태그: {esc(tags)}' if tags else '') + (f' — 우리 검역: {esc(joins)}' if joins else '')
         try:
             pub = datetime.strptime(it.get('date') or it['first_seen'], '%Y-%m-%d').replace(tzinfo=KST).strftime('%a, %d %b %Y 06:00:00 +0900')
         except ValueError:
@@ -386,7 +518,7 @@ def write_mail(items, today, run_at):
         joins = ' · '.join(f"{j['ko']} {'중점' if j['priority'] else ('지정' if j['designated'] else '미지정')}"
                            + (f"({j['disease']})" if j.get('disease') else '') for j in it.get('joins', []))
         rows.append(f'<li style="margin:0 0 10px"><b>[{esc(it["source"])}]</b> <a href="{esc(it["link"])}">{esc(it["title"])}</a>'
-                    + (f'<br><span style="color:#555;font-size:13px">{esc(it.get("summary","")[:200])}</span>' if it.get('summary') else '')
+                    + (f'<br><span style="color:#555;font-size:13px">{esc((it.get("ko") or it.get("summary",""))[:260])}</span>' if (it.get('ko') or it.get('summary')) else '')
                     + (f'<br><span style="color:#0A4A43;font-size:13px">우리 검역: {esc(joins)}</span>' if joins else '') + '</li>')
     body = (f'<div style="font-family:sans-serif;max-width:640px"><h2 style="margin:0 0 4px">감염병 상황판 {today}</h2>'
             f'<p style="color:#555;margin:0 0 14px">새로 올라온 것 {len(new)}건 · {run_at}</p>'

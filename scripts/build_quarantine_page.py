@@ -31,7 +31,34 @@ def build():
             ds = [head[i] for i, v in enumerate(row[1:]) if v.strip()]
             countries.setdefault(c, {'p': [], 'g': []})['g'] = ds
 
+    # 나라별 표는 분기 기준 고시에서 뽑는다. 그런데 분기 도중 개정 공지가 잦다 —
+    # 지금도 표는 2026.7.1 기준인데 2026.9.7 공지가 이미 있다.
+    # 없는 매트릭스를 지어내지 않는다. 대신 '표의 기준일'과 '그 뒤에 있었던 공지'를
+    # 따로 들고 가서, 나라를 찾은 사람에게 그 사실을 먼저 알린다.
+    import re as _re
+    m = _re.search(r'(\d{4})\.(\d{1,2})\.(\d{1,2})', q3['기준'])
+    matrix_date = f'{m.group(1)}-{int(m.group(2)):02d}-{int(m.group(3)):02d}' if m else None
+    later = [p for p in hist['periods']
+             if matrix_date and (p.get('effective') or '') > matrix_date]
+
+    # '현행'은 자료에 적어 두는 말이 아니라 오늘 날짜로 정해지는 것이다.
+    # 시행일이 오늘 이하인 시기 가운데 가장 늦은 것이 현행이다. 그래야 분기가 바뀌어도
+    # 누가 손으로 '현행' 글자를 옮기지 않아 생기는 어긋남이 없다.
+    from datetime import date
+    today = date.today().isoformat()
+    effective_now = [p for p in hist['periods'] if (p.get('effective') or '') <= today]
+    current_period = max(effective_now, key=lambda p: p['effective']) if effective_now else None
+
+    q4_path = os.path.join(DATA, '2026Q4_지정내역.json')
+    q4 = json.load(open(q4_path, encoding='utf-8')) if os.path.exists(q4_path) else None
+
     data = {
+        'today': today,
+        'current_period': current_period,
+        'q4': q4,
+        'matrix_asof': q3['기준'],
+        'matrix_date': matrix_date,
+        'later': later,
         'as_of': hist['as_of'],
         'definitions': hist['definitions'],
         'legal_basis': hist['legal_basis'],

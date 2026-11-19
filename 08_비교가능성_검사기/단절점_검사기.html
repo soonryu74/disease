@@ -1,7 +1,4 @@
 <title>감염병 통계 단절점 검사기</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&display=swap">
 <style>
   :root{
     --paper:#F3F4F1; --surface:#FFFFFF; --surface-2:#EAECE7; --sunk:#E3E6E0;
@@ -34,11 +31,11 @@
   *{box-sizing:border-box}
   body,h1,p,label,textarea,option,.vlabel,.etitle,.edetail{word-break:keep-all;overflow-wrap:anywhere}
   body{margin:0;background:var(--paper);color:var(--ink);
-    font-family:'IBM Plex Sans KR','Apple SD Gothic Neo',system-ui,sans-serif;
+    font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;
     font-weight:400;line-height:1.62;letter-spacing:-.005em;
     -webkit-font-smoothing:antialiased}
-  .mono{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,monospace;font-variant-numeric:tabular-nums}
-  .serif{font-family:'Gowun Batang',Batang,serif}
+  .mono{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;font-variant-numeric:tabular-nums}
+  .serif{font-family:'Gowun Batang','Nanum Myeongjo',AppleMyungjo,Batang,serif}
   .wrap{max-width:940px;margin:0 auto;padding:0 22px}
   a{color:var(--ink)}
   :focus-visible{outline:2px solid var(--seal);outline-offset:2px;border-radius:3px}
@@ -46,8 +43,8 @@
   /* ── masthead ─────────────────────────────── */
   header{padding:46px 0 26px;border-bottom:1px solid var(--line)}
   .kicker{font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--seal);
-    font-weight:600;margin:0 0 14px;font-family:'IBM Plex Mono',monospace}
-  h1{font-family:'Gowun Batang',Batang,serif;font-weight:700;
+    font-weight:600;margin:0 0 14px;font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace}
+  h1{font-family:'Gowun Batang','Nanum Myeongjo',AppleMyungjo,Batang,serif;font-weight:700;
     font-size:clamp(30px,5.4vw,46px);line-height:1.14;margin:0;letter-spacing:-.02em;text-wrap:balance}
   .lede{color:var(--muted);font-size:15.5px;max-width:62ch;margin:16px 0 0;text-wrap:pretty}
   .lede b{color:var(--ink);font-weight:600}
@@ -75,7 +72,7 @@
   .verdict.ok{--vbg:var(--clear-soft);--vline:var(--clear);--vink:var(--clear-ink);--vdot:var(--clear)}
   .vtop{display:flex;align-items:center;gap:11px;margin-bottom:4px}
   .stamp{width:11px;height:11px;border-radius:50%;background:var(--vdot);flex:none}
-  .vlabel{font-family:'Gowun Batang',Batang,serif;font-weight:700;
+  .vlabel{font-family:'Gowun Batang','Nanum Myeongjo',AppleMyungjo,Batang,serif;font-weight:700;
     font-size:clamp(23px,3.6vw,31px);line-height:1.2;color:var(--vink);letter-spacing:-.02em}
   .vsub{color:var(--vink);opacity:.92;font-size:14.5px;margin:8px 0 0;max-width:64ch}
 
@@ -83,10 +80,10 @@
     padding-top:16px;border-top:1px solid color-mix(in srgb,var(--vline) 32%,transparent)}
   .fig{display:flex;flex-direction:column;gap:2px}
   .fig .y{font-size:11.5px;letter-spacing:.08em;color:var(--vink);opacity:.7;font-weight:600}
-  .fig .n{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:23px;
+  .fig .n{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;font-weight:600;font-size:23px;
     color:var(--vink);font-variant-numeric:tabular-nums;line-height:1.1}
   .arrow{color:var(--vink);opacity:.5;font-size:17px;align-self:center;padding-top:12px}
-  .delta{font-family:'IBM Plex Mono',monospace;font-size:15px;font-weight:600;
+  .delta{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;font-size:15px;font-weight:600;
     color:var(--vink);align-self:center;padding-top:14px}
   .delta.void{text-decoration:line-through;opacity:.45}
   .voidnote{font-size:12.5px;color:var(--vink);opacity:.75;align-self:center;padding-top:15px}
@@ -94,7 +91,7 @@
   /* ── chart ────────────────────────────────── */
   .panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;
     padding:22px 24px;margin-bottom:20px;box-shadow:var(--shadow)}
-  .ptitle{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:17px;margin:0 0 3px}
+  .ptitle{font-family:'Gowun Batang','Nanum Myeongjo',AppleMyungjo,Batang,serif;font-weight:700;font-size:17px;margin:0 0 3px}
   .pnote{color:var(--muted);font-size:13px;margin:0 0 16px;max-width:66ch}
   .cwrap{position:relative;width:100%;height:212px}
   canvas{width:100%;height:100%;display:block}
@@ -112,18 +109,18 @@
     background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--ec);
     border-radius:12px;padding:15px 18px}
   .ecard.br{--ec:var(--seal)} .ecard.ca{--ec:var(--caution)}
-  .edate{font-family:'IBM Plex Mono',monospace;font-size:12.5px;font-weight:500;
+  .edate{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;font-size:12.5px;font-weight:500;
     color:var(--ec);line-height:1.35;padding-top:2px}
   .etype{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--faint);
     display:block;margin-top:4px;font-weight:600}
   .etitle{font-weight:600;font-size:14.5px;margin:0 0 5px}
   .edetail{color:var(--muted);font-size:13.5px;margin:0;text-wrap:pretty}
-  .elegal{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--faint);margin:7px 0 0}
+  .elegal{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;color:var(--faint);margin:7px 0 0}
 
   /* ── footnote generator ───────────────────── */
   .fn{background:var(--sunk);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:20px}
   .fnhead{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:10px}
-  .fnhead h3{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:16px;margin:0}
+  .fnhead h3{font-family:'Gowun Batang','Nanum Myeongjo',AppleMyungjo,Batang,serif;font-weight:700;font-size:16px;margin:0}
   .fnhead span{font-size:12.5px;color:var(--muted)}
   #fnText{width:100%;min-height:88px;resize:vertical;background:var(--surface);color:var(--ink);
     border:1px solid var(--line-firm);border-radius:9px;padding:12px 14px;
@@ -136,11 +133,11 @@
   /* ── recalc ───────────────────────────────── */
   .recalc{border:1px solid var(--clear);background:var(--clear-soft);border-radius:16px;
     padding:22px 24px;margin-bottom:20px}
-  .recalc h3{font-family:'Gowun Batang',Batang,serif;font-weight:700;font-size:17px;
+  .recalc h3{font-family:'Gowun Batang','Nanum Myeongjo',AppleMyungjo,Batang,serif;font-weight:700;font-size:17px;
     margin:0 0 4px;color:var(--clear-ink)}
   .recalc p{color:var(--clear-ink);opacity:.9;font-size:13.5px;margin:0 0 14px;max-width:66ch}
   .rrow{display:flex;gap:22px;flex-wrap:wrap;align-items:baseline}
-  .rrow .n{font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:21px;color:var(--clear-ink)}
+  .rrow .n{font-family:'IBM Plex Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;font-weight:600;font-size:21px;color:var(--clear-ink)}
   .rrow .y{font-size:11.5px;color:var(--clear-ink);opacity:.7;font-weight:600;display:block}
 
   footer{border-top:1px solid var(--line);margin-top:34px;padding:24px 0 56px;
@@ -155,6 +152,18 @@
     .ecard{grid-template-columns:1fr;gap:6px}
   }
   @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+  /* 왜 필요한가 — 처음 온 사람을 위한 한 장 */
+  .why{background:var(--surface);border:1px solid var(--line);border-radius:14px;margin:0 0 16px;padding:0 18px}
+  .why summary{cursor:pointer;padding:14px 0;font-weight:800;font-size:15.5px;list-style:none}
+  .why summary::-webkit-details-marker{display:none}
+  .why summary::after{content:' ▾';color:var(--muted)}
+  .why[open] summary::after{content:' ▴'}
+  .whyb{padding:0 0 16px;font-size:14px;line-height:1.7;color:var(--muted)}
+  .whyb p{margin:0 0 10px} .whyb b{color:var(--ink)}
+  .wsteps{margin:0 0 12px;padding-left:20px}
+  .wsteps li{margin:5px 0}
+  .wnote{font-size:13px;color:var(--muted);background:var(--surface-2,#EEF2F0);border-radius:10px;padding:10px 13px;margin:0}
 </style>
 
 <div class="wrap">
@@ -165,6 +174,23 @@
       그 지점을 모르고 두 해를 나란히 놓으면 유행을 잘못 읽는다.
       질병과 두 연도를 고르면 <b>비교해도 되는지, 안 된다면 왜인지</b>를 판정한다.</p>
   </header>
+
+  <details class="why" id="why">
+    <summary>왜 단절점을 확인해야 하나요?</summary>
+    <div class="whyb">
+      <p><b>같은 병이라도 해마다 '무엇을 세는지'가 바뀝니다.</b> 매독이 대표적입니다.</p>
+      <ol class="wsteps">
+        <li><b>2019</b> — 제3군 <b>전수감시</b>. 의사가 본 모든 환자를 신고</li>
+        <li><b>2020</b> — 제4급 <b>표본감시</b>로 전환. 정해진 표본기관에서만 신고</li>
+        <li><b>2024</b> — 제3급 <b>전수감시</b>로 복귀. 신고 대상 범위도 3종 → 5종으로 확대</li>
+      </ol>
+      <p>그래서 <b>2024년 숫자가 2019년보다 커 보여도 유행이 커졌다는 뜻이 아닙니다.</b>
+        세는 그물이 달라졌을 뿐일 수 있습니다. 실제로 같은 범위로 다시 계산하면
+        2018년 2,280건 → 2024년 1,519건으로 <b>줄었습니다</b>.</p>
+      <p class="wnote">이 검사기는 두 연도 사이에 이런 변화가 있었는지 찾아, 비교해도 되는지와
+        안 된다면 무엇 때문인지를 알려 줍니다. 붙여 쓸 각주 문장도 만들어 줍니다.</p>
+    </div>
+  </details>
 
   <div class="console">
     <div class="ctrls">
@@ -252,6 +278,15 @@
     });
   });
   elD.value = '매독'; elA.value = 2023; elB.value = 2024;
+  // 다른 쪽(도감·데이터센터)에서 ?disease=이름 으로 넘겨 주면 그 병을 고른 채로 연다.
+  // 목록에 없는 이름이면 기본값을 유지하고 조용히 넘어간다 — 빈 화면을 만들지 않는다.
+  (function(){
+    var want = new URLSearchParams(location.search).get('disease');
+    if(!want) return;
+    var hit = D.diseases.filter(function(d){ return d.name === want; })[0]
+           || D.diseases.filter(function(d){ return d.name.indexOf(want) > -1 || want.indexOf(d.name) > -1; })[0];
+    if(hit){ elD.value = hit.name; document.getElementById('why').open = false; }
+  })();
 
   var fmt = function(n){ return n == null ? '—' : n.toLocaleString('ko-KR'); };
   // 대체 연도는 반드시 상대 연도의 같은 쪽(시간 순서)을 유지해야 한다.

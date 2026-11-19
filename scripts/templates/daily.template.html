@@ -3,7 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>감염병 상황판</title>
+<title>오늘의 감염병 상황 | 감염병 자료 아카이브</title>
+<meta name="description" content="WHO·미국 CDC·질병관리청 등 공식 출처의 최신 감염병 발생정보와 신규 업데이트를 확인합니다.">
+<meta property="og:title" content="오늘의 감염병 상황">
+<meta property="og:description" content="공식 출처의 새 감염병 자료를 모아 새로 들어온 것과 고쳐진 것을 나눠 보여줍니다.">
 <link rel="alternate" type="application/rss+xml" title="감염병 상황판 RSS" href="feed.xml">
 <style>
   :root{
@@ -43,7 +46,10 @@
   .thesis b{color:var(--ink)}
   .run{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:18px 0 0;font-size:12.5px;color:var(--muted)}
   .src{display:inline-flex;align-items:center;gap:5px;border:1px solid var(--line);border-radius:999px;padding:3px 10px;background:var(--surface);font-weight:600}
-  .src i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--accent)} .src.bad i{background:var(--warn)}
+  .src i{width:8px;height:8px;border-radius:50%;display:inline-block;background:var(--accent)}
+  .src.bad i{background:var(--warn)} .src.quiet i{background:var(--s4)}
+  .src em{font-style:normal;font-weight:600;color:var(--faint);margin-left:2px}
+  .src.bad em{color:var(--warn)} .src.quiet em{color:var(--s4)}
   section{padding:26px 0 6px}
   h2{font-size:clamp(19px,3vw,24px);margin:0 0 4px;font-weight:800;letter-spacing:-.02em}
   .sdesc{color:var(--muted);font-size:14px;margin:0 0 14px;max-width:76ch}
@@ -82,26 +88,188 @@
   .sub button,.sub a.btn{font:inherit;font-size:13.5px;font-weight:800;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:10px;padding:9px 16px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
   .sub a.btn.ghost{background:transparent;color:var(--accent-ink)}
   .sub .pending{font-size:12.5px;color:var(--muted);background:var(--surface-2);border-radius:9px;padding:8px 10px;margin-top:8px}
-  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--surface-2);padding:1px 5px;border-radius:5px;overflow-wrap:anywhere}
   ul.tight{margin:6px 0 0;padding-left:18px;font-size:13.5px} ul.tight li{margin:3px 0}
   footer{padding:40px 0 60px;color:var(--faint);font-size:12.5px}
   footer a{color:var(--muted)}
+  /* ── 오늘 무엇이 달라졌나 ─────────────────────────────────────────── */
+  .sumbar{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:9px;margin:18px 0 0}
+  .sb2{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .sb2 b{display:block;font-size:24px;font-weight:800;line-height:1.1;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .sb2 span{display:block;font-size:12px;color:var(--muted);margin-top:5px;line-height:1.35}
+  .sb2.hot b{color:var(--accent)}
+  .sb2.zero b{color:var(--faint)}
+
+  h2 .cnt{font-size:13px;font-weight:700;color:var(--muted);margin-left:8px;font-variant-numeric:tabular-nums}
+  .nonew{background:var(--surface);border:1px dashed var(--line-strong);border-radius:12px;padding:18px 20px;
+    font-size:14px;color:var(--muted)}
+  .nonew b{color:var(--ink)}
+  .badge-new{font-weight:800;color:#fff;background:var(--accent);font-size:11px;letter-spacing:.06em;
+    border-radius:6px;padding:2px 7px}
+  .badge-upd{font-weight:800;color:#fff;background:var(--s4);font-size:11px;letter-spacing:.06em;
+    border-radius:6px;padding:2px 7px}
+  .seen{font-size:11.5px;color:var(--faint);margin-top:6px;line-height:1.5}
+  .seen b{color:var(--muted);font-weight:700}
+
+  /* 분류 확인 필요 — 상위 병원체 이름만 나온 글 */
+  .mb{border:1px dashed var(--caut);border-radius:10px;padding:9px 11px;margin:8px 0 0;
+    background:color-mix(in srgb,var(--caut) 7%,transparent)}
+  .mb b{color:var(--caut);font-size:12.5px}
+  .mb p{margin:4px 0 0;font-size:12.5px;color:var(--muted);line-height:1.55}
+  .mbc{margin:6px 0 0;font-size:12.5px;display:flex;flex-wrap:wrap;gap:8px;align-items:baseline}
+  .mbc a{color:var(--accent);font-weight:700}
+  .mbn{color:var(--faint)}
+
+  /* 많이 언급된 것 — 횟수일 뿐 위험도가 아니다 */
+  .agg{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .agg>*{min-width:0}
+  @media (max-width:640px){.agg{grid-template-columns:1fr}}
+  .rank{list-style:none;margin:0;padding:0}
+  /* 지도로 보기 */
+  .wmap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+  .wmap svg{display:block;width:100%;height:auto}
+  .wmap .land{fill:var(--surface-2);stroke:var(--line-strong);stroke-width:.35}
+  .wmap .hit{fill:var(--accent);stroke:var(--accent-ink);stroke-width:.4;cursor:pointer}
+  .wmap .hit:hover,.wmap .hit.sel{stroke:var(--ink);stroke-width:1.1}
+  .wmap .fresh{stroke:var(--s2);stroke-width:1.3}
+  .wmap circle.land{stroke-width:.3}
+  .mleg{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:12.5px;color:var(--muted);margin:10px 2px 0}
+  .mleg i{display:inline-block;width:14px;height:10px;border-radius:2px;vertical-align:-1px;margin-right:4px}
+  .cofilter{display:none;margin:0 0 10px;font-size:13px}
+  .cofilter.on{display:flex;gap:8px;align-items:center}
+  .cofilter button{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:999px;padding:2px 10px;font:inherit;cursor:pointer}
+  .rank li{display:flex;align-items:center;gap:9px;padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+  .rank li:last-child{border-bottom:0}
+  .rank .nm2{font-weight:700;color:var(--ink);flex:none;max-width:46%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .rank .bar{flex:1;height:7px;border-radius:4px;background:var(--surface-2);overflow:hidden}
+  .rank .bar i{display:block;height:100%;background:var(--accent);opacity:.75}
+  .rank .n2{font-variant-numeric:tabular-nums;color:var(--muted);font-size:12.5px;flex:none;min-width:52px;text-align:right}
+  .rank a{color:var(--ink)}
+  .caveat{font-size:12px;color:var(--faint);margin:9px 0 0;line-height:1.5}
+
+  /* 목록 도구 */
+  .lbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:0 0 12px}
+  /* 수집일 거르개 — 아카이브에 실제로 있는 날만 선다 */
+  .dayfilter{margin:0 0 14px}
+  .dchips{display:flex;gap:7px;flex-wrap:wrap}
+  .dchips button{font:inherit;font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);
+    background:var(--surface);border:1px solid var(--line-strong);border-radius:10px;
+    padding:7px 12px;min-height:44px;text-align:left;line-height:1.3}
+  .dchips button span{display:block;font-size:11px;font-weight:500;color:var(--muted);margin-top:1px}
+  .dchips button:hover{border-color:var(--accent)}
+  .dchips button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+  .dchips button.on span{color:rgba(255,255,255,.85)}
+  .dnote{font-size:11.5px;color:var(--faint);margin:8px 0 0;line-height:1.6;overflow-wrap:anywhere}
+  .lbar input[type=search]{flex:1;min-width:170px;font:inherit;font-size:15px;padding:10px 13px;
+    border:1px solid var(--line-strong);border-radius:10px;background:var(--surface);color:var(--ink)}
+  .lbar select{font:inherit;font-size:13px;padding:9px 11px;border:1px solid var(--line-strong);
+    border-radius:10px;background:var(--surface);color:var(--ink);min-height:42px}
+  .lbar .vt{display:flex;gap:0;border:1px solid var(--line-strong);border-radius:10px;overflow:hidden}
+  .lbar .vt button{font:inherit;font-size:13px;font-weight:700;border:0;background:var(--surface);
+    color:var(--muted);padding:9px 13px;cursor:pointer;min-height:42px}
+  .lbar .vt button[aria-pressed="true"]{background:var(--accent);color:#fff}
+  body.compact .it .ko,body.compact .it .facts,body.compact .it .figs,body.compact .it .tbl,
+  body.compact .it details.en,body.compact .it .join,body.compact .it p{display:none}
+  body.compact .it{padding:10px 14px}
+  body.compact .it h4{margin:4px 0 0;font-size:14.5px}
+
+  /* 한글 요약·사실·그림·원문 */
+  .ko{font-size:14.5px;line-height:1.7;margin:8px 0 6px}
+  .facts{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 8px}
+  .facts span{font-size:12px;font-weight:700;border:1px solid var(--line-strong);border-radius:7px;padding:3px 8px;color:var(--muted)}
+  .facts span b{color:var(--ink);font-variant-numeric:tabular-nums}
+  .facts span[data-lv="높음"],.facts span[data-lv="매우 높음"]{border-color:var(--warn);color:var(--warn)}
+  .facts span[data-lv="높음"] b,.facts span[data-lv="매우 높음"] b{color:var(--warn)}
+  .figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;margin:8px 0}
+  .figs>*{min-width:0}
+  .fig{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--surface-2)}
+  .fig img{width:100%;display:block;max-height:260px;object-fit:contain;background:#fff}
+  .fig figcaption{font-size:11.5px;color:var(--muted);padding:6px 9px;line-height:1.45}
+  .tbl{overflow-x:auto;margin:8px 0}
+  .tbl table{border-collapse:collapse;font-size:12px;min-width:320px}
+  .tbl th,.tbl td{border:1px solid var(--line);padding:4px 7px;text-align:left;vertical-align:top}
+  .tbl caption{font-size:11.5px;color:var(--muted);text-align:left;padding:0 0 4px}
+  details.en{margin:6px 0 4px;border:1px solid var(--line);border-radius:10px;padding:8px 12px;background:var(--surface-2)}
+  details.en summary{cursor:pointer;font-size:12.5px;font-weight:700;color:var(--muted);list-style:none}
+  details.en summary::-webkit-details-marker{display:none}
+  details.en p{font-size:13.5px;line-height:1.75;margin:8px 0 0;color:var(--ink)}
+  details.en ul{margin:8px 0 0;padding-left:18px;font-size:13.5px;line-height:1.7}
+  /* 용어 병기는 붙여 두되, 좁은 화면에서는 줄을 넘기게 한다 — 안 그러면 가로로 삐져나간다 */
+  .t{font-weight:700;color:var(--accent-ink);white-space:nowrap}
+  @media (max-width:420px){.t{white-space:normal;overflow-wrap:anywhere}}
+  .t i{font-style:normal;font-weight:600;color:var(--muted);font-size:.86em;margin-left:2px}
+  .terms{display:flex;gap:5px;flex-wrap:wrap;margin:8px 0 0}
+  .terms span{font-size:11.5px;border-radius:999px;padding:2px 9px;background:var(--surface);border:1px solid var(--line)}
+  .terms span i{font-style:normal;color:var(--muted);margin-left:4px}
+  .howko{background:var(--accent-soft);color:var(--accent-ink);border-radius:12px;padding:12px 16px;font-size:13px;margin:0 0 14px}
   @media print{.chips,.more,.sub form{display:none!important}.it{break-inside:avoid;box-shadow:none}}
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <p class="eyebrow">📡 감염병 상황판 · 매일 06:00 갱신</p>
-  <h1>오늘 세계에서 새로<br>보고된 것, 우리와의 거리</h1>
-  <p class="thesis">WHO 질병 발생 뉴스 · CDC 여행 건강 알림 · KDCA 지침 게시판을 매일 아침 모은다. 모으는 것은 남도 한다.
-  여기서는 항목마다 <b>그 병이 우리 도감 어디에 있는지</b>, <b>그 나라가 검역관리지역으로 지정돼 있는지</b>, <b>직항으로 몇 명이 들어오는지</b>를 한 줄로 붙인다.</p>
+  <p class="eyebrow">📡 감염병 상황판 · 매일 06:00 KST 갱신</p>
+  <h1>오늘의 감염병 상황</h1>
+  <p class="thesis">WHO 질병 발생 뉴스 · 미국 CDC 여행 건강 알림 · CDC 발생조사 · 질병관리청 지침 게시판의 새 자료를 한곳에서 봅니다.
+  직전 수집 결과와 견주어 <b>새로 들어온 것</b>과 <b>고쳐진 것</b>을 나눠 보여주고, 항목마다
+  <b>그 감염병의 국내 자료</b>와 <b>그 나라의 검역·유입 정보</b>를 붙입니다.</p>
+  <div class="sumbar" id="sumbar"></div>
   <div class="run" id="run"></div>
 </header>
 
+<section id="new">
+  <h2>오늘 새로 들어온 정보 <span class="cnt" id="newcnt"></span></h2>
+  <p class="sdesc">직전 정상 수집에는 없었고 이번 수집에서 처음 잡힌 항목입니다.
+    <b>원문 게시일과 우리가 처음 수집한 날은 다릅니다.</b></p>
+  <div id="newlist"></div>
+</section>
+
+<section id="changed">
+  <h2>고쳐진 항목 <span class="cnt" id="updcnt"></span></h2>
+  <p class="sdesc">이미 보관 중이던 글인데 원문의 제목·게시일·경보 단계가 바뀐 것입니다.
+    원문에서 사라진 글은 철회인지 목록에서 밀려난 것인지 가릴 수 없어 표시하지 않습니다.</p>
+  <div id="updlist"></div>
+</section>
+
+<section id="agg">
+  <h2>많이 언급된 질병·국가</h2>
+  <p class="sdesc">아래 숫자는 <b>공식자료에 등장한 문서 수</b>입니다. 환자 수도, 위험도 순위도 아닙니다.</p>
+  <div class="agg">
+    <div class="card"><h3>질병</h3><ul class="rank" id="rdz"></ul>
+      <p class="caveat">현재 보관 중인 자료에서 그 질병을 다룬 문서의 수입니다. 이름을 누르면 국내 자료로 갑니다.</p></div>
+    <div class="card"><h3>국가·지역</h3><ul class="rank" id="rco"></ul>
+      <p class="caveat">현재 보관 중인 자료에서 그 나라가 언급된 문서의 수입니다. 실제 발생 규모가 아닙니다.</p></div>
+  </div>
+</section>
+
+<section id="map">
+  <h2>지도로 보기</h2>
+  <p class="sdesc">보관 중인 자료가 언급한 나라를 색으로 칠했습니다. <b>색이 진할수록 그 나라를 다룬 문서가 많다는 뜻</b>이며,
+    환자 수나 위험도가 아닙니다. 나라를 누르면 아래 목록이 그 나라 자료로 좁혀집니다.</p>
+  <div class="wmap" id="wmap"><p class="small muted" style="margin:8px">지도를 불러오는 중…</p></div>
+  <div class="mleg" id="mleg"></div>
+</section>
+
 <section id="feed">
+  <h2>전체 수집 자료 <span class="cnt" id="allcnt"></span></h2>
+  <div class="lbar">
+    <label for="lq" style="position:absolute;left:-9999px">질병·국가·제목 검색</label>
+    <input id="lq" type="search" placeholder="이 목록에서 질병·국가·제목 검색" autocomplete="off">
+    <label for="lsort" style="position:absolute;left:-9999px">정렬</label>
+    <select id="lsort"><option value="date">발행일 최신순</option><option value="seen">수집일 최신순</option>
+      <option value="source">출처순</option><option value="disease">질병순</option></select>
+    <div class="vt" role="group" aria-label="보기 방식">
+      <button type="button" id="vFull" aria-pressed="true">자세히</button>
+      <button type="button" id="vComp" aria-pressed="false">간단히</button>
+    </div>
+  </div>
+  <div class="cofilter" id="cofilter"></div>
   <div class="chips" id="chips"></div>
-  <div id="list"></div>
+  <div class="dayfilter" id="dayf"></div>
+  <div class="howko"><b>한글 요약은 번역이 아니다.</b> 원문에서 병명·나라·숫자·기준일·위험 평가·여행 제한 권고를 뽑아 틀에 맞춰 적은 것이다.
+못 뽑은 것은 비워 둔다. 영어 핵심 문장은 그대로 두고 낱말마다 한글을 달았다(<span class="t">outbreak<i>발생(유행)</i></span>처럼).
+그림·표는 WHO 원문의 것을 그대로 가져온다. 판단이 필요한 대목은 원문을 열어 확인할 것.</div>
+<div id="list"></div>
 </section>
 
 <section id="subscribe">
@@ -125,7 +293,10 @@
   <h2>이 판이 말하지 않는 것</h2>
   <div class="card">
     <ul class="tight">
-      <li><b>출처가 죽는 날이 있다.</b> 출처마다 성공·실패와 마지막 성공 시각을 맨 위에 적는다. 실패한 출처의 항목은 마지막 성공분이 남는다.</li>
+      <li><b>조용한 것과 고장난 것은 다르다.</b> WHO 질병 발생 뉴스는 매일 나오지 않는다 — 한 달에 두세 건이고 열흘 넘게 조용한 때가 흔하다.
+      그래서 맨 위 출처 딱지에 <b>수집 성공 여부(●)</b>와 <b>가장 최근 발행이 며칠 전인지</b>를 함께 적는다. 평소 간격의 두 배를 넘게 조용하면 ⚠를 붙인다.
+      <b>새 항목이 없다고 파이프라인이 죽은 것이 아니다.</b> 실패한 출처의 항목은 마지막 성공분이 남는다.</li>
+      <li><b>WHO 일반 뉴스는 뺐다.</b> 25건 중 감염병 관련이 2건뿐이었다(나머지는 사무총장 방문·기관 성명). 대신 CDC 발생조사 알림을 넣었다 — 살아 있고 병원체가 분명하다.</li>
       <li><b>질병·나라 태그는 제목·요약에서 낱말로 맞춘 것이다.</b> "Guinea"와 "Papua New Guinea"처럼 헷갈리는 이름은 긴 것부터 맞추지만, 틀릴 수 있다. 태그는 연결 통로이지 판정이 아니다.</li>
       <li><b>"미지정"은 잘못이 아니다.</b> 검역관리지역은 세계 발생 상황과 풍토성으로 정한다. WHO가 보고했다고 곧바로 지정 대상이 되는 것이 아니다. 다만 <em>보고된 그 나라에서 직항으로 몇 명이 오는지</em>는 지정과 무관하게 알아둘 값이다.</li>
       <li><b>KDCA 보도자료는 아직 없다.</b> 새 누리집의 게시판 주소를 확인하지 못했다. 지침·매뉴얼 게시판만 본다.</li>
@@ -133,9 +304,15 @@
   </div>
 </section>
 
+<div class="howko" style="margin-top:18px">
+  본 상황판은 WHO·미국 CDC·질병관리청 등 <b>공식 공개자료를 자동 수집·정리</b>한 정보입니다.
+  <b>원문의 게시·수정 시점과 우리 수집 시점은 다를 수 있습니다.</b>
+  이 판은 스스로 위험도를 매기거나 발생 규모를 추정하지 않습니다 — 기관이 붙인 분류만 그대로 옮깁니다.
+  실제 의사결정 시에는 각 항목의 공식 원문을 확인하십시오.
+</div>
+
 <footer>
   <div>수집·결합 코드 <code>scripts/fetch_daily.py</code> · 매일 실행 <code>.github/workflows/daily.yml</code> · 원자료 <code>portal/daily/data/</code></div>
-  <div style="margin-top:6px">Built by <a href="https://jieumworks.com" target="_blank" rel="noopener">지음웍스 jieumworks.com</a> · 2026년 9월</div>
 </footer>
 </div>
 
@@ -151,18 +328,77 @@ const SB = {'WHO DON':'who','CDC 여행알림':'cdc','KDCA 지침':'kdca','WHO �
 
 /* 실행 상태 */
 const st = D.status, run = st._run || {};
-document.getElementById('run').innerHTML = `<span><b>${esc(run.run_at||'')}</b> 실행 · 오늘 새 항목 <b class="num">${run.new||0}</b>건 · 보관 ${run.total||0}건</span>` +
-  Object.entries(st).filter(([k])=>k!=='_run').map(([k,v])=>`<span class="src ${v.ok?'':'bad'}" title="${esc(v.ok?('마지막 성공 '+v.last_ok):('실패: '+v.error+' · 마지막 성공 '+(v.last_ok||'없음')))}"><i></i>${esc(v.label)}${v.ok?'':' ✗'}</span>`).join('');
+document.getElementById('run').innerHTML =
+  `<span><b>${esc(run.run_at||'')}</b> 실행 · ${D.first_run
+     ? `<b>첫 수집</b>이라 보관한 ${run.total||0}건이 전부 처음 잡혔다. 발행일은 항목마다 다르다`
+     : `오늘 처음 수집한 항목 <b class="num">${run.new||0}</b>건 · 보관 ${run.total||0}건`}</span>` +
+  Object.entries(st).filter(([k])=>k!=='_run').map(([k,v])=>{
+    /* 수집 성공/실패와 '발행이 얼마나 오래 없었나'는 다른 문제다. 둘 다 보여야
+       조용한 출처를 고장으로 오해하지 않는다. */
+    const age = v.age_days;
+    const cls = !v.ok ? 'bad' : (v.quiet ? 'quiet' : '');
+    const tip = !v.ok ? `수집 실패: ${v.error} · 마지막 성공 ${v.last_ok||'없음'}`
+      : `수집 성공 ${v.last_ok} · 이 출처의 가장 최근 발행 ${v.latest||'없음'}`
+        + (age!=null?` (${age}일 전)`:'') + ` · 평소 발행 간격 ${v.cadence}일 안팎`;
+    const tail = !v.ok ? ' ✗ 수집 실패'
+      : age==null ? ' · 발행일 없음'
+      : age===0 ? ' · 오늘 발행'
+      : ` · ${age}일 전 발행${v.quiet?' ⚠':''}`;
+    return `<span class="src ${cls}" title="${esc(tip)}"><i></i>${esc(v.label)}<em>${esc(tail)}</em></span>`;
+  }).join('');
 
 /* 필터 */
-let f='all', limit=40;
-const CH=[['all','전체'],['new','오늘 새로'],['WHO DON','WHO 발생뉴스'],['CDC 여행알림','CDC 여행알림'],['KDCA 지침','KDCA 지침'],['WHO 뉴스','WHO 뉴스'],['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
+let f='all', limit=40, seenDay='all', co=null;
+
+/* 수집일 — 아카이브에 실제로 적힌 날만 모은다.
+   처음 본 날(first_seen)과 고쳐진 날(updated)을 함께 센다.
+   이 아카이브가 시작된 날 이전의 기록은 없다. 없는 날짜를 고르게 하지 않는다. */
+(function(){
+  const el = document.getElementById('dayf'); if(!el) return;
+  const cnt = {};
+  for(const it of D.items){
+    for(const d of [it.first_seen, it.updated]){
+      if(!d) continue;
+      (cnt[d] = cnt[d] || {n:0, u:0});
+      if(d === it.first_seen) cnt[d].n++; else cnt[d].u++;
+    }
+  }
+  const days = Object.keys(cnt).sort().reverse();
+  if(days.length < 2){                       // 하루치뿐이면 고를 것이 없다
+    el.innerHTML = `<p class="dnote">이 아카이브는 <b>${esc(days[0] || D.today)}</b>부터 모읍니다.
+      아직 하루치뿐이라 날짜로 고를 것이 없습니다. 그 전 기록은 저희에게 없습니다.</p>`;
+    return;
+  }
+  const md = d => d.slice(5).replace('-', '월 ') + '일';
+  el.innerHTML = `<div class="dchips"><button type="button" data-d="all" class="on">모든 날</button>`
+    + days.map(d => {
+        const c = cnt[d], bits = [];
+        if(c.n) bits.push(`처음 ${c.n}`);
+        if(c.u) bits.push(`고쳐짐 ${c.u}`);
+        return `<button type="button" data-d="${esc(d)}">${esc(md(d))}<span>${bits.join(' · ')}</span></button>`;
+      }).join('')
+    + `</div><p class="dnote">수집한 날로 거릅니다. 이 아카이브는 <b>${esc(days[days.length-1])}</b>부터 모으며,
+        그 전에 나온 자료는 저희가 처음 본 날로만 적혀 있습니다 — 원문 게시일은 각 항목에 따로 있습니다.</p>`;
+  el.querySelector('.dchips').onclick = e => {
+    const b = e.target.closest('button'); if(!b) return;
+    seenDay = b.dataset.d; limit = 40;
+    el.querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b));
+    render();
+  };
+})();
+/* 출처 딱지는 실제로 보관된 항목에서 뽑는다 — 손으로 적어 두면 출처를 바꿀 때 죽은 딱지가 남는다 */
+const SRCS=[...new Set(D.items.map(x=>x.source))];
+const CH=[['all','전체'],['new','오늘 처음 수집'],...SRCS.map(s=>[s,s]),['desig','우리 지정국 관련'],['undesig','미지정국 관련']];
 document.getElementById('chips').innerHTML = CH.map(([k,l])=>`<button data-f="${k}" class="${k===f?'on':''}">${l}</button>`).join('');
 document.getElementById('chips').onclick=e=>{ const b=e.target.closest('button'); if(!b) return; f=b.dataset.f; limit=40; document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on',x===b)); render(); };
 
 function pass(it){
+  /* 수집일 거르개. 없는 과거를 만들어 내지 않으려고, 아카이브에 실제로 적힌
+     날짜만 단추로 세운다. 그래서 날이 쌓이는 만큼만 늘어난다. */
+  if(seenDay !== 'all' && it.first_seen !== seenDay && it.updated !== seenDay) return false;
+  if(co && (it.countries||[]).indexOf(co) < 0) return false;
   if(f==='all') return true;
-  if(f==='new') return it.first_seen===D.today;
+  if(f==='new') return it.first_seen===D.today && !D.first_run;
   if(f==='desig') return (it.joins||[]).some(j=>j.designated===true);
   if(f==='undesig') return (it.joins||[]).some(j=>j.designated===false);
   return it.source===f;
@@ -178,28 +414,283 @@ function joinHtml(it){
     parts.push(s+'</span>'); }
   return `<div class="join">${parts.join('')}</div>`;
 }
+function factsHtml(it){
+  const f=it.facts||{}; const out=[];
+  if(f.level) out.push(`<span>Level <b>${f.level}</b> · ${esc(f.level_ko)}<i style="font-style:normal;color:var(--faint)"> ${esc(f.level_en)}</i></span>`);
+  if(f.as_of) out.push(`<span>기준일 <b>${esc(f.as_of)}</b></span>`);
+  if(f.cases!=null) out.push(`<span>확진 <b>${fmt(f.cases)}</b>명</span>`);
+  if(f.suspected!=null) out.push(`<span>의심 <b>${fmt(f.suspected)}</b>명</span>`);
+  if(f.hospitalized!=null) out.push(`<span>입원 <b>${fmt(f.hospitalized)}</b>명</span>`);
+  if(f.deaths!=null) out.push(`<span>사망 <b>${fmt(f.deaths)}</b>명</span>`);
+  if(f.cfr) out.push(`<span>치명률 CFR <b>${esc(f.cfr)}</b></span>`);
+  if(f.states!=null) out.push(`<span>미국 <b>${f.states}</b>개 주</span>`);
+  for(const [sc,lv] of (f.risk||[])) out.push(`<span data-lv="${esc(lv)}">위험 ${esc(sc)} <b>${esc(lv)}</b></span>`);
+  if(f.travel) out.push(`<span>${esc(f.travel)}</span>`);
+  if(f.dept) out.push(`<span>담당 <b>${esc(f.dept)}</b></span>`);
+  return out.length?`<div class="facts">${out.join('')}</div>`:'';
+}
+function figsHtml(it){
+  const fs=it.figs||[]; if(!fs.length) return '';
+  return `<div class="figs">${fs.map(f=>`<figure class="fig"><a href="${esc(f.src)}" target="_blank" rel="noopener"><img src="${esc(f.src)}" alt="${esc(f.caption||'그림')}" loading="lazy" referrerpolicy="no-referrer" onerror="this.closest('figure').style.display='none'"></a>${f.caption?`<figcaption>${esc(f.caption)}</figcaption>`:''}</figure>`).join('')}</div>`;
+}
+function tablesHtml(it){
+  const ts=it.tables||[]; if(!ts.length) return '';
+  return ts.map(t=>`<div class="tbl"><table>${t.caption?`<caption>${esc(t.caption)}</caption>`:''}${t.rows.map((r,i)=>`<tr>${r.map(c=>i?`<td>${esc(c)}</td>`:`<th>${esc(c)}</th>`).join('')}</tr>`).join('')}</table></div>`).join('');
+}
+/* 영어 원문의 낱말에 한글을 단다 — 사전에 있는 것만, 긴 것부터 */
+function annotate(text, terms){
+  let h=esc(text);
+  const ts=[...(terms||[])].sort((a,b)=>b[0].length-a[0].length);
+  for(const [en,ko] of ts){
+    const re=new RegExp('(?<![A-Za-z])('+en.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')(?![A-Za-z])','i');
+    h=h.replace(re, `<span class="t">$1<i>${esc(ko)}</i></span>`);
+  }
+  return h;
+}
+function enHtml(it){
+  const en=it.en; if(!en) return '';
+  /* 원문이 제목과 같으면(RSS에 설명이 없는 CDC 발생조사) 접힌 상자만 남아 헛것이 된다 — 그냥 안 그린다 */
+  if(!(it.en_list&&it.en_list.length) && en.trim().replace(/\.$/,'')===String(it.title||'').trim().replace(/\.$/,'')) return '';
+  const body = (it.en_list&&it.en_list.length)
+    ? `<ul>${it.en_list.map(p=>`<li>${annotate(p,it.terms)}</li>`).join('')}</ul>`
+    : `<p>${annotate(en,it.terms)}</p>`;
+  const terms=(it.terms||[]).length?`<div class="terms">${it.terms.map(([e,k])=>`<span>${esc(e)}<i>${esc(k)}</i></span>`).join('')}</div>`:'';
+  return `<details class="en"><summary>원문 핵심 문장 — 영어, 용어에 한글 병기 ▾</summary>${body}${terms}</details>`;
+}
+/* 병원체 '무리' 이름만 나온 글 — 국내 질환을 확정하지 않는다.
+   상위 병원체 이름으로 국내 법정 질환을 지정하면 서로 다른 병의 대응이 섞인다. */
+function maybeHtml(it){
+  const m = it.maybe || [];
+  if (!m.length) return '';
+  return m.map(x=>`<div class="mb"><b>분류 확인 필요</b>
+    <p>${esc(x.why)}</p>
+    ${(x.candidates||[]).length?`<div class="mbc">참고할 국내 질환
+      ${x.candidates.map(c=>`<a href="../dogam/#${enc(c)}">${esc(c)}</a>`).join('')}
+      <span class="mbn">— 이 글이 그 질환이라는 뜻이 아닙니다</span></div>`:''}</div>`).join('');
+}
 function itemHtml(it){
-  const isNew=it.first_seen===D.today;
+  /* 발행일과 '우리가 처음 수집한 날'은 다르다. 배지는 수집 기준이므로 그렇게 적는다. */
+  const isNew=it.first_seen===D.today && !D.first_run;
   const tags=(it.diseases||[]).map(d=>`<a class="tag dz" href="../dogam/#${enc(d)}" title="도감">${esc(d)}</a>`).join('')+
              (it.diseases||[]).slice(0,1).map(d=>`<a class="tag" href="../field/#${enc(d)}" title="현장 대응 카드">🚑 현장</a><a class="tag" href="../pathogen/#${enc(d)}" title="병원체 형태">🧫 형태</a>`).join('');
   return `<article class="it ${isNew?'new':''}">
-    <div class="top"><span class="sb ${SB[it.source]||''}">${esc(it.source)}</span>${it.level?`<span class="lv">Level ${it.level}</span>`:''}<span class="num">${esc(it.date||it.first_seen)}</span>${isNew?'<span class="nw">NEW · 오늘</span>':''}</div>
+    <div class="top"><span class="sb ${SB[it.source]||''}">${esc(it.source)}</span>${it.level?`<span class="lv">Level ${it.level}</span>`:''}<span class="num" title="발행일">${esc(it.date||'날짜 없음')}</span>${isNew?'<span class="nw" title="우리가 오늘 처음 수집한 항목이다. 발행일과 다르다">오늘 처음 수집</span>':''}</div>
     <h4><a href="${esc(it.link)}" target="_blank" rel="noopener">${esc(it.title)}</a></h4>
-    ${it.summary?`<p>${esc(it.summary)}</p>`:''}
+    ${it.ko?`<p class="ko">${esc(it.ko)}</p>`:(it.summary?`<p>${esc(it.summary)}</p>`:'')}
+    ${maybeHtml(it)}
+    ${factsHtml(it)}
+    ${figsHtml(it)}
+    ${tablesHtml(it)}
+    ${enHtml(it)}
     ${tags?`<div class="tags">${tags}</div>`:''}
+    ${seenHtml(it)}
     ${joinHtml(it)}
   </article>`;
 }
+
+/* ── 언제 올라왔고 언제 우리가 봤나 ────────────────────────────────────
+   원문 게시일과 우리가 처음 수집한 날은 다르다. 섞으면 '오늘 발생한 일'로 오해된다. */
+function seenHtml(it){
+  const bits=[];
+  bits.push(`원문 게시 <b>${esc(it.date||'날짜 없음')}</b>`);
+  if(it.first_seen) bits.push(`아카이브 최초 수집 <b>${esc(it.first_seen)}</b>`);
+  if(it.last_seen && it.last_seen!==it.first_seen) bits.push(`마지막 확인 <b>${esc(it.last_seen)}</b>`);
+  if(it.updated) bits.push(`고쳐짐 <b>${esc(it.updated)}</b>${it.changes?` (${it.changes.map(esc).join('·')})`:''}`);
+  return `<div class="seen">${bits.join(' · ')}</div>`;
+}
+
+/* ── 요약 막대 ───────────────────────────────────────────────────────── */
+(function(){
+  const srcs = Object.entries(st).filter(([k])=>k!=='_run');
+  const okN = srcs.filter(([,v])=>v.ok).length;
+  const badN = srcs.length - okN;
+  /* 아카이브에서 센다. 예전에는 '마지막 실행이 찾아낸 수'를 썼는데,
+     하루에 두 번 돌면(재시도·수동 실행) 두 번째가 0으로 덮어써서
+     아침에 들어온 새 자료가 없던 일이 됐다. 그날의 사실은 항목에 적혀 있다. */
+  const newN = D.first_run ? null : D.items.filter(x=>x.first_seen===D.today).length;
+  const updN = D.first_run ? null : D.items.filter(x=>x.updated===D.today && x.first_seen!==D.today).length;
+  const cells = [
+    {v: newN==null?'—':newN, l: newN==null ? '오늘 새 항목<br>비교 기준 없음(첫 수집)' : '오늘 새로 수집한 항목', hot: newN>0},
+    {v: updN==null?'—':updN, l: updN==null ? '고쳐진 항목<br>기록 없음' : '오늘 고쳐진 항목', hot: updN>0},
+    {v: run.total||0, l: '보관 중인 공식자료'},
+    {v: (run.run_at||'').replace(/^\d{4}-\d{2}-\d{2}\s*/,'') || '—', l: '마지막 수집 (KST)'},
+    {v: badN ? `${okN}/${srcs.length}` : `${okN}`, l: badN ? '출처 정상 (나머지 확인 필요)' : '출처 모두 정상'},
+  ];
+  document.getElementById('sumbar').innerHTML = cells.map(c=>
+    `<div class="sb2 ${c.hot?'hot':(c.v===0?'zero':'')}"><b>${esc(c.v)}</b><span>${c.l}</span></div>`).join('');
+})();
+
+/* ── 오늘 새로 들어온 것 / 고쳐진 것 ──────────────────────────────────── */
+function section(sel, cntSel, rows, emptyMsg){
+  document.getElementById(cntSel).textContent = rows.length ? rows.length + '건' : '';
+  document.getElementById(sel).innerHTML = rows.length
+    ? rows.map(itemHtml).join('')
+    : `<div class="nonew">${emptyMsg}</div>`;
+}
+(function(){
+  if(D.first_run){
+    section('newlist','newcnt',[],
+      '<b>비교 기준이 없습니다.</b> 이번이 첫 수집이라 무엇이 새것인지 가릴 수 없습니다. '
+      + '보관한 자료는 아래 전체 목록에 있습니다.');
+    section('updlist','updcnt',[], '<b>비교 기준이 없습니다.</b>');
+    return;
+  }
+  const news = D.items.filter(x=>x.first_seen===D.today)
+    .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  const upds = D.items.filter(x=>x.updated===D.today && x.first_seen!==D.today)
+    .sort((a,b)=>String(b.date||'').localeCompare(String(a.date||'')));
+  section('newlist','newcnt', news,
+    '<b>오늘 새로 수집된 자료가 없습니다.</b> 수집은 정상이었고 출처에 새 글이 올라오지 않았다는 뜻입니다. '
+    + 'WHO 질병 발생 뉴스는 한 달에 두세 건이라 조용한 날이 흔합니다. '
+    + '<a href="#feed">전체 수집 자료 보기 →</a>');
+  section('updlist','updcnt', upds,
+    '<b>오늘 고쳐진 항목이 없습니다.</b> 보관 중인 글의 제목·게시일·경보 단계가 그대로입니다.');
+})();
+
+/* ── 많이 언급된 질병·국가 — 문서 수일 뿐, 환자 수도 위험도도 아니다 ──── */
+(function(){
+  function tally(key, mapper){
+    const c = new Map();
+    for(const it of D.items) for(const v of (it[key]||[])){
+      const k = mapper ? mapper(v) : v; if(!k) continue;
+      c.set(k, (c.get(k)||0)+1);
+    }
+    return [...c.entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0])).slice(0,8);
+  }
+  const isoKo = new Map();
+  for(const it of D.items) for(const j of (it.joins||[])) if(j.iso && j.ko) isoKo.set(j.iso, j.ko);
+  function draw(sel, rows, link){
+    const max = rows.length ? rows[0][1] : 1;
+    document.getElementById(sel).innerHTML = rows.length ? rows.map(([n,v])=>
+      `<li><span class="nm2">${link?`<a href="${link(n)}">${esc(n)}</a>`:esc(n)}</span>
+        <span class="bar"><i style="width:${Math.round(v/max*100)}%"></i></span>
+        <span class="n2">문서 ${v}건</span></li>`).join('')
+      : '<li class="muted">집계할 자료가 없습니다.</li>';
+  }
+  draw('rdz', tally('diseases'), n=>'../dogam/#'+enc(n));
+  draw('rco', tally('countries', iso=>isoKo.get(iso)||iso), n=>{
+    for(const [iso,ko] of isoKo) if(ko===n) return '../inflow/#'+iso;
+    return '../inflow/';
+  });
+})();
+
+/* ── 목록 검색·정렬·보기 ─────────────────────────────────────────────── */
+/* 검역·유입지도에서 ?q=나라이름 으로 넘어온다 — 받지 않으면 빈손으로 열린다 */
+let q = (new URLSearchParams(location.search).get('q') || '').trim().toLowerCase(), sortBy='date';
+if(q) document.getElementById('lq').value = q;
+document.getElementById('lq').addEventListener('input', e=>{ q=e.target.value.trim().toLowerCase(); limit=40; render(); });
+document.getElementById('lsort').addEventListener('change', e=>{ sortBy=e.target.value; render(); });
+(function(){
+  const full=document.getElementById('vFull'), comp=document.getElementById('vComp');
+  function set(c){ document.body.classList.toggle('compact', c);
+    full.setAttribute('aria-pressed', c?'false':'true'); comp.setAttribute('aria-pressed', c?'true':'false');
+    try{ localStorage.setItem('dailyCompact', c?'1':'0'); }catch(e){} }
+  full.onclick=()=>set(false); comp.onclick=()=>set(true);
+  try{ if(localStorage.getItem('dailyCompact')==='1') set(true); }catch(e){}
+})();
+
 function render(){
-  const items=D.items.filter(pass);
+  const items=sortItems(D.items.filter(pass).filter(hit));
   const el=document.getElementById('list');
-  if(!items.length){ el.innerHTML='<div class="empty">해당 항목이 없다.</div>'; return; }
+  const ac0=document.getElementById('allcnt'); if(ac0) ac0.textContent = items.length + '건';
+  if(!items.length){
+    /* 거른 결과가 없는 것과 수집이 실패한 것은 다르다 — 무엇을 지우면 되는지 알려 준다 */
+    el.innerHTML = `<div class="nonew"><b>조건에 맞는 자료가 없습니다.</b>`
+      + (q ? ` ‘${esc(q)}’(으)로는 보관 중인 ${D.items.length}건에서 찾지 못했습니다.` : '')
+      + (seenDay !== 'all' ? ` 수집일을 <b>${esc(seenDay)}</b>로 좁힌 상태입니다.` : '')
+      + ` <button class="more" id="reset" style="margin-top:10px">조건 지우고 전체 보기</button></div>`;
+    const rb=document.getElementById('reset');
+    if(rb) rb.onclick=()=>{ q=''; f='all'; seenDay='all'; setCo(null, true); document.getElementById('lq').value='';
+      document.querySelectorAll('#chips button').forEach(x=>x.classList.toggle('on', x.dataset.f==='all'));
+      document.querySelectorAll('#dayf button').forEach(x=>x.classList.toggle('on', x.dataset.d==='all'));
+      limit=40; render(); };
+    return;
+  }
+  /* 발행일로 묶는다. 예전에는 '우리가 처음 본 날'로 묶어서, 첫 수집 날에는 발행일이
+     제각각인 항목이 전부 '오늘'로 묶이는 잘못이 있었다. */
   let html='', day=null, n=0;
-  for(const it of items){ if(n>=limit) break; const d=it.first_seen===D.today?'오늘 새로 올라옴':'처음 본 날 '+it.first_seen; if(d!==day){ day=d; html+=`<div class="day">${esc(d)}</div>`; } html+=itemHtml(it); n++; }
+  for(const it of items){ if(n>=limit) break;
+    const d=it.date ? (it.date===D.today ? `${it.date} · 오늘 발행` : it.date) : '발행일 없음';
+    if(d!==day){ day=d; html+=`<div class="day">${esc(d)}</div>`; }
+    html+=itemHtml(it); n++; }
   if(items.length>limit) html+=`<button class="more" id="more">더 보기 (${items.length-limit}건 남음)</button>`;
   el.innerHTML=html;
   const m=document.getElementById('more'); if(m) m.onclick=()=>{ limit+=40; render(); };
 }
+function hit(it){
+  if(!q) return true;
+  const hay=[it.title, it.ko, it.summary, it.source, ...(it.diseases||[]),
+             ...((it.joins||[]).map(j=>j.ko))].join(' ').toLowerCase();
+  return hay.indexOf(q) > -1;
+}
+function sortItems(a){
+  const by = {
+    date:  (x,y)=>String(y.date||'').localeCompare(String(x.date||'')),
+    seen:  (x,y)=>String(y.first_seen||'').localeCompare(String(x.first_seen||'')),
+    source:(x,y)=>String(x.source).localeCompare(String(y.source)) || String(y.date||'').localeCompare(String(x.date||'')),
+    disease:(x,y)=>String((x.diseases||[])[0]||'힣').localeCompare(String((y.diseases||[])[0]||'힣')),
+  }[sortBy];
+  /* 신규 → 고쳐짐 → 고른 기준. 오늘 달라진 것이 늘 위로 온다. */
+  return a.slice().sort((x,y)=>{
+    const nx=(x.first_seen===D.today&&!D.first_run)?0:1, ny=(y.first_seen===D.today&&!D.first_run)?0:1;
+    if(nx!==ny) return nx-ny;
+    const ux=x.updated===D.today?0:1, uy=y.updated===D.today?0:1;
+    if(ux!==uy) return ux-uy;
+    return by(x,y);
+  });
+}
+/* 지도로 보기 — 원장의 ISO3 나라 태그를 세어 칠한다. 문서 수일 뿐 발생 규모가 아니다. */
+const CO_KO = {};
+D.items.forEach(it=>(it.joins||[]).forEach(j=>{ if(j.iso && j.ko) CO_KO[j.iso]=j.ko; }));
+function setCo(iso, quiet){
+  co = iso; limit = 40;
+  const cf = document.getElementById('cofilter');
+  if(cf){
+    cf.classList.toggle('on', !!iso);
+    cf.innerHTML = iso ? `<span>나라: <b>${esc(CO_KO[iso]||iso)}</b> 자료만 보는 중</span><button type="button" id="coclear">✕ 풀기</button>` : '';
+    const b = document.getElementById('coclear'); if(b) b.onclick = () => setCo(null);
+  }
+  document.querySelectorAll('#wmap .hit').forEach(x => x.classList.toggle('sel', x.dataset.iso === iso));
+  if(!quiet) render();
+}
+(function(){
+  const box = document.getElementById('wmap'); if(!box || !window.fetch) return;
+  const cnt = {}, fresh = {};
+  const isNew = it => it.first_seen === D.today && !D.first_run;
+  D.items.forEach(it => (it.countries||[]).forEach(c => { cnt[c] = (cnt[c]||0) + 1; if(isNew(it)) fresh[c] = 1; }));
+  const max = Math.max(1, ...Object.values(cnt));
+  const op = n => (0.28 + 0.72 * Math.sqrt(n / max)).toFixed(2);
+  const X = lon => ((lon + 180) * 2).toFixed(1), Y = lat => ((90 - lat) * 2).toFixed(1);
+  const attrs = (iso, ko) => {
+    const n = cnt[iso];
+    if(!n) return `class="land"><title>${esc(ko)}</title>`;
+    return `class="hit${fresh[iso]?' fresh':''}" data-iso="${iso}" fill-opacity="${op(n)}" tabindex="0" role="button" aria-label="${esc(ko)} ${n}건"><title>${esc(ko)} · 문서 ${n}건${fresh[iso]?' · 오늘 새 항목':''}</title>`;
+  };
+  fetch('data/world.json').then(r => r.json()).then(W => {
+    W.c.forEach(([iso, ko]) => { if(!CO_KO[iso]) CO_KO[iso] = ko; });
+    W.p.forEach(([iso, ko]) => { if(!CO_KO[iso]) CO_KO[iso] = ko; });
+    const shapes = W.c.map(([iso, ko, rings]) =>
+      `<path d="${rings.map(r => 'M' + r.map(([a,b]) => X(a) + ',' + Y(b)).join('L') + 'Z').join('')}" ${attrs(iso, ko)}</path>`).join('');
+    const dots = W.p.map(([iso, ko, lon, lat]) =>
+      `<circle cx="${X(lon)}" cy="${Y(lat)}" r="${cnt[iso]?3.2:1.6}" ${attrs(iso, ko)}</circle>`).join('');
+    box.innerHTML = `<svg viewBox="0 12 720 284" role="img" aria-label="자료가 언급한 나라 지도">${shapes}${dots}</svg>`;
+    const pick = e => {
+      const t = e.target.closest('.hit'); if(!t) return;
+      if(e.type === 'keydown' && e.key !== 'Enter' && e.key !== ' ') return;
+      e.preventDefault();
+      setCo(co === t.dataset.iso ? null : t.dataset.iso);
+      document.getElementById('feed').scrollIntoView({behavior:'smooth', block:'start'});
+    };
+    box.onclick = pick; box.onkeydown = pick;
+    const top = Object.entries(cnt).sort((a,b) => b[1]-a[1]).slice(0, 3)
+      .map(([c,n]) => `${esc(CO_KO[c]||c)} ${n}`).join(' · ');
+    document.getElementById('mleg').innerHTML =
+      `<span><i style="background:var(--accent);opacity:.3"></i>문서 적음</span>` +
+      `<span><i style="background:var(--accent)"></i>문서 많음</span>` +
+      `<span><i style="border:2px solid var(--s2)"></i>오늘 새 항목</span>` +
+      `<span>나라 ${Object.keys(cnt).length}곳${top ? ' · 많은 순 ' + top : ''}</span>`;
+  }).catch(() => { document.getElementById('map').style.display = 'none'; });
+})();
 render();
 
 /* 구독 */

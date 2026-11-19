@@ -94,9 +94,92 @@ def key(title):
     return re.sub(r'[\s·‧,.\-_및]', '', t)
 
 
+YEAR_MIN, YEAR_MAX = 1995, 2030
+
+
 def year_of(title, date):
-    m = re.search(r'(20\d{2}|19\d{2})', title)
-    return int(m.group(1)) if m else (int(date[:4]) if date[:4].isdigit() else 0)
+    """제목의 연도를 쓰되, 말이 되는 값일 때만. '220902기준' 같은 날짜 토막이
+    2090년으로 읽히던 오류가 있었다. 그런 경우 등록일 연도를 쓴다."""
+    reg = int(date[:4]) if date[:4].isdigit() else 0
+    for m in re.finditer(r'(19|20)\d{2}', title):
+        y = int(m.group(0))
+        if YEAR_MIN <= y <= YEAR_MAX:
+            return y
+    return reg
+
+
+# 감염병 지침 게시판에는 만성질환·건강증진 사업 지침도 섞여 올라온다(공지·교육자료 게시판 탓).
+# 지우지 않고 갈래만 표시해 서가에서 걸러 볼 수 있게 한다.
+NON_ID = ('고혈압', '당뇨', '심뇌혈관', '건강증진', '퇴원손상', '금연', '영양조사', '비만',
+          '만성질환', '자살', '치매', '구강건강', '희귀질환', '건강검진', '낙상', '손상감시',
+          '아토피', '천식', '알레르기', '심폐소생', '응급처치', '모유수유', '노인건강')
+ID_HINT = ('감염', '방역', '검역', '결핵', '예방접종', '백신', '역학조사', '병원체', '항생제',
+           '내성', '살균', '소독', '매개체', '방제', '격리', '검체', '진단검사', '신고')
+
+
+def field_of(title):
+    if any(k in title for k in ID_HINT):
+        return '감염병'
+    return '그 밖' if any(k in title for k in NON_ID) else '감염병'
+
+
+def merge(kd):
+    """누리집 수집분 + 감염병포털 목록을 계열키·연도로 합친다.
+    수집을 다시 하지 않고 정제 규칙만 고칠 때가 잦아 따로 뺐다(--merge-only)."""
+    portal = list(csv.DictReader(open(PORTAL, encoding='utf-8-sig')))
+    merged = {}
+    for src, rows_ in (('KDCA게시판', kd), ('감염병포털', portal)):
+        for r in rows_:
+            k = (key(r['제목']), year_of(r['제목'], r['등록일']))
+            if k in merged:
+                merged[k]['출처'] += '+' + src if src not in merged[k]['출처'] else ''
+                merged[k].setdefault('URL2', r['URL'])
+                continue
+            merged[k] = {'제목': r['제목'], '등록일': r['등록일'], 'URL': r['URL'], '출처': src,
+                         '게시판': r.get('게시판', ''), '계열키': k[0], '연도': k[1],
+                         '분야': field_of(r['제목'])}
+    allrows = sorted(merged.values(), key=lambda r: (r['연도'], r['등록일']), reverse=True)
+    # 계열별 판 수·최신 여부
+    by_series = {}
+    for r in allrows:
+        by_series.setdefault(r['계열키'], []).append(r)
+    for k, rs in by_series.items():
+        rs.sort(key=lambda r: (r['연도'], r['등록일']), reverse=True)
+        # 계열 안에서 갈래가 갈리면 다수결로 하나로 맞춘다. 같은 지침의 판끼리
+        # '감염병'과 '그 밖'으로 나뉘면 서가에서 계열이 두 쪽으로 쪼개 보인다.
+        f = '그 밖' if sum(1 for r in rs if r['분야'] == '그 밖') * 2 > len(rs) else '감염병'
+        for i, r in enumerate(rs):
+            r['최신판'] = 'Y' if i == 0 else ''
+            r['판수'] = len(rs)
+            r['분야'] = f
+    with open(OUT_ALL, 'w', encoding='utf-8', newline='') as f:
+        w = csv.DictWriter(f, ['제목', '등록일', '연도', '분야', '출처', '게시판', '최신판', '판수', 'URL', 'URL2', '계열키'])
+        w.writeheader()
+        w.writerows(allrows)
+    only_kd = sum(1 for r in allrows if r['출처'] == 'KDCA게시판')
+    only_po = sum(1 for r in allrows if r['출처'] == '감염병포털')
+    other = sum(1 for r in allrows if r['분야'] == '그 밖')
+    print(f'  → {os.path.relpath(OUT_ALL, ROOT)} {len(allrows)}건 '
+          f'(누리집만 {only_kd} · 포털만 {only_po} · 둘 다 {len(allrows) - only_kd - only_po})')
+    print(f'    갈래 — 감염병 {len(allrows) - other} · 그 밖 {other}')
+    return allrows
+
+
+def keep_previous(kd):
+    """이번에 못 본 행도 지우지 않는다.
+
+    게시판은 새 글이 앞에 붙으며 쪽 경계가 밀린다. 쪽을 여섯씩 동시에 받는 동안 경계가 밀리면
+    몇 건을 건너뛴다(2026-10-11 재수집에서 2001~2016년 글 39건이 빠졌다 — 게시판에는 그대로 있었다).
+    한 번 수집된 글은 남기고, 이번에 다시 본 글만 제목을 새로 고친다.
+    """
+    if not os.path.exists(OUT_KDCA):
+        return kd
+    seen = {(r['게시판'], r['artclId']) for r in kd}
+    old = [r for r in csv.DictReader(open(OUT_KDCA, encoding='utf-8-sig'))
+           if (r['게시판'], r['artclId']) not in seen]
+    if old:
+        print(f'  이번 수집에서 못 본 기존 글 {len(old)}건은 그대로 둔다', flush=True)
+    return kd + old
 
 
 def main():
@@ -111,6 +194,7 @@ def main():
         kd += rows_
     if len(kd) < 500:
         sys.exit(f'수집이 너무 적다({len(kd)}건). 게시판 구조가 바뀌었거나 망이 막혔다. 기존 파일을 지우지 않는다.')
+    kd = keep_previous(kd)
     kd.sort(key=lambda r: r['등록일'], reverse=True)
     with open(OUT_KDCA, 'w', encoding='utf-8', newline='') as f:
         w = csv.DictWriter(f, ['게시판', 'artclId', '제목', '등록일', 'URL'])
@@ -120,37 +204,13 @@ def main():
     for r in kd:
         by[r['게시판']] = by.get(r['게시판'], 0) + 1
     print(f'  → {os.path.relpath(OUT_KDCA, ROOT)} {len(kd)}건  ' + ' · '.join(f'{k} {v}' for k, v in by.items()))
-
-    portal = list(csv.DictReader(open(PORTAL, encoding='utf-8-sig')))
-    merged = {}
-    for src, rows_ in (('KDCA게시판', kd), ('감염병포털', portal)):
-        for r in rows_:
-            k = (key(r['제목']), year_of(r['제목'], r['등록일']))
-            if k in merged:
-                merged[k]['출처'] += '+' + src if src not in merged[k]['출처'] else ''
-                merged[k].setdefault('URL2', r['URL'])
-                continue
-            merged[k] = {'제목': r['제목'], '등록일': r['등록일'], 'URL': r['URL'], '출처': src,
-                         '게시판': r.get('게시판', ''), '계열키': k[0], '연도': k[1]}
-    allrows = sorted(merged.values(), key=lambda r: (r['연도'], r['등록일']), reverse=True)
-    # 계열별 판 수·최신 여부
-    by_series = {}
-    for r in allrows:
-        by_series.setdefault(r['계열키'], []).append(r)
-    for k, rs in by_series.items():
-        rs.sort(key=lambda r: (r['연도'], r['등록일']), reverse=True)
-        for i, r in enumerate(rs):
-            r['최신판'] = 'Y' if i == 0 else ''
-            r['판수'] = len(rs)
-    with open(OUT_ALL, 'w', encoding='utf-8', newline='') as f:
-        w = csv.DictWriter(f, ['제목', '등록일', '연도', '출처', '게시판', '최신판', '판수', 'URL', 'URL2', '계열키'])
-        w.writeheader()
-        w.writerows(allrows)
-    only_kd = sum(1 for r in allrows if r['출처'] == 'KDCA게시판')
-    only_po = sum(1 for r in allrows if r['출처'] == '감염병포털')
-    print(f'  → {os.path.relpath(OUT_ALL, ROOT)} {len(allrows)}건 '
-          f'(누리집만 {only_kd} · 포털만 {only_po} · 둘 다 {len(allrows) - only_kd - only_po})')
+    merge(kd)
 
 
 if __name__ == '__main__':
-    main()
+    if '--merge-only' in sys.argv:
+        rows = list(csv.DictReader(open(OUT_KDCA, encoding='utf-8-sig')))
+        print(f'수집 건너뜀 — {os.path.relpath(OUT_KDCA, ROOT)} {len(rows)}건을 다시 합친다')
+        merge(rows)
+    else:
+        main()

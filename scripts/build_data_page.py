@@ -6,6 +6,8 @@ GitHub Pages는 portal/ 만 배포하므로, 내려받게 하려면 파일이 �
 이 저장소가 경고해 온 '단절점 모르고 비교하기'를 그대로 반복하게 된다.
 """
 import csv
+import re
+from datetime import datetime
 import json
 import os
 import shutil
@@ -16,6 +18,17 @@ FILES = os.path.join(OUT, 'files')
 
 # (그룹, 페이지경로, 그룹설명, [(원본경로, 설명, 주의)])
 CATALOG = [
+    ('⑱ 예방접종', '../vaccine/', '「전국 어린이 예방접종률 현황」과 집단면역 문턱 계산에 쓴 값.', [
+        ('18_예방접종/data/어린이_예방접종률.csv',
+         '연도 × 연령 × 백신 접종률·접종자수(2017~2025). 예방접종도우미 게시글 본문 표에서 그대로 뽑았다.',
+         "'완전'의 뜻이 해마다 바뀐다 — 2017년 9종에서 2025년 13종으로 늘었다. 연도를 그냥 이으면 안 된다. "
+         "원문 이상값은 '이상' 열에 표시만 하고 지우지 않았다."),
+        ('18_예방접종/data/어린이_예방접종률.json',
+         '위와 같은 자료 + 해마다 무엇을 세었는지(백신 목록·조사 연령), 담지 않은 판과 그 이유.', ''),
+        ('18_예방접종/data/백신_감염병_연결.json',
+         '백신 ↔ 법정감염병 ↔ 백신 효과(VE). 집단면역 문턱 Vc = (1 − 1/R₀)/VE 계산의 입력이다.',
+         'VE는 문헌의 대표값이며 접종 횟수·경과 기간·유행 균주에 따라 크게 달라진다. 사실의 진술이 아니라 계산의 입력이다.'),
+    ]),
     ('⑮ 해외유입 지도', '../inflow/', '검역 지정 · 항공 도착 · 국적별 입국 · 유입 신고를 나라 하나로 묶은 표.', [
         ('15_해외유입_지도/data/국가별_유입_종합.csv',
          '219개국 — 직항 도착여객(환승 제외)·국적별 입국자·검역 지정 종수·유입 신고·백만 명당 건수.',
@@ -74,6 +87,10 @@ CATALOG = [
         ('11_검역관리지역/data/2026Q3_지정내역.json', '감염병별 국가 목록과 검산 결과.', ''),
     ]),
     ('⑨ 연대기 · ⑧ 검사기', '../chronicle/', '시점 인지형 국면과 비교 가능성 규칙.', [
+        ('09_감염병연대기/data/전시물.json',
+         '연대기 전시관에 걸린 전시물 원장 — 법령 연혁·급수변동·지침 목록·백서 목록·연보 신고수·'
+         '검역 지정이력·예방접종률에서 기계로 뽑아 연도별로 묶었다.',
+         '순위는 갈래별 가중치이며 중요도의 객관적 척도가 아니다. 무엇을 큰일로 볼지는 보는 사람이 정한다.'),
         ('09_감염병연대기/data/연대기.json',
          '법정감염병 91종 × 국면(지위·감시·신고·격리·범위·분모) + 단절점 32건 + 오류 원장.',
          '⭐ 전 구간 원문 대조 12종 외 79종은 매핑표 기반 자동 생성이다.'),
@@ -89,10 +106,15 @@ CATALOG = [
          '급수·감시체계 변경 이력 16건.', ''),
         ('01_감염병예방법_연혁/data/감염병지정고시_연혁.json', '고시 지정 연혁.', ''),
         ('02_지침_정리/data/지침_통합목록.csv',
-         '관리지침 통합 목록 — 누리집 지침 게시판 전량 + 감염병포털 358건, 제목·연도로 중복 제거. 계열별 최신판·판 수 표기.',
-         '감염병포털 게시판만 보면 2023년 이후 신판(바이러스 간염 통합지침 등)이 빠진다. 현행은 누리집 게시판이 정본.'),
+         '관리지침 통합 목록 — 누리집 게시판 5곳 전량 + 감염병포털, 제목·연도로 중복 제거. '
+         '계열키·판 수·최신판과 분야(감염병 / 그 밖) 표기. → 지침 서가에서 그대로 볼 수 있다.',
+         '감염병포털 게시판만 보면 2023년 이후 신판(바이러스 간염 통합지침 등)이 빠진다. 현행은 누리집 게시판이 정본. '
+         "지침 게시판에는 만성질환·건강증진 사업 지침도 섞여 오므로 '분야' 열로 걸러 쓸 것."),
         ('02_지침_정리/data/지침_전체목록_KDCA게시판.csv', '질병관리청 누리집 지침 게시판(kdca.go.kr/bbs/kdca/55) 전량.', ''),
         ('02_지침_정리/data/지침_전체목록_감염병포털.csv', '감염병포털 게시판 358건(2002~2026).', '2022년 이후 갱신이 드문 게시판이다.'),
+        ('03_백서_정리/data/백서_목록.json',
+         '질병관리청 백서 발간 이력 — 게시판 소스 실측. 화면에 안 보이는(주석 처리된) 항목과 표지 이미지 생존 여부를 함께 담았다.',
+         '2004~2011·2014~2015년판은 본문 PDF가 없다. 표지만 남아 있어 발간 사실만 확인된다.'),
         ('03_백서_정리/data/전수감시_신고수_2016_2025.csv',
          '연보 기반 전수감시 신고수(2016~2025).', ''),
         ('03_백서_정리/data/표본감시_기관수_2001_2025.csv',
@@ -113,6 +135,71 @@ def rows_of(path):
     return None
 
 
+# 묶음별 원자료 출처 — 파일마다 적으면 곧 어긋나므로 묶음 단위로 둔다.
+SOURCE = {
+    '⑱': '질병관리청 예방접종도우미', '⑮': '질병관리청 · 국토교통부 · 법무부',
+    '⑬': '질병관리청 주간 건강과 질병(PHWR)', '⑫': '질병관리청 주간 건강과 질병(PHWR)',
+    '⑩': '질병관리청 주간 건강과 질병(PHWR)', '⑪': '질병관리청 검역 공지 · Q-CODE',
+    '⑨': '법제처 국가법령정보 · 질병관리청', '①': '법제처 국가법령정보 Open API',
+}
+# 연도를 이어 읽는 자료 — 이 파일들만 단절점 확인을 권한다(모든 자료에 경고를 붙이지 않는다)
+YEAR_SERIES = ('신고', '감시', '접종률', '검출', '분리', '양성률', '확정신고수', '집단발생')
+
+
+def scan_csv(path):
+    """행·열·연도 범위를 파일에서 직접 읽는다. 손으로 적어 두면 곧 어긋난다.
+       앞 몇 줄도 그대로 담는다 — 내려받기 전에 무엇이 들었는지 보이게."""
+    try:
+        with open(path, encoding='utf-8-sig') as f:
+            r = csv.reader(f)
+            head = next(r, [])
+            n, years, sample = 0, set(), []
+            ycol = next((i for i, h in enumerate(head) if h.strip() in ('연도', '년도', 'year', '기준연도')), None)
+            dcol = next((i for i, h in enumerate(head)
+                         if any(k in h for k in ('기준일', '등록일', '시행일자', '공포일자'))), None)
+            # 열 이름 자체가 연도인 표(감염병명 × 2016…2025)도 있다
+            ycols = {i: int(h.strip()) for i, h in enumerate(head)
+                     if h and re.fullmatch(r'(19|20)\d{2}', h.strip())}
+            cover = {y: 0 for y in ycols.values()}
+            for row in r:
+                n += 1
+                if len(sample) < 4:
+                    sample.append([(c or '')[:60] for c in row[:8]])
+                for col in (ycol, dcol):
+                    if col is None or col >= len(row):
+                        continue
+                    m = re.search(r'(19|20)\d{2}', row[col] or '')
+                    if m:
+                        years.add(int(m.group(0)))
+                for i, y in ycols.items():
+                    if i < len(row) and (row[i] or '').strip() not in ('', '-'):
+                        cover[y] += 1
+            years |= set(ycols.values())
+            return {'rows': n, 'cols': len(head), 'head': head[:14],
+                    'y0': min(years) if years else None, 'y1': max(years) if years else None,
+                    'sample': sample,
+                    # 연도별로 '값이 채워진 행'이 몇인지. 통계값이 아니라 자료가 어디까지 있는지다
+                    'cover': [[y, cover[y]] for y in sorted(cover)] if cover else None}
+    except Exception:  # noqa: BLE001
+        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None, 'sample': [], 'cover': None}
+
+
+def scan_json(path):
+    try:
+        d = json.load(open(path, encoding='utf-8'))
+        if isinstance(d, list):
+            keys = list(d[0].keys())[:14] if d and isinstance(d[0], dict) else []
+            return {'rows': len(d), 'cols': len(keys) or None, 'head': keys, 'y0': None, 'y1': None,
+                    'sample': [], 'cover': None}
+        keys = list(d.keys())[:14]
+        big = max((len(v) for v in d.values() if isinstance(v, (list, dict))), default=None)
+        return {'rows': big, 'cols': None, 'head': keys, 'y0': d.get('y0'), 'y1': d.get('y1'),
+                'sample': [], 'cover': None}
+    except Exception:  # noqa: BLE001
+        return {'rows': None, 'cols': None, 'head': [], 'y0': None, 'y1': None,
+                'sample': [], 'cover': None}
+
+
 def build():
     os.makedirs(FILES, exist_ok=True)
     groups = []
@@ -130,12 +217,46 @@ def build():
             size = os.path.getsize(dst)
             total_files += 1
             total_bytes += size
+            kind = 'CSV' if name.endswith('.csv') else 'JSON'
+            sc = scan_csv(dst) if kind == 'CSV' else scan_json(dst)
             entries.append({'file': name, 'note': note, 'caution': caution,
-                            'size': human(size), 'rows': rows_of(dst),
-                            'kind': 'CSV' if name.endswith('.csv') else 'JSON',
-                            'repo': rel})
+                            'size': human(size), 'rows': sc['rows'], 'cols': sc['cols'],
+                            'head': sc['head'], 'y0': sc['y0'], 'y1': sc['y1'],
+                            'sample': sc.get('sample') or [], 'cover': sc.get('cover'),
+                            'kind': kind, 'repo': rel,
+                            'updated': datetime.fromtimestamp(os.path.getmtime(src)).strftime('%Y-%m-%d')})
         if entries:
-            groups.append({'title': title, 'page': page, 'desc': desc, 'items': entries})
+            # 같은 이름의 CSV·JSON은 한 자료의 두 형식이다. 카드 하나로 묶고 내려받기만 둘로 둔다.
+            by_stem, order = {}, []
+            for e in entries:
+                stem = e['file'].rsplit('.', 1)[0]
+                if stem not in by_stem:
+                    by_stem[stem] = {'name': stem, 'note': e['note'], 'caution': e['caution'],
+                                     'rows': e['rows'], 'cols': e['cols'], 'head': e['head'],
+                                     'y0': e['y0'], 'y1': e['y1'], 'updated': e['updated'],
+                                     'sample': e['sample'], 'cover': e['cover'],
+                                     'repo': e['repo'], 'files': [],
+                                     'src': SOURCE.get(title[0], '질병관리청'),
+                                     'brk': any(k in stem for k in YEAR_SERIES)}
+                    order.append(stem)
+                d = by_stem[stem]
+                d['files'].append({'f': e['file'], 'k': e['kind'], 'z': e['size']})
+                for k in ('rows', 'cols', 'y0', 'y1'):
+                    if d[k] is None:
+                        d[k] = e[k]
+                if len(e['note']) > len(d['note']):
+                    d['note'] = e['note']
+                if e['caution'] and not d['caution']:
+                    d['caution'] = e['caution']
+                if e['head'] and not d['head']:
+                    d['head'] = e['head']
+                # 미리보기는 CSV 쪽이 사람 눈에 낫다. 먼저 담긴 것을 그대로 둔다.
+                if e['sample'] and not d['sample']:
+                    d['sample'] = e['sample']
+                if e['cover'] and not d['cover']:
+                    d['cover'] = e['cover']
+            groups.append({'title': title, 'page': page, 'desc': desc,
+                           'items': [by_stem[k] for k in order]})
 
     tmpl = open(os.path.join(ROOT, 'scripts', 'templates', 'data.template.html'),
                 encoding='utf-8').read()
